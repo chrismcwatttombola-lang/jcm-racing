@@ -1,4 +1,23 @@
 {
   "schema_version": 1,
-  "selections": []
+  "selections": [
+    {
+      "id": "2026-10-08-southwell-2030-nostrum",
+      "date": "2026-10-08",
+      "course": "Southwell (AW)",
+      "off_time": "20:30",
+      "horse": "Nostrum",
+      "locked_at": "2026-10-08T10:53:04+01:00",
+      "source_url": "https://www.racingpost.com/racecards/394/southwell-aw/2026-10-08/928760/",
+      "rationale": "Market favourite at approximately 15/8–2/1; vulnerable to a 5lb penalty only five days after a 1m win, drops to 7f in a 12-runner handicap, with opposition including Not That Guy. Counterpoint: recent Southwell victory is a strong positive; this is a cautious research assessment, not a certainty.",
+      "market_snapshot": {
+        "source_url": "https://www.timeform.com/horse-racing/odds/southwell/2026-10-08/2030/47/9",
+        "observed_at": "2026-10-08T10:53:04+01:00",
+        "market": "bookmaker win odds",
+        "odds_description": "around 15/8 to 2/1 across sources; not a Betfair live feed"
+      },
+      "status": "PENDING",
+      "result": null
+    }
+  ]
 }

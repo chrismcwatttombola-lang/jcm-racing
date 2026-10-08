@@ -5,6 +5,7 @@ on:
     paths:
       - 'data/**'
       - 'scripts/validate_data.py'
+      - 'scripts/validate_race_analysis.py'
       - '.github/workflows/jcm-validate.yml'
   schedule:
     - cron: '17,47 7-20 * * *'
@@ -20,3 +21,5 @@ jobs:
           python-version: '3.12'
       - name: Validate locked selections and provider state
         run: python scripts/validate_data.py
+      - name: Validate unified all-runner analyses
+        run: python scripts/validate_race_analysis.py

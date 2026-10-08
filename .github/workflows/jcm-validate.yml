@@ -8,7 +8,6 @@ on:
       - '.github/workflows/jcm-validate.yml'
   schedule:
     - cron: '17,47 7-20 * * *'
-      timezone: 'Europe/London'
 permissions:
   contents: read
 jobs:

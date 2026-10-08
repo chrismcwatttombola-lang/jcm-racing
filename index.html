@@ -19,4 +19,17 @@ function renderMarket(){
  }).join('')+'</tbody></table><p class="live-disclaimer">Not a live feed. Historical snapshots will appear here only after a verified data source is connected.</p>';
 }
 sel.addEventListener('change',renderMarket);renderMarket();
+</script><section id="jcm-feed-status" style="max-width:900px;margin:0 auto 30px;padding:0 16px;font:12px system-ui;color:#a7b1c3" aria-live="polite">AUTOMATION: checking verified data connection…</section><script>
+(async function(){
+ const node=document.getElementById('jcm-feed-status');
+ async function check(){
+  try{
+   const res=await fetch('./data/status.json',{cache:'no-store'});
+   if(!res.ok)throw Error('HTTP '+res.status);
+   const s=await res.json();
+   node.textContent='AUTOMATION: '+(s.automated_picks_enabled?'Verified data feed connected':'SETUP IN PROGRESS — '+s.notice);
+  }catch(e){node.textContent='AUTOMATION: data connection status unavailable; existing results remain unchanged.'}
+ }
+ await check();setInterval(check,300000);
+})();
 </script></body></html>

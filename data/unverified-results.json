@@ -1,8 +1,39 @@
 {
   "schema_version": 1,
   "mode": "historical_results_unverified",
-  "generated_at": null,
-  "records": [],
+  "generated_at": "2026-10-10",
+  "records": [
+    {
+      "date": "2026-10-09",
+      "time": "16:10",
+      "course": "Newmarket",
+      "horse": "Forty Years On",
+      "place": "NR",
+      "category": "watchlist",
+      "verification_status": "UNVERIFIED",
+      "source_url": "https://www.racingpost.com/results/38/newmarket/2026-10-09/928522/"
+    },
+    {
+      "date": "2026-10-09",
+      "time": "18:00",
+      "course": "Dundalk (AW)",
+      "horse": "Nazario",
+      "place": "7th",
+      "category": "watchlist",
+      "verification_status": "UNVERIFIED",
+      "source_url": "https://www.racingpost.com/results/1138/dundalk-aw/2026-10-09/930324/"
+    },
+    {
+      "date": "2026-10-09",
+      "time": "18:45",
+      "course": "Kempton (AW)",
+      "horse": "Havana Touch",
+      "place": "1st",
+      "category": "watchlist",
+      "verification_status": "UNVERIFIED",
+      "source_url": "https://www.racingpost.com/results/1079/kempton-aw/2026-10-09/928642/"
+    }
+  ],
   "official_accuracy_eligible": false,
   "public_picks_enabled": false,
   "notice": "No independently matched historical results have been imported. This feed must never alter locked selections or official accuracy."

@@ -5,6 +5,16 @@
   "records": [
     {
       "date": "2026-10-09",
+      "time": "13:30",
+      "course": "York",
+      "horse": "Beagle Bay",
+      "place": "5th",
+      "category": "watchlist",
+      "verification_status": "UNVERIFIED",
+      "source_url": "https://www.racingpost.com/racecards/2026-10-09/runners-index/"
+    },
+    {
+      "date": "2026-10-09",
       "time": "16:10",
       "course": "Newmarket",
       "horse": "Forty Years On",
@@ -32,6 +42,46 @@
       "category": "watchlist",
       "verification_status": "UNVERIFIED",
       "source_url": "https://www.racingpost.com/results/1079/kempton-aw/2026-10-09/928642/"
+    },
+    {
+      "date": "2026-10-09",
+      "time": "19:15",
+      "course": "Kempton (AW)",
+      "horse": "Gunfighter",
+      "place": "3rd",
+      "category": "watchlist",
+      "verification_status": "UNVERIFIED",
+      "source_url": "https://www.racingpost.com/racecards/2026-10-09/runners-index/"
+    },
+    {
+      "date": "2026-10-09",
+      "time": "19:30",
+      "course": "Dundalk (AW)",
+      "horse": "Aiteall",
+      "place": "3rd",
+      "category": "watchlist",
+      "verification_status": "UNVERIFIED",
+      "source_url": "https://www.racingpost.com/racecards/2026-10-09/runners-index/"
+    },
+    {
+      "date": "2026-10-09",
+      "time": "20:00",
+      "course": "Dundalk (AW)",
+      "horse": "Camino Lad",
+      "place": "7th",
+      "category": "watchlist",
+      "verification_status": "UNVERIFIED",
+      "source_url": "https://www.racingpost.com/racecards/2026-10-09/runners-index/"
+    },
+    {
+      "date": "2026-10-09",
+      "time": "20:15",
+      "course": "Kempton (AW)",
+      "horse": "Bold Shout",
+      "place": "2nd",
+      "category": "watchlist",
+      "verification_status": "UNVERIFIED",
+      "source_url": "https://www.racingpost.com/racecards/2026-10-09/runners-index/"
     }
   ],
   "official_accuracy_eligible": false,

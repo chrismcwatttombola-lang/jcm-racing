@@ -37,7 +37,7 @@ def accepted(payload):
         if (key not in EXPECTED or key in out or item.get("category") != "watchlist"
             or item.get("verification_status") != "UNVERIFIED"
             or not isinstance(place, str) or not place.strip()
-            or not isinstance(url, str) or not re.fullmatch(r"https://\\S+", url, re.I)):
+            or not isinstance(url, str) or not re.fullmatch(r"https://\S+", url, re.I)):
             continue
         out[key] = item
     return out

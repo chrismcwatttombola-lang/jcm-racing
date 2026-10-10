@@ -310,7 +310,7 @@ sel.addEventListener('change',renderMarket);renderMarket();
     if(!item||item.date!=='2026-10-09'||item.verification_status!=='UNVERIFIED'||item.category!=='watchlist')continue;
     const key=[item.date,item.time,item.course,item.horse].join('|');
     if(!expected.has(key)||jcmUnverified.has(key))continue;
-    if(typeof item.place!=='string'||!item.place.trim()||!item.source_url||!/^https:\/\//.test(item.source_url))continue;
+    if(typeof item.place!=='string'||!item.place.trim()||!item.source_url||typeof item.source_url!=='string'||!/^https:\/\/[^\\s]+$/i.test(item.source_url))continue;
     jcmUnverified.set(key,{place:item.place.slice(0,40),source:item.source_url});
    }
    paint();

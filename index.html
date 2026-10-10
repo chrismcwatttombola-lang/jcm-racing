@@ -293,23 +293,52 @@ sel.addEventListener('change',renderMarket);renderMarket();
  {time:'20:00',course:'Dundalk (AW)',horse:'Camino Lad',place:'—',status:'PENDING',note:'Research-only watch: Serenity Blue rated higher by 0.8051 z. Potential improvement over longer trip. Not a verified pick.',source:'https://www.racingpost.com/racecards/'},
  {time:'20:15',course:'Kempton (AW)',horse:'Bold Shout',place:'—',status:'PENDING',note:'Research-only watch: Red Hat Eagle rated higher by 1.4222 z. Independent market verification still required. Not a verified pick.',source:'https://www.racingpost.com/racecards/'}
  ];
+ /* Explicit visual treatment for historical results awaiting settlement. */
+ const jcmUnverifiedStyle=document.createElement('style');
+ jcmUnverifiedStyle.textContent='.jcm-status.unverified{color:#ffe0a3;background:#5a411c;border:1px solid #bd9045}';
+ document.head.appendChild(jcmUnverifiedStyle);
+ /* Unverified history overlay: identity-matched only; never changes official scoring. */
+ const jcmUnverified = new Map();
+ async function loadUnverifiedHistory(){
+  try{
+   const response=await fetch('./data/unverified-results.json',{cache:'no-store'});
+   if(!response.ok) return;
+   const payload=await response.json();
+   if(payload.schema_version!==1||payload.official_accuracy_eligible!==false||payload.public_picks_enabled!==false||!Array.isArray(payload.records))return;
+   const expected=new Set(watchOct9.map(r=>['2026-10-09',r.time,r.course,r.horse].join('|')));
+   for(const item of payload.records){
+    if(!item||item.date!=='2026-10-09'||item.verification_status!=='UNVERIFIED'||item.category!=='watchlist')continue;
+    const key=[item.date,item.time,item.course,item.horse].join('|');
+    if(!expected.has(key)||jcmUnverified.has(key))continue;
+    if(typeof item.place!=='string'||!item.place.trim()||!item.source_url||typeof item.source_url!=='string'||!/^https:\/\/[^\\s]+$/i.test(item.source_url))continue;
+    jcmUnverified.set(key,{place:item.place.slice(0,40),source:item.source_url});
+   }
+   paint();
+  }catch(_error){/* Keep original immutable watchlist and scores on any failure. */}
+ }
+ function watchForDisplay(){
+  return watchOct9.map(r=>{
+   const item=jcmUnverified.get(['2026-10-09',r.time,r.course,r.horse].join('|'));
+   return item?{...r,place:item.place,status:'UNVERIFIED',note:r.note+' | Unverified result reported; not included in official accuracy.',source:item.source}:r;
+  });
+ }
  function rows(items,kind){return items.map((r,i)=>'<button type="button" class="jcm-row" data-kind="'+kind+'" data-index="'+i+'"><span><span class="jcm-time">'+esc(r.time)+'</span><span class="jcm-ground">'+esc(r.course)+'</span></span><span class="jcm-horse">'+esc(r.horse)+'</span><span class="jcm-place">'+esc(r.place)+'</span><span class="jcm-status '+esc(r.status.toLowerCase())+'">'+esc(r.status)+'</span></button>').join('')}
  function paint(){
   const first=date.value==='2026-10-07',oct8=date.value==='2026-10-08';
   const chosen=first?records:(oct8?todayRecords:[]);
-  official.innerHTML='<div class="jcm-panel-heading"><h2>Daily picks</h2><span class="jcm-accuracy">'+(first?'83.3%':oct8?'100% · 1/1':'No settled picks')+'</span></div>'+(date.value==='2026-10-09'?'<p role="status" style="font-size:12px;line-height:1.6;color:#d7e4ef;background:#243249;border:1px solid #52647b;border-radius:10px;padding:10px 12px;margin:10px 0"><strong>9 Oct research snapshot — not live results.</strong> No official JCM picks were locked for this date. Watchlist observations remain pending until independently verified. Private historical archiving is operational; official settlement verification is not yet connected.</p>':'')+rows(chosen,'official');
+  official.innerHTML='<div class="jcm-panel-heading"><h2>Daily picks</h2><span class="jcm-accuracy">'+(first?'83.3%':oct8?'100% · 1/1':'No settled picks')+'</span></div>'+(date.value==='2026-10-09'?'<p role="status" style="font-size:12px;line-height:1.6;color:#d7e4ef;background:#243249;border:1px solid #52647b;border-radius:10px;padding:10px 12px;margin:10px 0"><strong>9 Oct research snapshot — not live results.</strong> No official JCM picks were locked for this date. Watchlist results may be displayed as UNVERIFIED; no results have been independently settled. Private historical archiving is operational; official settlement verification is not yet connected.</p>':'')+rows(chosen,'official');
   const oct9=date.value==='2026-10-09';
   watch.hidden=!(oct8||oct9);
-  const watching=oct9?watchOct9:watchData;
-  watch.innerHTML='<div class="jcm-panel-heading"><h2>Watchlist · '+(oct9?'9 Oct':'8 Oct')+'</h2><span class="jcm-accuracy">'+(oct9?'8 pending · 0 settled':'0/2 wins')+'</span></div>'+(oct9?'<p style="font-size:12px;color:#c2ccdd">Research-only, not verified picks. Reported race placings may appear before settlement. WIN/LOSS/NR remains PENDING until independent JCM verification; separate from official accuracy.</p>':'')+rows(watching,'watch');
+  const watching=oct9?watchForDisplay():watchData;
+  watch.innerHTML='<div class="jcm-panel-heading"><h2>Watchlist · '+(oct9?'9 Oct':'8 Oct')+'</h2><span class="jcm-accuracy">'+(oct9?(watching.filter(r=>r.status==='UNVERIFIED').length+' unverified · '+watching.filter(r=>r.status==='PENDING').length+' pending · 0 settled'):'0/2 wins')+'</span></div>'+(oct9?'<p style="font-size:12px;color:#c2ccdd">Research-only, not verified picks. Reported race placings may appear as UNVERIFIED before settlement. WIN/LOSS/NR is not assigned until independent JCM verification; separate from official accuracy.</p>':'')+rows(watching,'watch');
  }
  function openDetails(kind,index){
-  const r=(kind==='watch'?(date.value==='2026-10-09'?watchOct9:watchData):(date.value==='2026-10-07'?records:date.value==='2026-10-08'?todayRecords:[]))[index];if(!r)return;
+  const r=(kind==='watch'?(date.value==='2026-10-09'?watchForDisplay():watchData):(date.value==='2026-10-07'?records:date.value==='2026-10-08'?todayRecords:[]))[index];if(!r)return;
   overlay.querySelector('#jcm-detail-content').innerHTML='<h2>'+esc(r.horse)+'</h2><p><strong>'+esc(r.time)+' · '+esc(r.course)+'</strong></p><p>Finished: <strong>'+esc(r.place)+'</strong> · '+esc(r.status)+'</p><p>'+esc(r.note)+'</p>'+(r.source?'<p><a href="'+esc(r.source)+'" target="_blank" rel="noopener">View race source ↗</a></p>':'');
   overlay.classList.add('open');overlay.querySelector('.jcm-close').focus();
  }
  for(const panel of [official,watch])panel.addEventListener('click',e=>{const row=e.target.closest('.jcm-row');if(row)openDetails(row.dataset.kind,Number(row.dataset.index))});
- date.addEventListener('change',paint);paint();
+ date.addEventListener('change',paint);paint();loadUnverifiedHistory();
 })();
 </script>
 <script>

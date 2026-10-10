@@ -1,0 +1,9 @@
+{
+  "schema_version": 1,
+  "mode": "historical_results_unverified",
+  "generated_at": null,
+  "records": [],
+  "official_accuracy_eligible": false,
+  "public_picks_enabled": false,
+  "notice": "No independently matched historical results have been imported. This feed must never alter locked selections or official accuracy."
+}

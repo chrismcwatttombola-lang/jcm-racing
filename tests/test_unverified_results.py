@@ -50,7 +50,7 @@ class HistoricalResultsTests(unittest.TestCase):
     def test_each_source_is_specific_race_result(self):
         for item in FEED["records"]:
             with self.subTest(horse=item["horse"]):
-                self.assertRegex(item["source_url"], r"^https://www\\.racingpost\\.com/results/[^/]+/[^/]+/2026-10-09/[0-9]+/$")
+                self.assertRegex(item["source_url"], r"^https://www\.racingpost\.com/results/[^/]+/[^/]+/2026-10-09/[0-9]+/$")
 
     def test_non_runner_not_settled(self):
         item = next(x for x in FEED["records"] if x["horse"] == "Forty Years On")

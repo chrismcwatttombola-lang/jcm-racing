@@ -1,0 +1,18 @@
+name: JCM Unverified Results Regression
+on:
+  pull_request:
+    paths:
+      - 'index.html'
+      - 'data/unverified-results.json'
+      - 'tests/test_unverified_results.py'
+      - '.github/workflows/unverified-results-regression.yml'
+  workflow_dispatch:
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    steps:
+      - uses: actions/checkout@v4
+      - name: Run fail-closed historical results tests
+        run: python3 -m unittest discover -s tests -p 'test_unverified_results.py' -v

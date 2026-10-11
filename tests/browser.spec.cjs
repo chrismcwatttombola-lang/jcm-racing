@@ -1,0 +1,53 @@
+const { test, expect } = require('@playwright/test');
+const URL = 'http://127.0.0.1:8765/#picks';
+async function openOct9(page) {
+  await page.goto(URL);
+  await page.locator('#date').selectOption('2026-10-09');
+  await expect(page.locator('#jcm-watch-panel')).toBeVisible();
+}
+async function snapshotMetrics(page) {
+  return page.locator('.metrics').innerText();
+}
+test('desktop: 8 unverified watchlist entries, popup, unchanged accuracy', async ({ page }) => {
+  await page.goto('http://127.0.0.1:8765/#picks');
+  const before = await snapshotMetrics(page);
+  await page.locator('#date').selectOption('2026-10-09');
+  await expect(page.locator('#jcm-watch-panel .jcm-status.unverified')).toHaveCount(8);
+  await expect(page.locator('#jcm-watch-panel')).toContainText('8 unverified · 0 pending · 0 settled');
+  await expect(page.locator('#jcm-official-panel')).toContainText('No settled picks');
+  await expect.poll(() => snapshotMetrics(page)).toBe(before);
+  await page.locator('#jcm-watch-panel .jcm-row').first().click();
+  await expect(page.locator('#jcm-detail-overlay')).toHaveClass(/open/);
+  await expect(page.locator('#jcm-detail-content')).toContainText('UNVERIFIED');
+  await expect(page.locator('#jcm-detail-content a')).toHaveAttribute('href', /^https:\/\/www\.racingpost\.com\/results\//);
+});
+test('failed feed request retains pending watchlist and accuracy', async ({ page }) => {
+  await page.route('**/data/unverified-results.json', route => route.abort());
+  await page.goto(URL);
+  const before = await snapshotMetrics(page);
+  await page.locator('#date').selectOption('2026-10-09');
+  await expect(page.locator('#jcm-watch-panel .jcm-status.pending')).toHaveCount(8);
+  await expect(page.locator('#jcm-watch-panel .jcm-status.unverified')).toHaveCount(0);
+  await expect.poll(() => snapshotMetrics(page)).toBe(before);
+});
+test('malformed feed fails closed', async ({ page }) => {
+  await page.route('**/data/unverified-results.json', route => route.fulfill({
+    status: 200, contentType: 'application/json',
+    body: JSON.stringify({ schema_version: 1, official_accuracy_eligible: true, public_picks_enabled: false, records: [] })
+  }));
+  await openOct9(page);
+  await expect(page.locator('#jcm-watch-panel .jcm-status.pending')).toHaveCount(8);
+  await expect(page.locator('#jcm-watch-panel .jcm-status.unverified')).toHaveCount(0);
+});
+test('mobile: watchlist readable, popup usable and no horizontal overflow', async ({ browser }) => {
+  const context = await browser.newContext({ viewport: { width: 390, height: 844 }, isMobile: true, hasTouch: true });
+  const page = await context.newPage();
+  await openOct9(page);
+  await expect(page.locator('#jcm-watch-panel .jcm-status.unverified')).toHaveCount(8);
+  await page.locator('#jcm-watch-panel .jcm-row').first().click();
+  await expect(page.locator('#jcm-detail-overlay')).toHaveClass(/open/);
+  await expect(page.locator('#jcm-detail-overlay .jcm-close')).toBeVisible();
+  await page.locator('#jcm-detail-overlay .jcm-close').click();
+  await expect(page.locator('#jcm-detail-overlay')).not.toHaveClass(/open/);
+  await context.close();
+});

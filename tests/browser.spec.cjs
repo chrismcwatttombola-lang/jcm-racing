@@ -61,3 +61,38 @@ test('public status remains fail-closed and publication disabled', async ({ requ
   expect(status.automated_picks_enabled).toBe(false);
   expect(status.mode).toBe('awaiting_verified_data_provider');
 });
+
+test('320px phone keeps unverified watchlist accessible', async ({ browser }) => {
+  const context = await browser.newContext({ viewport: { width: 320, height: 640 }, isMobile: true, hasTouch: true });
+  const page = await context.newPage();
+  await openOct9(page);
+  await expect(page.locator('#jcm-watch-panel .jcm-status.unverified')).toHaveCount(8);
+  const metrics = await page.evaluate(() => ({
+    scroll: document.documentElement.scrollWidth,
+    width: document.documentElement.clientWidth,
+    dateHeight: document.querySelector('#date').getBoundingClientRect().height
+  }));
+  expect(metrics.scroll).toBeLessThanOrEqual(metrics.width);
+  expect(metrics.dateHeight).toBeGreaterThanOrEqual(44);
+  await page.locator('#jcm-watch-panel .jcm-row').first().click();
+  await expect(page.locator('#jcm-detail-content')).toContainText('UNVERIFIED');
+  const modal = await page.locator('#jcm-detail-overlay .jcm-modal').boundingBox();
+  expect(modal).not.toBeNull();
+  expect(modal.x).toBeGreaterThanOrEqual(0);
+  expect(modal.x + modal.width).toBeLessThanOrEqual(321);
+  await page.locator('#jcm-detail-overlay .jcm-close').click();
+  await expect(page.locator('#jcm-detail-overlay')).not.toHaveClass(/open/);
+  await context.close();
+});
+
+test('reduced-motion mobile date navigation preserves displayed metrics', async ({ browser }) => {
+  const context = await browser.newContext({ viewport: { width: 375, height: 812 }, isMobile: true, hasTouch: true, reducedMotion: 'reduce' });
+  const page = await context.newPage();
+  await openOct9(page);
+  const before = await snapshotMetrics(page);
+  await page.locator('#date').selectOption('2026-10-08');
+  await page.locator('#date').selectOption('2026-10-09');
+  await expect(page.locator('#jcm-watch-panel .jcm-status.unverified')).toHaveCount(8);
+  await expect.poll(() => snapshotMetrics(page)).toBe(before);
+  await context.close();
+});

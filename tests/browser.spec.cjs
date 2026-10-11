@@ -44,10 +44,20 @@ test('mobile: watchlist readable, popup usable and no horizontal overflow', asyn
   const page = await context.newPage();
   await openOct9(page);
   await expect(page.locator('#jcm-watch-panel .jcm-status.unverified')).toHaveCount(8);
+  const width = await page.evaluate(() => ({ document: document.documentElement.scrollWidth, viewport: document.documentElement.clientWidth }));
+  expect(width.document, 'Mobile page must not overflow horizontally').toBeLessThanOrEqual(width.viewport);
   await page.locator('#jcm-watch-panel .jcm-row').first().click();
   await expect(page.locator('#jcm-detail-overlay')).toHaveClass(/open/);
   await expect(page.locator('#jcm-detail-overlay .jcm-close')).toBeVisible();
   await page.locator('#jcm-detail-overlay .jcm-close').click();
   await expect(page.locator('#jcm-detail-overlay')).not.toHaveClass(/open/);
   await context.close();
+});
+
+test('public status remains fail-closed and publication disabled', async ({ request }) => {
+  const response = await request.get('http://127.0.0.1:8765/data/status.json');
+  expect(response.ok()).toBeTruthy();
+  const status = await response.json();
+  expect(status.automated_picks_enabled).toBe(false);
+  expect(status.mode).toBe('awaiting_verified_data_provider');
 });

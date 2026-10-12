@@ -501,6 +501,7 @@ const date=document.getElementById('date'),panel=document.getElementById('jcm-of
 if(!date||!panel)return;
 const day='2026-10-12';let detailRows=[],state='loading',cardDetails=[];
 fetch('data/result-card-details-'+day+'.json',{cache:'no-store'}).then(r=>{if(!r.ok)throw Error('Unavailable');return r.json()}).then(d=>{if(d.schema_version===1&&d.date===day&&Array.isArray(d.details))cardDetails=d.details;}).catch(()=>{});
+function raceResultsLink(m,r){try{const u=new URL(m?.results_url);const course=r.course.toLowerCase().replace(/[^a-z0-9]+/g,'-').replace(/^-|-$/g,'');return u.protocol==='https:'&&u.hostname==='www.sportinglife.com'&&new RegExp('^/racing/results/'+r.race_date+'/'+course+'/[0-9]+/[a-z0-9-]+/?$').test(u.pathname)&&!u.search&&!u.hash?u.href:null;}catch(_){return null;}}
 function detailFor(r){const matches=cardDetails.filter(m=>m.date===r.race_date&&m.horse===r.horse&&m.course===r.course&&m.off_time_uk===r.off_time_uk);return matches.length===1?matches[0]:null;}
 function ordinal(v){const n=Number(v);if(!Number.isInteger(n)||n<1)return String(v||'Not supplied');const a=n%100;return n+(a>=11&&a<=13?'th':({1:'st',2:'nd',3:'rd'}[n%10]||'th'));}
 function margin(v){if(typeof v!=='string'||!v.trim())return 'Not supplied';return /^[0-9]*[.]?[0-9]+$/.test(v)&&Number.isFinite(Number(v))?Number(v)+' lengths':v;}
@@ -539,14 +540,15 @@ panel.addEventListener('click',e=>{
  if(!r||!overlay)return;
  const roundup=r.identified_challengers.length?'Chosen for review because '+r.identified_challengers.join(', ')+' were identified as competing threats.':'Selection reason not supplied.';
  const m=detailFor(r),view=resultView(r),accepted=view.css!=='pending'&&m&&m.race_id===r.result_race_id&&m.horse_id===r.result_horse_id&&m.position===r.position&&((r.result_status==='LOSS'&&m.position==='1')||(r.result_status==='WIN'&&Number(m.position)>1))&&(!r.placing||r.placing===ordinal(m.position));
- const card=raceLink(m?.racecard_url,'racecards');
+ const card=raceLink(m?.racecard_url,'racecards'),results=raceResultsLink(m,r);
  const finish=view.css==='pending'?'Pending':accepted?'Finished '+ordinal(m.position)+' of '+m.field_size:String(r.placing??r.position??'Not supplied');
  const stat=(label,value)=>'<div class="jcm-result-stat"><small>'+safe(label)+'</small><strong>'+safe(value)+'</strong></div>';
  const tile=(title,content)=>'<section class="jcm-result-tile"><h3>'+safe(title)+'</h3>'+content+'</section>';
  const winner=stat('Winner',accepted?m.winner:'Not yet available')+stat('Winning margin',accepted?margin(m.winning_margin_lengths):'Not yet available')+(view.css==='loss'?'':stat('Selected horse beaten by',accepted?margin(m.selected_beaten_lengths):'Not yet available'));
  const cardTile=tile('Racecard',card?'<a class="jcm-race-action" href="'+safe(card)+'" target="_blank" rel="noopener">View this racecard ↗</a>':'<p class="jcm-link-unavailable">Exact racecard link not verified.</p>');
+ const resultsTile=tile('Race results',results?'<a class="jcm-race-action" href="'+safe(results)+'" target="_blank" rel="noopener">View this race result ↗</a>':'<p class="jcm-link-unavailable">Exact race result link not yet verified.</p>');
  const videoTile=tile('Race video','<a class="jcm-race-action" href="https://www.sportinglife.com/racing/results" target="_blank" rel="noopener">View race videos here</a><small>Sporting Life login may be required.</small>');
- overlay.querySelector('#jcm-detail-content').innerHTML='<article class="jcm-result-card"><div class="jcm-result-top"><span class="jcm-result-time">'+safe(r.off_time_uk)+'</span><div class="jcm-result-course"><strong>'+safe(r.course)+'</strong><small>12 Oct 2026 · UK time</small></div>'+confidenceBox(r,true)+'</div><div class="jcm-result-summary"><span class="jcm-result-outcome '+view.css+'">'+safe(view.label)+'</span><strong class="jcm-result-finish">'+safe(finish)+'</strong></div><div class="jcm-result-body">'+tile('Selected horse','<h2>'+safe(r.horse)+'</h2><p>'+safe(m?.race_name||'Race details not supplied')+'</p>')+tile('Race winner',winner)+tile('Reason for selection','<p>'+safe(roundup)+'</p>')+cardTile+videoTile+'</div></article>';
+ overlay.querySelector('#jcm-detail-content').innerHTML='<article class="jcm-result-card"><div class="jcm-result-top"><span class="jcm-result-time">'+safe(r.off_time_uk)+'</span><div class="jcm-result-course"><strong>'+safe(r.course)+'</strong><small>12 Oct 2026 · UK time</small></div>'+confidenceBox(r,true)+'</div><div class="jcm-result-summary"><span class="jcm-result-outcome '+view.css+'">'+safe(view.label)+'</span><strong class="jcm-result-finish">'+safe(finish)+'</strong></div><div class="jcm-result-body">'+tile('Selected horse','<h2>'+safe(r.horse)+'</h2><p>'+safe(m?.race_name||'Race details not supplied')+'</p>')+tile('Race winner',winner)+tile('Reason for selection','<p>'+safe(roundup)+'</p>')+cardTile+resultsTile+videoTile+'</div></article>';
  overlay.classList.add('open');overlay.querySelector('.jcm-close').focus();
 });
 date.addEventListener('change',paint);paint();

@@ -290,10 +290,10 @@ test('manual: independent bank, funded reserves, persistence and individual sche
  await page.clock.fastForward(30*60*1000);await expect(page.locator('[data-manual-confirm="1"]')).toBeDisabled();await expect(page.locator('[data-manual-confirm="2"]')).toBeEnabled();
 });
 test('manual: accepted settlement moves only manual bank, missing evidence retains reserve',async({page})=>{
- await page.clock.install({time:new Date('2026-10-12T17:30:00Z')});let settled=false;
+ await page.clock.install({time:new Date('2026-10-12T17:30:00Z')});let settled=false,won=false;
  await page.route('**/data/fictional-account-2026-10-12.json',async route=>{
  const r=await route.fetch(),d=await r.json();if(settled){
- const a=d.rows.find(r=>r.horse==='Floating Market');Object.assign(a,{result_status:'LOSS',position:'1',race_date:d.date,result_date:d.date,result_off_time_uk:a.off_time_uk,result_off_dt:'2026-10-12T19:15:00+01:00',result_course:a.course,result_horse:a.horse,result_source:'THE_RACING_API',verification_status:'PROVIDER_ACCEPTED',result_source_url:'https://api.theracingapi.com/v1/results?start_date=2026-10-12&end_date=2026-10-12',result_retrieved_at:'2026-10-12T18:16:00Z',result_race_id:'rac_123',result_horse_id:'hrs_123',official_accuracy_eligible:false});
+ const a=d.rows.find(r=>r.horse==='Floating Market');Object.assign(a,{result_status:won?'WIN':'LOSS',position:won?'2':'1',race_date:d.date,result_date:d.date,result_off_time_uk:a.off_time_uk,result_off_dt:'2026-10-12T19:15:00+01:00',result_course:a.course,result_horse:a.horse,result_source:'THE_RACING_API',verification_status:'PROVIDER_ACCEPTED',result_source_url:'https://api.theracingapi.com/v1/results?start_date=2026-10-12&end_date=2026-10-12',result_retrieved_at:'2026-10-12T18:16:00Z',result_race_id:'rac_123',result_horse_id:'hrs_123',official_accuracy_eligible:false});
  const b=d.rows.find(r=>r.horse==='Niffler');Object.assign(b,{result_status:'WIN',position:'2',result_source_url:null});
  }await route.fulfill({json:d});
  });
@@ -301,4 +301,9 @@ test('manual: accepted settlement moves only manual bank, missing evidence retai
  settled=true;await page.clock.fastForward(46*60*1000);await page.reload();await page.locator('[data-page="dummy-account"]').click();await page.locator('[data-account-mode="manual"]').click();
  await expect(page.locator('[data-manual-balance]')).toHaveText('£4,000.00');await expect(page.locator('[data-manual-reserved]')).toHaveText('£500.00');await expect(page.locator('[data-manual-available]')).toHaveText('£3,500.00');
  await expect(page.locator('[data-manual-row="1"]')).toContainText('Result: PENDING');
+ won=true;await page.reload();await page.locator('[data-page="dummy-account"]').click();await page.locator('[data-account-mode="manual"]').click();
+ await expect(page.locator('[data-manual-balance]')).toHaveText('£5,413.04');await expect(page.locator('[data-manual-available]')).toHaveText('£4,913.04');
+ await confirmManual(page,1,'5400');await expect(page.locator('[data-manual-available]')).toHaveText('£13.04');
+ await page.reload();await page.locator('[data-page="dummy-account"]').click();await page.locator('[data-account-mode="manual"]').click();
+ await expect(page.locator('[data-manual-balance]')).toHaveText('£5,413.04');await expect(page.locator('[data-manual-reserved]')).toHaveText('£5,400.00');
 });

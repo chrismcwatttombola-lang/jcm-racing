@@ -263,3 +263,47 @@ test('provider identity mismatch remains pending',async({page,request})=>{
  await page.locator('[data-page="picks"]').click();await page.locator('#date').selectOption('2026-10-12');
  await expect(page.locator('#jcm-official-panel .jcm-accuracy')).toContainText('70% success · 7/10 settled');
  });
+
+async function manualView(page){
+ await page.goto('http://127.0.0.1:8765/#hub');await page.locator('[data-page="dummy-account"]').click();
+ await page.locator('[data-account-mode="manual"]').click();await expect(page.locator('[data-manual-row]')).toHaveCount(4);
+}
+async function confirmManual(page,i,amount){
+ await page.locator('[data-manual-include="'+i+'"]').check();await page.locator('[data-manual-amount="'+i+'"]').fill(amount);await page.locator('[data-manual-confirm="'+i+'"]').click();
+}
+test('manual: independent bank, funded reserves, persistence and individual scheduled locks',async({page})=>{
+ await page.setViewportSize({width:390,height:664});await page.clock.install({time:new Date('2026-10-12T17:30:00Z')});
+ await manualView(page);await expect(page.locator('#jcm-manual-bank')).toContainText('£5,000.00');
+ await expect(page.locator('[data-manual-include]:checked')).toHaveCount(0);await expect(page.locator('#jcm-detail-content')).not.toContainText('Wadooda');
+ await page.locator('[data-manual-include="0"]').check();await page.locator('[data-manual-amount="0"]').fill('1000');
+ await expect(page.locator('[data-manual-reserved]')).toHaveText('£0.00');await page.locator('[data-manual-confirm="0"]').click();
+ await expect(page.locator('[data-manual-reserved]')).toHaveText('£1,000.00');await expect(page.locator('[data-manual-available]')).toHaveText('£4,000.00');
+ await confirmManual(page,1,'4500');await expect(page.locator('#jcm-manual-message')).toContainText('Insufficient available balance');await expect(page.locator('[data-manual-reserved]')).toHaveText('£1,000.00');
+ await page.locator('[data-manual-include="0"]').uncheck();await page.locator('[data-manual-confirm="0"]').click();await expect(page.locator('[data-manual-available]')).toHaveText('£5,000.00');
+ await confirmManual(page,0,'500');await confirmManual(page,1,'1000');
+ await page.locator('[data-account-mode="fixed"]').click();await expect(page.locator('#jcm-account-budget')).toHaveValue('1000.00');
+ await page.locator('[data-account-mode="manual"]').click();await expect(page.locator('[data-manual-reserved]')).toHaveText('£1,500.00');
+ await page.reload();await page.locator('[data-page="dummy-account"]').click();await expect(page.locator('[data-account-mode="fixed"]')).toHaveAttribute('aria-selected','true');
+ await page.locator('[data-account-mode="manual"]').click();await expect(page.locator('[data-manual-amount="0"]')).toHaveValue('500');
+ await page.clock.fastForward(45*60*1000+10);await expect(page.locator('[data-manual-confirm="0"]')).toBeDisabled();await expect(page.locator('[data-manual-confirm="1"]')).toBeEnabled();
+ await confirmManual(page,1,'4000');await expect(page.locator('[data-manual-reserved]')).toHaveText('£4,500.00');
+ await page.clock.fastForward(30*60*1000);await expect(page.locator('[data-manual-confirm="1"]')).toBeDisabled();await expect(page.locator('[data-manual-confirm="2"]')).toBeEnabled();
+});
+test('manual: accepted settlement moves only manual bank, missing evidence retains reserve',async({page})=>{
+ await page.clock.install({time:new Date('2026-10-12T17:30:00Z')});let settled=false,won=false;
+ await page.route('**/data/fictional-account-2026-10-12.json',async route=>{
+ const r=await route.fetch(),d=await r.json();if(settled){
+ const a=d.rows.find(r=>r.horse==='Floating Market');Object.assign(a,{result_status:won?'WIN':'LOSS',position:won?'2':'1',race_date:d.date,result_date:d.date,result_off_time_uk:a.off_time_uk,result_off_dt:'2026-10-12T19:15:00+01:00',result_course:a.course,result_horse:a.horse,result_source:'THE_RACING_API',verification_status:'PROVIDER_ACCEPTED',result_source_url:'https://api.theracingapi.com/v1/results?start_date=2026-10-12&end_date=2026-10-12',result_retrieved_at:'2026-10-12T18:16:00Z',result_race_id:'rac_123',result_horse_id:'hrs_123',official_accuracy_eligible:false});
+ const b=d.rows.find(r=>r.horse==='Niffler');Object.assign(b,{result_status:'WIN',position:'2',result_source_url:null});
+ }await route.fulfill({json:d});
+ });
+ await manualView(page);await confirmManual(page,0,'1000');await confirmManual(page,1,'500');
+ settled=true;await page.clock.fastForward(46*60*1000);await page.reload();await page.locator('[data-page="dummy-account"]').click();await page.locator('[data-account-mode="manual"]').click();
+ await expect(page.locator('[data-manual-balance]')).toHaveText('£4,000.00');await expect(page.locator('[data-manual-reserved]')).toHaveText('£500.00');await expect(page.locator('[data-manual-available]')).toHaveText('£3,500.00');
+ await expect(page.locator('[data-manual-row="1"]')).toContainText('Result: PENDING');
+ won=true;await page.reload();await page.locator('[data-page="dummy-account"]').click();await page.locator('[data-account-mode="manual"]').click();
+ await expect(page.locator('[data-manual-balance]')).toHaveText('£5,413.04');await expect(page.locator('[data-manual-available]')).toHaveText('£4,913.04');
+ await confirmManual(page,1,'5400');await expect(page.locator('[data-manual-available]')).toHaveText('£13.04');
+ await page.reload();await page.locator('[data-page="dummy-account"]').click();await page.locator('[data-account-mode="manual"]').click();
+ await expect(page.locator('[data-manual-balance]')).toHaveText('£5,413.04');await expect(page.locator('[data-manual-reserved]')).toHaveText('£5,400.00');
+});

@@ -551,7 +551,7 @@ panel.addEventListener('click',e=>{
  const roundup=r.identified_challengers.length?'Chosen for review because '+r.identified_challengers.join(', ')+' were identified as competing threats.':'Selection reason not supplied.';
  const m=detailFor(r),view=resultView(r),accepted=view.css!=='pending'&&m&&m.race_id===r.result_race_id&&m.horse_id===r.result_horse_id&&m.position===r.position&&((r.result_status==='LOSS'&&m.position==='1')||(r.result_status==='WIN'&&Number(m.position)>1))&&(!r.placing||r.placing===ordinal(m.position));
  const card=racecardLink(m,r),results=raceResultsLink(m,r);
- const finish=view.css==='pending'?'Pending':accepted?'Finished '+ordinal(m.position)+' of '+m.field_size:String(r.placing??r.position??'Not supplied');
+ const finish=view.css==='pending'?'Pending':accepted?'Finished '+ordinal(m.position)+(m.dead_heat_place?' (joint)':'')+' of '+m.field_size:String(r.placing??r.position??'Not supplied');
  const stat=(label,value)=>'<div class="jcm-result-stat"><small>'+safe(label)+'</small><strong>'+safe(value)+'</strong></div>';
  const tile=(title,content)=>'<section class="jcm-result-tile"><h3>'+safe(title)+'</h3>'+content+'</section>';
  const winner=stat('Winner',accepted?m.winner:'Not yet available')+stat('Winning margin',accepted?margin(m.winning_margin_lengths):'Not yet available')+(view.css==='loss'?'':stat('Selected horse beaten by',accepted?margin(m.selected_beaten_lengths):'Not yet available'));

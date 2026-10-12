@@ -219,7 +219,7 @@ test('today displays supplied Betfair outcomes without changing official accurac
  await expect(page.locator('[data-research-index]').filter({hasText:'Methgal'})).toContainText('Pending');
  await success.click();
  await expect(page.locator('#jcm-detail-content')).toContainText('2nd');
- await expect(page.locator('#jcm-detail-content a').filter({hasText:'Result source'})).toHaveAttribute('href',rows[0].result_source_url);
+ await expect(page.locator('#jcm-detail-content')).not.toContainText('Result source');
  expect(rows.every(r=>r.official_accuracy_eligible===false)).toBeTruthy();
 });
 
@@ -316,7 +316,7 @@ test('result card shows selected outcome, finishing place, winner, margins and e
  await expect(page.locator('.jcm-result-card')).toContainText('Finished 1st of 8');await expect(page.locator('.jcm-result-card')).toContainText('1.5 lengths');
  await expect(page.locator('.jcm-result-outcome.loss')).toHaveText('Horse won');
  await expect(page.getByRole('link',{name:'View this racecard'})).toHaveAttribute('href','https://www.racingpost.com/racecards/1079/kempton-aw/2026-10-12/928657/');
- await expect(page.locator('.jcm-result-card')).toContainText('replay link not verified');
+ await expect(page.getByRole('link',{name:'View race videos here'})).toHaveAttribute('href','https://www.racingpost.com/video/');
  const modal=await page.locator('.jcm-modal').boundingBox();expect(modal.width).toBeGreaterThanOrEqual(366);
  await page.locator('.jcm-close').first().click();await page.locator('[data-research-index]').filter({hasText:'Niffler'}).click();
  await expect(page.getByRole('link',{name:'View this racecard'})).toHaveAttribute('href','https://www.racingpost.com/racecards/1079/kempton-aw/2026-10-12/928662/');
@@ -355,6 +355,6 @@ test('mobile result tiles group confidence, finish and winner details',async({pa
  const winner=page.locator('.jcm-result-tile').filter({has:page.getByRole('heading',{name:'Race winner',exact:true})});
  await expect(winner).toContainText('That Darn Cantor');await expect(winner).toContainText('2.25 lengths');
  await expect(page.locator('.jcm-result-summary')).toContainText('Horse lost');await expect(page.locator('.jcm-result-summary')).toContainText('Finished 3rd of 6');
- await expect(page.locator('.jcm-result-tile h3')).toHaveText(['Selected horse','Race winner','Reason for selection','Racecard','Race video','Result source']);
- await expect(page.locator('.jcm-result-tile').filter({has:page.getByRole('heading',{name:'Race video',exact:true})})).toContainText('Racing Post');
+ await expect(page.locator('.jcm-result-tile h3')).toHaveText(['Selected horse','Race winner','Reason for selection','Racecard','Race video']);
+ await expect(page.getByRole('link',{name:'View race videos here'})).toHaveAttribute('href','https://www.racingpost.com/video/');
 });

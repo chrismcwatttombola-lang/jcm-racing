@@ -134,7 +134,7 @@ test('today retains all 15 horses, confidence and chronological order; rated tot
  await page.locator('#jcm-official-panel .jcm-row').filter({hasText:'Kykorock'}).click();
  await expect(page.locator('#jcm-detail-content .jcm-confidence.high')).toContainText('85%');
  await page.locator('#jcm-detail-overlay .jcm-close').click();
- await expect(page.locator('#jcm-rated-ratios')).toContainText('4 / 4');
+ await expect(page.locator('#jcm-rated-ratios')).toContainText('4 / 3');
 });
 
 
@@ -234,7 +234,7 @@ test('accepted provider results populate picks, rating groups and fictional sett
  await page.locator('#jcm-detail-overlay .jcm-close').click();
  await expect.poll(()=>page.evaluate(()=>window.jcmRatedCounts?true:false)).toBeTruthy();
  const counts=await page.evaluate(async()=>window.jcmRatedCounts([await (await fetch('data/competition-research-2026-10-12.json')).json()]));
- expect(counts.high).toEqual({win:4,loss:1});expect(counts.medium).toEqual({win:6,loss:4});
+ expect(counts.high).toEqual({win:4,loss:1});expect(counts.medium).toEqual({win:4,loss:3});expect(counts.unbanded).toEqual({win:2,loss:1});
  await page.evaluate(()=>window.jcmOpenDummyAccount());
  await expect(page.locator('#jcm-detail-content')).toContainText('One Of The Boys');
  await expect(page.locator('#jcm-detail-content')).toContainText('£4,905.54');
@@ -386,4 +386,12 @@ test('mobile result tiles group confidence, finish and winner details',async({pa
  for(const horse of ["Rory's Royale",'Edmond Halley']){const row=page.locator('[data-research-index]').filter({hasText:horse});await expect(row).toContainText('Horse lost');await row.click();await expect(page.locator('.jcm-result-summary')).toContainText('Finished 3rd');await page.locator('#jcm-detail-overlay .jcm-close').click();}
  const d=await(await request.get('http://127.0.0.1:8765/data/fictional-account-2026-10-12.json')).json();expect(d.rows.filter(r=>r.result_status==='WIN')).toHaveLength(10);expect(d.rows.filter(r=>r.result_status==='LOSS')).toHaveLength(5);expect(d.rows.some(r=>r.result_status==='PENDING')).toBe(false);
  await page.evaluate(()=>window.jcmOpenDummyAccount());await expect(page.locator('#jcm-detail-content')).toContainText('£4,905.54');await expect(page.locator('#jcm-detail-content')).toContainText('all 0 outstanding');
+ });
+
+ test('confidence bands use 80 and 70 boundaries without a Low rating',async({page,request})=>{
+ const d=await(await request.get('http://127.0.0.1:8765/data/competition-research-2026-10-12.json')).json();
+ for(const [i,p] of [80,79,70,69].entries())d.high_competition[i].competition_confidence_percent=p;
+ await page.route('**/data/competition-research-2026-10-12.json',route=>route.fulfill({json:d}));await page.goto(URL);await page.locator('#date').selectOption('2026-10-12');
+ for(const [i,tier] of ['high','medium','medium','unbanded'].entries()){const row=page.locator('[data-research-index]').filter({hasText:d.high_competition[i].horse});await expect(row).toHaveClass(new RegExp('jcm-rating-'+tier));await row.click();await expect(page.locator('.jcm-confidence')).not.toContainText('Low');await page.locator('#jcm-detail-overlay .jcm-close').click();}
+ await page.evaluate(()=>window.jcmOpenRatedPerformance());await expect(page.locator('.jcm-rated-table tbody tr')).toHaveCount(2);await expect(page.locator('.jcm-rated-table')).not.toContainText('Low');
  });

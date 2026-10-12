@@ -399,7 +399,7 @@ sel.addEventListener('change',renderMarket);renderMarket();
 (function(){
  const logo=document.querySelector('.identity img');
  const hub=document.createElement('div');hub.id='jcm-hub';hub.setAttribute('aria-label','JCM Racing Hub');
- hub.innerHTML='<div class="jcm-hub-inner"><div class="jcm-hub-top">'+(logo?'<img class="jcm-hub-mark" alt="JCM" src="'+logo.getAttribute('src')+'">':'')+'<div><div class="jcm-hub-eyebrow">JCM RACING</div><h1 class="jcm-hub-title">Your racing hub</h1></div></div><p class="jcm-hub-sub">Better, informed. Your racing research tools, all in one place.</p><div class="jcm-hub-grid"><button class="jcm-hub-tile" data-page="picks"><span class="jcm-hub-icon">🎯</span><strong>False Favourites</strong><span>Daily picks, watchlist and verified results.</span><span class="jcm-hub-state">OPEN DASHBOARD ↗</span></button><button type="button" class="jcm-hub-tile" data-page="rated-performance"><span class="jcm-hub-icon">📊</span><strong>Rated Performance</strong><span id="jcm-rated-ratios" aria-live="polite">Loading Win / Loss ratios…</span><span class="jcm-hub-state">VIEW WIN / LOSS ↗</span></button></div><p class="jcm-hub-foot">JCM Favourite Vulnerability · Research, not betting advice</p></div>';
+ hub.innerHTML='<div class="jcm-hub-inner"><div class="jcm-hub-top">'+(logo?'<img class="jcm-hub-mark" alt="JCM" src="'+logo.getAttribute('src')+'">':'')+'<div><div class="jcm-hub-eyebrow">JCM RACING</div><h1 class="jcm-hub-title">Your racing hub</h1></div></div><p class="jcm-hub-sub">Better, informed. Your racing research tools, all in one place.</p><div class="jcm-hub-grid"><button class="jcm-hub-tile" data-page="picks"><span class="jcm-hub-icon">🎯</span><strong>False Favourites</strong><span>Daily picks, watchlist and verified results.</span><span class="jcm-hub-state">OPEN DASHBOARD ↗</span></button><button type="button" class="jcm-hub-tile" data-page="dummy-account"><span class="jcm-hub-icon">💷</span><strong>Dummy Account</strong><span>£5,000 fictional opening bank · £1,000 daily liability</span><span class="jcm-hub-state">VIEW ACCOUNT STATEMENT ↗</span></button><button type="button" class="jcm-hub-tile" data-page="rated-performance"><span class="jcm-hub-icon">📊</span><strong>Rated Performance</strong><span id="jcm-rated-ratios" aria-live="polite">Loading Win / Loss ratios…</span><span class="jcm-hub-state">VIEW WIN / LOSS ↗</span></button></div><p class="jcm-hub-foot">JCM Favourite Vulnerability · Research, not betting advice</p></div>';
  document.body.append(hub);
  const head=document.querySelector('header .head');
  const home=document.createElement('button');home.type='button';home.className='jcm-home-link';home.innerHTML='<svg width="21" height="21" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m3 10 9-7 9 7"/><path d="M5 9v12h14V9"/><path d="M9 21v-8h6v8"/></svg>';home.setAttribute('aria-label','Return to JCM Hub');
@@ -413,6 +413,7 @@ sel.addEventListener('change',renderMarket);renderMarket();
   const tile=e.target.closest('[data-page]');if(!tile)return;
   const page=tile.dataset.page;
   if(page==='picks')navigate('picks',true);
+  else if(page==='dummy-account')window.jcmOpenDummyAccount?.();
   else if(page==='rated-performance')window.jcmOpenRatedPerformance?.();
   else if(page==='odds')alert('Live Odds Tracker is in development. Market-data access and alert criteria must be validated before launch.');
   else if(page==='performance')alert('Performance analytics is planned. Official picks and Watchlist will remain separately measured.');
@@ -553,6 +554,26 @@ async function refresh(){
  draw();
 }
 refresh();window.addEventListener('focus',refresh);setInterval(refresh,300000);
+})();
+</script>
+
+<script>
+/* Fictional account presentation only. No invented odds or settled transactions. */
+(function(){
+function safe(v){return String(v??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));}
+window.jcmOpenDummyAccount=async function(){
+ const overlay=document.getElementById('jcm-detail-overlay');if(!overlay)return;
+ const node=overlay.querySelector('#jcm-detail-content');
+ const header='<h2>Dummy Account</h2><p>Fictional opening bank: <strong>£5,000.00</strong></p><p>Daily liability budget: <strong>£1,000.00</strong>, split evenly across the published horses. Profits and losses stay in the account.</p>';
+ node.innerHTML=header+'<p>Loading statement…</p>';overlay.classList.add('open');overlay.querySelector('.jcm-close').focus();
+ try{
+ const response=await fetch('data/competition-research-2026-10-12.json',{cache:'no-store'});if(!response.ok)throw Error('Unavailable');
+ const d=await response.json();if(d.date!=='2026-10-12'||!Array.isArray(d.high_competition)||!Array.isArray(d.competition_watchlist))throw Error('Invalid');
+ const rows=[...d.high_competition,...d.competition_watchlist].sort((a,b)=>a.off_time_uk.localeCompare(b.off_time_uk));
+ const liability=rows.length?1000/rows.length:0;
+ node.innerHTML=header+'<h3>Account statement</h3><table class="jcm-rated-table"><thead><tr><th>Movement</th><th>Amount</th><th>Balance</th></tr></thead><tbody><tr><td>Opening bank · 12 Oct 2026</td><td>+£5,000.00</td><td>£5,000.00</td></tr></tbody></table><p>No fictional race transactions booked yet. Publication-time lay odds and exchange commission have not been recorded; daily profit and closing balance are awaiting settlement.</p><h3>12 October horses</h3><p>Indicative liability per horse: £'+liability.toFixed(2)+'. Penny rounding will keep the total at £1,000.</p>'+rows.map(r=>'<div class="jcm-ft-card"><div><strong>'+safe(r.horse)+'</strong><div class="jcm-ft-where">'+safe(r.off_time_uk)+' · '+safe(r.course)+'</div><div class="jcm-ft-where">Publication lay odds: unavailable<br>Stake / potential profit: awaiting odds</div></div></div>').join('');
+ }catch(_){node.innerHTML=header+'<p>INSUFFICIENT VERIFIED DATA — horse list unavailable. No transactions booked.</p>';}
+};
 })();
 </script>
 </body></html>

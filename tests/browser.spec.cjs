@@ -355,7 +355,8 @@ test('mobile result tiles group confidence, finish and winner details',async({pa
  const winner=page.locator('.jcm-result-tile').filter({has:page.getByRole('heading',{name:'Race winner',exact:true})});
  await expect(winner).toContainText('That Darn Cantor');await expect(winner).toContainText('2.25 lengths');
  await expect(page.locator('.jcm-result-summary')).toContainText('Horse lost');await expect(page.locator('.jcm-result-summary')).toContainText('Finished 3rd of 6');
- await expect(page.locator('.jcm-result-tile h3')).toHaveText(['Selected horse','Race winner','Reason for selection','Racecard','Race video']);
+ await expect(page.locator('.jcm-result-tile h3')).toHaveText(['Selected horse','Race winner','Reason for selection','Racecard','Race results','Race video']);
+ await expect(page.getByRole('link',{name:'View this race result'})).toHaveAttribute('href','https://www.sportinglife.com/racing/results/2026-10-12/kempton/942994/try-unibets-superboosts-handicap');
  await expect(page.getByRole('link',{name:'View race videos here'})).toHaveAttribute('href','https://www.sportinglife.com/racing/results');
 });
 

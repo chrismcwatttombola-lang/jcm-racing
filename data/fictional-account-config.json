@@ -1,0 +1,20 @@
+{
+  "schema_version": 1,
+  "fictional_only": true,
+  "opening_bank_gbp": 5000,
+  "daily_liability_budget_gbp": 1000,
+  "commission_rate": 0.05,
+  "commission_basis": "Simulation assumption: standard Rewards package, 5% of positive net market winnings; zero for losing markets",
+  "commission_source_url": "https://www.sportinglife.com/free-bets/guides/betfair-exchange-education/how-does-commission-work",
+  "quote_policy": {
+    "initial_date": "2026-10-12",
+    "initial_basis": "First successfully verified current pre-race Betfair Exchange lay quote after user request",
+    "future_basis": "First successfully verified pre-race Betfair Exchange lay quote after each selection is agreed",
+    "lock_first_quote": true,
+    "allow_in_play": false,
+    "allow_sp_substitution": false
+  },
+  "capture_status": "BLOCKED_BETFAIR_MARKET_ACCESS",
+  "automated_quote_capture_enabled": false,
+  "todays_quotes_captured": 0
+}

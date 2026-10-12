@@ -129,7 +129,7 @@ test('wrong date, non-Betfair source, outcome mismatch and duplicate evidence st
 test('today retains all 15 horses, confidence and chronological order; rated totals include accepted outcomes', async ({page}) => {
  await page.goto(URL);await page.locator('#date').selectOption('2026-10-12');
  await expect(page.locator('#jcm-official-panel .jcm-row')).toHaveCount(15);
- await expect(page.locator('#jcm-official-panel .jcm-status.pending')).toHaveCount(2);
+ await expect(page.locator('#jcm-official-panel .jcm-status.pending')).toHaveCount(0);
  const times=await page.locator('#jcm-official-panel .jcm-time').allTextContents();expect(times).toEqual([...times].sort());
  await page.locator('#jcm-official-panel .jcm-row').filter({hasText:'Kykorock'}).click();
  await expect(page.locator('#jcm-detail-content .jcm-confidence.high')).toContainText('85%');

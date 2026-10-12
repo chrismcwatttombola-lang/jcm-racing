@@ -481,6 +481,16 @@ window.jcmAcceptedResult = function(r) {
  let u;try{u=new URL(r.result_source_url)}catch(_){return false;}
  if(u.protocol!=='https:')return false;
  if((u.hostname==='betfair.com'||u.hostname.endsWith('.betfair.com'))&&u.pathname.startsWith('/horse-racing/results/'))return true;
+ if(u.hostname==='www.sportinglife.com'){
+  const course=(r.course||'').toLowerCase().replace(/[^a-z0-9]+/g,'-').replace(/^-|-$/g,'');
+  const path=u.pathname.match(/^\/racing\/results\/(\d{4}-\d{2}-\d{2})\/([a-z0-9-]+)\/(\d+)\/[a-z0-9-]+\/?$/);
+  const t=Date.parse(r.result_retrieved_at),off=Date.parse(r.result_off_dt);
+  return !!path&&!u.search&&!u.hash&&path[1]===r.race_date&&path[2]===course&&path[3]===r.result_website_race_id
+   &&r.result_source==='SPORTING_LIFE'&&r.verification_status==='WEBSITE_CONFIRMED'
+   &&r.result_date===r.race_date&&r.result_off_time_uk===r.off_time_uk&&r.result_horse===r.horse&&r.result_course===r.course
+   &&Number.isFinite(t)&&Number.isFinite(off)&&t>=off&&t<=Date.now()&&r.official_accuracy_eligible===false
+   &&((r.result_status==='LOSS'&&r.position==='1')||(r.result_status==='WIN'&&/^[2-9]\d*$|^1\d+$/.test(r.position))||(r.result_status==='NR'&&r.position==='NR'));
+ }
  if(u.hostname!=='api.theracingapi.com')return false;
  const dated=u.pathname==='/v1/results'&&u.searchParams.get('start_date')===r.race_date&&u.searchParams.get('end_date')===r.race_date;
  const individual=/^rac_\d+$/.test(r.result_race_id||'')&&u.pathname==='/v1/results/'+r.result_race_id&&!u.search&&!u.hash;
@@ -505,7 +515,7 @@ function raceResultsLink(m,r){try{const u=new URL(m?.results_url);const course=r
 function detailFor(r){const matches=cardDetails.filter(m=>m.date===r.race_date&&m.horse===r.horse&&m.course===r.course&&m.off_time_uk===r.off_time_uk);return matches.length===1?matches[0]:null;}
 function ordinal(v){const n=Number(v);if(!Number.isInteger(n)||n<1)return String(v||'Not supplied');const a=n%100;return n+(a>=11&&a<=13?'th':({1:'st',2:'nd',3:'rd'}[n%10]||'th'));}
 function margin(v){if(typeof v!=='string'||!v.trim())return 'Not supplied';return /^[0-9]*[.]?[0-9]+$/.test(v)&&Number.isFinite(Number(v))?Number(v)+' lengths':v;}
-function raceLink(v,kind){try{const u=new URL(v);return u.protocol==='https:'&&u.hostname==='www.racingpost.com'&&new RegExp('^/'+kind+'/[0-9]+/[^/]+/'+day+'/[0-9]+/?$').test(u.pathname)&&!u.search&&!u.hash?u.href:null;}catch(_){return null;}}
+function racecardLink(m,r){try{const u=new URL(m?.racecard_url);const course=r.course.toLowerCase().replace(/[^a-z0-9]+/g,'-').replace(/^-|-$/g,'');return u.protocol==='https:'&&u.hostname==='www.sportinglife.com'&&new RegExp('^/racing/racecards/'+r.race_date+'/'+course+'/racecard/[0-9]+/[a-z0-9-]+/?$').test(u.pathname)&&(!u.search||u.search==='?dcmp=SL_PLUS_CARDS')&&!u.hash?u.href:null;}catch(_){return null;}}
 function safe(v){return String(v==null?'':v).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));}
 function confidenceTier(r){
  const p=r.competition_confidence_percent;
@@ -540,7 +550,7 @@ panel.addEventListener('click',e=>{
  if(!r||!overlay)return;
  const roundup=r.identified_challengers.length?'Chosen for review because '+r.identified_challengers.join(', ')+' were identified as competing threats.':'Selection reason not supplied.';
  const m=detailFor(r),view=resultView(r),accepted=view.css!=='pending'&&m&&m.race_id===r.result_race_id&&m.horse_id===r.result_horse_id&&m.position===r.position&&((r.result_status==='LOSS'&&m.position==='1')||(r.result_status==='WIN'&&Number(m.position)>1))&&(!r.placing||r.placing===ordinal(m.position));
- const card=raceLink(m?.racecard_url,'racecards'),results=raceResultsLink(m,r);
+ const card=racecardLink(m,r),results=raceResultsLink(m,r);
  const finish=view.css==='pending'?'Pending':accepted?'Finished '+ordinal(m.position)+' of '+m.field_size:String(r.placing??r.position??'Not supplied');
  const stat=(label,value)=>'<div class="jcm-result-stat"><small>'+safe(label)+'</small><strong>'+safe(value)+'</strong></div>';
  const tile=(title,content)=>'<section class="jcm-result-tile"><h3>'+safe(title)+'</h3>'+content+'</section>';

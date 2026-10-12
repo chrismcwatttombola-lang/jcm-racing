@@ -315,11 +315,11 @@ test('result card shows selected outcome, finishing place, winner, margins and e
  await page.locator('[data-research-index]').filter({hasText:'Wadooda'}).click();
  await expect(page.locator('.jcm-result-card')).toContainText('Finished 1st of 8');await expect(page.locator('.jcm-result-card')).toContainText('1.5 lengths');
  await expect(page.locator('.jcm-result-outcome.loss')).toHaveText('Horse won');
- await expect(page.getByRole('link',{name:'View this racecard'})).toHaveAttribute('href','https://www.racingpost.com/racecards/1079/kempton-aw/2026-10-12/928657/');
+ await expect(page.getByRole('link',{name:'View this racecard'})).toHaveAttribute('href','https://www.sportinglife.com/racing/racecards/2026-10-12/kempton/racecard/942991/unibet-supports-safer-gambling-maiden-fillies-stakes-gbb-race?dcmp=SL_PLUS_CARDS');
  await expect(page.getByRole('link',{name:'View race videos here'})).toHaveAttribute('href','https://www.sportinglife.com/racing/results');
  const modal=await page.locator('.jcm-modal').boundingBox();expect(modal.width).toBeGreaterThanOrEqual(366);
  await page.locator('.jcm-close').first().click();await page.locator('[data-research-index]').filter({hasText:'Niffler'}).click();
- await expect(page.getByRole('link',{name:'View this racecard'})).toHaveAttribute('href','https://www.racingpost.com/racecards/1079/kempton-aw/2026-10-12/928662/');
+ await expect(page.getByRole('link',{name:'View this racecard'})).toHaveAttribute('href','https://www.sportinglife.com/racing/racecards/2026-10-12/kempton/racecard/942995/try-unibets-new-improved-acca-boosts-handicap?dcmp=SL_PLUS_CARDS');
  await expect(page.locator('.jcm-result-card')).not.toContainText('https://www.racingpost.com/racecards/2026-10-12/');
 });
 test('individual provider URL must match result race ID',async({page,request})=>{
@@ -370,4 +370,13 @@ test('mobile result tiles group confidence, finish and winner details',async({pa
  const r=a.rows.find(r=>r.horse==='Niffler');expect(r.result_status).toBe('LOSS');expect(r.official_accuracy_eligible).toBe(false);
  expect(r.result_race_id).toBe('rac_32300727667');expect(r.result_horse_id).toBe('hrs_62779360');
  expect(await page.evaluate(r=>window.jcmAcceptedResult({...r,race_date:'2026-10-12'}),r)).toBe(true);
+ });
+
+ test('Sporting Life fallback requires matching race identity and completed evidence',async({page,request})=>{
+ await page.goto(URL);
+ const d=await(await request.get('http://127.0.0.1:8765/data/competition-research-2026-10-12.json')).json();
+ const base=d.high_competition.find(r=>r.horse==='Floating Market');
+ const r={...base,result_source:'SPORTING_LIFE',verification_status:'WEBSITE_CONFIRMED',result_website_race_id:'942994',result_source_url:'https://www.sportinglife.com/racing/results/2026-10-12/kempton/942994/try-unibets-superboosts-handicap'};
+ expect(await page.evaluate(r=>window.jcmAcceptedResult(r),r)).toBe(true);
+ for(const bad of [{result_website_race_id:'999'},{result_horse:'Different horse'},{result_date:'2026-10-11'},{verification_status:'UNVERIFIED'},{official_accuracy_eligible:true},{position:'UNKNOWN'},{result_source_url:r.result_source_url.replace('/kempton/','/newcastle/')}])expect(await page.evaluate(r=>window.jcmAcceptedResult(r),{...r,...bad})).toBe(false);
  });

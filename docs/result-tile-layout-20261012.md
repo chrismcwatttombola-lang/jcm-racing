@@ -7,3 +7,7 @@ Latest update: the Race video tile now always opens https://www.sportinglife.com
 
 
 Added Race results tile between Racecard and Race video. Today's 15 picks have race-specific Sporting Life result URLs checked against the dated meeting listing and race identity. URL validation restricts the destination to Sporting Life results with matching date and course. Missing or invalid links display an unavailable message. This adds navigation only; outcome, settlement and accuracy logic are unchanged.
+
+
+## Sporting Life navigation and fallback — 12 October 2026
+User requests uniform Sporting Life racecards, race results and video navigation. All 15 current racecard destinations were retrieved from the matching Sporting Life race-result pages. Racing API Pro remains PRIMARY; Sporting Life is the accepted fallback when API evidence is unavailable. Accept only completed results with exact date, scheduled London time, course and selected horse match; record result_source=SPORTING_LIFE, verification_status=WEBSITE_CONFIRMED, actual result_source_url/retrieved_at, result_website_race_id matching the URL, and the normal matching evidence fields. Preserve existing provider race/horse IDs where available. Missing, conflicting or unknown evidence stays Pending. Sporting Life acceptance does not confer official accuracy: official_accuracy_eligible=false remains mandatory. No existing results are reclassified by this change.

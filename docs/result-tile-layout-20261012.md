@@ -4,3 +4,6 @@ Follow-up: removed visible Result source tile, retaining underlying evidence. Wh
 
 
 Latest update: the Race video tile now always opens https://www.sportinglife.com/racing/results with caption “View race videos here” and a login note, as requested. This supersedes the Racing Post video destination; racecard links retain their existing destinations. No race-specific replay is claimed.
+
+
+Added Race results tile between Racecard and Race video. Today's 15 picks have race-specific Sporting Life result URLs checked against the dated meeting listing and race identity. URL validation restricts the destination to Sporting Life results with matching date and course. Missing or invalid links display an unavailable message. This adds navigation only; outcome, settlement and accuracy logic are unchanged.

@@ -340,3 +340,21 @@ test('phone header: home, date and logo share one row with compact top clearance
  expect(await page.evaluate(()=>document.documentElement.scrollWidth)).toBeLessThanOrEqual(width);
  }
 });
+
+test('mobile result tiles group confidence, finish and winner details',async({page})=>{
+ await page.setViewportSize({width:390,height:844});await page.goto(URL);await page.locator('#date').selectOption('2026-10-12');
+ await page.waitForTimeout(300);
+ await page.locator('[data-research-index]').filter({hasText:'Wadooda'}).click();
+ await expect(page.locator('.jcm-result-top .jcm-confidence')).toContainText('Confidence');
+ await expect(page.locator('.jcm-result-top')).not.toContainText('Confidence rating');
+ await expect(page.locator('.jcm-result-summary')).toContainText('Finished 1st of 8');
+ await expect(page.locator('.jcm-result-tile').filter({has:page.getByRole('heading',{name:'Race winner',exact:true})})).toContainText('Wadooda');
+ await expect(page.locator('.jcm-result-card')).not.toContainText('Selected horse beaten by');
+ const top=await page.locator('.jcm-result-top').evaluate(el=>el.scrollWidth<=el.clientWidth);expect(top).toBe(true);
+ await page.locator('.jcm-close').first().click();await page.locator('[data-research-index]').filter({hasText:'Floating Market'}).click();
+ const winner=page.locator('.jcm-result-tile').filter({has:page.getByRole('heading',{name:'Race winner',exact:true})});
+ await expect(winner).toContainText('That Darn Cantor');await expect(winner).toContainText('2.25 lengths');
+ await expect(page.locator('.jcm-result-summary')).toContainText('Horse lost');await expect(page.locator('.jcm-result-summary')).toContainText('Finished 3rd of 6');
+ await expect(page.locator('.jcm-result-tile h3')).toHaveText(['Selected horse','Race winner','Reason for selection','Racecard','Race video','Result source']);
+ await expect(page.locator('.jcm-result-tile').filter({has:page.getByRole('heading',{name:'Race video',exact:true})})).toContainText('Racing Post');
+});

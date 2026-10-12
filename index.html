@@ -558,36 +558,84 @@ refresh();window.addEventListener('focus',refresh);setInterval(refresh,300000);
 </script>
 
 <script>
-/* Fictional screenshot-priced account. Quoted prices do not prove matching. */
+/* Device-local fictional allocation controls. Quotes are illustrative, not matched bets. */
 (function(){
-function safe(v){return String(v??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));}
 const money=v=>'£'+Number(v).toFixed(2);
+const safe=v=>String(v??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+let lockTimer;
 window.jcmOpenDummyAccount=async function(){
  const overlay=document.getElementById('jcm-detail-overlay');if(!overlay)return;
  const node=overlay.querySelector('#jcm-detail-content');
  node.innerHTML='<h2>Dummy Account</h2><p>Loading statement…</p>';overlay.classList.add('open');overlay.querySelector('.jcm-close').focus();
+ clearTimeout(lockTimer);
  try{
  const response=await fetch('data/fictional-account-2026-10-12.json',{cache:'no-store'});if(!response.ok)throw Error('Unavailable');
  const d=await response.json();
- if(d.schema_version!==1||d.fictional_only!==true||d.date!=='2026-10-12'||!Array.isArray(d.rows)||d.rows.length!==15||d.rows.some(r=>typeof r.lay_odds!=='number'||r.lay_odds<=1||typeof r.liability_gbp!=='number'||!['PENDING','WIN','LOSS','NR'].includes(r.result_status)))throw Error('Invalid account');
- if(d.rows.reduce((sum,r)=>sum+Math.round(r.liability_gbp*100),0)!==100000)throw Error('Invalid allocation');
- let excluded=[];try{const saved=JSON.parse(localStorage.getItem('jcm-fictional-excluded-'+d.date)||'[]');if(Array.isArray(saved))excluded=saved.filter(x=>typeof x==='string');}catch(_){}
- const included=r=>!excluded.includes([r.off_time_uk,r.course,r.horse].join('|'));
- const gross=d.rows.map(r=>r.liability_gbp/(r.lay_odds-1));
- const settled=d.rows.map((r,i)=>!included(r)?0:r.result_status==='WIN'?gross[i]*(1-d.commission_rate):r.result_status==='LOSS'?-r.liability_gbp:0);
- const net=settled.reduce((a,b)=>a+Math.round(b*100)/100,0),pending=d.rows.filter(r=>included(r)&&r.result_status==='PENDING').length;
- const outstandingPotential=d.rows.reduce((sum,r,i)=>sum+(included(r)&&r.result_status==='PENDING'?Math.round(gross[i]*(1-d.commission_rate)*100)/100:0),0);
- const projectedNet=net+outstandingPotential;
- const includedLiability=d.rows.reduce((sum,r)=>sum+(included(r)?Math.round(r.liability_gbp*100):0),0)/100;
- const projectedMoneyBack=includedLiability+projectedNet;
- node.innerHTML='<h2>Dummy Account</h2><p>Opening bank: <strong>'+money(d.opening_balance_gbp)+'</strong><br>Balance from settled entries: <strong>'+money(d.opening_balance_gbp+net)+'</strong><br>Daily liability: <strong>'+money(includedLiability)+'</strong> of £1,000.00 budget<br>Commission assumption: <strong>5% on positive net market winnings</strong></p><p>Screenshot-priced simulation. Full matching at the displayed price is an assumption. Exact capture times are unknown; '+d.rows.filter(r=>!r.best_price_liquidity_sufficient).length+' quotes have insufficient displayed liquidity for the full stake.</p><h3>12 October statement</h3><table class="jcm-rated-table"><thead><tr><th>Movement</th><th>Amount</th></tr></thead><tbody><tr><td>Opening bank</td><td>'+money(d.opening_balance_gbp)+'</td></tr><tr><td>Settled race profit / loss</td><td>'+money(net)+'</td></tr><tr><td>Closing balance</td><td>'+(pending?'Pending · '+pending+' races':money(d.opening_balance_gbp+net))+'</td></tr></tbody></table><h3>Horse entries</h3><div style="background:#182336;border:1px solid #edbd57;border-radius:10px;padding:14px;margin:12px 0"><strong>Potential total money back: '+money(projectedMoneyBack)+'</strong><div class="jcm-ft-where">If all '+pending+' outstanding horses are beaten · released liability plus net profit, after settled losses<br>Potential net profit: '+money(projectedNet)+'<br>Potential account balance: '+money(d.opening_balance_gbp+projectedNet)+'</div></div>'+d.rows.map((r,i)=>'<div class="jcm-ft-card"><div style="flex:1;min-width:0"><strong>'+safe(r.horse)+'</strong><div class="jcm-ft-where">'+safe(r.off_time_uk)+' · '+safe(r.course)+'</div><div class="jcm-ft-where">Lay odds: <strong>'+safe(r.lay_odds)+'</strong> · Liability: '+money(r.liability_gbp)+'<br>Indicative stake: '+money(gross[i])+'<br>Potential net profit if beaten: '+money(gross[i]*(1-d.commission_rate))+'<br>Displayed available stake: '+money(r.available_stake_gbp)+(r.best_price_liquidity_sufficient?'':' · Insufficient for full stake')+'<br>Status: '+safe(r.result_status)+(included(r)?'':' · Excluded')+'</div></div><label style="font-size:11px;text-align:center;flex:0 0 65px"><input type="checkbox" data-account-row="'+i+'" aria-label="Include '+safe(r.horse)+' in totals" '+(included(r)?'checked':'')+' style="width:22px;height:22px;accent-color:#43bd84"><br>Include in totals</label></div>').join('');
- node.querySelectorAll('[data-account-row]').forEach(box=>box.addEventListener('change',()=>{
- const row=d.rows[Number(box.dataset.accountRow)],key=[row.off_time_uk,row.course,row.horse].join('|');
- excluded=excluded.filter(x=>x!==key);if(!box.checked)excluded.push(key);
- try{localStorage.setItem('jcm-fictional-excluded-'+d.date,JSON.stringify(excluded));}catch(_){node.insertAdjacentHTML('afterbegin','<p>Unable to save exclusions on this device.</p>');return;}
- window.jcmOpenDummyAccount();
- }));
- }catch(_){node.innerHTML='<h2>Dummy Account</h2><p>INSUFFICIENT VERIFIED DATA — statement unavailable. No balance inferred.</p>';}
+ if(d.schema_version!==1||d.fictional_only!==true||d.date!=='2026-10-12'||!Array.isArray(d.rows)||d.rows.length!==15||d.rows.some(r=>typeof r.lay_odds!=='number'||!Number.isFinite(r.lay_odds)||r.lay_odds<=1||!['PENDING','WIN','LOSS','NR'].includes(r.result_status)))throw Error('Invalid account');
+ const key=r=>[r.off_time_uk,r.course,r.horse].join('|');
+ const validKeys=new Set(d.rows.map(key));
+ const firstOff=d.rows.map(r=>r.off_time_uk).sort()[0];
+ const cutoff=Date.parse(d.date+'T'+firstOff+':00+01:00');
+ const settingsKey='jcm-fictional-settings-'+d.date;
+ const locked=()=>Date.now()>=cutoff;
+ let settings={budget_cents:100000,excluded:[],confirmed_at:null};
+ try{
+  const saved=JSON.parse(localStorage.getItem(settingsKey)||'null');
+  if(saved&&Number.isInteger(saved.budget_cents)&&saved.budget_cents>0&&saved.budget_cents<=Math.round(d.opening_balance_gbp*100)&&Array.isArray(saved.excluded)&&saved.excluded.every(x=>validKeys.has(x))&&saved.excluded.length<d.rows.length&&typeof saved.confirmed_at==='string'&&Date.parse(saved.confirmed_at)<cutoff)settings=saved;
+  else if(!saved&&!locked()){
+   const legacy=JSON.parse(localStorage.getItem('jcm-fictional-excluded-'+d.date)||'[]');
+   if(Array.isArray(legacy)&&legacy.length<d.rows.length)settings.excluded=legacy.filter(x=>validKeys.has(x));
+  }
+ }catch(_){}
+ function save(){settings.confirmed_at=new Date().toISOString();try{localStorage.setItem(settingsKey,JSON.stringify(settings));return true;}catch(_){return false;}}
+ if(!locked())save();
+ function allocated(){
+  const selected=d.rows.filter(r=>!settings.excluded.includes(key(r)));
+  const base=Math.floor(settings.budget_cents/selected.length),remainder=settings.budget_cents%selected.length;
+  const allocations=new Map(selected.map((r,i)=>[key(r),(base+(i<remainder?1:0))/100]));
+  return d.rows.map(r=>({...r,liability:allocations.get(key(r))||0,included:allocations.has(key(r))}));
+ }
+ function draw(message){
+  const rows=allocated(),budget=settings.budget_cents/100;
+  const profit=r=>Math.round(r.liability/(r.lay_odds-1)*(1-d.commission_rate)*100)/100;
+  const settled=rows.reduce((a,r)=>a+(!r.included?0:r.result_status==='WIN'?profit(r):r.result_status==='LOSS'?-r.liability:0),0);
+  const outstanding=rows.filter(r=>r.included&&r.result_status==='PENDING');
+  const projectedNet=settled+outstanding.reduce((a,r)=>a+profit(r),0);
+  const selected=rows.filter(r=>r.included);
+  const thin=selected.filter(r=>r.available_stake_gbp<r.liability/(r.lay_odds-1)).length;
+  const candidates=d.rows.filter(r=>r.result_status!=='NR');
+  const best=candidates.slice().sort((a,b)=>a.lay_odds-b.lay_odds)[0];
+  const bestNet=best?Math.round(budget/(best.lay_odds-1)*(1-d.commission_rate)*100)/100:0;
+  node.innerHTML='<h2>Dummy Account</h2><section style="border:1px solid #edbd57;background:#182336;border-radius:10px;padding:14px;margin:12px 0"><h3 style="margin-top:0">Today’s selection</h3>'+(best?'<strong>'+safe(best.horse)+' · '+safe(best.off_time_uk)+' '+safe(best.course)+'</strong><p>All '+money(budget)+' liability on this horse at screenshot lay odds '+safe(best.lay_odds)+'.<br>Potential total money back: <strong>'+money(budget+bestNet)+'</strong><br>Potential net profit: '+money(bestNet)+'</p>':'<p>No eligible horse.</p>')+'<p style="font-size:12px">Highest all-beaten return at the supplied quotes; not a prediction of highest expected profit. A winning horse would lose the full liability. Displayed liquidity may not support this amount. This illustration does not change your account choices.</p></section>'+
+  '<p>Opening bank: <strong>'+money(d.opening_balance_gbp)+'</strong><br>Balance from settled entries: <strong>'+money(d.opening_balance_gbp+settled)+'</strong><br>Commission: 5% of positive net market winnings</p>'+
+  '<div style="border:1px solid #52647b;border-radius:10px;padding:12px"><label for="jcm-account-budget">Total stake / liability (£)</label><div style="display:flex;gap:8px;margin-top:8px"><input id="jcm-account-budget" type="number" min="0.01" max="'+d.opening_balance_gbp+'" step="0.01" value="'+budget.toFixed(2)+'" '+(locked()?'disabled':'')+' style="min-width:0;width:100%;padding:10px;font-size:16px"><button id="jcm-account-confirm" type="button" '+(locked()?'disabled':'')+'>Confirm</button></div><p id="jcm-account-message" role="status">'+safe(message||'')+'</p><p id="jcm-account-lock" style="font-size:12px">'+(locked()?'Locked for today':'Editable until '+firstOff+' UK time, the day’s first race')+' · Choices saved on this device. Lock uses this device’s clock.</p></div>'+
+  '<h3>12 October statement</h3><table class="jcm-rated-table"><tbody><tr><td>Opening bank</td><td>'+money(d.opening_balance_gbp)+'</td></tr><tr><td>Settled net movement</td><td>'+money(settled)+'</td></tr><tr><td>Closing balance</td><td>'+(outstanding.length?'Pending · '+outstanding.length+' races':money(d.opening_balance_gbp+settled))+'</td></tr></tbody></table>'+
+  '<h3>Horse entries</h3><div style="background:#182336;border:1px solid #edbd57;border-radius:10px;padding:14px;margin:12px 0"><strong>Potential total money back: '+money(budget+projectedNet)+'</strong><div class="jcm-ft-where">Released liability plus net profit if all '+outstanding.length+' outstanding horses are beaten, after settled losses<br>Potential net profit: '+money(projectedNet)+'<br>Potential account balance: '+money(d.opening_balance_gbp+projectedNet)+'<br>'+selected.length+' horses · '+money(budget)+' total liability</div></div>'+
+  '<p style="font-size:12px">Screenshot-priced simulation; full matching is assumed. '+thin+' selected quotes have insufficient displayed liquidity. Exact quote capture times are unknown.</p>'+
+  rows.map((r,i)=>'<div class="jcm-ft-card"><div style="flex:1;min-width:0"><strong>'+safe(r.horse)+'</strong><div class="jcm-ft-where">'+safe(r.off_time_uk)+' · '+safe(r.course)+'</div><div class="jcm-ft-where">Lay odds: <strong>'+r.lay_odds+'</strong> · Liability: '+money(r.liability)+'<br>Indicative stake: '+money(r.liability/(r.lay_odds-1))+'<br>Potential net profit if beaten: '+money(profit(r))+'<br>Status: '+safe(r.result_status)+(r.included?'':' · Excluded')+'</div></div><label style="font-size:11px;text-align:center;flex:0 0 65px"><input type="checkbox" data-account-row="'+i+'" aria-label="Include '+safe(r.horse)+' in totals" '+(r.included?'checked ':'')+(locked()?'disabled':'')+' style="width:22px;height:22px;accent-color:#43bd84"><br>Include</label></div>').join('');
+  const say=text=>{node.querySelector('#jcm-account-message').textContent=text;};
+  node.querySelector('#jcm-account-confirm').addEventListener('click',()=>{
+   if(locked()){draw('Locked for today.');return;}
+   const raw=node.querySelector('#jcm-account-budget').value.trim();
+   const amount=Number(raw),cents=Math.round(amount*100);
+   if(!raw||!Number.isFinite(amount)||cents<selected.length||cents>Math.round(d.opening_balance_gbp*100)||Math.abs(amount*100-cents)>1e-6){say('Enter a funded amount with at most two decimal places, allowing at least 1p per horse.');return;}
+   const previous=settings.budget_cents;settings.budget_cents=cents;
+   if(!save()){settings.budget_cents=previous;say('Unable to save on this device. Amount unchanged.');return;}
+   draw('Amount confirmed; liability redistributed.');
+  });
+  node.querySelectorAll('[data-account-row]').forEach(box=>box.addEventListener('change',()=>{
+   if(locked()){draw('Locked for today.');return;}
+   const row=d.rows[Number(box.dataset.accountRow)],k=key(row),before=settings.excluded.slice();
+   settings.excluded=settings.excluded.filter(x=>x!==k);if(!box.checked)settings.excluded.push(k);
+   if(settings.excluded.length===d.rows.length||settings.budget_cents<d.rows.length-settings.excluded.length){settings.excluded=before;draw('Keep at least one horse included and at least 1p liability per horse.');return;}
+   if(!save()){settings.excluded=before;draw('Unable to save exclusions on this device.');return;}
+   draw('Full liability redistributed across included horses.');
+  }));
+  clearTimeout(lockTimer);
+  if(!locked())lockTimer=setTimeout(()=>{if(node.querySelector('#jcm-account-budget'))draw('Locked at the first scheduled race time.');},Math.min(Math.max(cutoff-Date.now(),1),2147483647));
+ }
+ draw();
+ }catch(_){node.innerHTML='<h2>Dummy Account</h2><p>INSUFFICIENT VERIFIED DATA — statement unavailable.</p>';}
 };
 })();
 </script>

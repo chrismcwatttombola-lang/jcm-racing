@@ -256,7 +256,18 @@
       "off_time_uk": "20:15",
       "racecard_url": "https://www.sportinglife.com/racing/racecards/2026-10-12/kempton/racecard/942996/unibet-more-extra-place-races-handicap?dcmp=SL_PLUS_CARDS",
       "replay_url": null,
-      "results_url": "https://www.sportinglife.com/racing/results/2026-10-12/kempton/942996/unibet-more-extra-place-races-handicap"
+      "results_url": "https://www.sportinglife.com/racing/results/2026-10-12/kempton/942996/unibet-more-extra-place-races-handicap",
+      "race_id": "rac_32300729604",
+      "horse_id": "hrs_57686923",
+      "race_name": "Unibet More Extra Place Races Handicap Stakes",
+      "position": "3",
+      "field_size": 10,
+      "winner": "Silky Robin (IRE)",
+      "winning_margin_lengths": "0.3",
+      "selected_beaten_lengths": "0.5",
+      "source": "THE_RACING_API",
+      "retrieved_at": "2026-10-12T19:53:19.486Z",
+      "dead_heat_place": true
     },
     {
       "date": "2026-10-12",
@@ -265,7 +276,18 @@
       "off_time_uk": "20:30",
       "racecard_url": "https://www.sportinglife.com/racing/racecards/2026-10-12/newcastle/racecard/943004/free-digital-racecard-at-raceday-readycom-handicap?dcmp=SL_PLUS_CARDS",
       "replay_url": null,
-      "results_url": "https://www.sportinglife.com/racing/results/2026-10-12/newcastle/943004/free-digital-racecard-at-raceday-readycom-handicap"
+      "results_url": "https://www.sportinglife.com/racing/results/2026-10-12/newcastle/943004/free-digital-racecard-at-raceday-readycom-handicap",
+      "race_id": "rac_32300745100",
+      "horse_id": "hrs_41189694",
+      "race_name": "Free Digital Racecard At raceday-ready.com Handicap Stakes",
+      "position": "3",
+      "field_size": 12,
+      "winner": "Woolridge (GB)",
+      "winning_margin_lengths": "0.3",
+      "selected_beaten_lengths": "0.75",
+      "source": "THE_RACING_API",
+      "retrieved_at": "2026-10-12T19:53:19.486Z",
+      "dead_heat_place": false
     }
   ]
 }

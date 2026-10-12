@@ -2,7 +2,7 @@
   "schema_version": 1,
   "fictional_only": true,
   "date": "2026-10-12",
-  "opening_balance_gbp": 5000,
+  "opening_balance_gbp": 35000,
   "daily_liability_gbp": 1000,
   "commission_rate": 0.05,
   "execution_assumption": "Illustrative full stake at best displayed lay quote, not a verified matched bet. Insufficient displayed liquidity is flagged.",

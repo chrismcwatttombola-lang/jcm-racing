@@ -126,15 +126,15 @@ test('wrong date, non-Betfair source, outcome mismatch and duplicate evidence st
   await page.route('**/data/betfair-results.json',route=>route.fulfill({status:200,contentType:'application/json',body:JSON.stringify({...feed,records:[item,item]})}));
   await openOct9(page);await expect(page.locator('#jcm-watch-panel .jcm-status.pending')).toHaveCount(8);
 });
-test('today retains all 15 horses, confidence and chronological order; rated totals remain zero', async ({page}) => {
+test('today retains all 15 horses, confidence and chronological order; rated totals include accepted outcomes', async ({page}) => {
  await page.goto(URL);await page.locator('#date').selectOption('2026-10-12');
  await expect(page.locator('#jcm-official-panel .jcm-row')).toHaveCount(15);
- await expect(page.locator('#jcm-official-panel .jcm-status.pending')).toHaveCount(15);
+ await expect(page.locator('#jcm-official-panel .jcm-status.pending')).toHaveCount(10);
  const times=await page.locator('#jcm-official-panel .jcm-time').allTextContents();expect(times).toEqual([...times].sort());
  await page.locator('#jcm-official-panel .jcm-row').filter({hasText:'Kykorock'}).click();
  await expect(page.locator('#jcm-detail-content .jcm-confidence.high')).toContainText('85%');
  await page.locator('#jcm-detail-overlay .jcm-close').click();
- await expect(page.locator('#jcm-rated-ratios')).toContainText('0 / 0');
+ await expect(page.locator('#jcm-rated-ratios')).toContainText('3 / 1');
 });
 
 
@@ -222,3 +222,29 @@ test('today displays supplied Betfair outcomes without changing official accurac
  await expect(page.locator('#jcm-detail-content a').first()).toHaveAttribute('href',rows[0].result_source_url);
  expect(rows.every(r=>r.official_accuracy_eligible===false)).toBeTruthy();
 });
+
+test('accepted provider results populate picks, rating groups and fictional settlement',async({page})=>{
+ await page.goto(URL);await page.locator('#date').selectOption('2026-10-12');
+ await expect(page.locator('[data-research-index]')).toHaveCount(15);
+ for(const name of ['Methgal','Indhaar','Lauderdale King','Tredegar Square'])await expect(page.locator('[data-research-index]').filter({hasText:name})).toContainText('Success');
+ await expect(page.locator('[data-research-index]').filter({hasText:'One Of The Boys'})).toContainText('Failure');
+ await expect(page.locator('[data-research-index]').filter({hasText:'Wadooda'})).toContainText('Pending');
+ await page.locator('[data-research-index]').filter({hasText:'Methgal'}).click();
+ await expect(page.locator('#jcm-detail-content')).toContainText('3rd');
+ await page.locator('#jcm-detail-overlay .jcm-close').click();
+ await expect.poll(()=>page.evaluate(()=>window.jcmRatedCounts?true:false)).toBeTruthy();
+ const counts=await page.evaluate(async()=>window.jcmRatedCounts([await (await fetch('data/competition-research-2026-10-12.json')).json()]));
+ expect(counts.high).toEqual({win:1,loss:0});expect(counts.medium).toEqual({win:3,loss:1});
+ await page.evaluate(()=>window.jcmOpenDummyAccount());
+ await expect(page.locator('#jcm-detail-content')).toContainText('One Of The Boys');
+ await expect(page.locator('#jcm-detail-content')).toContainText('£5,043.84');
+ await expect(page.locator('#jcm-detail-content')).toContainText('Pending · 10 races');
+});
+test('provider identity mismatch remains pending',async({page,request})=>{
+ const d=await (await request.get('http://127.0.0.1:8765/data/competition-research-2026-10-12.json')).json();
+ const r=d.high_competition.find(r=>r.horse==='Methgal');r.result_horse_id='';
+ await page.route('**/data/competition-research-2026-10-12.json',route=>route.fulfill({json:d}));
+ await page.goto(URL);await page.locator('#date').selectOption('2026-10-12');
+ await expect(page.locator('[data-research-index]').filter({hasText:'Methgal'})).toContainText('Pending');
+});
+

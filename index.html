@@ -1,4 +1,4 @@
-<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1,viewport-fit=cover"><title>JCM | Favourite Vulnerability</title><meta name="jcm-app-version" content="2026-10-12-rated-performance-36"><meta name="description" content="JCM Favourite Vulnerability — UK & Ireland racing research dashboard"><style>
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1,viewport-fit=cover"><title>JCM | Favourite Vulnerability</title><meta name="jcm-app-version" content="2026-10-12-betfair-results-37"><meta name="description" content="JCM Favourite Vulnerability — UK & Ireland racing research dashboard"><style>
 :root{--bg:#121626;--panel:#1c2435;--gold:#ffd700;--teal:#00c2b9;--red:#dc143c;--muted:#a7b1c3}*{box-sizing:border-box}body{margin:0;background:var(--bg);color:#fff;font-family:system-ui,-apple-system,Segoe UI,sans-serif}header{position:sticky;top:0;z-index:3;background:#121626f5;backdrop-filter:blur(14px);border-bottom:1px solid #344057;box-shadow:0 8px 24px #0005}.head{max-width:900px;margin:auto;padding:calc(20px + env(safe-area-inset-top, 0px)) 16px 12px}@media(display-mode:standalone){header{padding-top:max(58px, env(safe-area-inset-top, 0px))}.head{padding-top:12px}}.brand{display:flex;align-items:center;gap:12px;justify-content:space-between}.identity{display:flex;align-items:center;gap:10px}.identity img{height:46px;width:46px;border-radius:10px;object-fit:cover;mix-blend-mode:screen;background:transparent}.brandname{font-weight:850;letter-spacing:1.5px;color:var(--gold)}.subtitle{font-size:10px;color:var(--muted);letter-spacing:1px}select{background:#253149;color:white;border:1px solid #516077;border-radius:9px;padding:10px 8px;font-weight:700;max-width:145px}.metrics{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-top:12px}.metric{background:#202a3d;border:1px solid #364157;border-radius:12px;padding:10px 5px;text-align:center}.metric strong{display:block;font-size:clamp(17px,4vw,26px);color:var(--gold)}.metric small{font-size:9px;color:var(--muted);letter-spacing:.5px}.metric:nth-child(2) strong{color:var(--teal)}.metric:nth-child(3) strong{color:#ff5978}.metric:nth-child(4) strong{color:white}main{max-width:900px;margin:auto;padding:20px 16px 60px}.day{display:flex;justify-content:space-between;align-items:center;background:linear-gradient(120deg,#22323c,#20273b);border:1px solid #43536a;border-radius:15px;padding:16px;margin-bottom:16px}.day .eyebrow{font-size:11px;color:var(--muted);letter-spacing:1px}.day strong{font-size:32px;color:var(--gold)}.day .detail{font-size:12px;color:var(--muted);text-align:right}.section{display:flex;justify-content:space-between;align-items:center;margin:18px 0 10px}.section h2{font-size:17px;margin:0}.section small{color:var(--muted)}.pick{display:grid;grid-template-columns:80px minmax(0,1fr) 76px 75px;gap:10px;align-items:center;background:var(--panel);border:1px solid #344158;border-radius:13px;padding:15px 13px;margin-bottom:9px}.when{font-weight:800;color:var(--gold);font-size:15px}.course{font-size:12px;color:var(--muted)}.horse{font-size:16px;font-weight:750;overflow-wrap:anywhere}.note{font-size:11px;color:var(--muted);margin-top:5px}.place{text-align:center;font-weight:800;font-size:15px}.place small{display:block;color:var(--muted);font-size:10px;font-weight:400}.tag{display:inline-block;text-align:center;border-radius:8px;font-size:12px;font-weight:900;padding:9px 6px}.win{color:#72f4dc;background:#075d52}.loss{color:#ffafbe;background:#6d1930}.nr{color:#ddd;background:#45495b}.foot{margin-top:22px;font-size:12px;color:var(--muted);line-height:1.55}.foot summary{cursor:pointer;color:#d4dfef}.foot a{color:#65e8df}.empty{background:var(--panel);border-radius:12px;padding:26px;text-align:center;color:var(--muted)}@media(max-width:530px){.pick{grid-template-columns:58px minmax(0,1fr) 53px 58px;gap:6px;padding:13px 8px}.horse{font-size:13px}.when{font-size:13px}.course,.note{font-size:10px}.place{font-size:12px}.tag{font-size:10px;padding:8px 3px}.identity img{width:40px;height:40px}.brandname{font-size:13px}.subtitle{font-size:8px}select{font-size:11px;max-width:125px}.metric small{font-size:8px}}
 
 .market-summary{margin-top:8px;font-size:10px;color:#9baec5;display:flex;align-items:center;gap:5px}.market-dot{height:7px;width:7px;border-radius:50%;background:#78859b;display:inline-block}.odds-panel{margin-top:15px;background:#1c2435;border:1px solid #344158;border-radius:14px;padding:15px}.odds-panel summary{cursor:pointer;font-size:13px;font-weight:700;color:#f3d96a}.odds-panel p{color:#a7b1c3;font-size:12px;line-height:1.6}.odds-table{width:100%;border-collapse:collapse;font-size:12px}.odds-table th,.odds-table td{text-align:left;border-bottom:1px solid #344158;padding:9px 5px}.odds-table th{color:#a7b1c3}.data-note{font-size:11px;color:#a7b1c3;line-height:1.6}.pill{display:inline-block;background:#303e52;color:#d1d9e5;border-radius:7px;padding:4px 7px;font-size:10px;font-weight:800}.live-disclaimer{font-size:11px;color:#a7b1c3;margin:10px 0 0}
@@ -326,6 +326,32 @@ sel.addEventListener('change',renderMarket);renderMarket();
  document.head.appendChild(jcmUnverifiedStyle);
  /* Unverified history overlay: identity-matched only; never changes official scoring. */
  const jcmUnverified = new Map();
+ const jcmConfirmed = new Map();
+ async function loadConfirmedHistory(){
+  try{
+   const response=await fetch('./data/betfair-results.json',{cache:'no-store'});
+   if(!response.ok)return;
+   const payload=await response.json();
+   if(payload.schema_version!==1||payload.official_accuracy_eligible!==false||payload.public_picks_enabled!==false||!Array.isArray(payload.records))return;
+   const expected=new Set(watchOct9.map(r=>['2026-10-09',r.time,r.course,r.horse].join('|')));
+   const accepted=new Map(),seen=new Set();
+   for(const item of payload.records){
+    if(!item)continue;
+    const key=[item.date,item.time,item.course,item.horse].join('|');
+    if(!expected.has(key))continue;
+    if(seen.has(key))throw Error('Conflicting duplicate result');seen.add(key);
+    if(item.official_accuracy_eligible!==false||item.verification_status!=='BETFAIR_CONFIRMED'||!['WIN','LOSS','NR'].includes(item.result_status))continue;
+    if(typeof item.place!=='string'||!item.place.trim()||typeof item.result_retrieved_at!=='string'||!Number.isFinite(Date.parse(item.result_retrieved_at)))continue;
+    if(!/^https:\/\/betting\.betfair\.com\/horse-racing\/results\/09-october-2026\/[^/]+\/\d+\/\d+\/$/.test(item.result_source_url))continue;
+    const n=Number.parseInt(item.place,10);
+    if((item.result_status==='LOSS'&&item.place!=='1st')||(item.result_status==='WIN'&&!(n>1||['PU','F','UR','BD','RO','RR','DSQ'].includes(item.place)))||(item.result_status==='NR'&&item.place!=='NR'))continue;
+    accepted.set(key,item);
+   }
+   jcmConfirmed.clear();for(const [key,item] of accepted)jcmConfirmed.set(key,item);
+   paint();
+  }catch(_error){/* Missing/conflicting evidence stays pending. */}
+ }
+
  async function loadUnverifiedHistory(){
   try{
    const response=await fetch('./data/unverified-results.json',{cache:'no-store'});
@@ -345,19 +371,19 @@ sel.addEventListener('change',renderMarket);renderMarket();
  }
  function watchForDisplay(){
   return watchOct9.map(r=>{
-   const item=jcmUnverified.get(['2026-10-09',r.time,r.course,r.horse].join('|'));
-   return item?{...r,place:item.place,status:'UNVERIFIED',note:r.note+' | Unverified result reported; not included in official accuracy.',source:item.source}:r;
+   const item=jcmConfirmed.get(['2026-10-09',r.time,r.course,r.horse].join('|'));
+   return item?{...r,place:item.place,status:item.result_status,note:'Betfair confirmed: '+item.place+'. Research-only result; excluded from official accuracy. Retrieved '+item.result_retrieved_at+'.',source:item.result_source_url}:{...r,place:'—',status:'PENDING',note:'Result pending: no correctly matched confirmed outcome. Research-only; excluded from official accuracy.'};
   });
  }
  function rows(items,kind){return items.map((r,i)=>'<button type="button" class="jcm-row" data-kind="'+kind+'" data-index="'+i+'"><span><span class="jcm-time">'+esc(r.time)+'</span><span class="jcm-ground">'+esc(r.course)+'</span></span><span class="jcm-horse">'+esc(r.horse)+'</span><span class="jcm-place">'+esc(r.place)+'</span><span class="jcm-status '+esc(r.status.toLowerCase())+'">'+esc(jcmOutcomeLabel(r.status))+'</span></button>').join('')}
  function paint(){
   const first=date.value==='2026-10-07',oct8=date.value==='2026-10-08';
   const chosen=first?records:(oct8?todayRecords:[]);
-  official.innerHTML='<div class="jcm-panel-heading"><h2>Daily picks</h2><span class="jcm-accuracy">'+(first?'83.3%':oct8?'100% · 1/1':'No settled picks')+'</span></div>'+(date.value==='2026-10-09'?'<p role="status" style="font-size:12px;line-height:1.6;color:#d7e4ef;background:#243249;border:1px solid #52647b;border-radius:10px;padding:10px 12px;margin:10px 0"><strong>9 Oct research snapshot — not live results.</strong> No official JCM picks were locked for this date. Watchlist results may be displayed as UNVERIFIED; no results have been independently settled. Private historical archiving is operational; official settlement verification is not yet connected.</p>':'')+(chosen.length?rows(chosen,'official'):'<p class="empty" role="status">No picks</p>');
+  official.innerHTML='<div class="jcm-panel-heading"><h2>Daily picks</h2><span class="jcm-accuracy">'+(first?'83.3%':oct8?'100% · 1/1':'No settled picks')+'</span></div>'+(date.value==='2026-10-09'?'<p role="status" style="font-size:12px;line-height:1.6;color:#d7e4ef;background:#243249;border:1px solid #52647b;border-radius:10px;padding:10px 12px;margin:10px 0"><strong>9 Oct research snapshot — not live results.</strong> No official JCM picks were locked for this date. Matched Betfair results are confirmed for research display; these selections remain outside official accuracy.</p>':'')+(chosen.length?rows(chosen,'official'):'<p class="empty" role="status">No picks</p>');
   const oct9=date.value==='2026-10-09';
   watch.hidden=!(oct8||oct9);
   const watching=oct9?watchForDisplay():watchData;
-  watch.innerHTML='<div class="jcm-panel-heading"><h2>Watchlist · '+(oct9?'9 Oct':'8 Oct')+'</h2><span class="jcm-accuracy">'+(oct9?(watching.filter(r=>r.status==='UNVERIFIED').length+' unverified · '+watching.filter(r=>r.status==='PENDING').length+' pending · 0 settled'):'0/2 wins')+'</span></div>'+(oct9?'<p style="font-size:12px;color:#c2ccdd">Research-only, not verified picks. Reported race placings may appear as UNVERIFIED before settlement. WIN/LOSS/NR is not assigned until independent JCM verification; separate from official accuracy.</p>':'')+rows(watching,'watch');
+  watch.innerHTML='<div class="jcm-panel-heading"><h2>Watchlist · '+(oct9?'9 Oct':'8 Oct')+'</h2><span class="jcm-accuracy">'+(oct9?(watching.filter(r=>['WIN','LOSS'].includes(r.status)).length+' settled · '+watching.filter(r=>r.status==='PENDING').length+' pending · '+watching.filter(r=>r.status==='WIN').length+' / '+watching.filter(r=>r.status==='LOSS').length+' Win / Loss'):'0/2 wins')+'</span></div>'+(oct9?'<p style="font-size:12px;color:#c2ccdd">Research-only results from matched Betfair full-result pages. Pending and NR excluded from Win / Loss; separate from official accuracy.</p>':'')+rows(watching,'watch');
  }
  function openDetails(kind,index){
   const r=(kind==='watch'?(date.value==='2026-10-09'?watchForDisplay():watchData):(date.value==='2026-10-07'?records:date.value==='2026-10-08'?todayRecords:[]))[index];if(!r)return;
@@ -365,7 +391,7 @@ sel.addEventListener('change',renderMarket);renderMarket();
   overlay.classList.add('open');overlay.querySelector('.jcm-close').focus();
  }
  for(const panel of [official,watch])panel.addEventListener('click',e=>{const row=e.target.closest('.jcm-row');if(row)openDetails(row.dataset.kind,Number(row.dataset.index))});
- date.addEventListener('change',paint);paint();loadUnverifiedHistory();
+ date.addEventListener('change',paint);paint();loadUnverifiedHistory();loadConfirmedHistory();
 })();
 </script>
 <script>

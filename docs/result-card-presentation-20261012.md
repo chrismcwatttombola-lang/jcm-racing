@@ -1,0 +1,5 @@
+Expanded selected-horse result pop-ups retain JCM colours and show race time, course/date, selected outcome, finish/field size, winner, winning margin and selected horse cumulative beaten distance, confidence and roundup. Overview wording only: WIN -> Horse lost (green), LOSS -> Horse won (red); stored results/official accuracy/account logic unchanged.
+
+Margin semantics verified in The Racing API OpenAPI: btn is lengths behind the immediately preceding finisher; ovr_btn is cumulative lengths behind winner. Winning margin uses runner-up btn. Numeric lengths are displayed without speculative nose/head conversions. Missing/unknown fields stay unavailable.
+
+Supplementary details require exact selected identity and accepted primary result race/horse IDs and position before displaying outcomes. Ten individual Racing Post racecards retrieved and matched; remaining five unavailable/conflicting links remain unavailable, not generic substitutes. Racing Post replay URLs could not be verified, so no speculative Watch link is active. Example screenshot is layout only, not evidence for our selected horses.

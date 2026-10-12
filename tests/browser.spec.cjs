@@ -129,7 +129,7 @@ test('wrong date, non-Betfair source, outcome mismatch and duplicate evidence st
 test('today retains all 15 horses, confidence and chronological order; rated totals include accepted outcomes', async ({page}) => {
  await page.goto(URL);await page.locator('#date').selectOption('2026-10-12');
  await expect(page.locator('#jcm-official-panel .jcm-row')).toHaveCount(15);
- await expect(page.locator('#jcm-official-panel .jcm-status.pending')).toHaveCount(4);
+ await expect(page.locator('#jcm-official-panel .jcm-status.pending')).toHaveCount(3);
  const times=await page.locator('#jcm-official-panel .jcm-time').allTextContents();expect(times).toEqual([...times].sort());
  await page.locator('#jcm-official-panel .jcm-row').filter({hasText:'Kykorock'}).click();
  await expect(page.locator('#jcm-detail-content .jcm-confidence.high')).toContainText('85%');
@@ -214,31 +214,31 @@ test('today displays supplied Betfair outcomes without changing official accurac
  await page.goto(URL);await page.locator('#date').selectOption('2026-10-12');
  await expect(page.locator('[data-research-index]')).toHaveCount(15);
  const success=page.locator('[data-research-index]').filter({hasText:'Kykorock'});
- await expect(success).toContainText('Success');
- await expect(page.locator('[data-research-index]').filter({hasText:'Kelpie Grey'})).toContainText('Failure');
+ await expect(success).toContainText('Horse lost');
+ await expect(page.locator('[data-research-index]').filter({hasText:'Kelpie Grey'})).toContainText('Horse won');
  await expect(page.locator('[data-research-index]').filter({hasText:'Methgal'})).toContainText('Pending');
  await success.click();
  await expect(page.locator('#jcm-detail-content')).toContainText('2nd');
- await expect(page.locator('#jcm-detail-content a').first()).toHaveAttribute('href',rows[0].result_source_url);
+ await expect(page.locator('#jcm-detail-content a').filter({hasText:'Result source'})).toHaveAttribute('href',rows[0].result_source_url);
  expect(rows.every(r=>r.official_accuracy_eligible===false)).toBeTruthy();
 });
 
 test('accepted provider results populate picks, rating groups and fictional settlement',async({page})=>{
  await page.goto(URL);await page.locator('#date').selectOption('2026-10-12');
  await expect(page.locator('[data-research-index]')).toHaveCount(15);
- for(const name of ['Methgal','Indhaar','Lauderdale King','Tredegar Square','Kelpie Grey','Dandy Magic','Zoustar Dreams'])await expect(page.locator('[data-research-index]').filter({hasText:name})).toContainText('Success');
- for(const name of ['One Of The Boys','Mighty Fleur','Kykorock'])await expect(page.locator('[data-research-index]').filter({hasText:name})).toContainText('Failure');
- await expect(page.locator('[data-research-index]').filter({hasText:'Wadooda'})).toContainText('Failure');
+ for(const name of ['Methgal','Indhaar','Lauderdale King','Tredegar Square','Kelpie Grey','Dandy Magic','Zoustar Dreams'])await expect(page.locator('[data-research-index]').filter({hasText:name})).toContainText('Horse lost');
+ for(const name of ['One Of The Boys','Mighty Fleur','Kykorock'])await expect(page.locator('[data-research-index]').filter({hasText:name})).toContainText('Horse won');
+ await expect(page.locator('[data-research-index]').filter({hasText:'Wadooda'})).toContainText('Horse won');
  await page.locator('[data-research-index]').filter({hasText:'Methgal'}).click();
  await expect(page.locator('#jcm-detail-content')).toContainText('3rd');
  await page.locator('#jcm-detail-overlay .jcm-close').click();
  await expect.poll(()=>page.evaluate(()=>window.jcmRatedCounts?true:false)).toBeTruthy();
  const counts=await page.evaluate(async()=>window.jcmRatedCounts([await (await fetch('data/competition-research-2026-10-12.json')).json()]));
- expect(counts.high).toEqual({win:3,loss:1});expect(counts.medium).toEqual({win:4,loss:3});
+ expect(counts.high).toEqual({win:4,loss:1});expect(counts.medium).toEqual({win:4,loss:3});
  await page.evaluate(()=>window.jcmOpenDummyAccount());
  await expect(page.locator('#jcm-detail-content')).toContainText('One Of The Boys');
- await expect(page.locator('#jcm-detail-content')).toContainText('£4,917.66');
- await expect(page.locator('#jcm-detail-content')).toContainText('Pending · 4 races');
+ await expect(page.locator('#jcm-detail-content')).toContainText('£4,945.19');
+ await expect(page.locator('#jcm-detail-content')).toContainText('Pending · 3 races');
 });
 test('provider identity mismatch remains pending',async({page,request})=>{
  const d=await (await request.get('http://127.0.0.1:8765/data/competition-research-2026-10-12.json')).json();
@@ -252,7 +252,7 @@ test('provider identity mismatch remains pending',async({page,request})=>{
  test('mobile daily rate and reachable account close after scrolling', async ({page}) => {
  await page.setViewportSize({width:390,height:664});
  await page.goto('http://127.0.0.1:8765/#hub');
- await expect(page.locator('#jcm-daily-rate')).toContainText('63.6% success · 7/11 settled');
+ await expect(page.locator('#jcm-daily-rate')).toContainText('66.7% success · 8/12 settled');
  const logo=await page.locator('.jcm-hub-mark').boundingBox();expect(logo.y).toBeGreaterThanOrEqual(24);expect(logo.y).toBeLessThan(60);
  await page.locator('[data-page="dummy-account"]').click();
  await expect(page.locator('[data-account-row]')).toHaveCount(15);
@@ -261,7 +261,7 @@ test('provider identity mismatch remains pending',async({page,request})=>{
  const box=await close.boundingBox();expect(box.y).toBeGreaterThanOrEqual(24);expect(box.y+box.height).toBeLessThan(664);
  await close.click();await expect(page.locator('#jcm-detail-overlay')).not.toHaveClass(/open/);
  await page.locator('[data-page="picks"]').click();await page.locator('#date').selectOption('2026-10-12');
- await expect(page.locator('#jcm-official-panel .jcm-accuracy')).toContainText('63.6% success · 7/11 settled');
+ await expect(page.locator('#jcm-official-panel .jcm-accuracy')).toContainText('66.7% success · 8/12 settled');
  });
 
 async function manualView(page){
@@ -308,6 +308,20 @@ test('manual: accepted settlement moves only manual bank, missing evidence retai
  await expect(page.locator('[data-manual-balance]')).toHaveText('£5,413.04');await expect(page.locator('[data-manual-reserved]')).toHaveText('£5,400.00');
 });
 
+test('result card shows selected outcome, finishing place, winner, margins and exact racecard',async({page})=>{
+ await page.setViewportSize({width:390,height:844});await page.goto(URL);await page.locator('#date').selectOption('2026-10-12');
+ await expect(page.locator('[data-research-index]').filter({hasText:'Wadooda'})).toContainText('Horse won');
+ await expect.poll(()=>page.evaluate(async()=>{const d=await (await fetch('data/result-card-details-2026-10-12.json')).json();return d.details.length})).toBe(15);
+ await page.locator('[data-research-index]').filter({hasText:'Wadooda'}).click();
+ await expect(page.locator('.jcm-result-card')).toContainText('Finished 1st of 8');await expect(page.locator('.jcm-result-card')).toContainText('1.5 lengths');
+ await expect(page.locator('.jcm-result-outcome.loss')).toHaveText('Horse won');
+ await expect(page.getByRole('link',{name:'View this racecard'})).toHaveAttribute('href','https://www.racingpost.com/racecards/1079/kempton-aw/2026-10-12/928657/');
+ await expect(page.locator('.jcm-result-card')).toContainText('replay link not verified');
+ const modal=await page.locator('.jcm-modal').boundingBox();expect(modal.width).toBeGreaterThanOrEqual(366);
+ await page.locator('.jcm-close').first().click();await page.locator('[data-research-index]').filter({hasText:'Niffler'}).click();
+ await expect(page.getByRole('link',{name:'View this racecard'})).toHaveAttribute('href','https://www.racingpost.com/racecards/1079/kempton-aw/2026-10-12/928662/');
+ await expect(page.locator('.jcm-result-card')).not.toContainText('https://www.racingpost.com/racecards/2026-10-12/');
+});
 test('individual provider URL must match result race ID',async({page,request})=>{
  await page.goto(URL);
  const d=await (await request.get('http://127.0.0.1:8765/data/competition-research-2026-10-12.json')).json();

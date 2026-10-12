@@ -372,7 +372,21 @@
       "liability_gbp": 66.66,
       "indicative_stake_gbp": 18.016216216216215,
       "best_price_liquidity_sufficient": true,
-      "result_status": "PENDING"
+      "result_status": "WIN",
+      "position": "3",
+      "placing": "3rd",
+      "result_source": "THE_RACING_API",
+      "verification_status": "PROVIDER_ACCEPTED",
+      "result_source_url": "https://api.theracingapi.com/v1/results/rac_32300729604",
+      "result_retrieved_at": "2026-10-12T19:53:19.486Z",
+      "result_date": "2026-10-12",
+      "result_off_dt": "2026-10-12T20:15:00+01:00",
+      "result_off_time_uk": "20:15",
+      "result_course": "Kempton",
+      "result_horse": "Rory's Royale",
+      "result_race_id": "rac_32300729604",
+      "result_horse_id": "hrs_57686923",
+      "official_accuracy_eligible": false
     },
     {
       "off_time_uk": "20:30",
@@ -385,7 +399,21 @@
       "liability_gbp": 66.66,
       "indicative_stake_gbp": 10.415624999999999,
       "best_price_liquidity_sufficient": true,
-      "result_status": "PENDING"
+      "result_status": "WIN",
+      "position": "3",
+      "placing": "3rd",
+      "result_source": "THE_RACING_API",
+      "verification_status": "PROVIDER_ACCEPTED",
+      "result_source_url": "https://api.theracingapi.com/v1/results/rac_32300745100",
+      "result_retrieved_at": "2026-10-12T19:53:19.486Z",
+      "result_date": "2026-10-12",
+      "result_off_dt": "2026-10-12T20:30:00+01:00",
+      "result_off_time_uk": "20:30",
+      "result_course": "Newcastle",
+      "result_horse": "Edmond Halley",
+      "result_race_id": "rac_32300745100",
+      "result_horse_id": "hrs_41189694",
+      "official_accuracy_eligible": false
     }
   ]
 }

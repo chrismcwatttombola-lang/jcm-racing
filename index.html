@@ -384,19 +384,23 @@ sel.addEventListener('change',renderMarket);renderMarket();
 </script><style>
 #jcm-field-test{max-width:900px;margin:18px auto;padding:0 16px}#jcm-field-test[hidden]{display:none!important}.jcm-ft-wrap{border:1px solid #77623a;background:#202b3e;border-radius:14px;padding:16px}.jcm-ft-wrap h2{margin:0 0 7px;color:#ffd700;font-size:18px}.jcm-ft-note{font-size:12px;line-height:1.6;color:#d4dce9}.jcm-ft-card{background:#182336;border:1px solid #42516b;border-radius:10px;margin:9px 0;padding:12px;display:flex;align-items:center;justify-content:space-between;gap:10px}.jcm-ft-name{font-weight:800}.jcm-ft-where{color:#d0d9e6;font-size:12px;margin-top:4px}.jcm-ft-rating{white-space:nowrap;color:#fff;background:#42506a;padding:7px;border-radius:7px;font-size:12px;font-weight:800}.jcm-ft-hub{border:1px solid #77623a!important}
 </style>
+
+<style>
+/* James Test transition: legacy panels retained in source, removed from active presentation. */
+#jcm-field-test,#jcm-watchlist,.watchlist,.watch-accuracy{display:none!important}
+#jcm-james-status{max-width:900px;margin:14px auto;padding:15px;border:1px solid #b49a59;border-radius:12px;background:#1b283b;color:#fff}
+#jcm-james-status h2{font-size:19px;color:#ffd700;margin:0 0 9px}
+#jcm-james-status p{font-size:14px;line-height:1.5;margin:7px 0}
+</style>
 <script>
-/* Standalone, non-ledger research display. No scoring, results, publishing or history writes. */
+/* Informational transition notice only: no picks, settlement, accuracy or source records modified. */
 (function(){
-const day='2026-10-11';
-const runners=[['13:56','Naas','Bengal Tiger'],['15:05','Naas','Faiyum'],['15:40','Naas','Beset'],['16:07','Goodwood','Royal Acclamation']];
-const date=document.getElementById('date'),main=document.querySelector('main');
-if(!date||!main)return;
-if(!Array.from(date.options).some(o=>o.value===day)){const o=document.createElement('option');o.value=day;o.textContent='11th Oct-26';date.appendChild(o);}
-const section=document.createElement('section');section.id='jcm-field-test';section.setAttribute('aria-label','Field Test 11 October 2026');section.innerHTML='<div class="jcm-ft-wrap"><h2>Field Test · 11 October 2026</h2><p class="jcm-ft-note">Provisional research only — not verified selections. Confidence: Not rated. No official results or accuracy impact. Not betting advice.</p>'+runners.map(r=>'<div class="jcm-ft-card"><div><div class="jcm-ft-name">'+r[2]+'</div><div class="jcm-ft-where">'+r[0]+' · '+r[1]+'</div></div><span class="jcm-ft-rating">Not rated</span></div>').join('')+'</div>';
-main.prepend(section);
-function paint(){section.hidden=date.value!==day;}
-date.addEventListener('change',paint);paint();
-const hub=document.getElementById('jcm-hub');const grid=hub&&hub.querySelector('.jcm-hub-grid');
-if(grid){const tile=document.createElement('button');tile.type='button';tile.className='jcm-hub-tile jcm-ft-hub';tile.innerHTML='<span class="jcm-hub-icon">🔎</span><strong>Field Test</strong><span>11 October · Four provisional horses · Not rated</span><span class="jcm-hub-state">VIEW FIELD TEST ↗</span>';tile.addEventListener('click',()=>{date.value=day;date.dispatchEvent(new Event('change',{bubbles:true}));const picks=hub.querySelector('[data-page="picks"]');if(picks)picks.click();section.scrollIntoView({block:'start'});});grid.appendChild(tile);}
+ const main=document.querySelector('main');if(!main)return;
+ const section=document.createElement('section');section.id='jcm-james-status';
+ section.setAttribute('aria-label','James Test research status');
+ section.innerHTML='<h2>James Test · Research Hub</h2><p><strong>12 October:</strong> Morning exchange screenshots received; no confirmed selections yet.</p><p><strong>11 October:</strong> Dawnmore (Naas 14:30) and Leader Crik (Chepstow 15:47) were pre-race vulnerability research candidates. Both were reported beaten; independent official verification and eligibility remain pending.</p><p><strong>Past week:</strong> No independently settled James Test accuracy dataset is available. Official accuracy: N/A. Historical field-test and watchlist records are archived in source, not included in James Test figures.</p>';
+ main.prepend(section);
+ const legacy=document.getElementById('jcm-field-test');if(legacy)legacy.remove();
 })();
-</script></body></html>
+</script>
+</body></html>

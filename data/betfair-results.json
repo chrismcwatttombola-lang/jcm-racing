@@ -1,0 +1,116 @@
+{
+  "schema_version": 1,
+  "official_accuracy_eligible": false,
+  "public_picks_enabled": false,
+  "records": [
+    {
+      "date": "2026-10-09",
+      "time": "13:30",
+      "course": "York",
+      "horse": "Beagle Bay",
+      "place": "5th",
+      "result_status": "WIN",
+      "result_source_url": "https://betting.betfair.com/horse-racing/results/09-october-2026/york/62/1/",
+      "result_retrieved_at": "2026-10-12T11:59:00Z",
+      "verification_status": "BETFAIR_CONFIRMED",
+      "official_accuracy_eligible": false,
+      "margin": null,
+      "margin_note": "Distance column semantics not independently established; no winning margin or total beaten distance recorded."
+    },
+    {
+      "date": "2026-10-09",
+      "time": "18:00",
+      "course": "Dundalk (AW)",
+      "horse": "Nazario",
+      "place": "7th",
+      "result_status": "WIN",
+      "result_source_url": "https://betting.betfair.com/horse-racing/results/09-october-2026/dundalk/207/3/",
+      "result_retrieved_at": "2026-10-12T11:59:00Z",
+      "verification_status": "BETFAIR_CONFIRMED",
+      "official_accuracy_eligible": false,
+      "margin": null,
+      "margin_note": "Distance column semantics not independently established; no winning margin or total beaten distance recorded."
+    },
+    {
+      "date": "2026-10-09",
+      "time": "18:45",
+      "course": "Kempton (AW)",
+      "horse": "Havana Touch",
+      "place": "1st",
+      "result_status": "LOSS",
+      "result_source_url": "https://betting.betfair.com/horse-racing/results/09-october-2026/kempton-park/27/6/",
+      "result_retrieved_at": "2026-10-12T11:59:00Z",
+      "verification_status": "BETFAIR_CONFIRMED",
+      "official_accuracy_eligible": false,
+      "margin": null,
+      "margin_note": "Distance column semantics not independently established; no winning margin or total beaten distance recorded."
+    },
+    {
+      "date": "2026-10-09",
+      "time": "19:15",
+      "course": "Kempton (AW)",
+      "horse": "Gunfighter",
+      "place": "3rd",
+      "result_status": "WIN",
+      "result_source_url": "https://betting.betfair.com/horse-racing/results/09-october-2026/kempton-park/27/7/",
+      "result_retrieved_at": "2026-10-12T11:59:00Z",
+      "verification_status": "BETFAIR_CONFIRMED",
+      "official_accuracy_eligible": false,
+      "margin": null,
+      "margin_note": "Distance column semantics not independently established; no winning margin or total beaten distance recorded."
+    },
+    {
+      "date": "2026-10-09",
+      "time": "19:30",
+      "course": "Dundalk (AW)",
+      "horse": "Aiteall",
+      "place": "3rd",
+      "result_status": "WIN",
+      "result_source_url": "https://betting.betfair.com/horse-racing/results/09-october-2026/dundalk/207/6/",
+      "result_retrieved_at": "2026-10-12T11:59:00Z",
+      "verification_status": "BETFAIR_CONFIRMED",
+      "official_accuracy_eligible": false,
+      "margin": null,
+      "margin_note": "Distance column semantics not independently established; no winning margin or total beaten distance recorded."
+    },
+    {
+      "date": "2026-10-09",
+      "time": "20:00",
+      "course": "Dundalk (AW)",
+      "horse": "Camino Lad",
+      "place": "7th",
+      "result_status": "WIN",
+      "result_source_url": "https://betting.betfair.com/horse-racing/results/09-october-2026/dundalk/207/7/",
+      "result_retrieved_at": "2026-10-12T11:59:00Z",
+      "verification_status": "BETFAIR_CONFIRMED",
+      "official_accuracy_eligible": false,
+      "margin": null,
+      "margin_note": "Distance column semantics not independently established; no winning margin or total beaten distance recorded."
+    },
+    {
+      "date": "2026-10-09",
+      "time": "20:15",
+      "course": "Kempton (AW)",
+      "horse": "Bold Shout",
+      "place": "2nd",
+      "result_status": "WIN",
+      "result_source_url": "https://betting.betfair.com/horse-racing/results/09-october-2026/kempton-park/27/9/",
+      "result_retrieved_at": "2026-10-12T11:59:00Z",
+      "verification_status": "BETFAIR_CONFIRMED",
+      "official_accuracy_eligible": false,
+      "margin": null,
+      "margin_note": "Distance column semantics not independently established; no winning margin or total beaten distance recorded."
+    }
+  ],
+  "pending": [
+    {
+      "date": "2026-10-09",
+      "time": "16:10",
+      "course": "Newmarket",
+      "horse": "Forty Years On",
+      "reason": "Horse absent from retrieved full result; absence does not establish NR.",
+      "checked_source_url": "https://betting.betfair.com/horse-racing/results/09-october-2026/newmarket-rowley/36/6/",
+      "checked_at": "2026-10-12T11:59:00Z"
+    }
+  ]
+}

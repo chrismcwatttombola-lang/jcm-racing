@@ -86,11 +86,12 @@ class HistoricalResultsTests(unittest.TestCase):
         self.assertIn("public_picks_enabled!==false", HTML)
 
     def test_display_and_scoring_separation(self):
-        self.assertIn("status:'UNVERIFIED'", HTML)
+        self.assertIn("status:item.result_status", HTML)
         self.assertIn(".jcm-status.unverified", HTML)
         self.assertIn("watching.filter(r=>r.status==='PENDING')", HTML)
-        self.assertIn("watching.filter(r=>r.status==='UNVERIFIED')", HTML)
+        self.assertIn("watching.filter(r=>['WIN','LOSS'].includes(r.status))", HTML)
         self.assertIn("const chosen=first?records:(oct8?todayRecords:[])", HTML)
 
 if __name__ == "__main__":
     unittest.main(verbosity=2)
+

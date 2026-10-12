@@ -519,13 +519,13 @@ function racecardLink(m,r){try{const u=new URL(m?.racecard_url);const course=r.c
 function safe(v){return String(v==null?'':v).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));}
 function confidenceTier(r){
  const p=r.competition_confidence_percent;
- return typeof p==='number'&&Number.isFinite(p)&&p>=0&&p<=100?(p>=80?'high':p>=60?'medium':'low'):'unrated';
+ return typeof p==='number'&&Number.isFinite(p)&&p>=0&&p<=100?(p>=80?'high':p>=70?'medium':'unbanded'):'unrated';
 }
 function confidenceBox(r,compact=false){
  const p=r.competition_confidence_percent;
  const rated=typeof p==='number'&&Number.isFinite(p)&&p>=0&&p<=100;
- const tier=!rated?'unrated':p>=80?'high':p>=60?'medium':'low';
- const label=!rated?'Not rated':tier==='high'?'High':tier==='medium'?'Medium':'Low';
+ const tier=!rated?'unrated':p>=80?'high':p>=70?'medium':'unbanded';
+ const label=!rated?'Not rated':tier==='high'?'High':tier==='medium'?'Medium':'';
  return '<span class="jcm-confidence '+tier+'" aria-label="'+safe(label+(rated?' competition confidence, '+p+' percent':''))+'">'+(rated?'<small>'+ (compact?'Confidence':'Confidence rating') +'</small><strong>'+safe(p)+'%</strong><small>'+label+'</small>':'<small>Not rated</small>')+'</span>';
 }
 function resultView(r){
@@ -581,10 +581,10 @@ fetch('data/competition-research-2026-10-12.json',{cache:'no-store'}).then(r=>{i
 </style>
 <script>
 (function(){
-let groups={high:{win:0,loss:0},medium:{win:0,loss:0},low:{win:0,loss:0}},ready=false,error=false;
-const levels=[['high','High'],['medium','Medium'],['low','Low']];
+let groups={high:{win:0,loss:0},medium:{win:0,loss:0},unbanded:{win:0,loss:0}},ready=false,error=false;
+const levels=[['high','High'],['medium','Medium']];
 function ratedCounts(payloads){
- const counts={high:{win:0,loss:0},medium:{win:0,loss:0},low:{win:0,loss:0}};
+ const counts={high:{win:0,loss:0},medium:{win:0,loss:0},unbanded:{win:0,loss:0}};
  const seen=new Set();
  for(const d of payloads){
   if(d.schema_version!==1||typeof d.date!=='string'||!Array.isArray(d.high_competition)||!Array.isArray(d.competition_watchlist))throw Error('Invalid rated data');
@@ -597,7 +597,7 @@ function ratedCounts(payloads){
    if(!['WIN','LOSS'].includes(r.result_status))continue;
    let url;try{url=new URL(r.result_source_url)}catch(_){continue}
    if(!window.jcmAcceptedResult(r))continue;
-   const tier=p>=80?'high':p>=60?'medium':'low';
+   const tier=p>=80?'high':p>=70?'medium':'unbanded';
    counts[tier][r.result_status==='WIN'?'win':'loss']++;
   }
  }
@@ -612,7 +612,7 @@ function draw(){
 window.jcmOpenRatedPerformance=function(){
  const overlay=document.getElementById('jcm-detail-overlay');if(!overlay)return;
  overlay.querySelector('#jcm-detail-content').innerHTML='<h2>Rated Performance</h2>'+
- (error?'<p>INSUFFICIENT VERIFIED DATA — ratios could not be loaded.</p>':!ready?'<p>Loading results…</p>':'<table class="jcm-rated-table"><thead><tr><th>Rating</th><th>Win / Loss</th><th>Win rate</th></tr></thead><tbody>'+levels.map(([key,label])=>'<tr><td>'+label+'</td><td>'+groups[key].win+' / '+groups[key].loss+'</td><td>'+percentage(groups[key])+'</td></tr>').join('')+'</tbody></table><p>Win = selected horse beaten. Loss = selected horse won. Pending races, non-runners and unrated horses are excluded.</p><p>High: 80%+ · Medium: 60–79% · Low: below 60%.</p><p>'+(levels.some(([key])=>groups[key].win+groups[key].loss)?'Accepted source outcomes for the listed rated selections.':'No settled results yet.')+'</p>');
+ (error?'<p>INSUFFICIENT VERIFIED DATA — ratios could not be loaded.</p>':!ready?'<p>Loading results…</p>':'<table class="jcm-rated-table"><thead><tr><th>Rating</th><th>Win / Loss</th><th>Win rate</th></tr></thead><tbody>'+levels.map(([key,label])=>'<tr><td>'+label+'</td><td>'+groups[key].win+' / '+groups[key].loss+'</td><td>'+percentage(groups[key])+'</td></tr>').join('')+'</tbody></table><p>Win = selected horse beaten. Loss = selected horse won. Pending races, non-runners and horses outside the displayed bands are excluded from these band figures.</p><p>High: 80%+ · Medium: 70–79%. Below 70% has no band; those horses still count in daily results and the account.</p><p>'+(levels.some(([key])=>groups[key].win+groups[key].loss)?'Accepted source outcomes for the listed rated selections.':'No settled results yet.')+'</p>');
  overlay.classList.add('open');overlay.querySelector('.jcm-close').focus();
 };
 async function refresh(){

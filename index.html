@@ -414,4 +414,36 @@ date.addEventListener('change',paint);paint();
 </script><script>
 /* Run after historical date registrations so today is first and every day remains selectable. */
 jcmSetCurrentDate();
-</script></body></html>
+</script>
+<!-- JCM competition research 2026-10-12 -->
+<style>
+#jcm-competition-research{max-width:900px;margin:18px auto;padding:0 16px}#jcm-competition-research[hidden]{display:none!important}
+.jcm-cr-panel{background:#1c2435;border:1px solid #43536a;border-radius:14px;padding:14px;margin:12px 0}
+.jcm-cr-panel h2{font-size:17px;color:#ffd700;margin:0 0 8px}.jcm-cr-panel p{font-size:12px;color:#d4dfef;line-height:1.55}
+.jcm-cr-list{display:grid;gap:8px}.jcm-cr-item{display:grid;grid-template-columns:54px minmax(0,1fr) auto;gap:9px;align-items:center;padding:10px;border-radius:9px;background:#121b2c;border:1px solid #38455b}
+.jcm-cr-time{font-weight:800;color:#ffd700}.jcm-cr-name{font-weight:750;font-size:14px}.jcm-cr-meta{font-size:11px;color:#c6d2e3;margin-top:3px}
+.jcm-cr-score{font-size:14px;font-weight:850;color:#ffe080}.jcm-cr-unknown{font-size:11px;color:#d4dfef}
+</style>
+<script>
+/* Research-only public display. Never changes official picks, settlement or accuracy. */
+(function(){
+const date=document.getElementById('date'),main=document.querySelector('main');
+if(!date||!main)return;
+const day='2026-10-12',section=document.createElement('section');
+section.id='jcm-competition-research';section.setAttribute('aria-label','Competition research 12 October 2026');
+const option=Array.from(date.options).find(o=>o.value===day);
+if(!option){const o=document.createElement('option');o.value=day;o.textContent='12th Oct-26';date.appendChild(o);}
+function safe(v){return String(v==null?'':v).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));}
+function renderList(rows){return '<div class="jcm-cr-list">'+rows.map(r=>'<div class="jcm-cr-item"><span class="jcm-cr-time">'+safe(r.off_time_uk)+'</span><div><div class="jcm-cr-name">'+safe(r.horse)+'</div><div class="jcm-cr-meta">'+safe(r.course)+' · Pending result · Research only</div>'+(r.identified_challengers.length?'<div class="jcm-cr-meta">Challengers: '+r.identified_challengers.map(safe).join(', ')+'</div>':'')+'</div><div class="'+(r.competition_confidence_percent==null?'jcm-cr-unknown':'jcm-cr-score')+'">'+(r.competition_confidence_percent==null?'Not rated':safe(r.competition_confidence_percent)+'%')+'</div></div>').join('')+'</div>';}
+function panel(title,description,rows){return '<div class="jcm-cr-panel"><h2>'+title+' ('+rows.length+')</h2><p>'+description+'</p>'+renderList(rows)+'</div>';}
+section.innerHTML='<div class="jcm-cr-panel"><h2>12 October · Competition research</h2><p>Research-only, not locked James Test picks. Percentages represent subjective confidence in credible competition, NOT probability of defeat or validated model accuracy. No result or official accuracy is implied.</p></div><div class="jcm-cr-panel"><p>Loading research shortlist…</p></div>';
+main.prepend(section);
+function paint(){section.hidden=date.value!==day;}
+date.addEventListener('change',paint);paint();
+fetch('data/competition-research-2026-10-12.json',{cache:'no-store'}).then(r=>{if(!r.ok)throw Error('unavailable');return r.json()}).then(d=>{
+ if(d.mode!=='research_only_not_official_picks'||d.date!==day||!Array.isArray(d.high_competition)||!Array.isArray(d.competition_watchlist))throw Error('invalid research data');
+ section.innerHTML='<div class="jcm-cr-panel"><h2>12 October · Competition research</h2><p>Provisional research only. Competition confidence measures confidence in the presence of credible challengers, not a horse’s chance of losing. No official picks, verified results or accuracy changes.</p></div>'+panel('High Competition','Provisional threshold: 80% and above. Scores are uncalibrated analyst assessments.',d.high_competition)+panel('Competition Watchlist','Actively monitored research concerns. Numerical confidence not yet assessed; no percentages invented.',d.competition_watchlist);
+}).catch(()=>{section.innerHTML='<div class="jcm-cr-panel"><h2>Competition research unavailable</h2><p>INSUFFICIENT VERIFIED DATA — research feed could not be loaded. Official picks and accuracy are unaffected.</p></div>';});
+})();
+</script>
+</body></html>

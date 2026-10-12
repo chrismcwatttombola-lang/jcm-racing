@@ -418,6 +418,9 @@ date.addEventListener('change',paint);paint();
 jcmSetCurrentDate();
 </script>
 <style>
+.jcm-research-row{grid-template-columns:minmax(75px,23%) minmax(0,1fr) 73px;column-gap:9px}
+.jcm-detail-rating{display:flex;margin:12px 0}.jcm-detail-rating .jcm-confidence{flex-basis:68px;min-height:54px}
+@media(max-width:380px){.jcm-research-row{grid-template-columns:65px minmax(0,1fr) 61px;column-gap:5px}}
 .jcm-horse-with-confidence{display:flex;align-items:center;justify-content:space-between;gap:7px;min-width:0}
 .jcm-horse-with-confidence>.jcm-horse{min-width:0;flex:1 1 auto}
 .jcm-confidence{display:flex;flex-direction:column;align-items:center;justify-content:center;flex:0 0 52px;min-height:46px;padding:5px 3px;border-radius:8px;border:1px solid transparent;line-height:1.2;text-align:center}
@@ -446,14 +449,14 @@ function paint(){
  if(date.value!==day)return;
  const heading='<div class="jcm-panel-heading"><h2>Daily picks</h2><span class="jcm-accuracy">'+(state==='ready'?detailRows.length+' horses':'—')+'</span></div>';
  const note='';
- panel.innerHTML=heading+note+(state==='loading'?'<p role="status">Loading today’s horses…</p>':state==='error'?'<p role="status">INSUFFICIENT VERIFIED DATA — today’s list could not be loaded.</p>':detailRows.map((r,i)=>'<button type="button" class="jcm-row" data-research-index="'+i+'"><span><span class="jcm-time">'+safe(r.off_time_uk)+'</span><span class="jcm-ground">'+safe(r.course)+'</span></span><span class="jcm-horse-with-confidence"><span class="jcm-horse">'+safe(r.horse)+'</span>'+confidenceBox(r)+'</span><span class="jcm-place">—</span><span class="jcm-status pending">Pending</span></button>').join(''));
+ panel.innerHTML=heading+note+(state==='loading'?'<p role="status">Loading today’s horses…</p>':state==='error'?'<p role="status">INSUFFICIENT VERIFIED DATA — today’s list could not be loaded.</p>':detailRows.map((r,i)=>'<button type="button" class="jcm-row jcm-research-row" data-research-index="'+i+'"><span><span class="jcm-time">'+safe(r.off_time_uk)+'</span><span class="jcm-ground">'+safe(r.course)+'</span></span><span class="jcm-horse">'+safe(r.horse)+'</span><span class="jcm-status pending">Pending</span></button>').join(''));
 }
 panel.addEventListener('click',e=>{
  const button=e.target.closest('[data-research-index]');if(!button)return;
  const r=detailRows[Number(button.dataset.researchIndex)],overlay=document.getElementById('jcm-detail-overlay');
  if(!r||!overlay)return;
  const roundup=r.identified_challengers.length?'Chosen for review because '+r.identified_challengers.join(', ')+' were identified as competing threats.':'Selection reason not supplied.';
- overlay.querySelector('#jcm-detail-content').innerHTML='<h2>'+safe(r.horse)+'</h2><p><strong>'+safe(r.off_time_uk)+' · '+safe(r.course)+'</strong></p><p>Result: <strong>Pending</strong></p><p>'+safe(roundup)+'</p><p><a href="https://www.racingpost.com/racecards/2026-10-12/" target="_blank" rel="noopener">View racecards ↗</a></p>';
+ overlay.querySelector('#jcm-detail-content').innerHTML='<h2>'+safe(r.horse)+'</h2><div class="jcm-detail-rating">'+confidenceBox(r)+'</div><p><strong>'+safe(r.off_time_uk)+' · '+safe(r.course)+'</strong></p><p>Result: <strong>Pending</strong></p><p>'+safe(roundup)+'</p><p><a href="https://www.racingpost.com/racecards/2026-10-12/" target="_blank" rel="noopener">View racecards ↗</a></p>';
  overlay.classList.add('open');overlay.querySelector('.jcm-close').focus();
 });
 date.addEventListener('change',paint);paint();

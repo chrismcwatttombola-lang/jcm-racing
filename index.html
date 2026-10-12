@@ -539,13 +539,13 @@ panel.addEventListener('click',e=>{
  if(!r||!overlay)return;
  const roundup=r.identified_challengers.length?'Chosen for review because '+r.identified_challengers.join(', ')+' were identified as competing threats.':'Selection reason not supplied.';
  const m=detailFor(r),view=resultView(r),accepted=view.css!=='pending'&&m&&m.race_id===r.result_race_id&&m.horse_id===r.result_horse_id&&m.position===r.position&&((r.result_status==='LOSS'&&m.position==='1')||(r.result_status==='WIN'&&Number(m.position)>1))&&(!r.placing||r.placing===ordinal(m.position));
- const card=raceLink(m?.racecard_url,'racecards'),replay=raceLink(m?.replay_url,'results');
+ const card=raceLink(m?.racecard_url,'racecards');
  const finish=view.css==='pending'?'Pending':accepted?'Finished '+ordinal(m.position)+' of '+m.field_size:String(r.placing??r.position??'Not supplied');
  const stat=(label,value)=>'<div class="jcm-result-stat"><small>'+safe(label)+'</small><strong>'+safe(value)+'</strong></div>';
  const tile=(title,content)=>'<section class="jcm-result-tile"><h3>'+safe(title)+'</h3>'+content+'</section>';
  const winner=stat('Winner',accepted?m.winner:'Not yet available')+stat('Winning margin',accepted?margin(m.winning_margin_lengths):'Not yet available')+(view.css==='loss'?'':stat('Selected horse beaten by',accepted?margin(m.selected_beaten_lengths):'Not yet available'));
  const cardTile=tile('Racecard',card?'<a class="jcm-race-action" href="'+safe(card)+'" target="_blank" rel="noopener">View this racecard ↗</a>':'<p class="jcm-link-unavailable">Exact racecard link not verified.</p>');
- const videoTile=tile('Race video',replay&&view.css!=='pending'?'<a class="jcm-race-action" href="'+safe(replay)+'" target="_blank" rel="noopener">Watch the race here ↗</a><small>Racing Post access may be required.</small>':'<a class="jcm-race-action" href="https://www.racingpost.com/results/" target="_blank" rel="noopener">View race videos here</a>');
+ const videoTile=tile('Race video','<a class="jcm-race-action" href="https://www.sportinglife.com/racing/results" target="_blank" rel="noopener">View race videos here</a><small>Sporting Life login may be required.</small>');
  overlay.querySelector('#jcm-detail-content').innerHTML='<article class="jcm-result-card"><div class="jcm-result-top"><span class="jcm-result-time">'+safe(r.off_time_uk)+'</span><div class="jcm-result-course"><strong>'+safe(r.course)+'</strong><small>12 Oct 2026 · UK time</small></div>'+confidenceBox(r,true)+'</div><div class="jcm-result-summary"><span class="jcm-result-outcome '+view.css+'">'+safe(view.label)+'</span><strong class="jcm-result-finish">'+safe(finish)+'</strong></div><div class="jcm-result-body">'+tile('Selected horse','<h2>'+safe(r.horse)+'</h2><p>'+safe(m?.race_name||'Race details not supplied')+'</p>')+tile('Race winner',winner)+tile('Reason for selection','<p>'+safe(roundup)+'</p>')+cardTile+videoTile+'</div></article>';
  overlay.classList.add('open');overlay.querySelector('.jcm-close').focus();
 });

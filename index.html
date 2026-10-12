@@ -472,7 +472,10 @@ window.jcmAcceptedResult = function(r) {
  let u;try{u=new URL(r.result_source_url)}catch(_){return false;}
  if(u.protocol!=='https:')return false;
  if((u.hostname==='betfair.com'||u.hostname.endsWith('.betfair.com'))&&u.pathname.startsWith('/horse-racing/results/'))return true;
- if(u.hostname!=='api.theracingapi.com'||u.pathname!=='/v1/results'||u.searchParams.get('start_date')!==r.race_date||u.searchParams.get('end_date')!==r.race_date)return false;
+ if(u.hostname!=='api.theracingapi.com')return false;
+ const dated=u.pathname==='/v1/results'&&u.searchParams.get('start_date')===r.race_date&&u.searchParams.get('end_date')===r.race_date;
+ const individual=/^rac_\d+$/.test(r.result_race_id||'')&&u.pathname==='/v1/results/'+r.result_race_id&&!u.search&&!u.hash;
+ if(!dated&&!individual)return false;
  const t=Date.parse(r.result_retrieved_at),off=Date.parse(r.result_off_dt);
  return r.result_source==='THE_RACING_API'&&r.verification_status==='PROVIDER_ACCEPTED'
  && /^rac_\d+$/.test(r.result_race_id||'')&&/^hrs_\d+$/.test(r.result_horse_id||'')

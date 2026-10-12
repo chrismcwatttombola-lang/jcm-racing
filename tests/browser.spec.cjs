@@ -129,12 +129,12 @@ test('wrong date, non-Betfair source, outcome mismatch and duplicate evidence st
 test('today retains all 15 horses, confidence and chronological order; rated totals include accepted outcomes', async ({page}) => {
  await page.goto(URL);await page.locator('#date').selectOption('2026-10-12');
  await expect(page.locator('#jcm-official-panel .jcm-row')).toHaveCount(15);
- await expect(page.locator('#jcm-official-panel .jcm-status.pending')).toHaveCount(5);
+ await expect(page.locator('#jcm-official-panel .jcm-status.pending')).toHaveCount(4);
  const times=await page.locator('#jcm-official-panel .jcm-time').allTextContents();expect(times).toEqual([...times].sort());
  await page.locator('#jcm-official-panel .jcm-row').filter({hasText:'Kykorock'}).click();
  await expect(page.locator('#jcm-detail-content .jcm-confidence.high')).toContainText('85%');
  await page.locator('#jcm-detail-overlay .jcm-close').click();
- await expect(page.locator('#jcm-rated-ratios')).toContainText('4 / 2');
+ await expect(page.locator('#jcm-rated-ratios')).toContainText('4 / 3');
 });
 
 
@@ -228,17 +228,17 @@ test('accepted provider results populate picks, rating groups and fictional sett
  await expect(page.locator('[data-research-index]')).toHaveCount(15);
  for(const name of ['Methgal','Indhaar','Lauderdale King','Tredegar Square','Kelpie Grey','Dandy Magic','Zoustar Dreams'])await expect(page.locator('[data-research-index]').filter({hasText:name})).toContainText('Success');
  for(const name of ['One Of The Boys','Mighty Fleur','Kykorock'])await expect(page.locator('[data-research-index]').filter({hasText:name})).toContainText('Failure');
- await expect(page.locator('[data-research-index]').filter({hasText:'Wadooda'})).toContainText('Pending');
+ await expect(page.locator('[data-research-index]').filter({hasText:'Wadooda'})).toContainText('Failure');
  await page.locator('[data-research-index]').filter({hasText:'Methgal'}).click();
  await expect(page.locator('#jcm-detail-content')).toContainText('3rd');
  await page.locator('#jcm-detail-overlay .jcm-close').click();
  await expect.poll(()=>page.evaluate(()=>window.jcmRatedCounts?true:false)).toBeTruthy();
  const counts=await page.evaluate(async()=>window.jcmRatedCounts([await (await fetch('data/competition-research-2026-10-12.json')).json()]));
- expect(counts.high).toEqual({win:3,loss:1});expect(counts.medium).toEqual({win:4,loss:2});
+ expect(counts.high).toEqual({win:3,loss:1});expect(counts.medium).toEqual({win:4,loss:3});
  await page.evaluate(()=>window.jcmOpenDummyAccount());
  await expect(page.locator('#jcm-detail-content')).toContainText('One Of The Boys');
- await expect(page.locator('#jcm-detail-content')).toContainText('£4,984.32');
- await expect(page.locator('#jcm-detail-content')).toContainText('Pending · 5 races');
+ await expect(page.locator('#jcm-detail-content')).toContainText('£4,917.66');
+ await expect(page.locator('#jcm-detail-content')).toContainText('Pending · 4 races');
 });
 test('provider identity mismatch remains pending',async({page,request})=>{
  const d=await (await request.get('http://127.0.0.1:8765/data/competition-research-2026-10-12.json')).json();
@@ -252,7 +252,7 @@ test('provider identity mismatch remains pending',async({page,request})=>{
  test('mobile daily rate and reachable account close after scrolling', async ({page}) => {
  await page.setViewportSize({width:390,height:664});
  await page.goto('http://127.0.0.1:8765/#hub');
- await expect(page.locator('#jcm-daily-rate')).toContainText('70% success · 7/10 settled');
+ await expect(page.locator('#jcm-daily-rate')).toContainText('63.6% success · 7/11 settled');
  const logo=await page.locator('.jcm-hub-mark').boundingBox();expect(logo.y).toBeGreaterThanOrEqual(72);
  await page.locator('[data-page="dummy-account"]').click();
  await expect(page.locator('[data-account-row]')).toHaveCount(15);
@@ -261,7 +261,7 @@ test('provider identity mismatch remains pending',async({page,request})=>{
  const box=await close.boundingBox();expect(box.y).toBeGreaterThanOrEqual(24);expect(box.y+box.height).toBeLessThan(664);
  await close.click();await expect(page.locator('#jcm-detail-overlay')).not.toHaveClass(/open/);
  await page.locator('[data-page="picks"]').click();await page.locator('#date').selectOption('2026-10-12');
- await expect(page.locator('#jcm-official-panel .jcm-accuracy')).toContainText('70% success · 7/10 settled');
+ await expect(page.locator('#jcm-official-panel .jcm-accuracy')).toContainText('63.6% success · 7/11 settled');
  });
 
 async function manualView(page){
@@ -306,4 +306,12 @@ test('manual: accepted settlement moves only manual bank, missing evidence retai
  await confirmManual(page,1,'5400');await expect(page.locator('[data-manual-available]')).toHaveText('£13.04');
  await page.reload();await page.locator('[data-page="dummy-account"]').click();await page.locator('[data-account-mode="manual"]').click();
  await expect(page.locator('[data-manual-balance]')).toHaveText('£5,413.04');await expect(page.locator('[data-manual-reserved]')).toHaveText('£5,400.00');
+});
+
+test('individual provider URL must match result race ID',async({page,request})=>{
+ await page.goto(URL);
+ const d=await (await request.get('http://127.0.0.1:8765/data/competition-research-2026-10-12.json')).json();
+ const r=[...d.high_competition,...d.competition_watchlist].find(r=>r.horse==='Wadooda');
+ expect(await page.evaluate(r=>window.jcmAcceptedResult(r),r)).toBe(true);
+ for(const url of ['https://api.theracingapi.com/v1/results/rac_999',r.result_source_url+'?race=other',r.result_source_url+'#other'])expect(await page.evaluate(r=>window.jcmAcceptedResult(r),{...r,result_source_url:url})).toBe(false);
 });

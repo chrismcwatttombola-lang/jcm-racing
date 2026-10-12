@@ -136,3 +136,25 @@ test('today retains all 15 horses, confidence and chronological order; rated tot
  await page.locator('#jcm-detail-overlay .jcm-close').click();
  await expect(page.locator('#jcm-rated-ratios')).toContainText('0 / 0');
 });
+
+
+test('fictional account redistributes confirmed liability and locks at first race', async ({ page }) => {
+ await page.clock.install({time:new Date('2026-10-12T13:00:00Z')});
+ await page.goto('http://127.0.0.1:8765/#hub');
+ await page.locator('[data-page="dummy-account"]').click();
+ await expect(page.locator('[data-account-row]')).toHaveCount(15);
+ await page.locator('[data-account-row="0"]').uncheck();
+ await expect(page.locator('#jcm-detail-content')).toContainText('14 horses · £1,000.00 total liability');
+ await page.locator('#jcm-account-budget').fill('2000');
+ await expect(page.locator('#jcm-detail-content')).toContainText('14 horses · £1,000.00 total liability');
+ await page.locator('#jcm-account-confirm').click();
+ await expect(page.locator('#jcm-detail-content')).toContainText('14 horses · £2,000.00 total liability');
+ await page.reload();
+ await page.locator('[data-page="dummy-account"]').click();
+ await expect(page.locator('#jcm-account-budget')).toHaveValue('2000.00');
+ await expect(page.locator('[data-account-row="0"]')).not.toBeChecked();
+ await page.clock.fastForward(97*60*1000);
+ await expect(page.locator('#jcm-account-confirm')).toBeDisabled();
+ await expect(page.locator('[data-account-row="1"]')).toBeDisabled();
+ await expect(page.locator('#jcm-account-lock')).toContainText('Locked for today');
+});

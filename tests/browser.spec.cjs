@@ -219,7 +219,7 @@ test('today displays supplied Betfair outcomes without changing official accurac
  await expect(page.locator('[data-research-index]').filter({hasText:'Methgal'})).toContainText('Pending');
  await success.click();
  await expect(page.locator('#jcm-detail-content')).toContainText('2nd');
- await expect(page.locator('#jcm-detail-content a').first()).toHaveAttribute('href',rows[0].result_source_url);
+ await expect(page.locator('#jcm-detail-content a').filter({hasText:'Result source'})).toHaveAttribute('href',rows[0].result_source_url);
  expect(rows.every(r=>r.official_accuracy_eligible===false)).toBeTruthy();
 });
 

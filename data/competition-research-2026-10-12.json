@@ -99,130 +99,140 @@
       "off_time_uk": "15:37",
       "course": "Worcester",
       "horse": "Mighty Fleur",
-      "competition_confidence_percent": null,
+      "competition_confidence_percent": 78,
       "confidence_basis": "provisional subjective analyst judgement; not calibrated, not win/loss probability",
       "identified_challengers": [],
       "tier": "watchlist",
       "selection_status": "RESEARCH_ONLY_NOT_LOCKED",
       "result_status": "PENDING_UNVERIFIED",
-      "official_accuracy_eligible": false
+      "official_accuracy_eligible": false,
+      "confidence_source": "User-supplied JCM selections screenshot, 12 October 2026 (IMG_9679.jpeg)"
     },
     {
       "race_date": "2026-10-12",
       "off_time_uk": "15:47",
       "course": "Musselburgh",
       "horse": "Dandy Magic",
-      "competition_confidence_percent": null,
+      "competition_confidence_percent": 76,
       "confidence_basis": "provisional subjective analyst judgement; not calibrated, not win/loss probability",
       "identified_challengers": [],
       "tier": "watchlist",
       "selection_status": "RESEARCH_ONLY_NOT_LOCKED",
       "result_status": "PENDING_UNVERIFIED",
-      "official_accuracy_eligible": false
+      "official_accuracy_eligible": false,
+      "confidence_source": "User-supplied JCM selections screenshot, 12 October 2026 (IMG_9679.jpeg)"
     },
     {
       "race_date": "2026-10-12",
       "off_time_uk": "15:54",
       "course": "Yarmouth",
       "horse": "Zoustar Dreams",
-      "competition_confidence_percent": null,
+      "competition_confidence_percent": 73,
       "confidence_basis": "provisional subjective analyst judgement; not calibrated, not win/loss probability",
       "identified_challengers": [],
       "tier": "watchlist",
       "selection_status": "RESEARCH_ONLY_NOT_LOCKED",
       "result_status": "PENDING_UNVERIFIED",
-      "official_accuracy_eligible": false
+      "official_accuracy_eligible": false,
+      "confidence_source": "User-supplied JCM selections screenshot, 12 October 2026 (IMG_9679.jpeg)"
     },
     {
       "race_date": "2026-10-12",
       "off_time_uk": "16:28",
       "course": "Newcastle",
       "horse": "Indhaar",
-      "competition_confidence_percent": null,
+      "competition_confidence_percent": 70,
       "confidence_basis": "provisional subjective analyst judgement; not calibrated, not win/loss probability",
       "identified_challengers": [],
       "tier": "watchlist",
       "selection_status": "RESEARCH_ONLY_NOT_LOCKED",
       "result_status": "PENDING_UNVERIFIED",
-      "official_accuracy_eligible": false
+      "official_accuracy_eligible": false,
+      "confidence_source": "User-supplied JCM selections screenshot, 12 October 2026 (IMG_9679.jpeg)"
     },
     {
       "race_date": "2026-10-12",
       "off_time_uk": "16:45",
       "course": "Kempton",
       "horse": "Tredegar Square",
-      "competition_confidence_percent": null,
+      "competition_confidence_percent": 68,
       "confidence_basis": "provisional subjective analyst judgement; not calibrated, not win/loss probability",
       "identified_challengers": [],
       "tier": "watchlist",
       "selection_status": "RESEARCH_ONLY_NOT_LOCKED",
       "result_status": "PENDING_UNVERIFIED",
-      "official_accuracy_eligible": false
+      "official_accuracy_eligible": false,
+      "confidence_source": "User-supplied JCM selections screenshot, 12 October 2026 (IMG_9679.jpeg)"
     },
     {
       "race_date": "2026-10-12",
       "off_time_uk": "17:15",
       "course": "Kempton",
       "horse": "One Of The Boys",
-      "competition_confidence_percent": null,
+      "competition_confidence_percent": 65,
       "confidence_basis": "provisional subjective analyst judgement; not calibrated, not win/loss probability",
       "identified_challengers": [],
       "tier": "watchlist",
       "selection_status": "RESEARCH_ONLY_NOT_LOCKED",
       "result_status": "PENDING_UNVERIFIED",
-      "official_accuracy_eligible": false
+      "official_accuracy_eligible": false,
+      "confidence_source": "User-supplied JCM selections screenshot, 12 October 2026 (IMG_9679.jpeg)"
     },
     {
       "race_date": "2026-10-12",
       "off_time_uk": "17:45",
       "course": "Kempton",
       "horse": "Wadooda",
-      "competition_confidence_percent": null,
+      "competition_confidence_percent": 72,
       "confidence_basis": "provisional subjective analyst judgement; not calibrated, not win/loss probability",
       "identified_challengers": [],
       "tier": "watchlist",
       "selection_status": "RESEARCH_ONLY_NOT_LOCKED",
       "result_status": "PENDING_UNVERIFIED",
-      "official_accuracy_eligible": false
+      "official_accuracy_eligible": false,
+      "confidence_source": "User-supplied JCM selections screenshot, 12 October 2026 (IMG_9679.jpeg)"
     },
     {
       "race_date": "2026-10-12",
       "off_time_uk": "19:45",
       "course": "Kempton",
       "horse": "Niffler",
-      "competition_confidence_percent": null,
+      "competition_confidence_percent": 75,
       "confidence_basis": "provisional subjective analyst judgement; not calibrated, not win/loss probability",
       "identified_challengers": [],
       "tier": "watchlist",
       "selection_status": "RESEARCH_ONLY_NOT_LOCKED",
       "result_status": "PENDING_UNVERIFIED",
-      "official_accuracy_eligible": false
+      "official_accuracy_eligible": false,
+      "confidence_source": "User-supplied JCM selections screenshot, 12 October 2026 (IMG_9679.jpeg)"
     },
     {
       "race_date": "2026-10-12",
       "off_time_uk": "20:15",
       "course": "Kempton",
       "horse": "Rory's Royale",
-      "competition_confidence_percent": null,
+      "competition_confidence_percent": 68,
       "confidence_basis": "provisional subjective analyst judgement; not calibrated, not win/loss probability",
       "identified_challengers": [],
       "tier": "watchlist",
       "selection_status": "RESEARCH_ONLY_NOT_LOCKED",
       "result_status": "PENDING_UNVERIFIED",
-      "official_accuracy_eligible": false
+      "official_accuracy_eligible": false,
+      "confidence_source": "User-supplied JCM selections screenshot, 12 October 2026 (IMG_9679.jpeg)"
     },
     {
       "race_date": "2026-10-12",
       "off_time_uk": "20:30",
       "course": "Newcastle",
       "horse": "Edmond Halley",
-      "competition_confidence_percent": null,
+      "competition_confidence_percent": 70,
       "confidence_basis": "provisional subjective analyst judgement; not calibrated, not win/loss probability",
       "identified_challengers": [],
       "tier": "watchlist",
       "selection_status": "RESEARCH_ONLY_NOT_LOCKED",
       "result_status": "PENDING_UNVERIFIED",
-      "official_accuracy_eligible": false
+      "official_accuracy_eligible": false,
+      "confidence_source": "User-supplied JCM selections screenshot, 12 October 2026 (IMG_9679.jpeg)"
     }
   ],
   "other_screened_races": [
@@ -231,9 +241,9 @@
     "18:15 Kempton Rhythm Of My Heart"
   ],
   "notes": [
-    "Watchlist scores not assigned: do not invent precision",
     "Market leader rank provisional in some races",
     "All results pending independent verification; no accuracy updates",
-    "Research-only draft: not published to live hub"
+    "Research-only draft: not published to live hub",
+    "Watchlist competition-confidence scores transcribed from user-supplied original selections screenshot on 12 October 2026; no new estimates."
   ]
 }

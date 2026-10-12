@@ -1,7 +1,7 @@
 {
   "schema_version": 1,
   "fictional_only": true,
-  "opening_bank_gbp": 5000,
+  "opening_bank_gbp": 35000,
   "daily_liability_budget_gbp": 1000,
   "commission_rate": 0.05,
   "commission_basis": "Simulation assumption: standard Rewards package, 5% of positive net market winnings; zero for losing markets",

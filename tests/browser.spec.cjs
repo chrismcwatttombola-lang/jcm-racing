@@ -197,7 +197,7 @@ test('today picks survive delayed historical result refreshes', async ({ page })
  await expect(page.locator('#jcm-official-panel')).toContainText('Mighty Fleur');
  await page.locator('[data-research-index="0"]').click();
  await expect(page.locator('#jcm-detail-content')).toContainText('Mighty Fleur');
- await page.locator('.jcm-close').click();
+ await page.locator('#jcm-detail-overlay .jcm-close').click();
  await page.locator('#date').selectOption('2026-10-09');
  await page.locator('#date').selectOption('2026-10-12');
  await expect(page.locator('[data-research-index]')).toHaveCount(15);

@@ -158,3 +158,20 @@ test('fictional account redistributes confirmed liability and locks at first rac
  await expect(page.locator('[data-account-row="1"]')).toBeDisabled();
  await expect(page.locator('#jcm-account-lock')).toContainText('Locked for today');
 });
+
+
+test('fictional bank allows full £35000 liability and rejects unfunded amounts', async ({ page }) => {
+ await page.clock.install({time:new Date('2026-10-12T13:00:00Z')});
+ await page.goto('http://127.0.0.1:8765/#hub');
+ await page.locator('[data-page="dummy-account"]').click();
+ await expect(page.locator('#jcm-account-budget')).toHaveValue('1000.00');
+ await expect(page.locator('#jcm-account-budget')).toHaveAttribute('max','35000');
+ await expect(page.locator('#jcm-detail-content')).toContainText('Opening bank: £35,000.00');
+ await page.locator('#jcm-account-budget').fill('35000');
+ await page.locator('#jcm-account-confirm').click();
+ await expect(page.locator('#jcm-detail-content')).toContainText('15 horses · £35,000.00 total liability');
+ await page.locator('#jcm-account-budget').fill('35000.01');
+ await page.locator('#jcm-account-confirm').click();
+ await expect(page.locator('#jcm-account-message')).toContainText('Enter a funded amount');
+ await expect(page.locator('#jcm-detail-content')).toContainText('15 horses · £35,000.00 total liability');
+});

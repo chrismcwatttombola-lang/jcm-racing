@@ -510,12 +510,12 @@ function confidenceTier(r){
  const p=r.competition_confidence_percent;
  return typeof p==='number'&&Number.isFinite(p)&&p>=0&&p<=100?(p>=80?'high':p>=60?'medium':'low'):'unrated';
 }
-function confidenceBox(r){
+function confidenceBox(r,compact=false){
  const p=r.competition_confidence_percent;
  const rated=typeof p==='number'&&Number.isFinite(p)&&p>=0&&p<=100;
  const tier=!rated?'unrated':p>=80?'high':p>=60?'medium':'low';
  const label=!rated?'Not rated':tier==='high'?'High':tier==='medium'?'Medium':'Low';
- return '<span class="jcm-confidence '+tier+'" aria-label="'+safe(label+(rated?' competition confidence, '+p+' percent':''))+'">'+(rated?'<small>Confidence rating</small><strong>'+safe(p)+'%</strong><small>'+label+'</small>':'<small>Not rated</small>')+'</span>';
+ return '<span class="jcm-confidence '+tier+'" aria-label="'+safe(label+(rated?' competition confidence, '+p+' percent':''))+'">'+(rated?'<small>'+ (compact?'Confidence':'Confidence rating') +'</small><strong>'+safe(p)+'%</strong><small>'+label+'</small>':'<small>Not rated</small>')+'</span>';
 }
 function resultView(r){
  let url;try{url=new URL(r.result_source_url)}catch(_){return {label:'Pending',css:'pending'};}
@@ -540,7 +540,13 @@ panel.addEventListener('click',e=>{
  const roundup=r.identified_challengers.length?'Chosen for review because '+r.identified_challengers.join(', ')+' were identified as competing threats.':'Selection reason not supplied.';
  const m=detailFor(r),view=resultView(r),accepted=view.css!=='pending'&&m&&m.race_id===r.result_race_id&&m.horse_id===r.result_horse_id&&m.position===r.position&&((r.result_status==='LOSS'&&m.position==='1')||(r.result_status==='WIN'&&Number(m.position)>1))&&(!r.placing||r.placing===ordinal(m.position));
  const card=raceLink(m?.racecard_url,'racecards'),replay=raceLink(m?.replay_url,'results');
- overlay.querySelector('#jcm-detail-content').innerHTML='<article class="jcm-result-card"><div class="jcm-result-top"><span class="jcm-result-time">'+safe(r.off_time_uk)+'</span><div><strong>'+safe(r.course)+'</strong><small>12 Oct 2026 · UK time</small></div></div><span class="jcm-result-outcome '+view.css+'">'+safe(view.label)+'</span><div class="jcm-result-body"><small>SELECTED HORSE · RESEARCH</small><h2>'+safe(r.horse)+'</h2><p>'+safe(m?.race_name||'Race details not supplied')+'</p><div class="jcm-result-grid"><div><small>Finish</small><strong>'+(view.css==='pending'?'Pending':accepted?'Finished '+safe(ordinal(m.position))+' of '+safe(m.field_size):safe(r.placing??r.position??'Not supplied'))+'</strong></div><div><small>Race winner</small><strong>'+safe(accepted?m.winner:'Not yet available')+'</strong></div><div><small>Winning margin</small><strong>'+safe(accepted?margin(m.winning_margin_lengths):'Not yet available')+'</strong></div><div><small>Selected horse beaten by</small><strong>'+safe(accepted?margin(m.selected_beaten_lengths):'Not yet available')+'</strong></div></div><div class="jcm-detail-rating">'+confidenceBox(r)+'</div><p>'+safe(roundup)+'</p>'+(card?'<p><a class="jcm-race-action" href="'+safe(card)+'" target="_blank" rel="noopener">View this racecard ↗</a></p>':'<p class="jcm-link-unavailable">Exact racecard link not verified.</p>')+(view.css!=='pending'?(replay?'<p><a class="jcm-race-action" href="'+safe(replay)+'" target="_blank" rel="noopener">Watch the race here ↗</a></p><small>Racing Post access may be required.</small>':'<p class="jcm-link-unavailable">Watch the race here — replay link not verified.</p>'):'')+(view.css!=='pending'?'<p><a href="'+safe(r.result_source_url)+'" target="_blank" rel="noopener">Result source ↗</a></p>':'')+'</div></article>';
+ const finish=view.css==='pending'?'Pending':accepted?'Finished '+ordinal(m.position)+' of '+m.field_size:String(r.placing??r.position??'Not supplied');
+ const stat=(label,value)=>'<div class="jcm-result-stat"><small>'+safe(label)+'</small><strong>'+safe(value)+'</strong></div>';
+ const tile=(title,content)=>'<section class="jcm-result-tile"><h3>'+safe(title)+'</h3>'+content+'</section>';
+ const winner=stat('Winner',accepted?m.winner:'Not yet available')+stat('Winning margin',accepted?margin(m.winning_margin_lengths):'Not yet available')+(view.css==='loss'?'':stat('Selected horse beaten by',accepted?margin(m.selected_beaten_lengths):'Not yet available'));
+ const cardTile=tile('Racecard',card?'<a class="jcm-race-action" href="'+safe(card)+'" target="_blank" rel="noopener">View this racecard ↗</a>':'<p class="jcm-link-unavailable">Exact racecard link not verified.</p>');
+ const videoTile=tile('Race video',view.css==='pending'?'<p class="jcm-link-unavailable">Racing Post replay available after the race, once verified.</p>':replay?'<a class="jcm-race-action" href="'+safe(replay)+'" target="_blank" rel="noopener">Watch the race here ↗</a><small>Racing Post access may be required.</small>':'<p class="jcm-link-unavailable">Racing Post replay link not verified.</p>');
+ overlay.querySelector('#jcm-detail-content').innerHTML='<article class="jcm-result-card"><div class="jcm-result-top"><span class="jcm-result-time">'+safe(r.off_time_uk)+'</span><div class="jcm-result-course"><strong>'+safe(r.course)+'</strong><small>12 Oct 2026 · UK time</small></div>'+confidenceBox(r,true)+'</div><div class="jcm-result-summary"><span class="jcm-result-outcome '+view.css+'">'+safe(view.label)+'</span><strong class="jcm-result-finish">'+safe(finish)+'</strong></div><div class="jcm-result-body">'+tile('Selected horse','<h2>'+safe(r.horse)+'</h2><p>'+safe(m?.race_name||'Race details not supplied')+'</p>')+tile('Race winner',winner)+tile('Reason for selection','<p>'+safe(roundup)+'</p>')+cardTile+videoTile+(view.css!=='pending'?tile('Result source','<a href="'+safe(r.result_source_url)+'" target="_blank" rel="noopener">Result source ↗</a>'):'')+'</div></article>';
  overlay.classList.add('open');overlay.querySelector('.jcm-close').focus();
 });
 date.addEventListener('change',paint);paint();
@@ -775,11 +781,11 @@ window.jcmOpenDummyAccount=()=>open('fixed');
 <style>
 .jcm-modal:has(.jcm-result-card){width:min(calc(100vw - 24px),680px)}
 .jcm-result-card{border:1px solid #52647b;border-radius:16px;background:#1c293c;padding:22px 18px;clear:both}
-.jcm-result-top{display:flex;gap:16px;align-items:center}.jcm-result-time{border:1px solid #52647b;border-radius:12px;background:#26364b;padding:14px;font-size:23px;font-weight:850;color:#ffd700}
+.jcm-result-top{display:flex;gap:10px;align-items:center;flex-wrap:wrap}.jcm-result-course{flex:1;min-width:90px}.jcm-result-top .jcm-confidence{margin-left:auto;min-width:78px;padding:8px}.jcm-result-top .jcm-confidence small{font-size:11px;margin:2px 0}.jcm-result-top .jcm-confidence strong{font-size:21px}.jcm-result-time{border:1px solid #52647b;border-radius:12px;background:#26364b;padding:14px;font-size:23px;font-weight:850;color:#ffd700}
 .jcm-result-top strong{font-size:20px}.jcm-result-card small{display:block;color:#d4dfef;font-size:13px;margin:6px 0}
-.jcm-result-outcome{display:inline-block;font-size:18px;font-weight:850;padding:12px 18px;border-radius:24px;margin:18px 0}
+.jcm-result-summary{display:flex;align-items:center;gap:12px;flex-wrap:wrap;margin:16px 0}.jcm-result-finish{font-size:18px}.jcm-result-outcome{display:inline-block;font-size:18px;font-weight:850;padding:12px 18px;border-radius:24px;margin:0}
 .jcm-result-outcome.win{background:#14543b;color:#85efb8}.jcm-result-outcome.loss{background:#70263a;color:#ffb3c1}.jcm-result-outcome.pending{background:#364156;color:#fff}
-.jcm-result-body{border-top:1px solid #52647b;padding-top:20px}.jcm-result-body h2{font-size:clamp(25px,7vw,34px);line-height:1.2;margin:12px 0}
+.jcm-result-body{display:grid;gap:12px}.jcm-result-tile{border:1px solid #52647b;border-radius:12px;background:#142237;padding:16px}.jcm-result-tile h3{margin:0 0 12px;font-size:17px;color:#ffd700}.jcm-result-tile p{margin:8px 0;overflow-wrap:anywhere}.jcm-result-stat + .jcm-result-stat{margin-top:12px}.jcm-result-stat strong{display:block;font-size:19px;overflow-wrap:anywhere}.jcm-result-body h2{font-size:clamp(25px,7vw,34px);line-height:1.2;margin:12px 0}
 .jcm-result-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:22px 14px;border-top:1px solid #52647b;padding:18px 0;margin:20px 0}.jcm-result-grid strong{display:block;font-size:19px;overflow-wrap:anywhere}
 .jcm-race-action{display:block;padding:14px;border:1px solid #65748a;border-radius:10px;font-weight:800}
 .jcm-link-unavailable{font-size:13px;color:#c6d0de}

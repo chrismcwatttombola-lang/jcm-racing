@@ -180,3 +180,25 @@ test('phone: stake control is first and full liability stays on a single include
  await expect(page.locator('#jcm-account-controls')).toContainText('Selected total liability: £4,500.00');
  await expect(page.locator('#jcm-detail-content')).toContainText('Liability: £4,500.00');
 });
+
+
+test('today picks survive delayed historical result refreshes', async ({ page }) => {
+ await page.clock.install({time:new Date('2026-10-12T13:00:00Z')});
+ let release;const gate=new Promise(resolve=>{release=resolve});let held=0;
+ await page.route(/data\/(unverified-results|betfair-results)\.json/,async route=>{held++;await gate;await route.continue();});
+ await page.goto('http://127.0.0.1:8765/#picks');
+ await expect(page.locator('#date')).toHaveValue('2026-10-12');
+ await expect(page.locator('[data-research-index]')).toHaveCount(15);
+ await expect.poll(()=>held).toBe(2);
+ const responses=Promise.all([page.waitForResponse(r=>r.url().endsWith('/unverified-results.json')),page.waitForResponse(r=>r.url().endsWith('/betfair-results.json'))]);
+ release();await responses;
+ await page.waitForLoadState('networkidle');
+ await expect(page.locator('[data-research-index]')).toHaveCount(15);
+ await expect(page.locator('#jcm-official-panel')).toContainText('Mighty Fleur');
+ await page.locator('[data-research-index="0"]').click();
+ await expect(page.locator('#jcm-detail-content')).toContainText('Mighty Fleur');
+ await page.locator('.jcm-close').click();
+ await page.locator('#date').selectOption('2026-10-09');
+ await page.locator('#date').selectOption('2026-10-12');
+ await expect(page.locator('[data-research-index]')).toHaveCount(15);
+});

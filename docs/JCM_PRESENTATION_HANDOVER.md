@@ -8,3 +8,6 @@ Standing user approval in project instructions covers requested appearance/usabi
 
 ## 12 October: daily rate and mobile reach
 Restored the accepted settled-result success percentage on the hub picks tile and daily heading; pending/NR excluded using the existing result gate, official metrics unchanged. Added top spacing, removed header blur, bounded dialogs to safe viewport insets and kept the close control sticky during account scrolling.
+
+## 12 October: compact safe-area header
+Removed stacked header/standalone padding. Hub and dashboard each use one safe-area allowance plus compact clearance. Moved home into the logo/date grid so all three share one center line, including narrow phone widths. Dialog close behavior remains intact.

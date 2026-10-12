@@ -6,6 +6,7 @@ async function openOct9(page) {
   await expect(page.locator('#jcm-watch-panel')).toBeVisible();
 }
 async function snapshotMetrics(page) {
+  await expect(page.locator('.metrics')).toHaveAttribute('data-overall-state',/ready|error/);
   return page.locator('.metrics').innerText();
 }
 test('desktop: 7 confirmed watchlist entries, popup, unchanged accuracy', async ({ page }) => {
@@ -394,4 +395,11 @@ test('mobile result tiles group confidence, finish and winner details',async({pa
  await page.route('**/data/competition-research-2026-10-12.json',route=>route.fulfill({json:d}));await page.goto(URL);await page.locator('#date').selectOption('2026-10-12');
  for(const [i,tier] of ['high','medium','medium','unbanded'].entries()){const row=page.locator('[data-research-index]').filter({hasText:d.high_competition[i].horse});await expect(row).toHaveClass(new RegExp('jcm-rating-'+tier));await row.click();await expect(page.locator('.jcm-confidence')).not.toContainText('Low');await page.locator('#jcm-detail-overlay .jcm-close').click();}
  await page.evaluate(()=>window.jcmOpenRatedPerformance());await expect(page.locator('.jcm-rated-table tbody tr')).toHaveCount(2);await expect(page.locator('.jcm-rated-table')).not.toContainText('Low');
+ });
+
+ test('overall research counters and clickable lists include all current outcomes',async({page})=>{
+ await page.goto(URL);await expect(page.locator('.metrics')).toHaveAttribute('data-overall-state','ready');
+ const cards=page.locator('.metrics .metric');await expect(cards.nth(0)).toContainText('72.7%');await expect(cards.nth(0)).toContainText('16/22');await expect(cards.nth(1)).toContainText('16');await expect(cards.nth(2)).toContainText('6');
+ await cards.nth(1).click();await expect(page.locator('.jcm-category-row')).toHaveCount(16);await expect(page.locator('#jcm-detail-content')).toContainText('Nostrum');await expect(page.locator('#jcm-detail-content')).toContainText("Rory's Royale");await page.locator('#jcm-detail-overlay .jcm-close').click();
+ await cards.nth(2).click();await expect(page.locator('.jcm-category-row')).toHaveCount(6);await expect(page.locator('#jcm-detail-content')).toContainText('Niffler');
  });

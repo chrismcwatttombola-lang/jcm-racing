@@ -202,3 +202,23 @@ test('today picks survive delayed historical result refreshes', async ({ page })
  await page.locator('#date').selectOption('2026-10-12');
  await expect(page.locator('[data-research-index]')).toHaveCount(15);
 });
+
+test('today displays supplied Betfair outcomes without changing official accuracy', async ({page,request}) => {
+ const response=await request.get('http://127.0.0.1:8765/data/competition-research-2026-10-12.json');
+ const data=await response.json();
+ const rows=[...data.high_competition,...data.competition_watchlist];
+ Object.assign(rows[0],{result_status:'WIN',placing:'2nd',result_source_url:'https://betting.betfair.com/horse-racing/results/12-october-2026/worcester/59/6/'});
+ Object.assign(rows[1],{result_status:'LOSS',placing:'1st',result_source_url:'https://betting.betfair.com/horse-racing/results/12-october-2026/musselburgh/15/6/'});
+ Object.assign(rows[2],{result_status:'WIN',placing:'3rd',result_source_url:'https://example.com/'});
+ await page.route('**/data/competition-research-2026-10-12.json',route=>route.fulfill({status:200,contentType:'application/json',body:JSON.stringify(data)}));
+ await page.goto(URL);await page.locator('#date').selectOption('2026-10-12');
+ await expect(page.locator('[data-research-index]')).toHaveCount(15);
+ const success=page.locator('[data-research-index]').filter({hasText:'Kykorock'});
+ await expect(success).toContainText('Success');
+ await expect(page.locator('[data-research-index]').filter({hasText:'Kelpie Grey'})).toContainText('Failure');
+ await expect(page.locator('[data-research-index]').filter({hasText:'Methgal'})).toContainText('Pending');
+ await success.click();
+ await expect(page.locator('#jcm-detail-content')).toContainText('2nd');
+ await expect(page.locator('#jcm-detail-content a').first()).toHaveAttribute('href',rows[0].result_source_url);
+ expect(rows.every(r=>r.official_accuracy_eligible===false)).toBeTruthy();
+});

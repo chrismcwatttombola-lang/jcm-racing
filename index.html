@@ -419,7 +419,7 @@ jcmSetCurrentDate();
 </script>
 <style>
 .jcm-research-row{grid-template-columns:minmax(75px,23%) minmax(0,1fr) 73px;column-gap:9px}
-.jcm-detail-rating{display:flex;margin:12px 0}.jcm-detail-rating .jcm-confidence{flex-basis:68px;min-height:54px}
+.jcm-detail-rating{display:flex;margin:12px 0}.jcm-detail-rating .jcm-confidence{flex-basis:130px;min-height:66px;padding:8px}.jcm-detail-rating .jcm-confidence small{font-size:11px}.jcm-research-row.jcm-rating-high{border:2px solid #43bd84}.jcm-research-row.jcm-rating-medium{border:2px solid #edbd57}.jcm-research-row.jcm-rating-low{border:2px solid #ed7185}
 @media(max-width:380px){.jcm-research-row{grid-template-columns:65px minmax(0,1fr) 61px;column-gap:5px}}
 .jcm-horse-with-confidence{display:flex;align-items:center;justify-content:space-between;gap:7px;min-width:0}
 .jcm-horse-with-confidence>.jcm-horse{min-width:0;flex:1 1 auto}
@@ -438,18 +438,22 @@ const date=document.getElementById('date'),panel=document.getElementById('jcm-of
 if(!date||!panel)return;
 const day='2026-10-12';let detailRows=[],state='loading';
 function safe(v){return String(v==null?'':v).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));}
+function confidenceTier(r){
+ const p=r.competition_confidence_percent;
+ return typeof p==='number'&&Number.isFinite(p)&&p>=0&&p<=100?(p>=80?'high':p>=60?'medium':'low'):'unrated';
+}
 function confidenceBox(r){
  const p=r.competition_confidence_percent;
  const rated=typeof p==='number'&&Number.isFinite(p)&&p>=0&&p<=100;
  const tier=!rated?'unrated':p>=80?'high':p>=60?'medium':'low';
  const label=!rated?'Not rated':tier==='high'?'High':tier==='medium'?'Medium':'Low';
- return '<span class="jcm-confidence '+tier+'" aria-label="'+safe(label+(rated?' competition confidence, '+p+' percent':''))+'">'+(rated?'<strong>'+safe(p)+'%</strong><small>'+label+'</small>':'<small>Not rated</small>')+'</span>';
+ return '<span class="jcm-confidence '+tier+'" aria-label="'+safe(label+(rated?' competition confidence, '+p+' percent':''))+'">'+(rated?'<small>Confidence rating</small><strong>'+safe(p)+'%</strong><small>'+label+'</small>':'<small>Not rated</small>')+'</span>';
 }
 function paint(){
  if(date.value!==day)return;
  const heading='<div class="jcm-panel-heading"><h2>Daily picks</h2><span class="jcm-accuracy">'+(state==='ready'?detailRows.length+' horses':'—')+'</span></div>';
  const note='';
- panel.innerHTML=heading+note+(state==='loading'?'<p role="status">Loading today’s horses…</p>':state==='error'?'<p role="status">INSUFFICIENT VERIFIED DATA — today’s list could not be loaded.</p>':detailRows.map((r,i)=>'<button type="button" class="jcm-row jcm-research-row" data-research-index="'+i+'"><span><span class="jcm-time">'+safe(r.off_time_uk)+'</span><span class="jcm-ground">'+safe(r.course)+'</span></span><span class="jcm-horse">'+safe(r.horse)+'</span><span class="jcm-status pending">Pending</span></button>').join(''));
+ panel.innerHTML=heading+note+(state==='loading'?'<p role="status">Loading today’s horses…</p>':state==='error'?'<p role="status">INSUFFICIENT VERIFIED DATA — today’s list could not be loaded.</p>':detailRows.map((r,i)=>'<button type="button" class="jcm-row jcm-research-row jcm-rating-'+confidenceTier(r)+'" data-research-index="'+i+'"><span><span class="jcm-time">'+safe(r.off_time_uk)+'</span><span class="jcm-ground">'+safe(r.course)+'</span></span><span class="jcm-horse">'+safe(r.horse)+'</span><span class="jcm-status pending">Pending</span></button>').join(''));
 }
 panel.addEventListener('click',e=>{
  const button=e.target.closest('[data-research-index]');if(!button)return;

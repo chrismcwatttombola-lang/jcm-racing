@@ -248,3 +248,18 @@ test('provider identity mismatch remains pending',async({page,request})=>{
  await expect(page.locator('[data-research-index]').filter({hasText:'Methgal'})).toContainText('Pending');
 });
 
+
+ test('mobile daily rate and reachable account close after scrolling', async ({page}) => {
+ await page.setViewportSize({width:390,height:664});
+ await page.goto('http://127.0.0.1:8765/#hub');
+ await expect(page.locator('#jcm-daily-rate')).toContainText('70% success · 7/10 settled');
+ const logo=await page.locator('.jcm-hub-mark').boundingBox();expect(logo.y).toBeGreaterThanOrEqual(72);
+ await page.locator('[data-page="dummy-account"]').click();
+ await expect(page.locator('[data-account-row]')).toHaveCount(15);
+ await page.locator('.jcm-modal').evaluate(el=>el.scrollTop=el.scrollHeight);
+ const close=page.locator('#jcm-detail-overlay .jcm-close');
+ const box=await close.boundingBox();expect(box.y).toBeGreaterThanOrEqual(24);expect(box.y+box.height).toBeLessThan(664);
+ await close.click();await expect(page.locator('#jcm-detail-overlay')).not.toHaveClass(/open/);
+ await page.locator('[data-page="picks"]').click();await page.locator('#date').selectOption('2026-10-12');
+ await expect(page.locator('#jcm-official-panel .jcm-accuracy')).toContainText('70% success · 7/10 settled');
+ });

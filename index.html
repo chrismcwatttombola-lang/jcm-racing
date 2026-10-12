@@ -560,7 +560,7 @@ refresh();window.addEventListener('focus',refresh);setInterval(refresh,300000);
 <script>
 /* Device-local fictional allocation controls. Quotes are illustrative, not matched bets. */
 (function(){
-const money=v=>'£'+Number(v).toFixed(2);
+const money=v=>'£'+Number(v).toLocaleString('en-GB',{minimumFractionDigits:2,maximumFractionDigits:2});
 const safe=v=>String(v??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 let lockTimer;
 window.jcmOpenDummyAccount=async function(){

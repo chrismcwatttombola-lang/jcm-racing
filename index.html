@@ -477,20 +477,27 @@ function confidenceBox(r){
  const label=!rated?'Not rated':tier==='high'?'High':tier==='medium'?'Medium':'Low';
  return '<span class="jcm-confidence '+tier+'" aria-label="'+safe(label+(rated?' competition confidence, '+p+' percent':''))+'">'+(rated?'<small>Confidence rating</small><strong>'+safe(p)+'%</strong><small>'+label+'</small>':'<small>Not rated</small>')+'</span>';
 }
+function resultView(r){
+ let url;try{url=new URL(r.result_source_url)}catch(_){return {label:'Pending',css:'pending'};}
+ if(url.protocol!=='https:'||!(url.hostname==='betfair.com'||url.hostname.endsWith('.betfair.com'))||!url.pathname.startsWith('/horse-racing/results/'))return {label:'Pending',css:'pending'};
+ const labels={WIN:['Success','win'],LOSS:['Failure','loss'],NR:['NR','nr']};
+ const value=labels[r.result_status];return value?{label:value[0],css:value[1]}:{label:'Pending',css:'pending'};
+}
 function paint(){
  if(date.value!==day)return;
  const heading='<div class="jcm-panel-heading"><h2>Daily picks</h2><span class="jcm-accuracy">'+(state==='ready'?detailRows.length+' horses':'—')+'</span></div>';
  const note='';
- panel.innerHTML=heading+note+(state==='loading'?'<p role="status">Loading today’s horses…</p>':state==='error'?'<p role="status">INSUFFICIENT VERIFIED DATA — today’s list could not be loaded.</p>':detailRows.map((r,i)=>'<button type="button" class="jcm-row jcm-research-row jcm-rating-'+confidenceTier(r)+'" data-research-index="'+i+'"><span><span class="jcm-time">'+safe(r.off_time_uk)+'</span><span class="jcm-ground">'+safe(r.course)+'</span></span><span class="jcm-horse">'+safe(r.horse)+'</span><span class="jcm-status pending">Pending</span></button>').join(''));
+ panel.innerHTML=heading+note+(state==='loading'?'<p role="status">Loading today’s horses…</p>':state==='error'?'<p role="status">INSUFFICIENT VERIFIED DATA — today’s list could not be loaded.</p>':detailRows.map((r,i)=>'<button type="button" class="jcm-row jcm-research-row jcm-rating-'+confidenceTier(r)+'" data-research-index="'+i+'"><span><span class="jcm-time">'+safe(r.off_time_uk)+'</span><span class="jcm-ground">'+safe(r.course)+'</span></span><span class="jcm-horse">'+safe(r.horse)+'</span><span class="jcm-status '+resultView(r).css+'">'+safe(resultView(r).label)+'</span></button>').join(''));
 }
 panel.addEventListener('click',e=>{
  const button=e.target.closest('[data-research-index]');if(!button)return;
  const r=detailRows[Number(button.dataset.researchIndex)],overlay=document.getElementById('jcm-detail-overlay');
  if(!r||!overlay)return;
  const roundup=r.identified_challengers.length?'Chosen for review because '+r.identified_challengers.join(', ')+' were identified as competing threats.':'Selection reason not supplied.';
- overlay.querySelector('#jcm-detail-content').innerHTML='<h2>'+safe(r.horse)+'</h2><div class="jcm-detail-rating">'+confidenceBox(r)+'</div><p><strong>'+safe(r.off_time_uk)+' · '+safe(r.course)+'</strong></p><p>Result: <strong>Pending</strong></p><p>'+safe(roundup)+'</p><p><a href="https://www.racingpost.com/racecards/2026-10-12/" target="_blank" rel="noopener">View racecards ↗</a></p>';
+ overlay.querySelector('#jcm-detail-content').innerHTML='<h2>'+safe(r.horse)+'</h2><div class="jcm-detail-rating">'+confidenceBox(r)+'</div><p><strong>'+safe(r.off_time_uk)+' · '+safe(r.course)+'</strong></p><p>Result: <strong>'+safe(resultView(r).label)+'</strong></p>'+(resultView(r).css!=='pending'?'<p>Placing: '+safe(r.placing??r.position??'Not supplied')+'</p><p><a href="'+safe(r.result_source_url)+'" target="_blank" rel="noopener">Betfair result ↗</a></p>':'')+'<p>'+safe(roundup)+'</p><p><a href="https://www.racingpost.com/racecards/2026-10-12/" target="_blank" rel="noopener">View racecards ↗</a></p>';
  overlay.classList.add('open');overlay.querySelector('.jcm-close').focus();
 });
+window.addEventListener('jcm-repaint-panels',paint);
 date.addEventListener('change',paint);paint();
 fetch('data/competition-research-2026-10-12.json',{cache:'no-store'}).then(r=>{if(!r.ok)throw Error('unavailable');return r.json()}).then(d=>{
  if(d.mode!=='research_only_not_official_picks'||d.date!==day||!Array.isArray(d.high_competition)||!Array.isArray(d.competition_watchlist))throw Error('invalid research data');

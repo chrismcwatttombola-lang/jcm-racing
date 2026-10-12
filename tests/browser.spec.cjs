@@ -253,7 +253,7 @@ test('provider identity mismatch remains pending',async({page,request})=>{
  await page.setViewportSize({width:390,height:664});
  await page.goto('http://127.0.0.1:8765/#hub');
  await expect(page.locator('#jcm-daily-rate')).toContainText('63.6% success · 7/11 settled');
- const logo=await page.locator('.jcm-hub-mark').boundingBox();expect(logo.y).toBeGreaterThanOrEqual(72);
+ const logo=await page.locator('.jcm-hub-mark').boundingBox();expect(logo.y).toBeGreaterThanOrEqual(24);expect(logo.y).toBeLessThan(60);
  await page.locator('[data-page="dummy-account"]').click();
  await expect(page.locator('[data-account-row]')).toHaveCount(15);
  await page.locator('.jcm-modal').evaluate(el=>el.scrollTop=el.scrollHeight);
@@ -314,4 +314,15 @@ test('individual provider URL must match result race ID',async({page,request})=>
  const r=[...d.high_competition,...d.competition_watchlist].find(r=>r.horse==='Wadooda');
  expect(await page.evaluate(r=>window.jcmAcceptedResult(r),r)).toBe(true);
  for(const url of ['https://api.theracingapi.com/v1/results/rac_999',r.result_source_url+'?race=other',r.result_source_url+'#other'])expect(await page.evaluate(r=>window.jcmAcceptedResult(r),{...r,result_source_url:url})).toBe(false);
+});
+
+test('phone header: home, date and logo share one row with compact top clearance',async({page})=>{
+ for(const width of [360,390]){
+ await page.setViewportSize({width,height:844});await page.goto(URL);
+ const boxes=await Promise.all(['header .identity img','#date','.jcm-home-link'].map(s=>page.locator(s).boundingBox()));
+ const centers=boxes.map(b=>b.y+b.height/2);expect(Math.max(...centers)-Math.min(...centers)).toBeLessThan(2);
+ expect(boxes[0].y).toBeGreaterThanOrEqual(16);expect(boxes[0].y).toBeLessThan(40);
+ expect(boxes[2].x+boxes[2].width).toBeLessThanOrEqual(width);
+ expect(await page.evaluate(()=>document.documentElement.scrollWidth)).toBeLessThanOrEqual(width);
+ }
 });

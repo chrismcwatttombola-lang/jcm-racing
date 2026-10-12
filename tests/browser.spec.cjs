@@ -234,11 +234,11 @@ test('accepted provider results populate picks, rating groups and fictional sett
  await page.locator('#jcm-detail-overlay .jcm-close').click();
  await expect.poll(()=>page.evaluate(()=>window.jcmRatedCounts?true:false)).toBeTruthy();
  const counts=await page.evaluate(async()=>window.jcmRatedCounts([await (await fetch('data/competition-research-2026-10-12.json')).json()]));
- expect(counts.high).toEqual({win:4,loss:1});expect(counts.medium).toEqual({win:4,loss:4});
+ expect(counts.high).toEqual({win:4,loss:1});expect(counts.medium).toEqual({win:6,loss:4});
  await page.evaluate(()=>window.jcmOpenDummyAccount());
  await expect(page.locator('#jcm-detail-content')).toContainText('One Of The Boys');
- await expect(page.locator('#jcm-detail-content')).toContainText('£4,878.53');
- await expect(page.locator('#jcm-detail-content')).toContainText('Pending · 2 races');
+ await expect(page.locator('#jcm-detail-content')).toContainText('£4,905.54');
+ await expect(page.locator('#jcm-detail-content')).toContainText('Closing balance');
 });
 test('provider identity mismatch remains pending',async({page,request})=>{
  const d=await (await request.get('http://127.0.0.1:8765/data/competition-research-2026-10-12.json')).json();
@@ -252,7 +252,7 @@ test('provider identity mismatch remains pending',async({page,request})=>{
  test('mobile daily rate and reachable account close after scrolling', async ({page}) => {
  await page.setViewportSize({width:390,height:664});
  await page.goto('http://127.0.0.1:8765/#hub');
- await expect(page.locator('#jcm-daily-rate')).toContainText('61.5% success · 8/13 settled');
+ await expect(page.locator('#jcm-daily-rate')).toContainText('66.7% success · 10/15 settled');
  const logo=await page.locator('.jcm-hub-mark').boundingBox();expect(logo.y).toBeGreaterThanOrEqual(24);expect(logo.y).toBeLessThan(60);
  await page.locator('[data-page="dummy-account"]').click();
  await expect(page.locator('[data-account-row]')).toHaveCount(15);
@@ -261,7 +261,7 @@ test('provider identity mismatch remains pending',async({page,request})=>{
  const box=await close.boundingBox();expect(box.y).toBeGreaterThanOrEqual(24);expect(box.y+box.height).toBeLessThan(664);
  await close.click();await expect(page.locator('#jcm-detail-overlay')).not.toHaveClass(/open/);
  await page.locator('[data-page="picks"]').click();await page.locator('#date').selectOption('2026-10-12');
- await expect(page.locator('#jcm-official-panel .jcm-accuracy')).toContainText('61.5% success · 8/13 settled');
+ await expect(page.locator('#jcm-official-panel .jcm-accuracy')).toContainText('66.7% success · 10/15 settled');
  });
 
 async function manualView(page){
@@ -379,4 +379,11 @@ test('mobile result tiles group confidence, finish and winner details',async({pa
  const r={...base,result_source:'SPORTING_LIFE',verification_status:'WEBSITE_CONFIRMED',result_website_race_id:'942994',result_source_url:'https://www.sportinglife.com/racing/results/2026-10-12/kempton/942994/try-unibets-superboosts-handicap'};
  expect(await page.evaluate(r=>window.jcmAcceptedResult(r),r)).toBe(true);
  for(const bad of [{result_website_race_id:'999'},{result_horse:'Different horse'},{result_date:'2026-10-11'},{verification_status:'UNVERIFIED'},{official_accuracy_eligible:true},{position:'UNKNOWN'},{result_source_url:r.result_source_url.replace('/kempton/','/newcastle/')}])expect(await page.evaluate(r=>window.jcmAcceptedResult(r),{...r,...bad})).toBe(false);
+ });
+
+ test('final two races and closing research totals agree across account views',async({page,request})=>{
+ await page.goto(URL);await page.locator('#date').selectOption('2026-10-12');
+ for(const horse of ["Rory's Royale",'Edmond Halley']){const row=page.locator('[data-research-index]').filter({hasText:horse});await expect(row).toContainText('Horse lost');await row.click();await expect(page.locator('.jcm-result-summary')).toContainText('Finished 3rd');await page.locator('#jcm-detail-overlay .jcm-close').click();}
+ const d=await(await request.get('http://127.0.0.1:8765/data/fictional-account-2026-10-12.json')).json();expect(d.rows.filter(r=>r.result_status==='WIN')).toHaveLength(10);expect(d.rows.filter(r=>r.result_status==='LOSS')).toHaveLength(5);expect(d.rows.some(r=>r.result_status==='PENDING')).toBe(false);
+ await page.evaluate(()=>window.jcmOpenDummyAccount());await expect(page.locator('#jcm-detail-content')).toContainText('£4,905.54');await expect(page.locator('#jcm-detail-content')).toContainText('all 0 outstanding');
  });

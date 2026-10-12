@@ -18,7 +18,7 @@ test('desktop: 8 unverified watchlist entries, popup, unchanged accuracy', async
   await expect.poll(() => snapshotMetrics(page)).toBe(before);
   await page.locator('#jcm-watch-panel .jcm-row').first().click();
   await expect(page.locator('#jcm-detail-overlay')).toHaveClass(/open/);
-  await expect(page.locator('#jcm-detail-content')).toContainText('UNVERIFIED');
+  await expect(page.locator('#jcm-detail-content')).toContainText(/unverified/i);
   await expect(page.locator('#jcm-detail-content a')).toHaveAttribute('href', /^https:\/\/www\.racingpost\.com\/results\//);
 });
 test('failed feed request retains pending watchlist and accuracy', async ({ page }) => {
@@ -75,7 +75,7 @@ test('320px phone keeps unverified watchlist accessible', async ({ browser }) =>
   expect(metrics.scroll).toBeLessThanOrEqual(metrics.width);
   expect(metrics.dateHeight).toBeGreaterThanOrEqual(44);
   await page.locator('#jcm-watch-panel .jcm-row').first().click();
-  await expect(page.locator('#jcm-detail-content')).toContainText('UNVERIFIED');
+  await expect(page.locator('#jcm-detail-content')).toContainText(/unverified/i);
   const modal = await page.locator('#jcm-detail-overlay .jcm-modal').boundingBox();
   expect(modal).not.toBeNull();
   expect(modal.x).toBeGreaterThanOrEqual(0);

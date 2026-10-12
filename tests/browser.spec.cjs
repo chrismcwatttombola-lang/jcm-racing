@@ -166,6 +166,11 @@ test('phone: stake control is first and full liability stays on a single include
  await page.goto('http://127.0.0.1:8765/#hub');
  await page.locator('[data-page="dummy-account"]').click();
  await expect(page.locator('#jcm-account-controls')).toBeVisible();
+ await expect(page.locator('#jcm-best-selection')).not.toHaveAttribute('open','');
+ await page.locator('#jcm-best-selection summary').click();
+ await expect(page.locator('#jcm-best-selection')).toHaveAttribute('open','');
+ await expect(page.locator('#jcm-best-selection')).toContainText('Wadooda');
+ await expect(page.locator('[data-account-row]:checked')).toHaveCount(15);
  await expect(page.locator('#jcm-detail-content > :nth-child(2)')).toHaveAttribute('id','jcm-account-controls');
  for(let i=1;i<15;i++)await page.locator('[data-account-row="'+i+'"]').uncheck();
  await expect(page.locator('#jcm-account-controls')).toContainText('Selected total liability: £1,000.00');

@@ -158,3 +158,20 @@ test('fictional account redistributes confirmed liability and locks at first rac
  await expect(page.locator('[data-account-row="1"]')).toBeDisabled();
  await expect(page.locator('#jcm-account-lock')).toContainText('Locked for today');
 });
+
+
+test('phone: stake control is first and full liability stays on a single included horse', async ({ page }) => {
+ await page.setViewportSize({width:390,height:844});
+ await page.clock.install({time:new Date('2026-10-12T13:00:00Z')});
+ await page.goto('http://127.0.0.1:8765/#hub');
+ await page.locator('[data-page="dummy-account"]').click();
+ await expect(page.locator('#jcm-account-controls')).toBeVisible();
+ await expect(page.locator('#jcm-detail-content > :nth-child(2)')).toHaveAttribute('id','jcm-account-controls');
+ for(let i=1;i<15;i++)await page.locator('[data-account-row="'+i+'"]').uncheck();
+ await expect(page.locator('#jcm-account-controls')).toContainText('Selected total liability: £1,000.00');
+ await expect(page.locator('#jcm-detail-content')).toContainText('1 horses · £1,000.00 total liability');
+ await page.locator('#jcm-account-budget').fill('4500');
+ await page.locator('#jcm-account-confirm').click();
+ await expect(page.locator('#jcm-account-controls')).toContainText('Selected total liability: £4,500.00');
+ await expect(page.locator('#jcm-detail-content')).toContainText('Liability: £4,500.00');
+});

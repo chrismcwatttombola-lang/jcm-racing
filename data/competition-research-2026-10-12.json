@@ -54,8 +54,21 @@
       ],
       "tier": "high",
       "selection_status": "RESEARCH_ONLY_NOT_LOCKED",
-      "result_status": "PENDING_UNVERIFIED",
-      "official_accuracy_eligible": false
+      "result_status": "WIN",
+      "official_accuracy_eligible": false,
+      "position": "3",
+      "placing": "3rd",
+      "result_source": "THE_RACING_API",
+      "verification_status": "PROVIDER_ACCEPTED",
+      "result_source_url": "https://api.theracingapi.com/v1/results?start_date=2026-10-12&end_date=2026-10-12",
+      "result_retrieved_at": "2026-10-12T16:50:15.847Z",
+      "result_date": "2026-10-12",
+      "result_off_dt": "2026-10-12T16:24:00+01:00",
+      "result_off_time_uk": "16:24",
+      "result_course": "Yarmouth",
+      "result_horse": "Methgal",
+      "result_race_id": "rac_32300756722",
+      "result_horse_id": "hrs_39962125"
     },
     {
       "race_date": "2026-10-12",
@@ -72,8 +85,21 @@
       ],
       "tier": "high",
       "selection_status": "RESEARCH_ONLY_NOT_LOCKED",
-      "result_status": "PENDING_UNVERIFIED",
-      "official_accuracy_eligible": false
+      "result_status": "WIN",
+      "official_accuracy_eligible": false,
+      "position": "4",
+      "placing": "4th",
+      "result_source": "THE_RACING_API",
+      "verification_status": "PROVIDER_ACCEPTED",
+      "result_source_url": "https://api.theracingapi.com/v1/results?start_date=2026-10-12&end_date=2026-10-12",
+      "result_retrieved_at": "2026-10-12T16:50:15.847Z",
+      "result_date": "2026-10-12",
+      "result_off_dt": "2026-10-12T16:30:00+01:00",
+      "result_off_time_uk": "16:30",
+      "result_course": "Roscommon",
+      "result_horse": "Lauderdale King",
+      "result_race_id": "rac_32300851635",
+      "result_horse_id": "hrs_52862607"
     },
     {
       "race_date": "2026-10-12",
@@ -146,9 +172,22 @@
       "identified_challengers": [],
       "tier": "watchlist",
       "selection_status": "RESEARCH_ONLY_NOT_LOCKED",
-      "result_status": "PENDING_UNVERIFIED",
+      "result_status": "WIN",
       "official_accuracy_eligible": false,
-      "confidence_source": "User-supplied JCM selections screenshot, 12 October 2026 (IMG_9679.jpeg)"
+      "confidence_source": "User-supplied JCM selections screenshot, 12 October 2026 (IMG_9679.jpeg)",
+      "position": "2",
+      "placing": "2nd",
+      "result_source": "THE_RACING_API",
+      "verification_status": "PROVIDER_ACCEPTED",
+      "result_source_url": "https://api.theracingapi.com/v1/results?start_date=2026-10-12&end_date=2026-10-12",
+      "result_retrieved_at": "2026-10-12T16:50:15.847Z",
+      "result_date": "2026-10-12",
+      "result_off_dt": "2026-10-12T16:28:00+01:00",
+      "result_off_time_uk": "16:28",
+      "result_course": "Newcastle",
+      "result_horse": "Indhaar",
+      "result_race_id": "rac_32300731541",
+      "result_horse_id": "hrs_63809403"
     },
     {
       "race_date": "2026-10-12",
@@ -160,9 +199,22 @@
       "identified_challengers": [],
       "tier": "watchlist",
       "selection_status": "RESEARCH_ONLY_NOT_LOCKED",
-      "result_status": "PENDING_UNVERIFIED",
+      "result_status": "WIN",
       "official_accuracy_eligible": false,
-      "confidence_source": "User-supplied JCM selections screenshot, 12 October 2026 (IMG_9679.jpeg)"
+      "confidence_source": "User-supplied JCM selections screenshot, 12 October 2026 (IMG_9679.jpeg)",
+      "position": "5",
+      "placing": "5th",
+      "result_source": "THE_RACING_API",
+      "verification_status": "PROVIDER_ACCEPTED",
+      "result_source_url": "https://api.theracingapi.com/v1/results?start_date=2026-10-12&end_date=2026-10-12",
+      "result_retrieved_at": "2026-10-12T16:50:15.847Z",
+      "result_date": "2026-10-12",
+      "result_off_dt": "2026-10-12T16:45:00+01:00",
+      "result_off_time_uk": "16:45",
+      "result_course": "Kempton",
+      "result_horse": "Tredegar Square",
+      "result_race_id": "rac_32300716045",
+      "result_horse_id": "hrs_17390467493"
     },
     {
       "race_date": "2026-10-12",
@@ -174,9 +226,22 @@
       "identified_challengers": [],
       "tier": "watchlist",
       "selection_status": "RESEARCH_ONLY_NOT_LOCKED",
-      "result_status": "PENDING_UNVERIFIED",
+      "result_status": "LOSS",
       "official_accuracy_eligible": false,
-      "confidence_source": "User-supplied JCM selections screenshot, 12 October 2026 (IMG_9679.jpeg)"
+      "confidence_source": "User-supplied JCM selections screenshot, 12 October 2026 (IMG_9679.jpeg)",
+      "position": "1",
+      "placing": "1st",
+      "result_source": "THE_RACING_API",
+      "verification_status": "PROVIDER_ACCEPTED",
+      "result_source_url": "https://api.theracingapi.com/v1/results?start_date=2026-10-12&end_date=2026-10-12",
+      "result_retrieved_at": "2026-10-12T16:50:15.847Z",
+      "result_date": "2026-10-12",
+      "result_off_dt": "2026-10-12T17:15:00+01:00",
+      "result_off_time_uk": "17:15",
+      "result_course": "Kempton",
+      "result_horse": "One Of The Boys",
+      "result_race_id": "rac_32300717982",
+      "result_horse_id": "hrs_55303745"
     },
     {
       "race_date": "2026-10-12",
@@ -242,8 +307,7 @@
   ],
   "notes": [
     "Market leader rank provisional in some races",
-    "All results pending independent verification; no accuracy updates",
-    "Research-only draft: not published to live hub",
-    "Watchlist competition-confidence scores transcribed from user-supplied original selections screenshot on 12 October 2026; no new estimates."
+    "Watchlist competition-confidence scores transcribed from user-supplied original selections screenshot on 12 October 2026; no new estimates.",
+    "12 October user accepts The Racing API as primary results source; provider accepted outcomes remain ineligible for official accuracy."
   ]
 }

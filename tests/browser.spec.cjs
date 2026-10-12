@@ -214,8 +214,8 @@ test('today displays supplied Betfair outcomes without changing official accurac
  await page.goto(URL);await page.locator('#date').selectOption('2026-10-12');
  await expect(page.locator('[data-research-index]')).toHaveCount(15);
  const success=page.locator('[data-research-index]').filter({hasText:'Kykorock'});
- await expect(success).toContainText('Success');
- await expect(page.locator('[data-research-index]').filter({hasText:'Kelpie Grey'})).toContainText('Failure');
+ await expect(success).toContainText('Horse lost');
+ await expect(page.locator('[data-research-index]').filter({hasText:'Kelpie Grey'})).toContainText('Horse won');
  await expect(page.locator('[data-research-index]').filter({hasText:'Methgal'})).toContainText('Pending');
  await success.click();
  await expect(page.locator('#jcm-detail-content')).toContainText('2nd');
@@ -226,9 +226,9 @@ test('today displays supplied Betfair outcomes without changing official accurac
 test('accepted provider results populate picks, rating groups and fictional settlement',async({page})=>{
  await page.goto(URL);await page.locator('#date').selectOption('2026-10-12');
  await expect(page.locator('[data-research-index]')).toHaveCount(15);
- for(const name of ['Methgal','Indhaar','Lauderdale King','Tredegar Square','Kelpie Grey','Dandy Magic','Zoustar Dreams'])await expect(page.locator('[data-research-index]').filter({hasText:name})).toContainText('Success');
- for(const name of ['One Of The Boys','Mighty Fleur','Kykorock'])await expect(page.locator('[data-research-index]').filter({hasText:name})).toContainText('Failure');
- await expect(page.locator('[data-research-index]').filter({hasText:'Wadooda'})).toContainText('Failure');
+ for(const name of ['Methgal','Indhaar','Lauderdale King','Tredegar Square','Kelpie Grey','Dandy Magic','Zoustar Dreams'])await expect(page.locator('[data-research-index]').filter({hasText:name})).toContainText('Horse lost');
+ for(const name of ['One Of The Boys','Mighty Fleur','Kykorock'])await expect(page.locator('[data-research-index]').filter({hasText:name})).toContainText('Horse won');
+ await expect(page.locator('[data-research-index]').filter({hasText:'Wadooda'})).toContainText('Horse won');
  await page.locator('[data-research-index]').filter({hasText:'Methgal'}).click();
  await expect(page.locator('#jcm-detail-content')).toContainText('3rd');
  await page.locator('#jcm-detail-overlay .jcm-close').click();
@@ -308,6 +308,20 @@ test('manual: accepted settlement moves only manual bank, missing evidence retai
  await expect(page.locator('[data-manual-balance]')).toHaveText('£5,413.04');await expect(page.locator('[data-manual-reserved]')).toHaveText('£5,400.00');
 });
 
+test('result card shows selected outcome, finishing place, winner, margins and exact racecard',async({page})=>{
+ await page.setViewportSize({width:390,height:844});await page.goto(URL);await page.locator('#date').selectOption('2026-10-12');
+ await expect(page.locator('[data-research-index]').filter({hasText:'Wadooda'})).toContainText('Horse won');
+ await expect.poll(()=>page.evaluate(async()=>{const d=await (await fetch('data/result-card-details-2026-10-12.json')).json();return d.details.length})).toBe(15);
+ await page.locator('[data-research-index]').filter({hasText:'Wadooda'}).click();
+ await expect(page.locator('.jcm-result-card')).toContainText('Finished 1st of 8');await expect(page.locator('.jcm-result-card')).toContainText('1.5 lengths');
+ await expect(page.locator('.jcm-result-outcome.loss')).toHaveText('Horse won');
+ await expect(page.getByRole('link',{name:'View this racecard'})).toHaveAttribute('href','https://www.racingpost.com/racecards/1079/kempton-aw/2026-10-12/928657/');
+ await expect(page.locator('.jcm-result-card')).toContainText('replay link not verified');
+ const modal=await page.locator('.jcm-modal').boundingBox();expect(modal.width).toBeGreaterThanOrEqual(366);
+ await page.locator('.jcm-close').first().click();await page.locator('[data-research-index]').filter({hasText:'Niffler'}).click();
+ await expect(page.getByRole('link',{name:'View this racecard'})).toHaveAttribute('href','https://www.racingpost.com/racecards/1079/kempton-aw/2026-10-12/928662/');
+ await expect(page.locator('.jcm-result-card')).not.toContainText('https://www.racingpost.com/racecards/2026-10-12/');
+});
 test('individual provider URL must match result race ID',async({page,request})=>{
  await page.goto(URL);
  const d=await (await request.get('http://127.0.0.1:8765/data/competition-research-2026-10-12.json')).json();

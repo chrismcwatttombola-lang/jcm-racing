@@ -345,7 +345,21 @@
       "liability_gbp": 66.66,
       "indicative_stake_gbp": 41.148148148148145,
       "best_price_liquidity_sufficient": false,
-      "result_status": "PENDING"
+      "result_status": "LOSS",
+      "position": "1",
+      "placing": "1st",
+      "result_source": "THE_RACING_API",
+      "verification_status": "PROVIDER_ACCEPTED",
+      "result_source_url": "https://api.theracingapi.com/v1/results/rac_32300727667",
+      "result_retrieved_at": "2026-10-12T19:25:58.666Z",
+      "result_date": "2026-10-12",
+      "result_off_dt": "2026-10-12T19:45:00+01:00",
+      "result_off_time_uk": "19:45",
+      "result_course": "Kempton",
+      "result_horse": "Niffler",
+      "result_race_id": "rac_32300727667",
+      "result_horse_id": "hrs_62779360",
+      "official_accuracy_eligible": false
     },
     {
       "off_time_uk": "20:15",

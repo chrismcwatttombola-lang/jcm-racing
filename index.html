@@ -501,6 +501,300 @@ const date=document.getElementById('date'),panel=document.getElementById('jcm-of
 if(!date||!panel)return;
 const day='2026-10-12';let detailRows=[],state='loading',cardDetails=[];
 fetch('data/result-card-details-'+day+'.json',{cache:'no-store'}).then(r=>{if(!r.ok)throw Error('Unavailable');return r.json()}).then(d=>{if(d.schema_version===1&&d.date===day&&Array.isArray(d.details))cardDetails=d.details;}).catch(()=>{});
+function raceResultsLink(m,r){try{const u=new URL(m?.results_url);const course=r.course.toLowerCase().replace(/[^a-z0-9]+/g,'-').replace(/^-|-$/g,'');return u.protocol==='https:'&&u.hostname==='www.sportinglife.com'&&new RegExp('^/racing/results/'+r.race_date+'/'+course+'/[0-9]+/[a-z0-9-]+/?{const matches=cardDetails.filter(m=>m.date===r.race_date&&m.horse===r.horse&&m.course===r.course&&m.off_time_uk===r.off_time_uk);return matches.length===1?matches[0]:null;}
+function ordinal(v){const n=Number(v);if(!Number.isInteger(n)||n<1)return String(v||'Not supplied');const a=n%100;return n+(a>=11&&a<=13?'th':({1:'st',2:'nd',3:'rd'}[n%10]||'th'));}
+function margin(v){if(typeof v!=='string'||!v.trim())return 'Not supplied';return /^[0-9]*[.]?[0-9]+$/.test(v)&&Number.isFinite(Number(v))?Number(v)+' lengths':v;}
+function raceLink(v,kind){try{const u=new URL(v);return u.protocol==='https:'&&u.hostname==='www.racingpost.com'&&new RegExp('^/'+kind+'/[0-9]+/[^/]+/'+day+'/[0-9]+/?$').test(u.pathname)&&!u.search&&!u.hash?u.href:null;}catch(_){return null;}}
+function safe(v){return String(v==null?'':v).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));}
+function confidenceTier(r){
+ const p=r.competition_confidence_percent;
+ return typeof p==='number'&&Number.isFinite(p)&&p>=0&&p<=100?(p>=80?'high':p>=60?'medium':'low'):'unrated';
+}
+function confidenceBox(r,compact=false){
+ const p=r.competition_confidence_percent;
+ const rated=typeof p==='number'&&Number.isFinite(p)&&p>=0&&p<=100;
+ const tier=!rated?'unrated':p>=80?'high':p>=60?'medium':'low';
+ const label=!rated?'Not rated':tier==='high'?'High':tier==='medium'?'Medium':'Low';
+ return '<span class="jcm-confidence '+tier+'" aria-label="'+safe(label+(rated?' competition confidence, '+p+' percent':''))+'">'+(rated?'<small>'+ (compact?'Confidence':'Confidence rating') +'</small><strong>'+safe(p)+'%</strong><small>'+label+'</small>':'<small>Not rated</small>')+'</span>';
+}
+function resultView(r){
+ let url;try{url=new URL(r.result_source_url)}catch(_){return {label:'Pending',css:'pending'};}
+ if(!window.jcmAcceptedResult(r))return {label:'Pending',css:'pending'};
+ const labels={WIN:['Horse lost','win'],LOSS:['Horse won','loss'],NR:['NR','nr']};
+ const value=labels[r.result_status];return value?{label:value[0],css:value[1]}:{label:'Pending',css:'pending'};
+}
+function paint(){
+ if(date.value!==day)return;
+ const settled=detailRows.filter(r=>['win','loss'].includes(resultView(r).css));
+ const wins=settled.filter(r=>resultView(r).css==='win').length;
+ const rate=state==='ready'?(settled.length?Math.round(wins/settled.length*1000)/10+'% success · '+wins+'/'+settled.length+' settled':'No settled results'):state==='error'?'Results unavailable':'Loading results…';
+ const tile=document.getElementById('jcm-daily-rate');if(tile)tile.textContent='Today · '+rate;
+ const heading='<div class="jcm-panel-heading"><h2>Daily picks</h2><span class="jcm-accuracy">'+safe(rate)+'</span></div>';
+ const note='';
+ panel.innerHTML=heading+note+(state==='loading'?'<p role="status">Loading today’s horses…</p>':state==='error'?'<p role="status">INSUFFICIENT VERIFIED DATA — today’s list could not be loaded.</p>':detailRows.map((r,i)=>'<button type="button" class="jcm-row jcm-research-row jcm-rating-'+confidenceTier(r)+'" data-research-index="'+i+'"><span><span class="jcm-time">'+safe(r.off_time_uk)+'</span><span class="jcm-ground">'+safe(r.course)+'</span></span><span class="jcm-horse">'+safe(r.horse)+'</span><span class="jcm-status '+resultView(r).css+'">'+safe(resultView(r).label)+'</span></button>').join(''));
+}
+panel.addEventListener('click',e=>{
+ const button=e.target.closest('[data-research-index]');if(!button)return;
+ const r=detailRows[Number(button.dataset.researchIndex)],overlay=document.getElementById('jcm-detail-overlay');
+ if(!r||!overlay)return;
+ const roundup=r.identified_challengers.length?'Chosen for review because '+r.identified_challengers.join(', ')+' were identified as competing threats.':'Selection reason not supplied.';
+ const m=detailFor(r),view=resultView(r),accepted=view.css!=='pending'&&m&&m.race_id===r.result_race_id&&m.horse_id===r.result_horse_id&&m.position===r.position&&((r.result_status==='LOSS'&&m.position==='1')||(r.result_status==='WIN'&&Number(m.position)>1))&&(!r.placing||r.placing===ordinal(m.position));
+ const card=raceLink(m?.racecard_url,'racecards'),results=raceResultsLink(m,r);
+ const finish=view.css==='pending'?'Pending':accepted?'Finished '+ordinal(m.position)+' of '+m.field_size:String(r.placing??r.position??'Not supplied');
+ const stat=(label,value)=>'<div class="jcm-result-stat"><small>'+safe(label)+'</small><strong>'+safe(value)+'</strong></div>';
+ const tile=(title,content)=>'<section class="jcm-result-tile"><h3>'+safe(title)+'</h3>'+content+'</section>';
+ const winner=stat('Winner',accepted?m.winner:'Not yet available')+stat('Winning margin',accepted?margin(m.winning_margin_lengths):'Not yet available')+(view.css==='loss'?'':stat('Selected horse beaten by',accepted?margin(m.selected_beaten_lengths):'Not yet available'));
+ const cardTile=tile('Racecard',card?'<a class="jcm-race-action" href="'+safe(card)+'" target="_blank" rel="noopener">View this racecard ↗</a>':'<p class="jcm-link-unavailable">Exact racecard link not verified.</p>');
+ const resultsTile=tile('Race results',results?'<a class="jcm-race-action" href="'+safe(results)+'" target="_blank" rel="noopener">View this race result ↗</a>':'<p class="jcm-link-unavailable">Exact race result link not yet verified.</p>');
+ const videoTile=tile('Race video','<a class="jcm-race-action" href="https://www.sportinglife.com/racing/results" target="_blank" rel="noopener">View race videos here</a><small>Sporting Life login may be required.</small>');
+ overlay.querySelector('#jcm-detail-content').innerHTML='<article class="jcm-result-card"><div class="jcm-result-top"><span class="jcm-result-time">'+safe(r.off_time_uk)+'</span><div class="jcm-result-course"><strong>'+safe(r.course)+'</strong><small>12 Oct 2026 · UK time</small></div>'+confidenceBox(r,true)+'</div><div class="jcm-result-summary"><span class="jcm-result-outcome '+view.css+'">'+safe(view.label)+'</span><strong class="jcm-result-finish">'+safe(finish)+'</strong></div><div class="jcm-result-body">'+tile('Selected horse','<h2>'+safe(r.horse)+'</h2><p>'+safe(m?.race_name||'Race details not supplied')+'</p>')+tile('Race winner',winner)+tile('Reason for selection','<p>'+safe(roundup)+'</p>')+cardTile+resultsTile+videoTile+'</div></article>';
+ overlay.classList.add('open');overlay.querySelector('.jcm-close').focus();
+});
+date.addEventListener('change',paint);paint();
+fetch('data/competition-research-2026-10-12.json',{cache:'no-store'}).then(r=>{if(!r.ok)throw Error('unavailable');return r.json()}).then(d=>{
+ if(d.mode!=='research_only_not_official_picks'||d.date!==day||!Array.isArray(d.high_competition)||!Array.isArray(d.competition_watchlist))throw Error('invalid research data');
+ detailRows=[...d.high_competition,...d.competition_watchlist].sort((a,b)=>a.off_time_uk.localeCompare(b.off_time_uk));
+ if(detailRows.length!==15||detailRows.some(r=>r.race_date!==day||typeof r.horse!=='string'||typeof r.course!=='string'||typeof r.off_time_uk!=='string'||!Array.isArray(r.identified_challengers)))throw Error('invalid rows');
+ state='ready';paint();
+}).catch(()=>{state='error';paint();});
+})();
+</script>
+<style>
+#jcm-detail-overlay{z-index:100}
+#jcm-rated-ratios{display:grid;gap:8px;width:100%}
+.jcm-rated-line{display:grid;grid-template-columns:72px 1fr auto;gap:10px;align-items:center;width:100%;padding:9px;border-radius:9px;background:#121b2c}
+.jcm-rated-line .high{color:#80e4b2}.jcm-rated-line .medium{color:#f5ce79}.jcm-rated-line .low{color:#ff9bad}
+.jcm-rated-table{width:100%;border-collapse:collapse;font-size:14px}
+.jcm-rated-table th,.jcm-rated-table td{padding:12px 5px;border-bottom:1px solid #52647b;text-align:left}
+.jcm-rated-table th{font-size:12px}
+</style>
+<script>
+(function(){
+let groups={high:{win:0,loss:0},medium:{win:0,loss:0},low:{win:0,loss:0}},ready=false,error=false;
+const levels=[['high','High'],['medium','Medium'],['low','Low']];
+function ratedCounts(payloads){
+ const counts={high:{win:0,loss:0},medium:{win:0,loss:0},low:{win:0,loss:0}};
+ const seen=new Set();
+ for(const d of payloads){
+  if(d.schema_version!==1||typeof d.date!=='string'||!Array.isArray(d.high_competition)||!Array.isArray(d.competition_watchlist))throw Error('Invalid rated data');
+  for(const r of [...d.high_competition,...d.competition_watchlist]){
+   const p=r.competition_confidence_percent;
+   if(typeof p!=='number'||!Number.isFinite(p)||p<0||p>100)continue;
+   if(r.race_date!==d.date||typeof r.horse!=='string'||typeof r.off_time_uk!=='string'||typeof r.course!=='string')throw Error('Invalid selection identity');
+   const key=[d.date,r.off_time_uk,r.course,r.horse].join('|');
+   if(seen.has(key))throw Error('Duplicate selection');seen.add(key);
+   if(!['WIN','LOSS'].includes(r.result_status))continue;
+   let url;try{url=new URL(r.result_source_url)}catch(_){continue}
+   if(!window.jcmAcceptedResult(r))continue;
+   const tier=p>=80?'high':p>=60?'medium':'low';
+   counts[tier][r.result_status==='WIN'?'win':'loss']++;
+  }
+ }
+ return counts;
+}
+window.jcmRatedCounts=ratedCounts;
+function percentage(c){const total=c.win+c.loss;return total?Math.round(c.win/total*1000)/10+'%':'—'}
+function draw(){
+ const node=document.getElementById('jcm-rated-ratios');if(!node)return;
+ node.innerHTML=error?'Ratios unavailable':!ready?'Loading Win / Loss ratios…':levels.map(([key,label])=>'<span class="jcm-rated-line"><b class="'+key+'">'+label+'</b><span>'+groups[key].win+' / '+groups[key].loss+'</span><b>'+percentage(groups[key])+'</b></span>').join('');
+}
+window.jcmOpenRatedPerformance=function(){
+ const overlay=document.getElementById('jcm-detail-overlay');if(!overlay)return;
+ overlay.querySelector('#jcm-detail-content').innerHTML='<h2>Rated Performance</h2>'+
+ (error?'<p>INSUFFICIENT VERIFIED DATA — ratios could not be loaded.</p>':!ready?'<p>Loading results…</p>':'<table class="jcm-rated-table"><thead><tr><th>Rating</th><th>Win / Loss</th><th>Win rate</th></tr></thead><tbody>'+levels.map(([key,label])=>'<tr><td>'+label+'</td><td>'+groups[key].win+' / '+groups[key].loss+'</td><td>'+percentage(groups[key])+'</td></tr>').join('')+'</tbody></table><p>Win = selected horse beaten. Loss = selected horse won. Pending races, non-runners and unrated horses are excluded.</p><p>High: 80%+ · Medium: 60–79% · Low: below 60%.</p><p>'+(levels.some(([key])=>groups[key].win+groups[key].loss)?'Accepted source outcomes for the listed rated selections.':'No settled results yet.')+'</p>');
+ overlay.classList.add('open');overlay.querySelector('.jcm-close').focus();
+};
+async function refresh(){
+ try{
+  const response=await fetch('./data/rated-performance-sources.json',{cache:'no-store'});if(!response.ok)throw Error('Sources unavailable');
+  const manifest=await response.json();if(manifest.schema_version!==1||!Array.isArray(manifest.sources)||!manifest.sources.length||manifest.sources.some(p=>typeof p!=='string'||!/^data\/competition-research-\d{4}-\d{2}-\d{2}\.json$/.test(p)))throw Error('Invalid source list');
+  const payloads=await Promise.all(manifest.sources.map(async path=>{const r=await fetch('./'+path,{cache:'no-store'});if(!r.ok)throw Error('Results unavailable');return r.json()}));
+  groups=ratedCounts(payloads);ready=true;error=false;
+ }catch(_){error=true;ready=false}
+ draw();
+}
+refresh();window.addEventListener('focus',refresh);setInterval(refresh,300000);
+})();
+</script>
+
+<script>
+/* Device-local fictional allocation controls. Quotes are illustrative, not matched bets. */
+(function(){
+const money=v=>'£'+Number(v).toLocaleString('en-GB',{minimumFractionDigits:2,maximumFractionDigits:2});
+const safe=v=>String(v??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+let lockTimer;
+window.jcmStopFixedTimer=()=>clearTimeout(lockTimer);
+window.jcmOpenFixedAccount=async function(){
+ const overlay=document.getElementById('jcm-detail-overlay');if(!overlay)return;
+ const node=overlay.querySelector('#jcm-detail-content');
+ node.innerHTML='<h2>Dummy Account</h2><p>Loading statement…</p>';overlay.classList.add('open');overlay.querySelector('.jcm-close').focus();
+ clearTimeout(lockTimer);
+ try{
+ const response=await fetch('data/fictional-account-2026-10-12.json',{cache:'no-store'});if(!response.ok)throw Error('Unavailable');
+ const d=await response.json();
+ if(d.schema_version!==1||d.fictional_only!==true||d.date!=='2026-10-12'||!Array.isArray(d.rows)||d.rows.length!==15||d.rows.some(r=>typeof r.lay_odds!=='number'||!Number.isFinite(r.lay_odds)||r.lay_odds<=1||!['PENDING','WIN','LOSS','NR'].includes(r.result_status)))throw Error('Invalid account');
+ const key=r=>[r.off_time_uk,r.course,r.horse].join('|');
+ const validKeys=new Set(d.rows.map(key));
+ const firstOff=d.rows.map(r=>r.off_time_uk).sort()[0];
+ const cutoff=Date.parse(d.date+'T'+firstOff+':00+01:00');
+ const settingsKey='jcm-fictional-settings-'+d.date;
+ const locked=()=>Date.now()>=cutoff;
+ let settings={budget_cents:100000,excluded:[],confirmed_at:null};
+ try{
+  const saved=JSON.parse(localStorage.getItem(settingsKey)||'null');
+  if(saved&&Number.isInteger(saved.budget_cents)&&saved.budget_cents>0&&saved.budget_cents<=Math.round(d.opening_balance_gbp*100)&&Array.isArray(saved.excluded)&&saved.excluded.every(x=>validKeys.has(x))&&saved.excluded.length<d.rows.length&&typeof saved.confirmed_at==='string'&&Date.parse(saved.confirmed_at)<cutoff)settings=saved;
+  else if(!saved&&!locked()){
+   const legacy=JSON.parse(localStorage.getItem('jcm-fictional-excluded-'+d.date)||'[]');
+   if(Array.isArray(legacy)&&legacy.length<d.rows.length)settings.excluded=legacy.filter(x=>validKeys.has(x));
+  }
+ }catch(_){}
+ function save(){settings.confirmed_at=new Date().toISOString();try{localStorage.setItem(settingsKey,JSON.stringify(settings));return true;}catch(_){return false;}}
+ if(!locked())save();
+ function allocated(){
+  const selected=d.rows.filter(r=>!settings.excluded.includes(key(r)));
+  const base=Math.floor(settings.budget_cents/selected.length),remainder=settings.budget_cents%selected.length;
+  const allocations=new Map(selected.map((r,i)=>[key(r),(base+(i<remainder?1:0))/100]));
+  return d.rows.map(r=>({...r,liability:allocations.get(key(r))||0,included:allocations.has(key(r))}));
+ }
+ function draw(message){
+  const rows=allocated(),budget=settings.budget_cents/100;
+  const profit=r=>Math.round(r.liability/(r.lay_odds-1)*(1-d.commission_rate)*100)/100;
+  const settled=rows.reduce((a,r)=>a+(!r.included?0:r.result_status==='WIN'?profit(r):r.result_status==='LOSS'?-r.liability:0),0);
+  const outstanding=rows.filter(r=>r.included&&r.result_status==='PENDING');
+  const projectedNet=settled+outstanding.reduce((a,r)=>a+profit(r),0);
+  const selected=rows.filter(r=>r.included);
+  const thin=selected.filter(r=>r.available_stake_gbp<r.liability/(r.lay_odds-1)).length;
+  const candidates=d.rows.filter(r=>r.result_status!=='NR');
+  const best=candidates.slice().sort((a,b)=>a.lay_odds-b.lay_odds)[0];
+  const bestNet=best?Math.round(budget/(best.lay_odds-1)*(1-d.commission_rate)*100)/100:0;
+  node.innerHTML='<h2>Dummy Account</h2><details id="jcm-best-selection" style="border:1px solid #edbd57;background:#182336;border-radius:10px;padding:14px;margin:12px 0"><summary style="cursor:pointer;font-weight:800;font-size:17px;color:#edbd57">Today’s selection · View largest potential return</summary><section style="padding-top:12px">'+(best?'<strong>'+safe(best.horse)+' · '+safe(best.off_time_uk)+' '+safe(best.course)+'</strong><p>All '+money(budget)+' liability on this horse at screenshot lay odds '+safe(best.lay_odds)+'.<br>Potential total money back: <strong>'+money(budget+bestNet)+'</strong><br>Potential net profit: '+money(bestNet)+'</p>':'<p>No eligible horse.</p>')+'<p style="font-size:12px">Highest all-beaten return at the supplied quotes; not a prediction of highest expected profit. A winning horse would lose the full liability. Displayed liquidity may not support this amount. This illustration does not change your account choices. With this calculation, splitting across horses cannot exceed assigning the full liability to the lowest lay odds. It does not account for their probabilities of winning.</p></section></details>'+
+  '<p>Opening bank: <strong>'+money(d.opening_balance_gbp)+'</strong><br>Balance from settled entries: <strong>'+money(d.opening_balance_gbp+settled)+'</strong><br>Commission: 5% of positive net market winnings</p>'+
+  '<div id="jcm-account-controls" style="border:2px solid #edbd57;border-radius:10px;padding:14px;margin:12px 0"><h3 style="margin-top:0">Change stake</h3><p><strong>Selected total liability: '+money(budget)+'</strong><br>Split equally across '+selected.length+' included horses.</p><label for="jcm-account-budget">Enter total liability (£)</label><div style="display:flex;gap:8px;margin-top:8px"><input id="jcm-account-budget" type="number" min="0.01" max="'+d.opening_balance_gbp+'" step="0.01" value="'+budget.toFixed(2)+'" '+(locked()?'disabled':'')+' style="min-width:0;width:100%;padding:10px;font-size:16px"><button id="jcm-account-confirm" type="button" '+(locked()?'disabled':'')+'>Confirm amount</button></div><p id="jcm-account-message" role="status">'+safe(message||'')+'</p><p id="jcm-account-lock" style="font-size:12px">'+(locked()?'Locked for today':'Editable until '+firstOff+' UK time, the day’s first race')+' · Choices saved on this device. Lock uses this device’s clock.</p></div>'+
+  '<h3>12 October statement</h3><table class="jcm-rated-table"><tbody><tr><td>Opening bank</td><td>'+money(d.opening_balance_gbp)+'</td></tr><tr><td>Settled net movement</td><td>'+money(settled)+'</td></tr><tr><td>Closing balance</td><td>'+(outstanding.length?'Pending · '+outstanding.length+' races':money(d.opening_balance_gbp+settled))+'</td></tr></tbody></table>'+
+  '<h3>Horse entries</h3><div style="background:#182336;border:1px solid #edbd57;border-radius:10px;padding:14px;margin:12px 0"><strong>Potential total money back: '+money(budget+projectedNet)+'</strong><div class="jcm-ft-where">Released liability plus net profit if all '+outstanding.length+' outstanding horses are beaten, after settled losses<br>Potential net profit: '+money(projectedNet)+'<br>Potential account balance: '+money(d.opening_balance_gbp+projectedNet)+'<br>'+selected.length+' horses · '+money(budget)+' total liability</div></div>'+
+  '<p style="font-size:12px">Screenshot-priced simulation; full matching is assumed. '+thin+' selected quotes have insufficient displayed liquidity. Exact quote capture times are unknown.</p>'+
+  rows.map((r,i)=>'<div class="jcm-ft-card"><div style="flex:1;min-width:0"><strong>'+safe(r.horse)+'</strong><div class="jcm-ft-where">'+safe(r.off_time_uk)+' · '+safe(r.course)+'</div><div class="jcm-ft-where">Lay odds: <strong>'+r.lay_odds+'</strong> · Liability: '+money(r.liability)+'<br>Indicative stake: '+money(r.liability/(r.lay_odds-1))+'<br>Potential net profit if beaten: '+money(profit(r))+'<br>Status: '+safe(r.result_status)+(r.included?'':' · Excluded')+'</div></div><label style="font-size:11px;text-align:center;flex:0 0 65px"><input type="checkbox" data-account-row="'+i+'" aria-label="Include '+safe(r.horse)+' in totals" '+(r.included?'checked ':'')+(locked()?'disabled':'')+' style="width:22px;height:22px;accent-color:#43bd84"><br>Include</label></div>').join('');
+  node.querySelector('h2').insertAdjacentElement('afterend',node.querySelector('#jcm-account-controls'));
+  const say=text=>{node.querySelector('#jcm-account-message').textContent=text;};
+  node.querySelector('#jcm-account-confirm').addEventListener('click',()=>{
+   if(locked()){draw('Locked for today.');return;}
+   const raw=node.querySelector('#jcm-account-budget').value.trim();
+   const amount=Number(raw),cents=Math.round(amount*100);
+   if(!raw||!Number.isFinite(amount)||cents<selected.length||cents>Math.round(d.opening_balance_gbp*100)||Math.abs(amount*100-cents)>1e-6){say('Enter a funded amount with at most two decimal places, allowing at least 1p per horse.');return;}
+   const previous=settings.budget_cents;settings.budget_cents=cents;
+   if(!save()){settings.budget_cents=previous;say('Unable to save on this device. Amount unchanged.');return;}
+   draw('Amount confirmed; liability redistributed.');
+  });
+  node.querySelectorAll('[data-account-row]').forEach(box=>box.addEventListener('change',()=>{
+   if(locked()){draw('Locked for today.');return;}
+   const row=d.rows[Number(box.dataset.accountRow)],k=key(row),before=settings.excluded.slice();
+   settings.excluded=settings.excluded.filter(x=>x!==k);if(!box.checked)settings.excluded.push(k);
+   if(settings.excluded.length===d.rows.length||settings.budget_cents<d.rows.length-settings.excluded.length){settings.excluded=before;draw('Keep at least one horse included and at least 1p liability per horse.');return;}
+   if(!save()){settings.excluded=before;draw('Unable to save exclusions on this device.');return;}
+   draw('Full liability redistributed across included horses.');
+  }));
+  window.jcmAddAccountSwitch?.(node,'fixed');
+  clearTimeout(lockTimer);
+  if(!locked())lockTimer=setTimeout(()=>{if(node.querySelector('#jcm-account-budget'))draw('Locked at the first scheduled race time.');},Math.min(Math.max(cutoff-Date.now(),1),2147483647));
+ }
+ draw();
+ }catch(_){node.innerHTML='<h2>Dummy Account</h2><p>INSUFFICIENT VERIFIED DATA — statement unavailable.</p>';}
+};
+})();
+</script>
+<style>
+.jcm-account-switch{display:flex;position:relative;background:#121626;border:1px solid #65748a;border-radius:24px;padding:4px;margin:16px 0;gap:4px}
+.jcm-account-switch button{flex:1;position:relative;z-index:1;border:0;background:transparent;color:#fff;border-radius:20px;padding:12px 8px;font:inherit;font-weight:750;cursor:pointer;min-height:44px}
+.jcm-account-switch::before{content:'';position:absolute;left:4px;top:4px;bottom:4px;width:calc(50% - 6px);background:#365774;border-radius:20px;transition:transform .18s}
+.jcm-account-switch.manual::before{transform:translateX(calc(100% + 4px))}
+.jcm-manual-row{border:1px solid #52647b;background:#182336;border-radius:12px;padding:14px;margin:12px 0}
+.jcm-manual-row input[type=number]{width:100%;min-width:0;padding:10px;font-size:16px;margin:8px 0;color:#fff;background:#26324b;border:1px solid #65748a;border-radius:8px}
+.jcm-manual-row input[type=checkbox]{width:22px;height:22px;vertical-align:middle;accent-color:#43bd84}
+.jcm-manual-row button{padding:10px 14px;min-height:44px;border-radius:8px;background:#365774;color:#fff;border:1px solid #65748a;font:inherit}
+.jcm-manual-row :disabled{opacity:.65}
+</style>
+<script>
+/* Separate device-local manual simulation. Scheduled times, not live-off detection. */
+(function(){
+const day='2026-10-12',money=v=>'£'+Number(v).toLocaleString('en-GB',{minimumFractionDigits:2,maximumFractionDigits:2});
+const safe=v=>String(v??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const key=r=>[r.off_time_uk,r.course,r.horse].join('|');
+const off=r=>Date.parse(day+'T'+r.off_time_uk+':00+01:00');
+let mode='fixed',timer,refreshTimer;
+window.jcmAddAccountSwitch=function(node,current){
+ node.querySelector('.jcm-account-switch')?.remove();
+ const sw=document.createElement('div');sw.className='jcm-account-switch '+current;sw.setAttribute('role','tablist');sw.setAttribute('aria-label','Fictional account strategy');
+ sw.innerHTML=['fixed','manual'].map(m=>'<button type="button" role="tab" aria-selected="'+(current===m)+'" data-account-mode="'+m+'">'+(m==='fixed'?'Fixed stakes':'Manual stakes')+'</button>').join('');
+ const anchor=node.querySelector('#jcm-account-controls')||node.querySelector('h2');anchor.insertAdjacentElement('afterend',sw);
+ sw.querySelectorAll('button').forEach(b=>b.addEventListener('click',()=>open(b.dataset.accountMode)));
+};
+async function open(next='fixed'){
+ mode=next;clearTimeout(timer);clearInterval(refreshTimer);window.jcmStopFixedTimer?.();
+ if(mode==='fixed'){await window.jcmOpenFixedAccount();return;}
+ const overlay=document.getElementById('jcm-detail-overlay'),node=overlay.querySelector('#jcm-detail-content');
+ overlay.classList.add('open');node.innerHTML='<h2>Dummy Account</h2><p>Loading manual account…</p>';window.jcmAddAccountSwitch(node,'manual');overlay.querySelector('.jcm-close').focus();
+ try{
+ const read=async path=>{const r=await fetch(path,{cache:'no-store'});if(!r.ok)throw Error('Unavailable');return r.json()};
+ const [config,initial]=await Promise.all([read('data/manual-account-'+day+'.json'),read('data/fictional-account-'+day+'.json')]);
+ if(mode!=='manual')return;
+ if(config.schema_version!==1||config.fictional_only!==true||config.date!==day||config.opening_balance_gbp!==5000||!Array.isArray(config.horse_keys)||new Set(config.horse_keys).size!==config.horse_keys.length||!Number.isFinite(Date.parse(config.introduced_at)))throw Error('Invalid manual account');
+ let data=initial;
+ const rowsFrom=d=>{
+  if(d.schema_version!==1||d.date!==day||d.fictional_only!==true||d.commission_rate!==.05||!Array.isArray(d.rows))throw Error('Invalid statement');
+  const rows=config.horse_keys.map(k=>{const matches=d.rows.filter(r=>key(r)===k);if(matches.length!==1)throw Error('Ambiguous horse');return matches[0]});
+  if(rows.some(r=>!Number.isFinite(off(r))||off(r)<=Date.parse(config.introduced_at)||!Number.isFinite(r.lay_odds)||r.lay_odds<=1)||new Set(rows.map(r=>r.off_time_uk+'|'+r.course)).size!==rows.length)throw Error('Invalid race');
+  return rows;
+ };
+ let rows=rowsFrom(data),settings={};const storage='jcm-manual-settings-'+day;
+ try{settings=JSON.parse(localStorage.getItem(storage)||'{}')}catch(_){throw Error('Unreadable saved choices')}
+ const validSettings=s=>s&&typeof s==='object'&&!Array.isArray(s)&&Object.entries(s).every(([k,v])=>{
+ const r=rows.find(r=>key(r)===k);return r&&v&&typeof v.included==='boolean'&&Number.isInteger(v.liability_cents)&&v.liability_cents>=0&&Number.isSafeInteger(v.liability_cents)&&(!v.included||v.liability_cents>0)&&Number.isFinite(Date.parse(v.confirmed_at))&&Date.parse(v.confirmed_at)>=Date.parse(config.introduced_at)&&Date.parse(v.confirmed_at)<=Date.now()&&Date.parse(v.confirmed_at)<off(r);
+ });
+ if(!validSettings(settings))throw Error('Invalid saved choices');
+ function status(r){return window.jcmAcceptedResult({...r,race_date:day})&&['WIN','LOSS','NR'].includes(r.result_status)?r.result_status:'PENDING'}
+ const profit=(r,cents)=>Math.round(cents/(r.lay_odds-1)*(1-data.commission_rate));
+ function totals(s=settings){let movement=0,reserved=0,projected=0;for(const r of rows){const v=s[key(r)];if(!v?.included)continue;const st=status(r),p=profit(r,v.liability_cents);if(st==='WIN')movement+=p;else if(st==='LOSS')movement-=v.liability_cents;else if(st==='PENDING'){reserved+=v.liability_cents;projected+=p}}
+ return {balance:500000+movement,available:500000+movement-reserved,reserved,movement,projected};}
+ if(totals().available<0)throw Error('Saved account is unfunded');
+ function draw(message=''){
+ if(mode!=='manual'||!overlay.classList.contains('open'))return;
+ const t=totals();node.innerHTML='<h2>Dummy Account · Manual stakes</h2><section id="jcm-manual-bank"><p>Separate opening bank: <strong>'+money(5000)+'</strong><br>Balance: <strong data-manual-balance>'+money(t.balance/100)+'</strong><br>Reserved liability: <strong data-manual-reserved>'+money(t.reserved/100)+'</strong><br>Available balance: <strong data-manual-available>'+money(t.available/100)+'</strong></p><p>Settled net movement: '+money(t.movement/100)+'<br>Potential account balance if all outstanding selections are beaten: '+money((t.balance+t.projected)/100)+'</p></section><p id="jcm-manual-message" role="status">'+safe(message)+'</p><p>Only races remaining when this strategy was introduced are shown. Choose a race, enter its liability and press Confirm race. No amount is redistributed. Each race locks at its scheduled UK start time.</p><p style="font-size:12px">Screenshot odds; full matching assumed. Exact quote times are unknown and displayed liquidity may be insufficient. 5% commission on positive net market winnings. Choices and time locks use this device; the two strategies have independent banks.</p><h3>12 October · Manual statement</h3>'+rows.map((r,i)=>{
+ const v=settings[key(r)]||{included:false,liability_cents:0};const locked=Date.now()>=off(r),st=status(r),p=profit(r,v.liability_cents);return '<section class="jcm-manual-row" data-manual-row="'+i+'"><strong>'+safe(r.horse)+'</strong><p>'+safe(r.off_time_uk)+' · '+safe(r.course)+' · '+(locked?'Locked':'Editable')+'</p><label><input data-manual-include="'+i+'" type="checkbox" '+(v.included?'checked ':'')+(locked?'disabled':'')+'> Include race</label><label style="display:block;margin-top:10px" for="manual-amount-'+i+'">Individual liability (£)</label><input id="manual-amount-'+i+'" data-manual-amount="'+i+'" type="number" min="0.01" max="'+((t.available+(v.included&&st==='PENDING'?v.liability_cents:0))/100)+'" step="0.01" value="'+(v.liability_cents?v.liability_cents/100:'')+'" '+(locked?'disabled':'')+'><button type="button" data-manual-confirm="'+i+'" '+(locked?'disabled':'')+'>Confirm race</button><p>Confirmed liability: '+money((v.included?v.liability_cents:0)/100)+'<br>Lay odds: '+r.lay_odds+' · Indicative lay stake: '+money((v.included?v.liability_cents:0)/100/(r.lay_odds-1))+'<br>Potential net profit: '+money((v.included?p:0)/100)+'<br>Result: '+safe(st)+' · '+(v.included?'Included':'Excluded')+'<br>Net movement: '+money(!v.included?0:st==='WIN'?p/100:st==='LOSS'?-v.liability_cents/100:0)+'</p>'+((v.included&&r.available_stake_gbp<v.liability_cents/100/(r.lay_odds-1))?'<p>Insufficient displayed liquidity · illustrative return</p>':'')+'</section>';
+ }).join('');window.jcmAddAccountSwitch(node,'manual');
+ node.querySelectorAll('[data-manual-confirm]').forEach(button=>button.addEventListener('click',()=>{
+ const i=Number(button.dataset.manualConfirm),r=rows[i];if(Date.now()>=off(r)){draw('Race locked at its scheduled start.');return;}
+ const included=node.querySelector('[data-manual-include="'+i+'"]').checked,raw=node.querySelector('[data-manual-amount="'+i+'"]').value.trim(),amount=Number(raw),cents=included?Math.round(amount*100):0;
+ if(included&&(!raw||!Number.isFinite(amount)||cents<1||!Number.isSafeInteger(cents)||Math.abs(amount*100-cents)>1e-6)){node.querySelector('#jcm-manual-message').textContent='Enter a positive liability with at most two decimal places.';return;}
+ const next={...settings,[key(r)]:{included,liability_cents:cents,confirmed_at:new Date().toISOString()}};
+ if(totals(next).available<0){node.querySelector('#jcm-manual-message').textContent='Insufficient available balance. Reduce this liability or release another editable race.';return;}
+ try{localStorage.setItem(storage,JSON.stringify(next))}catch(_){node.querySelector('#jcm-manual-message').textContent='Unable to save. Account unchanged.';return;}
+ settings=next;draw('Race confirmed.');
+ }));
+ clearTimeout(timer);const future=rows.map(off).filter(t=>t>Date.now());if(future.length)timer=setTimeout(()=>draw('Race controls locked at the scheduled start.'),Math.min(...future)-Date.now()+1);
+ }
+ draw();
+ refreshTimer=setInterval(async()=>{if(mode!=='manual'||!overlay.classList.contains('open')){clearInterval(refreshTimer);return;}try{const next=await read('data/fictional-account-'+day+'.json');const nextRows=rowsFrom(next);if(JSON.stringify(next)!==JSON.stringify(data)){data=next;rows=nextRows;draw('Published results refreshed.')}}catch(_){node.querySelector('#jcm-manual-message').textContent='Results refresh unavailable; retaining last loaded statement.'}},30000);
+ }catch(_){if(mode==='manual'){node.innerHTML='<h2>Dummy Account · Manual stakes</h2><p>INSUFFICIENT VERIFIED DATA — manual statement unavailable.</p>';window.jcmAddAccountSwitch(node,'manual');}}
+}
+window.jcmOpenDummyAccount=()=>open('fixed');
+})();
+</script>
+<style>
+.jcm-modal:has(.jcm-result-card){width:min(calc(100vw - 24px),680px)}
+.jcm-result-card{border:1px solid #52647b;border-radius:16px;background:#1c293c;padding:22px 18px;clear:both}
+.jcm-result-top{display:flex;gap:10px;align-items:center;flex-wrap:wrap}.jcm-result-course{flex:1;min-width:90px}.jcm-result-top .jcm-confidence{margin-left:auto;min-width:78px;padding:8px}.jcm-result-top .jcm-confidence small{font-size:11px;margin:2px 0}.jcm-result-top .jcm-confidence strong{font-size:21px}.jcm-result-time{border:1px solid #52647b;border-radius:12px;background:#26364b;padding:14px;font-size:23px;font-weight:850;color:#ffd700}
+.jcm-result-top strong{font-size:20px}.jcm-result-card small{display:block;color:#d4dfef;font-size:13px;margin:6px 0}
+.jcm-result-summary{display:flex;align-items:center;gap:12px;flex-wrap:wrap;margin:16px 0}.jcm-result-finish{font-size:18px}.jcm-result-outcome{display:inline-block;font-size:18px;font-weight:850;padding:12px 18px;border-radius:24px;margin:0}
+.jcm-result-outcome.win{background:#14543b;color:#85efb8}.jcm-result-outcome.loss{background:#70263a;color:#ffb3c1}.jcm-result-outcome.pending{background:#364156;color:#fff}
+.jcm-result-body{display:grid;gap:12px}.jcm-result-tile{border:1px solid #52647b;border-radius:12px;background:#142237;padding:16px}.jcm-result-tile h3{margin:0 0 12px;font-size:17px;color:#ffd700}.jcm-result-tile p{margin:8px 0;overflow-wrap:anywhere}.jcm-result-stat + .jcm-result-stat{margin-top:12px}.jcm-result-stat strong{display:block;font-size:19px;overflow-wrap:anywhere}.jcm-result-body h2{font-size:clamp(25px,7vw,34px);line-height:1.2;margin:12px 0}
+.jcm-result-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:22px 14px;border-top:1px solid #52647b;padding:18px 0;margin:20px 0}.jcm-result-grid strong{display:block;font-size:19px;overflow-wrap:anywhere}
+.jcm-race-action{display:block;padding:14px;border:1px solid #65748a;border-radius:10px;font-weight:800}
+.jcm-link-unavailable{font-size:13px;color:#c6d0de}
+#jcm-official-panel .jcm-status.win{color:#85efb8}#jcm-official-panel .jcm-status.loss{color:#ff849d}
+@media(max-width:380px){.jcm-result-card{padding:18px 12px}.jcm-result-grid strong{font-size:17px}}
+</style>
+</body></html>
+).test(u.pathname)&&!u.search&&!u.hash?u.href:null;}catch(_){return null;}}
 function detailFor(r){const matches=cardDetails.filter(m=>m.date===r.race_date&&m.horse===r.horse&&m.course===r.course&&m.off_time_uk===r.off_time_uk);return matches.length===1?matches[0]:null;}
 function ordinal(v){const n=Number(v);if(!Number.isInteger(n)||n<1)return String(v||'Not supplied');const a=n%100;return n+(a>=11&&a<=13?'th':({1:'st',2:'nd',3:'rd'}[n%10]||'th'));}
 function margin(v){if(typeof v!=='string'||!v.trim())return 'Not supplied';return /^[0-9]*[.]?[0-9]+$/.test(v)&&Number.isFinite(Number(v))?Number(v)+' lengths':v;}

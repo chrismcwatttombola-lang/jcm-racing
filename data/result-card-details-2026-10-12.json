@@ -224,7 +224,17 @@
       "course": "Kempton",
       "off_time_uk": "19:45",
       "racecard_url": "https://www.racingpost.com/racecards/1079/kempton-aw/2026-10-12/928662/",
-      "replay_url": null
+      "replay_url": null,
+      "race_id": "rac_32300727667",
+      "horse_id": "hrs_62779360",
+      "race_name": "Try Unibet's New Improved Acca Boosts Handicap Stakes (London Stayers' Series Qualifier)",
+      "position": "1",
+      "field_size": 9,
+      "winner": "Niffler (GER)",
+      "winning_margin_lengths": ".75",
+      "selected_beaten_lengths": "0",
+      "retrieved_at": "2026-10-12T19:25:58.666Z",
+      "source": "THE_RACING_API"
     },
     {
       "date": "2026-10-12",

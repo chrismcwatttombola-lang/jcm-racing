@@ -129,12 +129,12 @@ test('wrong date, non-Betfair source, outcome mismatch and duplicate evidence st
 test('today retains all 15 horses, confidence and chronological order; rated totals include accepted outcomes', async ({page}) => {
  await page.goto(URL);await page.locator('#date').selectOption('2026-10-12');
  await expect(page.locator('#jcm-official-panel .jcm-row')).toHaveCount(15);
- await expect(page.locator('#jcm-official-panel .jcm-status.pending')).toHaveCount(3);
+ await expect(page.locator('#jcm-official-panel .jcm-status.pending')).toHaveCount(2);
  const times=await page.locator('#jcm-official-panel .jcm-time').allTextContents();expect(times).toEqual([...times].sort());
  await page.locator('#jcm-official-panel .jcm-row').filter({hasText:'Kykorock'}).click();
  await expect(page.locator('#jcm-detail-content .jcm-confidence.high')).toContainText('85%');
  await page.locator('#jcm-detail-overlay .jcm-close').click();
- await expect(page.locator('#jcm-rated-ratios')).toContainText('4 / 3');
+ await expect(page.locator('#jcm-rated-ratios')).toContainText('4 / 4');
 });
 
 
@@ -234,11 +234,11 @@ test('accepted provider results populate picks, rating groups and fictional sett
  await page.locator('#jcm-detail-overlay .jcm-close').click();
  await expect.poll(()=>page.evaluate(()=>window.jcmRatedCounts?true:false)).toBeTruthy();
  const counts=await page.evaluate(async()=>window.jcmRatedCounts([await (await fetch('data/competition-research-2026-10-12.json')).json()]));
- expect(counts.high).toEqual({win:4,loss:1});expect(counts.medium).toEqual({win:4,loss:3});
+ expect(counts.high).toEqual({win:4,loss:1});expect(counts.medium).toEqual({win:4,loss:4});
  await page.evaluate(()=>window.jcmOpenDummyAccount());
  await expect(page.locator('#jcm-detail-content')).toContainText('One Of The Boys');
- await expect(page.locator('#jcm-detail-content')).toContainText('£4,945.19');
- await expect(page.locator('#jcm-detail-content')).toContainText('Pending · 3 races');
+ await expect(page.locator('#jcm-detail-content')).toContainText('£4,878.53');
+ await expect(page.locator('#jcm-detail-content')).toContainText('Pending · 2 races');
 });
 test('provider identity mismatch remains pending',async({page,request})=>{
  const d=await (await request.get('http://127.0.0.1:8765/data/competition-research-2026-10-12.json')).json();
@@ -252,7 +252,7 @@ test('provider identity mismatch remains pending',async({page,request})=>{
  test('mobile daily rate and reachable account close after scrolling', async ({page}) => {
  await page.setViewportSize({width:390,height:664});
  await page.goto('http://127.0.0.1:8765/#hub');
- await expect(page.locator('#jcm-daily-rate')).toContainText('66.7% success · 8/12 settled');
+ await expect(page.locator('#jcm-daily-rate')).toContainText('61.5% success · 8/13 settled');
  const logo=await page.locator('.jcm-hub-mark').boundingBox();expect(logo.y).toBeGreaterThanOrEqual(24);expect(logo.y).toBeLessThan(60);
  await page.locator('[data-page="dummy-account"]').click();
  await expect(page.locator('[data-account-row]')).toHaveCount(15);
@@ -261,7 +261,7 @@ test('provider identity mismatch remains pending',async({page,request})=>{
  const box=await close.boundingBox();expect(box.y).toBeGreaterThanOrEqual(24);expect(box.y+box.height).toBeLessThan(664);
  await close.click();await expect(page.locator('#jcm-detail-overlay')).not.toHaveClass(/open/);
  await page.locator('[data-page="picks"]').click();await page.locator('#date').selectOption('2026-10-12');
- await expect(page.locator('#jcm-official-panel .jcm-accuracy')).toContainText('66.7% success · 8/12 settled');
+ await expect(page.locator('#jcm-official-panel .jcm-accuracy')).toContainText('61.5% success · 8/13 settled');
  });
 
 async function manualView(page){
@@ -358,3 +358,15 @@ test('mobile result tiles group confidence, finish and winner details',async({pa
  await expect(page.locator('.jcm-result-tile h3')).toHaveText(['Selected horse','Race winner','Reason for selection','Racecard','Race video']);
  await expect(page.getByRole('link',{name:'View race videos here'})).toHaveAttribute('href','https://www.racingpost.com/video/');
 });
+
+ test('Niffler winning result keeps provider identity and matching result card',async({page,request})=>{
+ await page.goto(URL);await page.locator('#date').selectOption('2026-10-12');
+ const row=page.locator('[data-research-index]').filter({hasText:'Niffler'});await expect(row).toContainText('Horse won');
+ await row.click();await expect(page.locator('.jcm-result-summary')).toContainText('Finished 1st of 9');
+ await expect(page.locator('.jcm-result-card')).toContainText('0.75 lengths');
+ await expect(page.locator('.jcm-result-card')).not.toContainText('Selected horse beaten by');
+ const a=await (await request.get('http://127.0.0.1:8765/data/fictional-account-2026-10-12.json')).json();
+ const r=a.rows.find(r=>r.horse==='Niffler');expect(r.result_status).toBe('LOSS');expect(r.official_accuracy_eligible).toBe(false);
+ expect(r.result_race_id).toBe('rac_32300727667');expect(r.result_horse_id).toBe('hrs_62779360');
+ expect(await page.evaluate(r=>window.jcmAcceptedResult({...r,race_date:'2026-10-12'}),r)).toBe(true);
+ });

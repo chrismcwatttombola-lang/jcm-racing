@@ -129,12 +129,12 @@ test('wrong date, non-Betfair source, outcome mismatch and duplicate evidence st
 test('today retains all 15 horses, confidence and chronological order; rated totals include accepted outcomes', async ({page}) => {
  await page.goto(URL);await page.locator('#date').selectOption('2026-10-12');
  await expect(page.locator('#jcm-official-panel .jcm-row')).toHaveCount(15);
- await expect(page.locator('#jcm-official-panel .jcm-status.pending')).toHaveCount(10);
+ await expect(page.locator('#jcm-official-panel .jcm-status.pending')).toHaveCount(5);
  const times=await page.locator('#jcm-official-panel .jcm-time').allTextContents();expect(times).toEqual([...times].sort());
  await page.locator('#jcm-official-panel .jcm-row').filter({hasText:'Kykorock'}).click();
  await expect(page.locator('#jcm-detail-content .jcm-confidence.high')).toContainText('85%');
  await page.locator('#jcm-detail-overlay .jcm-close').click();
- await expect(page.locator('#jcm-rated-ratios')).toContainText('2 / 1');
+ await expect(page.locator('#jcm-rated-ratios')).toContainText('4 / 2');
 });
 
 
@@ -226,19 +226,19 @@ test('today displays supplied Betfair outcomes without changing official accurac
 test('accepted provider results populate picks, rating groups and fictional settlement',async({page})=>{
  await page.goto(URL);await page.locator('#date').selectOption('2026-10-12');
  await expect(page.locator('[data-research-index]')).toHaveCount(15);
- for(const name of ['Methgal','Indhaar','Lauderdale King','Tredegar Square'])await expect(page.locator('[data-research-index]').filter({hasText:name})).toContainText('Success');
- await expect(page.locator('[data-research-index]').filter({hasText:'One Of The Boys'})).toContainText('Failure');
+ for(const name of ['Methgal','Indhaar','Lauderdale King','Tredegar Square','Kelpie Grey','Dandy Magic','Zoustar Dreams'])await expect(page.locator('[data-research-index]').filter({hasText:name})).toContainText('Success');
+ for(const name of ['One Of The Boys','Kykorock','Mighty Fleur'])await expect(page.locator('[data-research-index]').filter({hasText:name})).toContainText('Failure');
  await expect(page.locator('[data-research-index]').filter({hasText:'Wadooda'})).toContainText('Pending');
  await page.locator('[data-research-index]').filter({hasText:'Methgal'}).click();
  await expect(page.locator('#jcm-detail-content')).toContainText('3rd');
  await page.locator('#jcm-detail-overlay .jcm-close').click();
  await expect.poll(()=>page.evaluate(()=>window.jcmRatedCounts?true:false)).toBeTruthy();
  const counts=await page.evaluate(async()=>window.jcmRatedCounts([await (await fetch('data/competition-research-2026-10-12.json')).json()]));
- expect(counts.high).toEqual({win:2,loss:0});expect(counts.medium).toEqual({win:2,loss:1});
+ expect(counts.high).toEqual({win:3,loss:1});expect(counts.medium).toEqual({win:4,loss:2});
  await page.evaluate(()=>window.jcmOpenDummyAccount());
  await expect(page.locator('#jcm-detail-content')).toContainText('One Of The Boys');
- await expect(page.locator('#jcm-detail-content')).toContainText('£5,043.84');
- await expect(page.locator('#jcm-detail-content')).toContainText('Pending · 10 races');
+ await expect(page.locator('#jcm-detail-content')).toContainText('£4,984.32');
+ await expect(page.locator('#jcm-detail-content')).toContainText('Pending · 5 races');
 });
 test('provider identity mismatch remains pending',async({page,request})=>{
  const d=await (await request.get('http://127.0.0.1:8765/data/competition-research-2026-10-12.json')).json();

@@ -1,0 +1,239 @@
+{
+  "schema_version": 1,
+  "mode": "research_only_not_official_picks",
+  "date": "2026-10-12",
+  "confidence_definition": "Subjective confidence in existence of multiple credible competitors under race conditions; not likelihood horse loses; not calibrated",
+  "provisional_high_threshold_percent": 80,
+  "high_competition": [
+    {
+      "race_date": "2026-10-12",
+      "off_time_uk": "16:07",
+      "course": "Worcester",
+      "horse": "Kykorock",
+      "competition_confidence_percent": 85,
+      "confidence_basis": "provisional subjective analyst judgement; not calibrated, not win/loss probability",
+      "identified_challengers": [
+        "Park Annonciade",
+        "Authoceltic",
+        "Siam Park"
+      ],
+      "tier": "high",
+      "selection_status": "RESEARCH_ONLY_NOT_LOCKED",
+      "result_status": "PENDING_UNVERIFIED",
+      "official_accuracy_eligible": false
+    },
+    {
+      "race_date": "2026-10-12",
+      "off_time_uk": "16:17",
+      "course": "Musselburgh",
+      "horse": "Kelpie Grey",
+      "competition_confidence_percent": 90,
+      "confidence_basis": "provisional subjective analyst judgement; not calibrated, not win/loss probability",
+      "identified_challengers": [
+        "Monhammer",
+        "Rwenearlytheredad",
+        "Real Jack"
+      ],
+      "tier": "high",
+      "selection_status": "RESEARCH_ONLY_NOT_LOCKED",
+      "result_status": "PENDING_UNVERIFIED",
+      "official_accuracy_eligible": false
+    },
+    {
+      "race_date": "2026-10-12",
+      "off_time_uk": "16:24",
+      "course": "Yarmouth",
+      "horse": "Methgal",
+      "competition_confidence_percent": 88,
+      "confidence_basis": "provisional subjective analyst judgement; not calibrated, not win/loss probability",
+      "identified_challengers": [
+        "Raffles Angel",
+        "Deluded",
+        "Startled Lady",
+        "Good Earth"
+      ],
+      "tier": "high",
+      "selection_status": "RESEARCH_ONLY_NOT_LOCKED",
+      "result_status": "PENDING_UNVERIFIED",
+      "official_accuracy_eligible": false
+    },
+    {
+      "race_date": "2026-10-12",
+      "off_time_uk": "16:30",
+      "course": "Roscommon",
+      "horse": "Lauderdale King",
+      "competition_confidence_percent": 82,
+      "confidence_basis": "provisional subjective analyst judgement; not calibrated, not win/loss probability",
+      "identified_challengers": [
+        "Justenzia",
+        "Coulstys Way",
+        "Pillar Of Hope",
+        "Rakki"
+      ],
+      "tier": "high",
+      "selection_status": "RESEARCH_ONLY_NOT_LOCKED",
+      "result_status": "PENDING_UNVERIFIED",
+      "official_accuracy_eligible": false
+    },
+    {
+      "race_date": "2026-10-12",
+      "off_time_uk": "19:15",
+      "course": "Kempton",
+      "horse": "Floating Market",
+      "competition_confidence_percent": 86,
+      "confidence_basis": "provisional subjective analyst judgement; not calibrated, not win/loss probability",
+      "identified_challengers": [
+        "Time To Sparkle",
+        "Takeitorleaveit",
+        "That Darn Cantor"
+      ],
+      "tier": "high",
+      "selection_status": "RESEARCH_ONLY_NOT_LOCKED",
+      "result_status": "PENDING_UNVERIFIED",
+      "official_accuracy_eligible": false
+    }
+  ],
+  "competition_watchlist": [
+    {
+      "race_date": "2026-10-12",
+      "off_time_uk": "15:37",
+      "course": "Worcester",
+      "horse": "Mighty Fleur",
+      "competition_confidence_percent": null,
+      "confidence_basis": "provisional subjective analyst judgement; not calibrated, not win/loss probability",
+      "identified_challengers": [],
+      "tier": "watchlist",
+      "selection_status": "RESEARCH_ONLY_NOT_LOCKED",
+      "result_status": "PENDING_UNVERIFIED",
+      "official_accuracy_eligible": false
+    },
+    {
+      "race_date": "2026-10-12",
+      "off_time_uk": "15:47",
+      "course": "Musselburgh",
+      "horse": "Dandy Magic",
+      "competition_confidence_percent": null,
+      "confidence_basis": "provisional subjective analyst judgement; not calibrated, not win/loss probability",
+      "identified_challengers": [],
+      "tier": "watchlist",
+      "selection_status": "RESEARCH_ONLY_NOT_LOCKED",
+      "result_status": "PENDING_UNVERIFIED",
+      "official_accuracy_eligible": false
+    },
+    {
+      "race_date": "2026-10-12",
+      "off_time_uk": "15:54",
+      "course": "Yarmouth",
+      "horse": "Zoustar Dreams",
+      "competition_confidence_percent": null,
+      "confidence_basis": "provisional subjective analyst judgement; not calibrated, not win/loss probability",
+      "identified_challengers": [],
+      "tier": "watchlist",
+      "selection_status": "RESEARCH_ONLY_NOT_LOCKED",
+      "result_status": "PENDING_UNVERIFIED",
+      "official_accuracy_eligible": false
+    },
+    {
+      "race_date": "2026-10-12",
+      "off_time_uk": "16:28",
+      "course": "Newcastle",
+      "horse": "Indhaar",
+      "competition_confidence_percent": null,
+      "confidence_basis": "provisional subjective analyst judgement; not calibrated, not win/loss probability",
+      "identified_challengers": [],
+      "tier": "watchlist",
+      "selection_status": "RESEARCH_ONLY_NOT_LOCKED",
+      "result_status": "PENDING_UNVERIFIED",
+      "official_accuracy_eligible": false
+    },
+    {
+      "race_date": "2026-10-12",
+      "off_time_uk": "16:45",
+      "course": "Kempton",
+      "horse": "Tredegar Square",
+      "competition_confidence_percent": null,
+      "confidence_basis": "provisional subjective analyst judgement; not calibrated, not win/loss probability",
+      "identified_challengers": [],
+      "tier": "watchlist",
+      "selection_status": "RESEARCH_ONLY_NOT_LOCKED",
+      "result_status": "PENDING_UNVERIFIED",
+      "official_accuracy_eligible": false
+    },
+    {
+      "race_date": "2026-10-12",
+      "off_time_uk": "17:15",
+      "course": "Kempton",
+      "horse": "One Of The Boys",
+      "competition_confidence_percent": null,
+      "confidence_basis": "provisional subjective analyst judgement; not calibrated, not win/loss probability",
+      "identified_challengers": [],
+      "tier": "watchlist",
+      "selection_status": "RESEARCH_ONLY_NOT_LOCKED",
+      "result_status": "PENDING_UNVERIFIED",
+      "official_accuracy_eligible": false
+    },
+    {
+      "race_date": "2026-10-12",
+      "off_time_uk": "17:45",
+      "course": "Kempton",
+      "horse": "Wadooda",
+      "competition_confidence_percent": null,
+      "confidence_basis": "provisional subjective analyst judgement; not calibrated, not win/loss probability",
+      "identified_challengers": [],
+      "tier": "watchlist",
+      "selection_status": "RESEARCH_ONLY_NOT_LOCKED",
+      "result_status": "PENDING_UNVERIFIED",
+      "official_accuracy_eligible": false
+    },
+    {
+      "race_date": "2026-10-12",
+      "off_time_uk": "19:45",
+      "course": "Kempton",
+      "horse": "Niffler",
+      "competition_confidence_percent": null,
+      "confidence_basis": "provisional subjective analyst judgement; not calibrated, not win/loss probability",
+      "identified_challengers": [],
+      "tier": "watchlist",
+      "selection_status": "RESEARCH_ONLY_NOT_LOCKED",
+      "result_status": "PENDING_UNVERIFIED",
+      "official_accuracy_eligible": false
+    },
+    {
+      "race_date": "2026-10-12",
+      "off_time_uk": "20:15",
+      "course": "Kempton",
+      "horse": "Rory's Royale",
+      "competition_confidence_percent": null,
+      "confidence_basis": "provisional subjective analyst judgement; not calibrated, not win/loss probability",
+      "identified_challengers": [],
+      "tier": "watchlist",
+      "selection_status": "RESEARCH_ONLY_NOT_LOCKED",
+      "result_status": "PENDING_UNVERIFIED",
+      "official_accuracy_eligible": false
+    },
+    {
+      "race_date": "2026-10-12",
+      "off_time_uk": "20:30",
+      "course": "Newcastle",
+      "horse": "Edmond Halley",
+      "competition_confidence_percent": null,
+      "confidence_basis": "provisional subjective analyst judgement; not calibrated, not win/loss probability",
+      "identified_challengers": [],
+      "tier": "watchlist",
+      "selection_status": "RESEARCH_ONLY_NOT_LOCKED",
+      "result_status": "PENDING_UNVERIFIED",
+      "official_accuracy_eligible": false
+    }
+  ],
+  "other_screened_races": [
+    "16:12 Kempton Showcasing Glory",
+    "17:30 Newcastle Great Balls O'Fire",
+    "18:15 Kempton Rhythm Of My Heart"
+  ],
+  "notes": [
+    "Watchlist scores not assigned: do not invent precision",
+    "Market leader rank provisional in some races",
+    "All results pending independent verification; no accuracy updates",
+    "Research-only draft: not published to live hub"
+  ]
+}

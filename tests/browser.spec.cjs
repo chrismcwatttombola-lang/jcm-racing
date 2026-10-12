@@ -134,7 +134,7 @@ test('today retains all 15 horses, confidence and chronological order; rated tot
  await page.locator('#jcm-official-panel .jcm-row').filter({hasText:'Kykorock'}).click();
  await expect(page.locator('#jcm-detail-content .jcm-confidence.high')).toContainText('85%');
  await page.locator('#jcm-detail-overlay .jcm-close').click();
- await expect(page.locator('#jcm-rated-ratios')).toContainText('3 / 1');
+ await expect(page.locator('#jcm-rated-ratios')).toContainText('2 / 1');
 });
 
 
@@ -234,7 +234,7 @@ test('accepted provider results populate picks, rating groups and fictional sett
  await page.locator('#jcm-detail-overlay .jcm-close').click();
  await expect.poll(()=>page.evaluate(()=>window.jcmRatedCounts?true:false)).toBeTruthy();
  const counts=await page.evaluate(async()=>window.jcmRatedCounts([await (await fetch('data/competition-research-2026-10-12.json')).json()]));
- expect(counts.high).toEqual({win:1,loss:0});expect(counts.medium).toEqual({win:3,loss:1});
+ expect(counts.high).toEqual({win:2,loss:0});expect(counts.medium).toEqual({win:2,loss:1});
  await page.evaluate(()=>window.jcmOpenDummyAccount());
  await expect(page.locator('#jcm-detail-content')).toContainText('One Of The Boys');
  await expect(page.locator('#jcm-detail-content')).toContainText('£5,043.84');

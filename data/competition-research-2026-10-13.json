@@ -16,7 +16,7 @@
       "identified_challengers": [],
       "tier": "high",
       "selection_status": "USER_CONFIRMED_RESEARCH",
-      "result_status": "PENDING",
+      "result_status": "LOSS",
       "official_accuracy_eligible": false,
       "race_id": "rac_32300882627",
       "horse_id": "hrs_52709139",
@@ -33,6 +33,36 @@
         "source_message_at": "2026-10-13T05:17:03Z",
         "added_at": "2026-10-13T09:52:52.657Z",
         "qualification_status": "NOT_REVALIDATED"
+      },
+      "position": "1",
+      "placing": "1st",
+      "result_source": "BETFAIR_EXCHANGE_USER_SCREENSHOT",
+      "verification_status": "QUICK_RESULT_PARTIAL",
+      "result_date": "2026-10-13",
+      "result_off_time_uk": "14:35",
+      "result_course": "Southwell",
+      "result_horse": "Four Springs",
+      "result_race_id": "rac_32300882627",
+      "result_horse_id": "hrs_52709139",
+      "result_winner": "Four Springs",
+      "result_evidence": "User-provided Betfair Exchange Quick Result screenshot 13 Oct 2026",
+      "result_non_runners": [
+        "Jamada",
+        "Lady Kara"
+      ],
+      "result_industry_starting_price": 2.38,
+      "market_movement": {
+        "morning_source": "BETFAIR_EXCHANGE_USER_SCREENSHOT",
+        "morning_best_back": 3.15,
+        "morning_best_lay": 3.45,
+        "industry_starting_price": 2.38,
+        "betfair_starting_price": null,
+        "bsp_status": "AWAITING_FULL_RESULT",
+        "pre_off_snapshot_status": "NOT_CAPTURED",
+        "direction": "EXCHANGE_MOVEMENT_UNCONFIRMED",
+        "morning_back_to_isp_decimal_change": -0.77,
+        "morning_back_to_isp_percent_change": -24.44,
+        "comparison_note": "Morning Exchange back versus industry SP, not like-for-like Exchange odds"
       }
     },
     {

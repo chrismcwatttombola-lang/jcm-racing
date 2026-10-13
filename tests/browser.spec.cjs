@@ -560,8 +560,11 @@ async function openDrift(page){
  await expect(page.locator('#jcm-drift-overlay')).toHaveClass(/open/);
  await expect(page.locator('[data-drift-race]')).toHaveCount(38);
 }
-test('Drifting Odds shows all race leaders, historical coverage and blocked execution',async({page})=>{
+test('Drifting / Shortening Tracker shows all race leaders, historical coverage and blocked execution',async({page})=>{
  await openDrift(page);
+ await expect(page.locator('#drift-title')).toHaveText('Drifting / Shortening Tracker');
+ await expect(page.locator('#drift-content')).toContainText('Betfair Exchange only, via Racing API');
+ await expect(page.locator('#drift-content')).toContainText('never used to fill missing Exchange quotes');
  await expect(page.locator('#drift-content')).toContainText('113/149');
  await expect(page.locator('#drift-content')).toContainText('No executable opportunities qualified');
  await expect(page.locator('#drift-content')).toContainText('Similar opening prices (±25%)');
@@ -635,3 +638,14 @@ test('13 October accepted Miss Denver result reaches overview, detail and per-ra
  expect(await page.evaluate(r=>window.jcmAcceptedResult(r),selected)).toBe(true);
  expect(await page.evaluate(r=>window.jcmAcceptedResult({...r,result_source_url:'https://api.theracingapi.com/v1/results/rac_999'}),selected)).toBe(false);
 });
+
+
+for(const source of ['The Racing API · Bet365',null]){
+ test('tracker rejects non-Exchange or unidentified price source '+source,async({page})=>{
+  await page.clock.install({time:new Date('2026-10-13T11:00:00Z')});
+  await page.route('**/data/drifting-odds-2026-10-13.json',async route=>{const response=await route.fetch();const d=await response.json();d.rows[0].current.source=source;await route.fulfill({json:d});});
+  await page.goto('http://127.0.0.1:8765/#hub');await page.locator('[data-page="drifting-odds"]').click();
+  await expect(page.locator('#drift-content')).toContainText('INSUFFICIENT VERIFIED DATA');
+  await expect(page.locator('[data-drift-race]')).toHaveCount(0);
+ });
+}

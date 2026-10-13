@@ -10,7 +10,13 @@
       "race_id": "rac_32300882627",
       "horse_id": "hrs_52709139",
       "racecard_url": "https://www.sportinglife.com/racing/racecards/2026-10-13/southwell/racecard/943164/heb-group-the-power-behind-everyday-novices-handicap-chase-gbb-race",
-      "website_race_id": "943164"
+      "website_race_id": "943164",
+      "position": "1",
+      "field_size": 4,
+      "race_name": "Heb Group \"the Power Behind Everyday\" Novices' Handicap Steeple Chase (gbb Race)",
+      "winner": "Four Springs",
+      "winning_margin_lengths": 1.25,
+      "selected_beaten_lengths": 0
     },
     {
       "date": "2026-10-13",
@@ -96,7 +102,13 @@
       "race_id": "rac_32300969792",
       "horse_id": "hrs_48643945",
       "racecard_url": "https://www.sportinglife.com/racing/racecards/2026-10-13/punchestown/racecard/943381/william-hill-challenge-series-handicap-hurdle",
-      "website_race_id": "943381"
+      "website_race_id": "943381",
+      "position": "6",
+      "field_size": 11,
+      "race_name": "William Hill Challenge Series Handicap Hurdle",
+      "winner": "Build A Bridge",
+      "winning_margin_lengths": 4.5,
+      "selected_beaten_lengths": 13
     },
     {
       "date": "2026-10-13",

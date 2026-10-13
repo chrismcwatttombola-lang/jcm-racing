@@ -12,7 +12,7 @@ const read=async path=>{const r=await fetch(path,{cache:'no-store'});if(!r.ok)th
 const day=()=>document.getElementById('date').value;
 const storage=(d,m)=>'jcm-builder-v2-'+d+'-'+m;
 const cents=v=>{const raw=String(v).trim(),n=Number(raw),c=Math.round(n*100);return raw&&Number.isFinite(n)&&Number.isSafeInteger(c)&&c>0&&Math.abs(n*100-c)<1e-6?c:null;};
-const price=v=>{const raw=String(v??'').trim(),n=Number(raw);return raw&&Number.isFinite(n)&&n>1&&n<=1000?n:null;};
+const price=v=>{const raw=String(v??'').trim(),n=Number(raw);return raw&&Number.isFinite(n)&&n>=1.01&&n<=1000?n:null;};
 const off=r=>Date.parse(r.scheduled_off_dt);
 const withdrawn=r=>r.withdrawal_status==='SCREENSHOT_NR';
 const status=r=>withdrawn(r)?'NR':Date.now()>=off(r)&&window.jcmAcceptedResult(r)&&(r.result_source!=='THE_RACING_API'||(!r.race_id||r.result_race_id===r.race_id)&&(!r.horse_id||r.result_horse_id===r.horse_id))&&['WIN','LOSS','NR'].includes(r.result_status)?r.result_status:'PENDING';

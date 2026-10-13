@@ -615,3 +615,20 @@ test('missing odds data fails closed and preserves horse popup navigation',async
  await page.locator('[data-page="picks"]').click();await page.locator('[data-research-index]').first().click();
  await expect(page.locator('.jcm-result-card')).toBeVisible();
 });
+
+test('13 October accepted Miss Denver result reaches overview, detail and all strategy settlements',async({page,request})=>{
+ await page.clock.install({time:new Date('2026-10-13T12:44:00Z')});
+ await builderToday(page,'race');await page.locator('#builder-amount').fill('100');await page.locator('#builder-confirm').click();
+ await page.clock.fastForward(32*60*1000);await page.locator('[data-account-mode="race"]').click();
+ await expect(page.locator('[data-builder-row="0"]')).toContainText('Result: WIN');
+ await expect(page.locator('[data-builder-reserved]')).toHaveText('£1,400.00');
+ await expect(page.locator('[data-builder-balance]')).toHaveText('£5,105.56');
+ await page.locator('#jcm-detail-overlay .jcm-close').click();await page.locator('[data-page="picks"]').click();await page.locator('#date').selectOption('2026-10-13');
+ const row=page.locator('[data-research-index]').filter({hasText:'Miss Denver'});await expect(row).toContainText('Horse lost');await row.click();
+ await expect(page.locator('.jcm-result-card')).toContainText('Finished 2nd of 5');await expect(page.locator('.jcm-result-card')).toContainText('Blue Topaz');
+ const data=await(await request.get('http://127.0.0.1:8765/data/competition-research-2026-10-13.json')).json();
+ const selected=data.competition_watchlist.find(r=>r.horse==='Miss Denver');
+ expect(selected.official_accuracy_eligible).toBe(false);expect(selected.screenshot_result_evidence.result_source).toBe('BETFAIR_EXCHANGE_USER_SCREENSHOT');
+ expect(await page.evaluate(r=>window.jcmAcceptedResult(r),selected)).toBe(true);
+ expect(await page.evaluate(r=>window.jcmAcceptedResult({...r,result_source_url:'https://api.theracingapi.com/v1/results/rac_999'}),selected)).toBe(false);
+});

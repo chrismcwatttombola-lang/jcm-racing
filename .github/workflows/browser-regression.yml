@@ -3,6 +3,8 @@ on:
   pull_request:
     paths:
       - 'index.html'
+      - 'scripts/drifting-odds.js'
+      - 'tests/drift-screenshots.spec.cjs'
       - 'data/unverified-results.json'
       - 'tests/browser.spec.cjs'
       - 'scripts/bet-builder.js'
@@ -28,4 +30,4 @@ jobs:
       - name: Start static web server
         run: python3 -m http.server 8765 --bind 127.0.0.1 > /tmp/jcm-http.log 2>&1 &
       - name: Browser regression tests
-        run: npx playwright test tests/browser.spec.cjs --browser=chromium --workers=1 --reporter=line
+        run: npx playwright test tests/browser.spec.cjs tests/drift-screenshots.spec.cjs --browser=chromium --workers=1 --reporter=line

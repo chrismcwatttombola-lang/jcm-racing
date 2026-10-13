@@ -682,3 +682,13 @@ test('provider pulled-up and explicit NR outcomes settle, unknown codes stay pen
  await expect(page.locator('[data-research-index]').filter({hasText:'Dream Diamond'})).toContainText('Horse lost');
  await expect(page.locator('[data-research-index]').filter({hasText:'Granlahan'})).toContainText('NR');
 });
+
+test('Luminaries provider result updates overview, detail and account data', async ({page,request})=>{
+ await page.clock.install({time:new Date('2026-10-13T17:00:00Z')});await page.goto(URL);await page.locator('#date').selectOption('2026-10-13');
+ const row=page.locator('[data-research-index]').filter({hasText:'Luminaries'});await expect(row).toContainText('Horse won');await row.click();
+ await expect(page.locator('.jcm-result-card')).toContainText('Finished 1st of 6');await expect(page.locator('.jcm-result-card')).toContainText('Luminaries');
+ const research=await(await request.get('http://127.0.0.1:8765/data/competition-research-2026-10-13.json')).json();
+ const account=await(await request.get('http://127.0.0.1:8765/data/bet-builder-2026-10-13.json')).json();
+ const selected=research.high_competition.find(r=>r.horse==='Luminaries'),settled=account.rows.find(r=>r.horse==='Luminaries');
+ for(const result of [selected,settled]){expect(result.result_status).toBe('LOSS');expect(result.position).toBe('1');expect(result.result_field_size).toBe(6);expect(result.official_accuracy_eligible).toBe(false);expect(await page.evaluate(r=>window.jcmAcceptedResult(r),result)).toBe(true);}
+});

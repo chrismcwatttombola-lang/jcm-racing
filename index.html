@@ -503,7 +503,7 @@ window.jcmAcceptedResult = function(r) {
  &&r.result_date===r.race_date&&r.result_off_time_uk===r.off_time_uk&&r.result_horse===r.horse
  &&r.result_course===r.course&&Number.isFinite(t)&&Number.isFinite(off)&&t>=off&&t<=Date.now()
  &&r.official_accuracy_eligible===false
- &&((r.result_status==='LOSS'&&r.position==='1')||(r.result_status==='WIN'&&/^[2-9]\d*$|^1\d+$/.test(r.position)));
+ &&((r.result_status==='LOSS'&&r.position==='1')||(r.result_status==='WIN'&&(/^[2-9]\d*$|^1\d+$/.test(r.position)||r.position==='PU'))||(r.result_status==='NR'&&r.position==='NR'&&Array.isArray(r.result_non_runners)&&r.result_non_runners.includes(r.horse)));
 };
 </script>
 

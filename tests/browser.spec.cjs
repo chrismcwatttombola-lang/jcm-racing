@@ -668,3 +668,16 @@ for(const source of ['The Racing API · Bet365',null]){
   await expect(page.locator('[data-drift-race]')).toHaveCount(0);
  });
 }
+
+test('provider pulled-up and explicit NR outcomes settle, unknown codes stay pending', async ({page,request})=>{
+ await page.clock.install({time:new Date('2026-10-13T18:00:00Z')});await page.goto(URL);await page.locator('#date').selectOption('2026-10-13');
+ const data=await(await request.get('http://127.0.0.1:8765/data/competition-research-2026-10-13.json')).json();
+ const dream=data.high_competition.find(r=>r.horse==='Dream Diamond'),nr=data.high_competition.find(r=>r.horse==='Granlahan');
+ expect(await page.evaluate(r=>window.jcmAcceptedResult(r),dream)).toBe(true);
+ expect(await page.evaluate(r=>window.jcmAcceptedResult(r),nr)).toBe(true);
+ expect(await page.evaluate(r=>window.jcmAcceptedResult({...r,position:'UNKNOWN'}),dream)).toBe(false);
+ expect(await page.evaluate(r=>window.jcmAcceptedResult({...r,result_non_runners:[]}),nr)).toBe(false);
+ expect(await page.evaluate(r=>window.jcmAcceptedResult({...r,result_status:'LOSS'}),dream)).toBe(false);
+ await expect(page.locator('[data-research-index]').filter({hasText:'Dream Diamond'})).toContainText('Horse lost');
+ await expect(page.locator('[data-research-index]').filter({hasText:'Granlahan'})).toContainText('NR');
+});

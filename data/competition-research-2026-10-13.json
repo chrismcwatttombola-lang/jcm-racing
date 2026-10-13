@@ -94,7 +94,7 @@
       "identified_challengers": [],
       "tier": "high",
       "selection_status": "USER_CONFIRMED_RESEARCH",
-      "result_status": "PENDING",
+      "result_status": "WIN",
       "official_accuracy_eligible": false,
       "race_id": "rac_32300884564",
       "horse_id": "hrs_40920131",
@@ -112,7 +112,28 @@
         "source_message_at": "2026-10-13T05:18:24Z",
         "added_at": "2026-10-13T09:52:52.657Z",
         "qualification_status": "NOT_REVALIDATED"
-      }
+      },
+      "position": "PU",
+      "placing": "PU",
+      "result_source": "THE_RACING_API",
+      "verification_status": "PROVIDER_ACCEPTED",
+      "result_date": "2026-10-13",
+      "result_off_time_uk": "15:10",
+      "result_course": "Southwell",
+      "result_horse": "Dream Diamond",
+      "result_race_id": "rac_32300884564",
+      "result_horse_id": "hrs_40920131",
+      "result_winner": "Palamon",
+      "result_field_size": 4,
+      "result_evidence": "Provider race and runner matched by date, scheduled UK off-time, course, race ID, horse and horse ID",
+      "result_non_runners": [
+        "Move With The Beat",
+        "Martin's Denuo"
+      ],
+      "result_source_url": "https://api.theracingapi.com/v1/results/rac_32300884564",
+      "result_off_dt": "2026-10-13T15:10:00+01:00",
+      "result_retrieved_at": "2026-10-13T16:37:10.280Z",
+      "result_industry_starting_price": 3.25
     },
     {
       "race_date": "2026-10-13",
@@ -124,7 +145,7 @@
       "identified_challengers": [],
       "tier": "high",
       "selection_status": "USER_CONFIRMED_RESEARCH",
-      "result_status": "PENDING",
+      "result_status": "NR",
       "official_accuracy_eligible": false,
       "race_id": "rac_32301302956",
       "horse_id": "hrs_60594744",
@@ -141,7 +162,28 @@
         "source_message_at": "2026-10-13T05:20:04Z",
         "added_at": "2026-10-13T09:52:52.657Z",
         "qualification_status": "NOT_REVALIDATED"
-      }
+      },
+      "position": "NR",
+      "placing": "NR",
+      "result_source": "THE_RACING_API",
+      "verification_status": "PROVIDER_ACCEPTED",
+      "result_date": "2026-10-13",
+      "result_off_time_uk": "16:30",
+      "result_course": "Punchestown",
+      "result_horse": "Granlahan",
+      "result_race_id": "rac_32301302956",
+      "result_horse_id": "hrs_60594744",
+      "result_winner": "Another Challenge",
+      "result_field_size": 15,
+      "result_evidence": "Provider explicitly lists selected horse as non-runner; race date, scheduled time, course and stored race identity matched",
+      "result_non_runners": [
+        "Granlahan",
+        "Talas Kera",
+        "Poetic Focus"
+      ],
+      "result_source_url": "https://api.theracingapi.com/v1/results/rac_32301302956",
+      "result_off_dt": "2026-10-13T16:30:00+01:00",
+      "result_retrieved_at": "2026-10-13T16:37:10.280Z"
     },
     {
       "race_date": "2026-10-13",
@@ -153,7 +195,7 @@
       "identified_challengers": [],
       "tier": "high",
       "selection_status": "USER_CONFIRMED_RESEARCH",
-      "result_status": "PENDING",
+      "result_status": "WIN",
       "official_accuracy_eligible": false,
       "race_id": "rac_32300876816",
       "horse_id": "hrs_58251515",
@@ -170,7 +212,27 @@
         "source_message_at": "2026-10-13T05:14:55Z",
         "added_at": "2026-10-13T09:52:52.657Z",
         "qualification_status": "NOT_REVALIDATED"
-      }
+      },
+      "position": "4",
+      "placing": "4th",
+      "result_source": "THE_RACING_API",
+      "verification_status": "PROVIDER_ACCEPTED",
+      "result_date": "2026-10-13",
+      "result_off_time_uk": "16:47",
+      "result_course": "Leicester",
+      "result_horse": "English Time",
+      "result_race_id": "rac_32300876816",
+      "result_horse_id": "hrs_58251515",
+      "result_winner": "Foreseen",
+      "result_field_size": 17,
+      "result_evidence": "Provider race and runner matched by date, scheduled UK off-time, course, race ID, horse and horse ID",
+      "result_non_runners": [
+        "Righthere Rightnow"
+      ],
+      "result_source_url": "https://api.theracingapi.com/v1/results/rac_32300876816",
+      "result_off_dt": "2026-10-13T16:47:00+01:00",
+      "result_retrieved_at": "2026-10-13T16:37:10.280Z",
+      "result_industry_starting_price": 5.5
     },
     {
       "race_date": "2026-10-13",
@@ -338,7 +400,9 @@
       },
       "result_source_url": "https://api.theracingapi.com/v1/results/rac_32300855509",
       "result_off_dt": "2026-10-13T13:45:00+01:00",
-      "result_retrieved_at": "2026-10-13T13:14:42Z"
+      "result_retrieved_at": "2026-10-13T13:14:42Z",
+      "result_non_runners": [],
+      "result_industry_starting_price": 1.5
     },
     {
       "race_date": "2026-10-13",
@@ -423,7 +487,8 @@
         "selection_was_pre_off_favourite": false,
         "selection_bsp": null,
         "bsp_status": "AWAITING_FULL_RESULT"
-      }
+      },
+      "result_industry_starting_price": 4.5
     },
     {
       "race_date": "2026-10-13",
@@ -435,7 +500,7 @@
       "identified_challengers": [],
       "tier": "watchlist",
       "selection_status": "USER_CONFIRMED_RESEARCH",
-      "result_status": "PENDING",
+      "result_status": "WIN",
       "official_accuracy_eligible": false,
       "race_id": "rac_32300861320",
       "horse_id": "hrs_21826966",
@@ -452,7 +517,25 @@
         "source_message_at": "2026-10-13T05:18:24Z",
         "added_at": "2026-10-13T09:52:52.657Z",
         "qualification_status": "NOT_REVALIDATED"
-      }
+      },
+      "position": "2",
+      "placing": "2nd",
+      "result_source": "THE_RACING_API",
+      "verification_status": "PROVIDER_ACCEPTED",
+      "result_date": "2026-10-13",
+      "result_off_time_uk": "15:30",
+      "result_course": "Hereford",
+      "result_horse": "Donnie Azoff",
+      "result_race_id": "rac_32300861320",
+      "result_horse_id": "hrs_21826966",
+      "result_winner": "Jaramillo",
+      "result_field_size": 8,
+      "result_evidence": "Provider race and runner matched by date, scheduled UK off-time, course, race ID, horse and horse ID",
+      "result_non_runners": [],
+      "result_source_url": "https://api.theracingapi.com/v1/results/rac_32300861320",
+      "result_off_dt": "2026-10-13T15:30:00+01:00",
+      "result_retrieved_at": "2026-10-13T16:37:10.280Z",
+      "result_industry_starting_price": 3.75
     },
     {
       "race_date": "2026-10-13",
@@ -464,7 +547,7 @@
       "identified_challengers": [],
       "tier": "watchlist",
       "selection_status": "USER_CONFIRMED_RESEARCH",
-      "result_status": "PENDING",
+      "result_status": "LOSS",
       "official_accuracy_eligible": false,
       "race_id": "rac_32300872942",
       "horse_id": "hrs_34470982",
@@ -482,7 +565,25 @@
         "source_message_at": "2026-10-13T07:12:59Z",
         "added_at": "2026-10-13T09:52:52.657Z",
         "qualification_status": "NOT_REVALIDATED"
-      }
+      },
+      "position": "1",
+      "placing": "1st",
+      "result_source": "THE_RACING_API",
+      "verification_status": "PROVIDER_ACCEPTED",
+      "result_date": "2026-10-13",
+      "result_off_time_uk": "15:39",
+      "result_course": "Leicester",
+      "result_horse": "Irish Nectar",
+      "result_race_id": "rac_32300872942",
+      "result_horse_id": "hrs_34470982",
+      "result_winner": "Irish Nectar",
+      "result_field_size": 18,
+      "result_evidence": "Provider race and runner matched by date, scheduled UK off-time, course, race ID, horse and horse ID",
+      "result_non_runners": [],
+      "result_source_url": "https://api.theracingapi.com/v1/results/rac_32300872942",
+      "result_off_dt": "2026-10-13T15:39:00+01:00",
+      "result_retrieved_at": "2026-10-13T16:37:10.280Z",
+      "result_industry_starting_price": 5.5
     },
     {
       "race_date": "2026-10-13",
@@ -494,7 +595,7 @@
       "identified_challengers": [],
       "tier": "watchlist",
       "selection_status": "USER_CONFIRMED_RESEARCH",
-      "result_status": "PENDING",
+      "result_status": "WIN",
       "official_accuracy_eligible": false,
       "race_id": "rac_32300894249",
       "horse_id": "hrs_36779932",
@@ -512,7 +613,25 @@
         "source_message_at": "2026-10-13T07:12:59Z",
         "added_at": "2026-10-13T09:52:52.657Z",
         "qualification_status": "NOT_REVALIDATED"
-      }
+      },
+      "position": "4",
+      "placing": "4th",
+      "result_source": "THE_RACING_API",
+      "verification_status": "PROVIDER_ACCEPTED",
+      "result_date": "2026-10-13",
+      "result_off_time_uk": "17:00",
+      "result_course": "Wolverhampton",
+      "result_horse": "Homme De Fer",
+      "result_race_id": "rac_32300894249",
+      "result_horse_id": "hrs_36779932",
+      "result_winner": "Lady Delila",
+      "result_field_size": 9,
+      "result_evidence": "Provider race and runner matched by date, scheduled UK off-time, course, race ID, horse and horse ID",
+      "result_non_runners": [],
+      "result_source_url": "https://api.theracingapi.com/v1/results/rac_32300894249",
+      "result_off_dt": "2026-10-13T17:00:00+01:00",
+      "result_retrieved_at": "2026-10-13T16:37:10.280Z",
+      "result_industry_starting_price": 4
     },
     {
       "race_date": "2026-10-13",
@@ -524,7 +643,7 @@
       "identified_challengers": [],
       "tier": "watchlist",
       "selection_status": "USER_CONFIRMED_RESEARCH",
-      "result_status": "PENDING",
+      "result_status": "WIN",
       "official_accuracy_eligible": false,
       "race_id": "rac_32300977540",
       "horse_id": "hrs_34002983",
@@ -542,7 +661,27 @@
         "source_message_at": "2026-10-13T07:12:59Z",
         "added_at": "2026-10-13T09:52:52.657Z",
         "qualification_status": "NOT_REVALIDATED"
-      }
+      },
+      "position": "9",
+      "placing": "9th",
+      "result_source": "THE_RACING_API",
+      "verification_status": "PROVIDER_ACCEPTED",
+      "result_date": "2026-10-13",
+      "result_off_time_uk": "17:07",
+      "result_course": "Punchestown",
+      "result_horse": "No Big Deal",
+      "result_race_id": "rac_32300977540",
+      "result_horse_id": "hrs_34002983",
+      "result_winner": "Tuckmill",
+      "result_field_size": 17,
+      "result_evidence": "Provider race and runner matched by date, scheduled UK off-time, course, race ID, horse and horse ID",
+      "result_non_runners": [
+        "Bearami Creek"
+      ],
+      "result_source_url": "https://api.theracingapi.com/v1/results/rac_32300977540",
+      "result_off_dt": "2026-10-13T17:07:00+01:00",
+      "result_retrieved_at": "2026-10-13T16:37:10.280Z",
+      "result_industry_starting_price": 6
     },
     {
       "race_date": "2026-10-13",
@@ -554,7 +693,7 @@
       "identified_challengers": [],
       "tier": "watchlist",
       "selection_status": "USER_CONFIRMED_RESEARCH",
-      "result_status": "PENDING",
+      "result_status": "WIN",
       "official_accuracy_eligible": false,
       "race_id": "rac_32300878753",
       "horse_id": "hrs_39147990",
@@ -571,7 +710,30 @@
         "source_message_at": "2026-10-13T07:12:59Z",
         "added_at": "2026-10-13T09:52:52.657Z",
         "qualification_status": "NOT_REVALIDATED"
-      }
+      },
+      "position": "3",
+      "placing": "3rd",
+      "result_source": "THE_RACING_API",
+      "verification_status": "PROVIDER_ACCEPTED",
+      "result_date": "2026-10-13",
+      "result_off_time_uk": "17:17",
+      "result_course": "Leicester",
+      "result_horse": "Ricardo Phillips",
+      "result_race_id": "rac_32300878753",
+      "result_horse_id": "hrs_39147990",
+      "result_winner": "Grindleton",
+      "result_field_size": 13,
+      "result_evidence": "Provider race and runner matched by date, scheduled UK off-time, course, race ID, horse and horse ID",
+      "result_non_runners": [
+        "Stipulation",
+        "Fizzy Bear",
+        "Man From Havana",
+        "We've Got This"
+      ],
+      "result_source_url": "https://api.theracingapi.com/v1/results/rac_32300878753",
+      "result_off_dt": "2026-10-13T17:17:00+01:00",
+      "result_retrieved_at": "2026-10-13T16:37:10.280Z",
+      "result_industry_starting_price": 7
     },
     {
       "race_date": "2026-10-13",

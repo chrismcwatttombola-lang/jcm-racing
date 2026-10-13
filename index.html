@@ -393,7 +393,7 @@ sel.addEventListener('change',renderMarket);renderMarket();
  }
  function rows(items,kind){return items.map((r,i)=>'<button type="button" class="jcm-row" data-kind="'+kind+'" data-index="'+i+'"><span><span class="jcm-time">'+esc(r.time)+'</span><span class="jcm-ground">'+esc(r.course)+'</span></span><span class="jcm-horse">'+esc(r.horse)+'</span><span class="jcm-place">'+esc(r.place)+'</span><span class="jcm-status '+esc(r.status.toLowerCase())+'">'+esc(jcmOutcomeLabel(r.status))+'</span></button>').join('')}
  function paint(){
-  if(['2026-10-12','2026-10-13'].includes(date.value))return; // Today's shortlist owns this panel, including after delayed historical feeds.
+  if(['2026-10-12','2026-10-13'].includes(date.value)){watch.hidden=true;return;} // Today's shortlist owns this panel, including after delayed historical feeds.
   const first=date.value==='2026-10-07',oct8=date.value==='2026-10-08';
   const chosen=first?records:(oct8?todayRecords:[]);
   official.innerHTML='<div class="jcm-panel-heading"><h2>Daily picks</h2><span class="jcm-accuracy">'+(first?'83.3%':oct8?'100% · 1/1':'No settled picks')+'</span></div>'+(date.value==='2026-10-09'?'<p role="status" style="font-size:12px;line-height:1.6;color:#d7e4ef;background:#243249;border:1px solid #52647b;border-radius:10px;padding:10px 12px;margin:10px 0"><strong>9 Oct research snapshot — not live results.</strong> No official JCM picks were locked for this date. Matched Betfair results are confirmed for research display; these selections remain outside official accuracy.</p>':'')+(chosen.length?rows(chosen,'official'):'<p class="empty" role="status">No picks</p>');

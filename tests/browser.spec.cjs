@@ -418,7 +418,7 @@ test('13 October confirmed picks, colours, percentages and yesterday Low results
  expect(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth)).toBe(true);
  await page.locator('#date').selectOption('2026-10-12');await expect(page.locator('[data-research-index]')).toHaveCount(15);await expect(page.locator('[data-research-index] .jcm-confidence.low')).toHaveCount(3);await expect(page.locator('#jcm-official-panel .jcm-accuracy')).toContainText('66.7%');
  await page.evaluate(()=>window.jcmOpenRatedPerformance());await expect(page.locator('.jcm-rated-table')).toContainText('Low');await expect(page.locator('.jcm-rated-table tbody tr').filter({hasText:'Low'})).toContainText('2 / 1');await page.locator('#jcm-detail-overlay .jcm-close').click();
- await page.locator('#date').selectOption('2026-10-13');await expect(page.locator('[data-research-index]')).toHaveCount(16);await expect(page.locator('.metrics')).toContainText('72.7%');
+ await page.locator('#date').selectOption('2026-10-09');await expect(page.locator('#jcm-watch-panel')).toBeVisible();await page.locator('#date').selectOption('2026-10-13');await expect(page.locator('[data-research-index]')).toHaveCount(16);await expect(page.locator('#jcm-watch-panel')).toBeHidden();await expect(page.locator('.metrics')).toContainText('72.7%');
 });
 
 test('13 October picks survive delayed history and racing date fetches',async({page})=>{

@@ -451,7 +451,7 @@ test('builder today: top selector, daily redistribution, isolated race bank and 
  await page.locator('#builder-amount').fill('400');await page.locator('#builder-confirm').click();await expect(page.locator('#builder-message')).toContainText('Insufficient available balance');
  await page.locator('#builder-amount').fill('100');await page.locator('#builder-confirm').click();await expect(page.locator('[data-builder-reserved]')).toHaveText('£1,600.00');
  await page.locator('[data-builder-include="0"]').uncheck();await expect(page.locator('[data-builder-reserved]')).toHaveText('£1,500.00');await expect(page.locator('[data-builder-row="1"] [data-builder-liability-value]')).toHaveText('£100.00');
- await builderOdds(page,1,'3');await expect(page.locator('[data-builder-row="1"]')).toContainText('£47.50');
+ await builderOdds(page,1,'1.0001');await expect(page.locator('#builder-message')).toContainText('Enter decimal lay odds');await builderOdds(page,1,'3');await expect(page.locator('[data-builder-row="1"]')).toContainText('£47.50');
  await page.reload();await page.locator('[data-page="dummy-account"]').click();await expect(page.locator('[data-account-mode="fixed"]')).toHaveAttribute('aria-selected','true');await expect(page.locator('[data-builder-reserved]')).toHaveText('£1,000.00');
  await page.locator('[data-account-mode="race"]').click();await expect(page.locator('[data-builder-reserved]')).toHaveText('£1,500.00');await expect(page.locator('[data-builder-odds="1"]')).toHaveValue('3');
  expect(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth)).toBe(true);

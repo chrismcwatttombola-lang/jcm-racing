@@ -639,6 +639,24 @@ test('13 October accepted Miss Denver result reaches overview, detail and per-ra
  expect(await page.evaluate(r=>window.jcmAcceptedResult({...r,result_source_url:'https://api.theracingapi.com/v1/results/rac_999'}),selected)).toBe(false);
 });
 
+test('13 October full API results replace partial screenshot evidence without upgrading official accuracy',async({page,request})=>{
+ await page.clock.install({time:new Date('2026-10-13T14:20:00Z')});
+ await page.goto(URL);await page.locator('#date').selectOption('2026-10-13');
+ await expect(page.locator('.metrics .metric').first()).toContainText('18/25');
+ for(const expected of [
+  {horse:'Chantilly Wings',status:'Horse lost',finish:'Finished 6th of 11',winner:'Build A Bridge',source:'rac_32300969792'},
+  {horse:'Four Springs',status:'Horse won',finish:'Finished 1st of 4',winner:'Four Springs',source:'rac_32300882627'}
+ ]){
+  const row=page.locator('[data-research-index]').filter({hasText:expected.horse});await expect(row).toContainText(expected.status);await row.click();
+  await expect(page.locator('.jcm-result-card')).toContainText(expected.finish);await expect(page.locator('.jcm-result-card')).toContainText(expected.winner);await page.locator('#jcm-detail-overlay .jcm-close').click();
+ }
+ const data=await(await request.get('http://127.0.0.1:8765/data/competition-research-2026-10-13.json')).json();
+ for(const selected of [...data.high_competition,...data.competition_watchlist].filter(r=>['Chantilly Wings','Four Springs'].includes(r.horse))){
+  expect(selected.official_accuracy_eligible).toBe(false);expect(selected.verification_status).toBe('PROVIDER_ACCEPTED');expect(selected.screenshot_result_evidence.result_source).toBe('BETFAIR_EXCHANGE_USER_SCREENSHOT');
+  expect(selected.result_source_url).toBe('https://api.theracingapi.com/v1/results/'+selected.result_race_id);expect(await page.evaluate(r=>window.jcmAcceptedResult(r),selected)).toBe(true);
+ }
+});
+
 
 for(const source of ['The Racing API · Bet365',null]){
  test('tracker rejects non-Exchange or unidentified price source '+source,async({page})=>{

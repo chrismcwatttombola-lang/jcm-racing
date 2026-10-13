@@ -571,8 +571,8 @@ test('Drifting / Shortening Tracker shows all race leaders, historical coverage 
  await expect(page.locator('#drift-content')).toContainText('Similar opening prices (±25%)');
  await expect(page.locator('[data-drift-race]').filter({hasText:'Koffee And Kale'})).toHaveCount(0);
  await page.locator('#drift-filter').selectOption('DRIFT');
- const rows=page.locator('[data-drift-race]');expect(await rows.count()).toBeGreaterThan(0);
- await expect(rows.first()).toContainText('DRIFT');
+ const rows=page.locator('[data-drift-race]');await expect(rows).toHaveCount(0);
+ await expect(page.locator('#drift-content')).toContainText('No comparable rows for this view');
  const width=await page.locator('.drift-modal').evaluate(e=>({scroll:e.scrollWidth,client:e.clientWidth}));
  expect(width.scroll).toBeLessThanOrEqual(width.client+1);
  await page.locator('.drift-modal').evaluate(e=>e.scrollTop=e.scrollHeight);
@@ -582,14 +582,19 @@ test('Drifting / Shortening Tracker shows all race leaders, historical coverage 
 });
 test('latest Exchange capture is append-only and remains blocked research',async({request})=>{
  const response=await request.get('http://127.0.0.1:8765/data/drifting-odds-2026-10-13.json');expect(response.ok()).toBe(true);
- const data=await response.json(),latest=data.observations.at(-1);expect(data.latest_observation_at).toBe('2026-10-13T17:41:07.434Z');
- expect(data.observations).toHaveLength(6);expect(latest.rows).toHaveLength(38);
+ const data=await response.json(),latest=data.observations.at(-1);expect(data.latest_observation_at).toBe('2026-10-13T22:08:51.332Z');
+ expect(data.observations).toHaveLength(7);expect(latest.rows).toHaveLength(38);
+ expect(latest.completion_status).toBe('END_OF_DAY_ARCHIVAL_CAPTURE_ALL_RACES_OFF');
  const counts=latest.rows.reduce((out,row)=>{const key=row.current.direction||row.current.status;out[key]=(out[key]||0)+1;return out;},{});
- expect(counts).toEqual({DRIFT:1,SHORTENED:3,STALE_OR_MISSING_CLOSE:34});
+ expect(counts).toEqual({STALE_OR_MISSING_CLOSE:38});
  for(const [index,row] of data.rows.entries()){
   expect(row.current).toEqual(latest.rows[index].current);expect(row.current.source).toBe('The Racing API · Betfair Exchange');expect(row.current.price_side).toBe('UNSPECIFIED');
   expect(row.opportunity_status).toBe('BLOCKED_UNVERIFIED_EXECUTION_AND_UNVALIDATED_FORECAST');
  }
+ const granlahan=data.rows.find(row=>row.horse==='Granlahan');
+ expect(granlahan.withdrawal_status).toBe('EXPLICIT_NON_RUNNER');
+ expect(granlahan.withdrawal_evidence.status).toBe('PROVIDER_ACCEPTED');
+ expect(data.replacement_observations).toEqual([expect.objectContaining({withdrawn_horse:'Granlahan',status:'NOT_CAPTURED_PROSPECTIVELY',replacement_horse:null})]);
 });
 test('screenshot date archive preserves unknown capture times and reported comparison',async({page})=>{
  await openDrift(page);await page.locator('[data-drift-tab="screenshots"]').click();

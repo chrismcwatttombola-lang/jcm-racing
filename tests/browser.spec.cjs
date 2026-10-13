@@ -526,3 +526,27 @@ test('historical controls: select-all in daily and manual views changes no locke
  await page.clock.install({time:new Date('2026-10-12T13:00:00Z')});await page.goto('http://127.0.0.1:8765/#hub');await page.locator('[data-page="dummy-account"]').click();await page.locator('#builder-select-all').uncheck();await expect(page.locator('[data-account-row]:checked')).toHaveCount(0);await page.reload();await page.locator('[data-page="dummy-account"]').click();await expect(page.locator('[data-account-row]:checked')).toHaveCount(0);await page.locator('#builder-select-all').check();await expect(page.locator('[data-account-row]:checked')).toHaveCount(15);
  await page.clock.fastForward(5*60*60*1000);await page.locator('[data-account-mode="manual"]').click();await expect(page.locator('[data-manual-include]:checked')).toHaveCount(4);await page.locator('#builder-select-all').uncheck();await expect(page.locator('[data-manual-include]:checked')).toHaveCount(0);await page.locator('#builder-select-all').check();await expect(page.locator('[data-manual-include]:checked')).toHaveCount(4);await expect(page.locator('[data-manual-reserved]')).toHaveText('£0.00');await page.clock.fastForward(2*60*60*1000);await expect(page.locator('#builder-select-all')).toBeDisabled();
 });
+
+test('all 13 October selections show recovered reasons with counterarguments and provenance',async({page})=>{
+ await page.setViewportSize({width:360,height:780});
+ await page.clock.install({time:new Date('2026-10-13T08:30:00Z')});
+ await page.goto('http://127.0.0.1:8765/#picks');
+ await page.locator('#date').selectOption('2026-10-13');
+ await expect(page.locator('[data-research-index]')).toHaveCount(16);
+ for(let i=0;i<16;i++){
+  const row=page.locator('[data-research-index]').nth(i);
+  const horse=await row.locator('.jcm-horse').innerText();
+  await row.click();
+  const tile=page.locator('.jcm-result-tile').filter({has:page.locator('h3',{hasText:'Reason for selection'})});
+  await expect(page.locator('.jcm-result-card h2')).toHaveText(horse);
+  await expect(tile).toContainText('Counterargument');
+  await expect(tile).toContainText('Main challengers');
+  await expect(tile).toContainText('underlying source data not reverified');
+  await expect(tile).not.toContainText('Selection reason not supplied.');
+  await page.locator('#jcm-detail-overlay .jcm-close').click();
+ }
+ await page.locator('#date').selectOption('2026-10-12');
+ await expect(page.locator('[data-research-index]')).toHaveCount(15);
+ await page.locator('[data-research-index]').first().click();
+ await expect(page.locator('.jcm-result-card')).toBeVisible();
+});

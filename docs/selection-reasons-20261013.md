@@ -1,0 +1,5 @@
+# 13 October selection reasons
+
+User requested adding reasons for every race to the app. App records held no original reasoning. Recovered morning conversation excerpts supply a concise concern, counterargument and named challengers for all 16 existing entries. These are explicitly labelled recovered prior analysis, with underlying provider data not reverified; they are not new qualification decisions or validated model outputs. The original fields and historical selections remain intact. Koffee And Kale retains its original explanation alongside the separate builder NR record. Unknown original counterarguments are disclosed. No results, confidence scores or account calculations change.
+
+Added provenance/status and dated source-message references for recovered notes. Browser coverage opens all 16 pop-ups on mobile, checks counterarguments, challengers and the provenance label, then checks the historical date. Existing fallback remains for records without reasons. User request authorizes the content addition and publication; prior standing requested-change approval preserved.

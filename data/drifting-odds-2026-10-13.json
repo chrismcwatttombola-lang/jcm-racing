@@ -91,7 +91,17 @@
       "drift_count": 2,
       "shortening_count": 0,
       "unchanged_count": 0,
-      "opportunity_status": "BLOCKED_UNVERIFIED_EXECUTION_AND_UNVALIDATED_FORECAST"
+      "opportunity_status": "BLOCKED_UNVERIFIED_EXECUTION_AND_UNVALIDATED_FORECAST",
+      "similar_opening": {
+        "reference_price": 7.2,
+        "band_percent": 25,
+        "count": 0,
+        "drift_count": 0,
+        "shortening_count": 0,
+        "min_change_percent": null,
+        "max_change_percent": null,
+        "status": "EXPLORATORY_NOT_VALIDATED"
+      }
     },
     {
       "race_id": "rac_32300967855",
@@ -142,7 +152,17 @@
       "drift_count": 0,
       "shortening_count": 1,
       "unchanged_count": 0,
-      "opportunity_status": "BLOCKED_UNVERIFIED_EXECUTION_AND_UNVALIDATED_FORECAST"
+      "opportunity_status": "BLOCKED_UNVERIFIED_EXECUTION_AND_UNVALIDATED_FORECAST",
+      "similar_opening": {
+        "reference_price": 1.86,
+        "band_percent": 25,
+        "count": 0,
+        "drift_count": 0,
+        "shortening_count": 0,
+        "min_change_percent": null,
+        "max_change_percent": null,
+        "status": "EXPLORATORY_NOT_VALIDATED"
+      }
     },
     {
       "race_id": "rac_32300855509",
@@ -263,7 +283,17 @@
       "drift_count": 2,
       "shortening_count": 1,
       "unchanged_count": 0,
-      "opportunity_status": "BLOCKED_UNVERIFIED_EXECUTION_AND_UNVALIDATED_FORECAST"
+      "opportunity_status": "BLOCKED_UNVERIFIED_EXECUTION_AND_UNVALIDATED_FORECAST",
+      "similar_opening": {
+        "reference_price": 1.96,
+        "band_percent": 25,
+        "count": 0,
+        "drift_count": 0,
+        "shortening_count": 0,
+        "min_change_percent": null,
+        "max_change_percent": null,
+        "status": "EXPLORATORY_NOT_VALIDATED"
+      }
     },
     {
       "race_id": "rac_32300867131",
@@ -371,7 +401,17 @@
       "drift_count": 1,
       "shortening_count": 3,
       "unchanged_count": 0,
-      "opportunity_status": "BLOCKED_UNVERIFIED_EXECUTION_AND_UNVALIDATED_FORECAST"
+      "opportunity_status": "BLOCKED_UNVERIFIED_EXECUTION_AND_UNVALIDATED_FORECAST",
+      "similar_opening": {
+        "reference_price": 3.5,
+        "band_percent": 25,
+        "count": 1,
+        "drift_count": 0,
+        "shortening_count": 1,
+        "min_change_percent": -19.57,
+        "max_change_percent": -19.57,
+        "status": "EXPLORATORY_NOT_VALIDATED"
+      }
     },
     {
       "race_id": "rac_32300880690",
@@ -495,7 +535,17 @@
       "drift_count": 0,
       "shortening_count": 4,
       "unchanged_count": 0,
-      "opportunity_status": "BLOCKED_UNVERIFIED_EXECUTION_AND_UNVALIDATED_FORECAST"
+      "opportunity_status": "BLOCKED_UNVERIFIED_EXECUTION_AND_UNVALIDATED_FORECAST",
+      "similar_opening": {
+        "reference_price": 2.36,
+        "band_percent": 25,
+        "count": 0,
+        "drift_count": 0,
+        "shortening_count": 0,
+        "min_change_percent": null,
+        "max_change_percent": null,
+        "status": "EXPLORATORY_NOT_VALIDATED"
+      }
     },
     {
       "race_id": "rac_32300969792",
@@ -597,7 +647,17 @@
       "drift_count": 1,
       "shortening_count": 1,
       "unchanged_count": 0,
-      "opportunity_status": "BLOCKED_UNVERIFIED_EXECUTION_AND_UNVALIDATED_FORECAST"
+      "opportunity_status": "BLOCKED_UNVERIFIED_EXECUTION_AND_UNVALIDATED_FORECAST",
+      "similar_opening": {
+        "reference_price": 5.3,
+        "band_percent": 25,
+        "count": 0,
+        "drift_count": 0,
+        "shortening_count": 0,
+        "min_change_percent": null,
+        "max_change_percent": null,
+        "status": "EXPLORATORY_NOT_VALIDATED"
+      }
     },
     {
       "race_id": "rac_32300857446",
@@ -724,7 +784,17 @@
       "drift_count": 3,
       "shortening_count": 1,
       "unchanged_count": 1,
-      "opportunity_status": "BLOCKED_UNVERIFIED_EXECUTION_AND_UNVALIDATED_FORECAST"
+      "opportunity_status": "BLOCKED_UNVERIFIED_EXECUTION_AND_UNVALIDATED_FORECAST",
+      "similar_opening": {
+        "reference_price": 2.4,
+        "band_percent": 25,
+        "count": 1,
+        "drift_count": 0,
+        "shortening_count": 1,
+        "min_change_percent": -14.58,
+        "max_change_percent": -14.58,
+        "status": "EXPLORATORY_NOT_VALIDATED"
+      }
     },
     {
       "race_id": "rac_32300869068",
@@ -775,7 +845,17 @@
       "drift_count": 1,
       "shortening_count": 0,
       "unchanged_count": 0,
-      "opportunity_status": "BLOCKED_UNVERIFIED_EXECUTION_AND_UNVALIDATED_FORECAST"
+      "opportunity_status": "BLOCKED_UNVERIFIED_EXECUTION_AND_UNVALIDATED_FORECAST",
+      "similar_opening": {
+        "reference_price": 3.05,
+        "band_percent": 25,
+        "count": 0,
+        "drift_count": 0,
+        "shortening_count": 0,
+        "min_change_percent": null,
+        "max_change_percent": null,
+        "status": "EXPLORATORY_NOT_VALIDATED"
+      }
     },
     {
       "race_id": "rac_32300882627",
@@ -877,7 +957,17 @@
       "drift_count": 1,
       "shortening_count": 1,
       "unchanged_count": 0,
-      "opportunity_status": "BLOCKED_UNVERIFIED_EXECUTION_AND_UNVALIDATED_FORECAST"
+      "opportunity_status": "BLOCKED_UNVERIFIED_EXECUTION_AND_UNVALIDATED_FORECAST",
+      "similar_opening": {
+        "reference_price": 3.15,
+        "band_percent": 25,
+        "count": 2,
+        "drift_count": 1,
+        "shortening_count": 1,
+        "min_change_percent": -20,
+        "max_change_percent": 20,
+        "status": "EXPLORATORY_NOT_VALIDATED"
+      }
     },
     {
       "race_id": "rac_32300971729",
@@ -998,7 +1088,17 @@
       "drift_count": 1,
       "shortening_count": 2,
       "unchanged_count": 0,
-      "opportunity_status": "BLOCKED_UNVERIFIED_EXECUTION_AND_UNVALIDATED_FORECAST"
+      "opportunity_status": "BLOCKED_UNVERIFIED_EXECUTION_AND_UNVALIDATED_FORECAST",
+      "similar_opening": {
+        "reference_price": 2.96,
+        "band_percent": 25,
+        "count": 0,
+        "drift_count": 0,
+        "shortening_count": 0,
+        "min_change_percent": null,
+        "max_change_percent": null,
+        "status": "EXPLORATORY_NOT_VALIDATED"
+      }
     },
     {
       "race_id": "rac_32300859383",
@@ -1125,7 +1225,17 @@
       "drift_count": 3,
       "shortening_count": 2,
       "unchanged_count": 0,
-      "opportunity_status": "BLOCKED_UNVERIFIED_EXECUTION_AND_UNVALIDATED_FORECAST"
+      "opportunity_status": "BLOCKED_UNVERIFIED_EXECUTION_AND_UNVALIDATED_FORECAST",
+      "similar_opening": {
+        "reference_price": 3.15,
+        "band_percent": 25,
+        "count": 0,
+        "drift_count": 0,
+        "shortening_count": 0,
+        "min_change_percent": null,
+        "max_change_percent": null,
+        "status": "EXPLORATORY_NOT_VALIDATED"
+      }
     },
     {
       "race_id": "rac_32300871005",
@@ -1156,7 +1266,17 @@
       "drift_count": 0,
       "shortening_count": 0,
       "unchanged_count": 0,
-      "opportunity_status": "BLOCKED_UNVERIFIED_EXECUTION_AND_UNVALIDATED_FORECAST"
+      "opportunity_status": "BLOCKED_UNVERIFIED_EXECUTION_AND_UNVALIDATED_FORECAST",
+      "similar_opening": {
+        "reference_price": 3.1,
+        "band_percent": 25,
+        "count": 0,
+        "drift_count": 0,
+        "shortening_count": 0,
+        "min_change_percent": null,
+        "max_change_percent": null,
+        "status": "EXPLORATORY_NOT_VALIDATED"
+      }
     },
     {
       "race_id": "rac_32300884564",
@@ -1280,7 +1400,17 @@
       "drift_count": 0,
       "shortening_count": 4,
       "unchanged_count": 0,
-      "opportunity_status": "BLOCKED_UNVERIFIED_EXECUTION_AND_UNVALIDATED_FORECAST"
+      "opportunity_status": "BLOCKED_UNVERIFIED_EXECUTION_AND_UNVALIDATED_FORECAST",
+      "similar_opening": {
+        "reference_price": 2.44,
+        "band_percent": 25,
+        "count": 0,
+        "drift_count": 0,
+        "shortening_count": 0,
+        "min_change_percent": null,
+        "max_change_percent": null,
+        "status": "EXPLORATORY_NOT_VALIDATED"
+      }
     },
     {
       "race_id": "rac_32300973666",
@@ -1398,7 +1528,17 @@
       "drift_count": 1,
       "shortening_count": 0,
       "unchanged_count": 1,
-      "opportunity_status": "BLOCKED_UNVERIFIED_EXECUTION_AND_UNVALIDATED_FORECAST"
+      "opportunity_status": "BLOCKED_UNVERIFIED_EXECUTION_AND_UNVALIDATED_FORECAST",
+      "similar_opening": {
+        "reference_price": 4.4,
+        "band_percent": 25,
+        "count": 2,
+        "drift_count": 1,
+        "shortening_count": 0,
+        "min_change_percent": 0,
+        "max_change_percent": 33.33,
+        "status": "EXPLORATORY_NOT_VALIDATED"
+      }
     },
     {
       "race_id": "rac_32300861320",
@@ -1519,7 +1659,17 @@
       "drift_count": 3,
       "shortening_count": 0,
       "unchanged_count": 0,
-      "opportunity_status": "BLOCKED_UNVERIFIED_EXECUTION_AND_UNVALIDATED_FORECAST"
+      "opportunity_status": "BLOCKED_UNVERIFIED_EXECUTION_AND_UNVALIDATED_FORECAST",
+      "similar_opening": {
+        "reference_price": 4.8,
+        "band_percent": 25,
+        "count": 1,
+        "drift_count": 1,
+        "shortening_count": 0,
+        "min_change_percent": 37.93,
+        "max_change_percent": 37.93,
+        "status": "EXPLORATORY_NOT_VALIDATED"
+      }
     },
     {
       "race_id": "rac_32300872942",
@@ -1646,7 +1796,17 @@
       "drift_count": 3,
       "shortening_count": 2,
       "unchanged_count": 0,
-      "opportunity_status": "BLOCKED_UNVERIFIED_EXECUTION_AND_UNVALIDATED_FORECAST"
+      "opportunity_status": "BLOCKED_UNVERIFIED_EXECUTION_AND_UNVALIDATED_FORECAST",
+      "similar_opening": {
+        "reference_price": 4.9,
+        "band_percent": 25,
+        "count": 2,
+        "drift_count": 1,
+        "shortening_count": 1,
+        "min_change_percent": -19.64,
+        "max_change_percent": 2.08,
+        "status": "EXPLORATORY_NOT_VALIDATED"
+      }
     },
     {
       "race_id": "rac_32300886501",
@@ -1710,7 +1870,17 @@
       "drift_count": 0,
       "shortening_count": 1,
       "unchanged_count": 0,
-      "opportunity_status": "BLOCKED_UNVERIFIED_EXECUTION_AND_UNVALIDATED_FORECAST"
+      "opportunity_status": "BLOCKED_UNVERIFIED_EXECUTION_AND_UNVALIDATED_FORECAST",
+      "similar_opening": {
+        "reference_price": null,
+        "band_percent": 25,
+        "count": 0,
+        "drift_count": 0,
+        "shortening_count": 0,
+        "min_change_percent": null,
+        "max_change_percent": null,
+        "status": "EXPLORATORY_NOT_VALIDATED"
+      }
     },
     {
       "race_id": "rac_32300975603",
@@ -1774,7 +1944,17 @@
       "drift_count": 0,
       "shortening_count": 0,
       "unchanged_count": 0,
-      "opportunity_status": "BLOCKED_UNVERIFIED_EXECUTION_AND_UNVALIDATED_FORECAST"
+      "opportunity_status": "BLOCKED_UNVERIFIED_EXECUTION_AND_UNVALIDATED_FORECAST",
+      "similar_opening": {
+        "reference_price": 3.1,
+        "band_percent": 25,
+        "count": 0,
+        "drift_count": 0,
+        "shortening_count": 0,
+        "min_change_percent": null,
+        "max_change_percent": null,
+        "status": "EXPLORATORY_NOT_VALIDATED"
+      }
     },
     {
       "race_id": "rac_32300863257",
@@ -1895,7 +2075,17 @@
       "drift_count": 2,
       "shortening_count": 1,
       "unchanged_count": 0,
-      "opportunity_status": "BLOCKED_UNVERIFIED_EXECUTION_AND_UNVALIDATED_FORECAST"
+      "opportunity_status": "BLOCKED_UNVERIFIED_EXECUTION_AND_UNVALIDATED_FORECAST",
+      "similar_opening": {
+        "reference_price": 4.6,
+        "band_percent": 25,
+        "count": 1,
+        "drift_count": 0,
+        "shortening_count": 1,
+        "min_change_percent": -19.05,
+        "max_change_percent": -19.05,
+        "status": "EXPLORATORY_NOT_VALIDATED"
+      }
     },
     {
       "race_id": "rac_32300874879",
@@ -2022,7 +2212,17 @@
       "drift_count": 3,
       "shortening_count": 2,
       "unchanged_count": 0,
-      "opportunity_status": "BLOCKED_UNVERIFIED_EXECUTION_AND_UNVALIDATED_FORECAST"
+      "opportunity_status": "BLOCKED_UNVERIFIED_EXECUTION_AND_UNVALIDATED_FORECAST",
+      "similar_opening": {
+        "reference_price": 3.45,
+        "band_percent": 25,
+        "count": 1,
+        "drift_count": 1,
+        "shortening_count": 0,
+        "min_change_percent": 10.92,
+        "max_change_percent": 10.92,
+        "status": "EXPLORATORY_NOT_VALIDATED"
+      }
     },
     {
       "race_id": "rac_32300888438",
@@ -2092,7 +2292,17 @@
       "drift_count": 1,
       "shortening_count": 1,
       "unchanged_count": 0,
-      "opportunity_status": "BLOCKED_UNVERIFIED_EXECUTION_AND_UNVALIDATED_FORECAST"
+      "opportunity_status": "BLOCKED_UNVERIFIED_EXECUTION_AND_UNVALIDATED_FORECAST",
+      "similar_opening": {
+        "reference_price": 1.53,
+        "band_percent": 25,
+        "count": 0,
+        "drift_count": 0,
+        "shortening_count": 0,
+        "min_change_percent": null,
+        "max_change_percent": null,
+        "status": "EXPLORATORY_NOT_VALIDATED"
+      }
     },
     {
       "race_id": "rac_32301297145",
@@ -2219,7 +2429,17 @@
       "drift_count": 3,
       "shortening_count": 2,
       "unchanged_count": 0,
-      "opportunity_status": "BLOCKED_UNVERIFIED_EXECUTION_AND_UNVALIDATED_FORECAST"
+      "opportunity_status": "BLOCKED_UNVERIFIED_EXECUTION_AND_UNVALIDATED_FORECAST",
+      "similar_opening": {
+        "reference_price": 2.82,
+        "band_percent": 25,
+        "count": 0,
+        "drift_count": 0,
+        "shortening_count": 0,
+        "min_change_percent": null,
+        "max_change_percent": null,
+        "status": "EXPLORATORY_NOT_VALIDATED"
+      }
     },
     {
       "race_id": "rac_32301302956",
@@ -2334,7 +2554,17 @@
       "drift_count": 2,
       "shortening_count": 2,
       "unchanged_count": 0,
-      "opportunity_status": "BLOCKED_UNVERIFIED_EXECUTION_AND_UNVALIDATED_FORECAST"
+      "opportunity_status": "BLOCKED_UNVERIFIED_EXECUTION_AND_UNVALIDATED_FORECAST",
+      "similar_opening": {
+        "reference_price": 3.1,
+        "band_percent": 25,
+        "count": 2,
+        "drift_count": 1,
+        "shortening_count": 1,
+        "min_change_percent": -15.87,
+        "max_change_percent": 16.22,
+        "status": "EXPLORATORY_NOT_VALIDATED"
+      }
     },
     {
       "race_id": "rac_32300865194",
@@ -2401,7 +2631,17 @@
       "drift_count": 1,
       "shortening_count": 0,
       "unchanged_count": 0,
-      "opportunity_status": "BLOCKED_UNVERIFIED_EXECUTION_AND_UNVALIDATED_FORECAST"
+      "opportunity_status": "BLOCKED_UNVERIFIED_EXECUTION_AND_UNVALIDATED_FORECAST",
+      "similar_opening": {
+        "reference_price": 2,
+        "band_percent": 25,
+        "count": 0,
+        "drift_count": 0,
+        "shortening_count": 0,
+        "min_change_percent": null,
+        "max_change_percent": null,
+        "status": "EXPLORATORY_NOT_VALIDATED"
+      }
     },
     {
       "race_id": "rac_32300876816",
@@ -2503,7 +2743,17 @@
       "drift_count": 1,
       "shortening_count": 0,
       "unchanged_count": 1,
-      "opportunity_status": "BLOCKED_UNVERIFIED_EXECUTION_AND_UNVALIDATED_FORECAST"
+      "opportunity_status": "BLOCKED_UNVERIFIED_EXECUTION_AND_UNVALIDATED_FORECAST",
+      "similar_opening": {
+        "reference_price": 5.5,
+        "band_percent": 25,
+        "count": 1,
+        "drift_count": 0,
+        "shortening_count": 0,
+        "min_change_percent": 0,
+        "max_change_percent": 0,
+        "status": "EXPLORATORY_NOT_VALIDATED"
+      }
     },
     {
       "race_id": "rac_32300890375",
@@ -2627,7 +2877,17 @@
       "drift_count": 2,
       "shortening_count": 2,
       "unchanged_count": 0,
-      "opportunity_status": "BLOCKED_UNVERIFIED_EXECUTION_AND_UNVALIDATED_FORECAST"
+      "opportunity_status": "BLOCKED_UNVERIFIED_EXECUTION_AND_UNVALIDATED_FORECAST",
+      "similar_opening": {
+        "reference_price": 2.48,
+        "band_percent": 25,
+        "count": 0,
+        "drift_count": 0,
+        "shortening_count": 0,
+        "min_change_percent": null,
+        "max_change_percent": null,
+        "status": "EXPLORATORY_NOT_VALIDATED"
+      }
     },
     {
       "race_id": "rac_32300894249",
@@ -2748,7 +3008,17 @@
       "drift_count": 1,
       "shortening_count": 2,
       "unchanged_count": 0,
-      "opportunity_status": "BLOCKED_UNVERIFIED_EXECUTION_AND_UNVALIDATED_FORECAST"
+      "opportunity_status": "BLOCKED_UNVERIFIED_EXECUTION_AND_UNVALIDATED_FORECAST",
+      "similar_opening": {
+        "reference_price": 4.3,
+        "band_percent": 25,
+        "count": 0,
+        "drift_count": 0,
+        "shortening_count": 0,
+        "min_change_percent": null,
+        "max_change_percent": null,
+        "status": "EXPLORATORY_NOT_VALIDATED"
+      }
     },
     {
       "race_id": "rac_32300977540",
@@ -2869,7 +3139,17 @@
       "drift_count": 2,
       "shortening_count": 1,
       "unchanged_count": 0,
-      "opportunity_status": "BLOCKED_UNVERIFIED_EXECUTION_AND_UNVALIDATED_FORECAST"
+      "opportunity_status": "BLOCKED_UNVERIFIED_EXECUTION_AND_UNVALIDATED_FORECAST",
+      "similar_opening": {
+        "reference_price": 5.2,
+        "band_percent": 25,
+        "count": 1,
+        "drift_count": 0,
+        "shortening_count": 1,
+        "min_change_percent": -23.08,
+        "max_change_percent": -23.08,
+        "status": "EXPLORATORY_NOT_VALIDATED"
+      }
     },
     {
       "race_id": "rac_32300878753",
@@ -2996,7 +3276,17 @@
       "drift_count": 2,
       "shortening_count": 2,
       "unchanged_count": 0,
-      "opportunity_status": "BLOCKED_UNVERIFIED_EXECUTION_AND_UNVALIDATED_FORECAST"
+      "opportunity_status": "BLOCKED_UNVERIFIED_EXECUTION_AND_UNVALIDATED_FORECAST",
+      "similar_opening": {
+        "reference_price": 8,
+        "band_percent": 25,
+        "count": 1,
+        "drift_count": 1,
+        "shortening_count": 0,
+        "min_change_percent": 23.53,
+        "max_change_percent": 23.53,
+        "status": "EXPLORATORY_NOT_VALIDATED"
+      }
     },
     {
       "race_id": "rac_32300892312",
@@ -3123,7 +3413,17 @@
       "drift_count": 3,
       "shortening_count": 1,
       "unchanged_count": 1,
-      "opportunity_status": "BLOCKED_UNVERIFIED_EXECUTION_AND_UNVALIDATED_FORECAST"
+      "opportunity_status": "BLOCKED_UNVERIFIED_EXECUTION_AND_UNVALIDATED_FORECAST",
+      "similar_opening": {
+        "reference_price": 4.2,
+        "band_percent": 25,
+        "count": 2,
+        "drift_count": 0,
+        "shortening_count": 1,
+        "min_change_percent": -33.7,
+        "max_change_percent": 0,
+        "status": "EXPLORATORY_NOT_VALIDATED"
+      }
     },
     {
       "race_id": "rac_32300896186",
@@ -3250,7 +3550,17 @@
       "drift_count": 4,
       "shortening_count": 1,
       "unchanged_count": 0,
-      "opportunity_status": "BLOCKED_UNVERIFIED_EXECUTION_AND_UNVALIDATED_FORECAST"
+      "opportunity_status": "BLOCKED_UNVERIFIED_EXECUTION_AND_UNVALIDATED_FORECAST",
+      "similar_opening": {
+        "reference_price": 1.94,
+        "band_percent": 25,
+        "count": 2,
+        "drift_count": 2,
+        "shortening_count": 0,
+        "min_change_percent": 2.34,
+        "max_change_percent": 5.26,
+        "status": "EXPLORATORY_NOT_VALIDATED"
+      }
     },
     {
       "race_id": "rac_32300979477",
@@ -3278,7 +3588,17 @@
       "drift_count": 0,
       "shortening_count": 0,
       "unchanged_count": 0,
-      "opportunity_status": "BLOCKED_UNVERIFIED_EXECUTION_AND_UNVALIDATED_FORECAST"
+      "opportunity_status": "BLOCKED_UNVERIFIED_EXECUTION_AND_UNVALIDATED_FORECAST",
+      "similar_opening": {
+        "reference_price": null,
+        "band_percent": 25,
+        "count": 0,
+        "drift_count": 0,
+        "shortening_count": 0,
+        "min_change_percent": null,
+        "max_change_percent": null,
+        "status": "EXPLORATORY_NOT_VALIDATED"
+      }
     },
     {
       "race_id": "rac_32300898123",
@@ -3348,7 +3668,17 @@
       "drift_count": 1,
       "shortening_count": 0,
       "unchanged_count": 1,
-      "opportunity_status": "BLOCKED_UNVERIFIED_EXECUTION_AND_UNVALIDATED_FORECAST"
+      "opportunity_status": "BLOCKED_UNVERIFIED_EXECUTION_AND_UNVALIDATED_FORECAST",
+      "similar_opening": {
+        "reference_price": 2.02,
+        "band_percent": 25,
+        "count": 0,
+        "drift_count": 0,
+        "shortening_count": 0,
+        "min_change_percent": null,
+        "max_change_percent": null,
+        "status": "EXPLORATORY_NOT_VALIDATED"
+      }
     },
     {
       "race_id": "rac_32300900060",
@@ -3431,7 +3761,17 @@
       "drift_count": 1,
       "shortening_count": 0,
       "unchanged_count": 0,
-      "opportunity_status": "BLOCKED_UNVERIFIED_EXECUTION_AND_UNVALIDATED_FORECAST"
+      "opportunity_status": "BLOCKED_UNVERIFIED_EXECUTION_AND_UNVALIDATED_FORECAST",
+      "similar_opening": {
+        "reference_price": 2.28,
+        "band_percent": 25,
+        "count": 0,
+        "drift_count": 0,
+        "shortening_count": 0,
+        "min_change_percent": null,
+        "max_change_percent": null,
+        "status": "EXPLORATORY_NOT_VALIDATED"
+      }
     },
     {
       "race_id": "rac_32300901997",
@@ -3558,7 +3898,17 @@
       "drift_count": 2,
       "shortening_count": 2,
       "unchanged_count": 0,
-      "opportunity_status": "BLOCKED_UNVERIFIED_EXECUTION_AND_UNVALIDATED_FORECAST"
+      "opportunity_status": "BLOCKED_UNVERIFIED_EXECUTION_AND_UNVALIDATED_FORECAST",
+      "similar_opening": {
+        "reference_price": 2.56,
+        "band_percent": 25,
+        "count": 2,
+        "drift_count": 1,
+        "shortening_count": 1,
+        "min_change_percent": -3.33,
+        "max_change_percent": 11.11,
+        "status": "EXPLORATORY_NOT_VALIDATED"
+      }
     },
     {
       "race_id": "rac_32300903934",
@@ -3685,7 +4035,17 @@
       "drift_count": 3,
       "shortening_count": 2,
       "unchanged_count": 0,
-      "opportunity_status": "BLOCKED_UNVERIFIED_EXECUTION_AND_UNVALIDATED_FORECAST"
+      "opportunity_status": "BLOCKED_UNVERIFIED_EXECUTION_AND_UNVALIDATED_FORECAST",
+      "similar_opening": {
+        "reference_price": 6.4,
+        "band_percent": 25,
+        "count": 2,
+        "drift_count": 0,
+        "shortening_count": 2,
+        "min_change_percent": -28.07,
+        "max_change_percent": -6.9,
+        "status": "EXPLORATORY_NOT_VALIDATED"
+      }
     },
     {
       "race_id": "rac_32300905871",
@@ -3809,7 +4169,17 @@
       "drift_count": 3,
       "shortening_count": 1,
       "unchanged_count": 0,
-      "opportunity_status": "BLOCKED_UNVERIFIED_EXECUTION_AND_UNVALIDATED_FORECAST"
+      "opportunity_status": "BLOCKED_UNVERIFIED_EXECUTION_AND_UNVALIDATED_FORECAST",
+      "similar_opening": {
+        "reference_price": 3.65,
+        "band_percent": 25,
+        "count": 0,
+        "drift_count": 0,
+        "shortening_count": 0,
+        "min_change_percent": null,
+        "max_change_percent": null,
+        "status": "EXPLORATORY_NOT_VALIDATED"
+      }
     },
     {
       "race_id": "rac_32300907808",
@@ -3933,7 +4303,17 @@
       "drift_count": 1,
       "shortening_count": 3,
       "unchanged_count": 0,
-      "opportunity_status": "BLOCKED_UNVERIFIED_EXECUTION_AND_UNVALIDATED_FORECAST"
+      "opportunity_status": "BLOCKED_UNVERIFIED_EXECUTION_AND_UNVALIDATED_FORECAST",
+      "similar_opening": {
+        "reference_price": 2.56,
+        "band_percent": 25,
+        "count": 3,
+        "drift_count": 1,
+        "shortening_count": 2,
+        "min_change_percent": -28.97,
+        "max_change_percent": 40.63,
+        "status": "EXPLORATORY_NOT_VALIDATED"
+      }
     }
   ],
   "screenshots": [

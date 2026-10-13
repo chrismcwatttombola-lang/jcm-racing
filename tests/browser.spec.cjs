@@ -563,6 +563,7 @@ test('Drifting Odds shows all race leaders, historical coverage and blocked exec
  await openDrift(page);
  await expect(page.locator('#drift-content')).toContainText('113/149');
  await expect(page.locator('#drift-content')).toContainText('No executable opportunities qualified');
+ await expect(page.locator('#drift-content')).toContainText('Similar opening prices (±25%)');
  await expect(page.locator('[data-drift-race]').filter({hasText:'Koffee And Kale'})).toHaveCount(0);
  await page.locator('#drift-filter').selectOption('DRIFT');
  const rows=page.locator('[data-drift-race]');expect(await rows.count()).toBeGreaterThan(0);

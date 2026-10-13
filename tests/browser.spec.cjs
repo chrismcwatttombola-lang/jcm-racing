@@ -715,3 +715,18 @@ test('Zachary Hickes winner settles as Horse won across the app and account', as
  for(const result of [selected,settled]){expect(result.result_status).toBe('LOSS');expect(result.position).toBe('1');expect(result.result_field_size).toBe(7);expect(result.official_accuracy_eligible).toBe(false);expect(await page.evaluate(r=>window.jcmAcceptedResult(r),result)).toBe(true);}
  expect(card).toMatchObject({position:'1',field_size:7,winner:'Zachary Hickes',winning_margin_lengths:1,selected_beaten_lengths:0});
 });
+
+test('13 October closes with two final winners and an explicit non-runner', async ({page,request})=>{
+ await page.clock.install({time:new Date('2026-10-13T21:45:00Z')});await page.goto(URL);await page.locator('#date').selectOption('2026-10-13');
+ const research=await(await request.get('http://127.0.0.1:8765/data/competition-research-2026-10-13.json')).json();
+ const account=await(await request.get('http://127.0.0.1:8765/data/bet-builder-2026-10-13.json')).json();
+ const detail=await(await request.get('http://127.0.0.1:8765/data/result-card-details-2026-10-13.json')).json();
+ const selections=[...research.high_competition,...research.competition_watchlist],counts=selections.reduce((out,row)=>{out[row.result_status]=(out[row.result_status]||0)+1;return out;},{});
+ expect(counts).toEqual({LOSS:6,NR:2,WIN:8});
+ for(const expected of [{horse:'Koffee And Kale',status:'NR',position:'NR',field:12},{horse:'Coxy’s Star',status:'LOSS',position:'1',field:10},{horse:'Midnight Media',status:'LOSS',position:'1',field:11}]){
+  const selected=selections.find(r=>r.horse===expected.horse),settled=account.rows.find(r=>r.horse===expected.horse),card=detail.details.find(r=>r.horse===expected.horse);
+  for(const result of [selected,settled]){expect(result.result_status).toBe(expected.status);expect(result.position).toBe(expected.position);expect(result.result_field_size).toBe(expected.field);expect(result.official_accuracy_eligible).toBe(false);expect(await page.evaluate(r=>window.jcmAcceptedResult(r),result)).toBe(true);}
+  expect(card).toMatchObject({position:expected.position,field_size:expected.field});
+  await expect(page.locator('[data-research-index]').filter({hasText:expected.horse})).toContainText(expected.status==='NR'?'NR':'Horse won');
+ }
+});

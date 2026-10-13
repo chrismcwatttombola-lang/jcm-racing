@@ -19,9 +19,12 @@ const status=r=>withdrawn(r)?'NR':Date.now()>=off(r)&&window.jcmAcceptedResult(r
 function stop(){window.jcmBuilderLegacyActive=false;generation++;clearTimeout(lockTimer);clearInterval(refreshTimer);window.jcmStopLegacyAccount?.();window.jcmStopFixedTimer?.();}
 window.jcmAddAccountSwitch=function(node,current){
  node.querySelector('.jcm-account-switch')?.remove();
+ node.querySelector('.builder-select-all')?.remove();
  const sw=document.createElement('div');sw.className='jcm-account-switch builder-switch';sw.setAttribute('role','tablist');sw.setAttribute('aria-label','Fictional account strategy');
  sw.innerHTML=Object.entries(names).map(([m,label])=>'<button type="button" role="tab" aria-selected="'+(m===current)+'" data-account-mode="'+m+'">'+label+'</button>').join('');
  node.prepend(sw);
+ const boxes=[...node.querySelectorAll('[data-builder-include],[data-account-row],[data-manual-include]')],editable=boxes.filter(b=>!b.disabled);
+ if(boxes.length){const label=document.createElement('label');label.className='builder-select-all';label.innerHTML='<input id="builder-select-all" type="checkbox" '+(!editable.length?'disabled':'')+'> Select all editable races';sw.after(label);const master=label.querySelector('input');master.checked=editable.length>0&&editable.every(b=>b.checked);master.indeterminate=editable.some(b=>b.checked)&&!master.checked;master.addEventListener('change',()=>{if(node.jcmToggleAll)node.jcmToggleAll(master.checked);else if(current==='fixed')window.jcmSetAllFixed?.(master.checked);else window.jcmSetAllManual?.(master.checked);});}
  sw.querySelectorAll('button').forEach(b=>b.addEventListener('click',()=>open(b.dataset.accountMode)));
  sw.addEventListener('keydown',e=>{if(!['ArrowLeft','ArrowRight','Home','End'].includes(e.key))return;e.preventDefault();const keys=Object.keys(names),i=keys.indexOf(current),next=e.key==='Home'?0:e.key==='End'?3:(i+(e.key==='ArrowRight'?1:3))%4;open(keys[next]);});
 };
@@ -47,16 +50,18 @@ function loadSettings(c,m){
   if(!r||!v||typeof v.included!=='boolean'||!Number.isSafeInteger(v.liability_cents)||v.liability_cents<0||v.included&&v.liability_cents<1||v.odds!==null&&price(v.odds)!==v.odds||!Number.isFinite(Date.parse(v.confirmed_at))||Date.parse(v.confirmed_at)>=off(r)||Date.parse(v.confirmed_at)>Date.now()||Date.parse(v.confirmed_at)<Date.parse(c.introduced_at))throw Error('Invalid saved race');
  }
  if(m==='race'&&Object.values(s.entries).some(v=>v.included&&v.liability_cents!==s.amount_cents))throw Error('Inconsistent race amount');
- if(m==='fixed'&&s.confirmed_at&&Object.values(s.entries).reduce((a,v)=>a+(v.included?v.liability_cents:0),0)!==s.amount_cents)throw Error('Inconsistent daily amount');
+ if(s.choices!==undefined&&(!s.choices||typeof s.choices!=='object'||Array.isArray(s.choices)||Object.entries(s.choices).some(([k,v])=>!c.rows.some(r=>key(r)===k)||typeof v!=='boolean')))throw Error('Invalid saved selections');
+ if(m==='fixed'&&s.confirmed_at&&Object.values(s.entries).some(v=>v.included)&&Object.values(s.entries).reduce((a,v)=>a+(v.included?v.liability_cents:0),0)!==s.amount_cents)throw Error('Inconsistent daily amount');
  return s;
 }
-function initial(c,m){return {version:2,date:c.date,mode:m,amount_cents:0,confirmed_at:null,entries:{}};}
+function selected(s,r){return !withdrawn(r)&&(s.choices?.[key(r)]??s.entries[key(r)]?.included??(Date.now()<off(r)));}
+function initial(c,m){return {version:2,date:c.date,mode:m,amount_cents:0,confirmed_at:null,entries:{},choices:Object.fromEntries(c.rows.map(r=>[key(r),!withdrawn(r)&&Date.now()<off(r)]))};}
 function allocation(s,rows,amount,m){
- const next=structuredClone(s),selected=rows.filter(r=>!withdrawn(r)&&s.entries[key(r)]?.included!==false),stamp=new Date().toISOString();
- for(const r of rows.filter(withdrawn))next.entries[key(r)]={included:false,liability_cents:0,odds:null,confirmed_at:stamp};
- if(!selected.length||m==='fixed'&&amount<selected.length)throw Error('Keep at least one race and at least 1p per race.');
+ const next=structuredClone(s),picked=rows.filter(r=>selected(s,r)),stamp=new Date().toISOString();
+ for(const r of rows)next.entries[key(r)]={included:false,liability_cents:0,odds:s.entries[key(r)]?.odds??r.lay_odds??null,confirmed_at:stamp};
+ if(m==='fixed'&&amount<picked.length)throw Error('Allow at least 1p per included race.');
  next.amount_cents=amount;next.confirmed_at=stamp;
- for(const [i,r] of selected.entries())next.entries[key(r)]={included:true,liability_cents:m==='race'?amount:Math.floor(amount/selected.length)+(i<amount%selected.length?1:0),odds:s.entries[key(r)]?.odds??r.lay_odds??null,confirmed_at:stamp};
+ for(const [i,r] of picked.entries())next.entries[key(r)]={included:true,liability_cents:m==='race'?amount:Math.floor(amount/picked.length)+(i<amount%picked.length?1:0),odds:s.entries[key(r)]?.odds??r.lay_odds??null,confirmed_at:stamp};
  return next;
 }
 function totals(c,rows,s){
@@ -73,6 +78,7 @@ function persist(c,m,s){localStorage.setItem(storage(c.date,m),JSON.stringify(s)
 async function open(next='fixed'){
  stop();mode=next;const token=generation,d=day();
  const overlay=document.getElementById('jcm-detail-overlay'),node=overlay.querySelector('#jcm-detail-content');overlay.classList.add('open');
+ delete node.jcmToggleAll;
  overlay.querySelector('.jcm-modal')?.scrollTo(0,0);node.innerHTML='<h2>Bet Builder</h2><p role="status">Loading…</p>';window.jcmAddAccountSwitch(node,next);overlay.querySelector('.jcm-close').focus();
  if(d==='2026-10-12'&&['fixed','manual'].includes(next)){window.jcmBuilderLegacyActive=true;await legacyOpen(next);return;}
  try{
@@ -100,13 +106,19 @@ async function open(next='fixed'){
    node.innerHTML='<h2>Bet Builder · '+names[next]+'</h2><label class="builder-date">Racing day <select id="builder-day">'+days.days.map(v=>'<option value="'+v+'" '+(v===d?'selected':'')+'>'+v.slice(8)+' Oct '+v.slice(0,4)+'</option>').join('')+'</select></label>'+
     '<section class="builder-tile"><div class="builder-bank"><div>Opening bank<strong>'+money(c.account_opening_cents)+'</strong></div><div>Balance<strong data-builder-balance>'+money(t.balance)+'</strong></div><div>Reserved<strong data-builder-reserved>'+money(t.reserved)+'</strong></div><div>Available<strong data-builder-available>'+money(t.available)+'</strong></div></div></section>'+
     (next==='manual'?'':'<section class="builder-tile" id="builder-amount-box"><h3>'+ (next==='fixed'?'Total liability for the day':'Liability on every included race')+'</h3><label for="builder-amount">Amount (£)</label><div class="builder-input-group"><input id="builder-amount" type="number" min="0.01" max="'+c.account_opening_cents/100+'" step="0.01" value="'+(s.amount_cents?s.amount_cents/100:'')+'" '+(amountLocked?'disabled':'')+'><button id="builder-confirm" '+(amountLocked?'disabled':'')+'>Lock amount</button></div><p>'+ (next==='fixed'?'Split equally across included races; choices lock at the first race.':'The same amount is applied to each included race. The amount locks at the first race; each checkbox locks at its own start. Unchecking does not redistribute funds.')+'</p></section>')+
-    '<p id="builder-message" role="status">'+safe(message)+'</p><p class="builder-note">Fictional liability, no real bets. Screenshot lay prices; full matching assumed. Quote capture times are unknown and displayed liquidity may be insufficient. You can change illustrative odds before each race starts. Missing odds keep returns unavailable. Each strategy starts with £5,000 and carries its completed closing bank into the next day. 5% commission on positive market winnings. Choices are saved on this device; locks use its clock.</p>'+
+    '<p id="builder-message" role="status">'+safe(message)+'</p><p class="builder-note">Green = selected, red = unselected. New cards start with every active race selected. Confirm your amount to reserve funds; a checked race without a confirmed amount reserves nothing. Fictional liability, no real bets. Screenshot lay prices; full matching assumed. Quote capture times are unknown and displayed liquidity may be insufficient. You can change illustrative odds before each race starts. Missing odds keep returns unavailable. Each strategy starts with £5,000 and carries its completed closing bank into the next day. 5% commission on positive market winnings. Choices are saved on this device; locks use its clock.</p>'+
     '<h3>'+d.slice(8)+' October · '+rows.length+' races</h3>'+rows.map((r,i)=>{
      const v=s.entries[key(r)]||{included:false,liability_cents:0,odds:r.lay_odds??null},locked=Date.now()>=off(r),st=status(r),checkboxLocked=withdrawn(r)||(next==='fixed'?amountLocked:locked);
-     return '<section class="jcm-manual-row builder-row" data-builder-row="'+i+'"><strong>'+safe(r.horse)+'</strong><p>'+safe(r.off_time_uk)+' · '+safe(r.course)+' · '+(locked?'Locked':'Editable')+'</p><label><input data-builder-include="'+i+'" type="checkbox" '+(v.included?'checked ':'')+(checkboxLocked?'disabled':'')+'> Include race</label>'+
+     return '<section class="jcm-manual-row builder-row" data-builder-row="'+i+'"><strong>'+safe(r.horse)+'</strong><p>'+safe(r.off_time_uk)+' · '+safe(r.course)+' · '+(locked?'Locked':'Editable')+'</p><label><input data-builder-include="'+i+'" type="checkbox" '+(selected(s,r)?'checked ':'')+(checkboxLocked?'disabled':'')+'> Include race</label>'+
       (next==='manual'?'<label for="builder-liability-'+i+'">Liability (£)</label><input id="builder-liability-'+i+'" data-builder-liability="'+i+'" type="number" min="0.01" step="0.01" value="'+(v.liability_cents?v.liability_cents/100:'')+'" '+(locked||withdrawn(r)?'disabled':'')+'>':'')+
       '<label for="builder-odds-'+i+'">Illustrative lay odds</label><input id="builder-odds-'+i+'" data-builder-odds="'+i+'" type="number" min="1.01" max="1000" step="0.01" value="'+(v.odds??'')+'" '+(locked||withdrawn(r)?'disabled':'')+'><button data-builder-confirm-row="'+i+'" '+(locked||withdrawn(r)?'disabled':'')+'>'+ (next==='manual'?'Confirm race':'Save odds')+'</button><p>Liability: <strong data-builder-liability-value>'+money(v.included?v.liability_cents:0)+'</strong><br>Result: '+safe(st==='WIN'?'Horse lost':st==='LOSS'?'Horse won':st==='NR'?'Non-runner'+(withdrawn(r)?' (Betfair screenshot)':''):'Pending')+'<br>Potential net profit: '+(v.included&&v.odds!==null?money(Math.round(v.liability_cents/(v.odds-1)*.95)):'Unavailable')+'<br>Displayed liquidity: '+(r.available_stake_gbp!==null?money(Math.round(r.available_stake_gbp*100)):'Unavailable')+(v.included&&v.odds!==null&&r.available_stake_gbp<v.liability_cents/100/(v.odds-1)?' · Insufficient for full simulated stake':'')+'</p>'+ (locked&&v.included&&v.odds===null?'<p>INSUFFICIENT VERIFIED DATA — no pre-race price saved; financial result unavailable.</p>':'')+'</section>';
     }).join('');
+   function toggleRows(targets,checked){
+    let candidate=structuredClone(s);candidate.choices={...s.choices};const stamp=new Date().toISOString();
+    for(const r of targets){if(withdrawn(r)||Date.now()>=(next==='fixed'?first:off(r)))continue;const k=key(r);candidate.choices[k]=checked;const v=candidate.entries[k];if(!checked&&v)candidate.entries[k]={...v,included:false,confirmed_at:stamp};if(next==='race'&&checked&&s.confirmed_at)candidate.entries[k]={included:true,liability_cents:s.amount_cents,odds:v?.odds??r.lay_odds??null,confirmed_at:stamp};}
+    try{if(next==='fixed')candidate=allocation(candidate,rows,s.amount_cents,next);commit(candidate,checked?'Editable races selected. Confirm any outstanding amounts.':'Editable races unselected; funds released.');}catch(e){draw(e.message);}
+   }
+   node.jcmToggleAll=checked=>toggleRows(rows,checked);
    window.jcmAddAccountSwitch(node,next);
    node.querySelector('#builder-day').addEventListener('change',e=>{document.getElementById('date').value=e.target.value;document.getElementById('date').dispatchEvent(new Event('change'));open(next);});
    node.querySelector('#builder-confirm')?.addEventListener('click',()=>{
@@ -116,16 +128,13 @@ async function open(next='fixed'){
    });
    node.querySelectorAll('[data-builder-include]').forEach(box=>box.addEventListener('change',()=>{
     const i=Number(box.dataset.builderInclude),r=rows[i];if(withdrawn(r)||Date.now()>=(next==='fixed'?first:off(r))){draw('Race choice locked.');return;}
-    if(next==='manual'&&box.checked){say('Enter the liability and odds, then Confirm race.');return;}
-    if(next==='race'&&box.checked&&!s.confirmed_at){box.checked=false;say('Lock an amount first.');return;}
-    let candidate=structuredClone(s),v=candidate.entries[key(r)]||{included:false,liability_cents:0,odds:null};candidate.entries[key(r)]={...v,included:box.checked,liability_cents:box.checked?candidate.amount_cents:v.liability_cents,confirmed_at:new Date().toISOString()};
-    try{if(next==='fixed')candidate=allocation(candidate,rows,s.amount_cents,next);commit(candidate,box.checked?'Race included.':'Race excluded; funds released.');}catch(e){draw(e.message);}
+    toggleRows([r],box.checked);
    }));
    node.querySelectorAll('[data-builder-confirm-row]').forEach(button=>button.addEventListener('click',()=>{
     const i=Number(button.dataset.builderConfirmRow),r=rows[i];if(Date.now()>=off(r)){draw('Race locked at its scheduled start.');return;}
     if(withdrawn(r)){draw('Non-runner excluded.');return;}const odds=price(node.querySelector('[data-builder-odds="'+i+'"]').value);if(odds===null){say('Enter decimal lay odds greater than 1, up to 1000.');return;}
     const candidate=structuredClone(s);let v=candidate.entries[key(r)]||{included:false,liability_cents:0};
-    if(next==='manual'){const included=node.querySelector('[data-builder-include="'+i+'"]').checked,amount=cents(node.querySelector('[data-builder-liability="'+i+'"]').value);if(included&&amount===null){say('Enter a positive liability with at most two decimal places.');return;}v={...v,included,liability_cents:included?amount:0};}
+    if(next==='manual'){const included=node.querySelector('[data-builder-include="'+i+'"]').checked,amount=cents(node.querySelector('[data-builder-liability="'+i+'"]').value);if(included&&amount===null){say('Enter a positive liability with at most two decimal places.');return;}v={...v,included,liability_cents:included?amount:0};candidate.choices={...s.choices,[key(r)]:included};}
     if(next!=='manual'&&!v.included){say('Include this race and confirm an amount first.');return;}
     candidate.entries[key(r)]={...v,odds,confirmed_at:new Date().toISOString()};commit(candidate,'Race saved.');
    }));
@@ -148,7 +157,7 @@ async function history(days,before=null){
     const raw=localStorage.getItem('jcm-fictional-settings-'+d),saved=raw?JSON.parse(raw):null;
     let budget=100000,excluded=[];
     if(saved){if(!Number.isSafeInteger(saved.budget_cents)||saved.budget_cents<1||saved.budget_cents>500000||!Array.isArray(saved.excluded)||saved.excluded.some(k=>!account.rows.some(r=>key(r)===k))||!Number.isFinite(Date.parse(saved.confirmed_at))||Date.parse(saved.confirmed_at)>=first||Date.parse(saved.confirmed_at)>Date.now())throw Error('Invalid historical choices');budget=saved.budget_cents;excluded=saved.excluded;}
-    const included=account.rows.filter(r=>!excluded.includes(key(r)));if(!included.length||budget<included.length)throw Error('Invalid allocation');
+    const included=account.rows.filter(r=>!excluded.includes(key(r)));if(budget<included.length)throw Error('Invalid allocation');
     let net=0,complete=true;for(const [i,r] of included.entries()){const st=status({...r,race_date:d,scheduled_off_dt:d+'T'+r.off_time_uk+':00+01:00'}),amount=Math.floor(budget/included.length)+(i<budget%included.length?1:0);if(st==='PENDING'||price(r.lay_odds)===null){complete=false;break;}net+=st==='WIN'?Math.round(amount/(r.lay_odds-1)*.95):st==='LOSS'?-amount:0;}
     if(complete){points.fixed.push({date:d,balance:500000+net,opening:500000,basis:saved?'Saved choices':'Default historical allocation'});banks.fixed=500000+net;}else banks.fixed=null;
     const manualRaw=localStorage.getItem('jcm-manual-settings-'+d);

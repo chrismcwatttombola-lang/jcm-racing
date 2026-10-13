@@ -1,0 +1,33 @@
+# Drifting Odds capture — 13 October 2026, 12:35–12:38 UK
+
+Retrieved Racing API Pro plan, all 38 UK/Irish racecards and odds histories for all 38 frozen 11:03 reference leaders. Three transient connector timeouts succeeded on retry. Appended one observation batch with per-horse retrieval timestamps and separate provider-updated UK timestamps. Preserved initial cohort/benchmark, original observation, 149-start cached study (113 usable), 16 screenshots, and all other app data. No new forecast, bet or execution qualification.
+
+Latest proxy pairs: 13 DRIFT, 18 SHORTENED, 1 UNCHANGED, 2 missing morning, 4 stale latest. Only timezone-aware numeric history points before retrieval and scheduled off admitted; latest change point must be <=30 minutes old for a numeric pair. No forward filling. Unspecified Exchange side/spread/liquidity and missing runner-withdrawal fields block every opportunity. Later whole-field Bet365 snapshot retained separately: 38 races, two ties, four changed leaders; it does not replace the original cohort or assert activity. Exact card retrieval completion was not recorded; provider updated and upper retrieval bound stored distinctly.
+
+Read current private MASTER_RULES, DECISIONS, SERVICES, ARCHITECTURE and HANDOVER; JCM_STATUS.md returned 404. Read current public module, manifest, research handover, unified model and Library rules-review proposal (not adopted). Public PR #52 owns screenshot UI and tests only, not this data scope; left untouched. No licensing/credential/permission, model, accuracy, result, account or automation changes.
+
+Data validation and custom preservation/identity/timestamp/freshness/arithmetic checks pass. Browser tests could not launch because Chromium is absent; attempted download failed with invalid/truncated archive. Existing browser workflow excludes drifting-odds data paths. Connector exposes no workflow dispatch operation. REQUIRED: run full browser CI on this exact PR head before authorized merge, then verify Pages deployment. Do not substitute old-main CI or data checks for browser CI. This capture is prepared, NOT deployed. Future runs should append to this existing data PR rather than duplicate it and retry transient access. Software tests do not validate predictive value.
+
+## 13:27–13:30 UK follow-up
+
+Appended a second complete 38-leader `get_odds` capture without changing the frozen cohort, morning quotes, historical comparisons or screenshots. The upper-bound retrieval timestamp was recorded immediately after the paced connector batches; individual call completion times were not retained. One scheduled off had passed by completion, so only its pre-off history point was admitted. Latest status: 14 drifted, 15 shortened, 2 unchanged, 2 missing morning quotes and 5 stale latest points. All prices remain unspecified-side Exchange proxies with no verified spread, liquidity, matching or complete withdrawal status. No opportunity qualified and no simulated or actual return was published.
+
+## 14:20–14:23 UK follow-up
+
+Appended a third complete 38-leader `get_odds` capture and a separate whole-field Bet365 snapshot from all 38 returned UK/Irish racecards. Exact per-horse completion timestamps were retained. Only timezone-aware numeric Exchange points at or before both retrieval and scheduled off were admitted; a current pair additionally required a quote no more than 30 minutes old at that horse's retrieval. Latest status: 14 drifted, 17 shortened, 0 unchanged and 7 stale or missing pairs. Known screenshot NR Koffee And Kale was explicitly excluded from the later bookmaker-leader snapshot; all other withdrawal status remains unverified.
+
+The original 11:03 cohort, earlier observations, historical comparisons and screenshots remain unchanged. Exchange side, spread, liquidity, matching, commission and predictive value are still unverified, so every opportunity remains blocked and no return is published. This observation requires data checks and full exact-head browser CI before any merge or deployment.
+
+## 15:18–15:19 UK follow-up
+
+Appended a fourth complete 38-leader `get_odds` capture with exact per-horse completion timestamps. Only the named Betfair Exchange series was admitted; numeric points had to be timezone-aware and no later than both retrieval and scheduled off. At each horse's retrieval, 23 rows had a complete morning-to-current pair within the 30-minute freshness rule: 10 drifted, 12 shortened and 1 was unchanged. The remaining 15 were stale or lacked a morning pair as earlier races moved beyond the freshness window. No missing Exchange series or connector failures occurred.
+
+The frozen 11:03 cohort, all earlier captures, 149-start historical study and screenshots remain unchanged. Other withdrawal status is still unverified. Price side, spread, liquidity, matching, commission and predictive value remain unverified, so no executable opportunity qualified and no return was published. Full exact-head browser CI remains mandatory before merge and deployment.
+
+## 18:40–18:41 UK follow-up
+
+The Pro racecard endpoint again returned all 38 UK/Irish races. The frozen 11:03 cohort was not reselected. Appended a fifth follow-up `get_odds` capture for all 38 frozen leaders with exact per-horse completion timestamps, retaining every earlier observation, historical comparison and screenshot record.
+
+At retrieval, four leaders still had a complete morning-to-latest Exchange proxy pair within the 30-minute freshness rule: 1 drifted and 3 shortened. The other 34 rows were stale because their races had already passed; none lacked a named Betfair Exchange series. Historical pre-off points remain descriptive only and were not relabelled as live or executable observations.
+
+Every opportunity remains blocked. The API series still has unspecified price side and no verified spread, liquidity, matching, commission or complete withdrawal status, and predictive value remains unvalidated. No trade, return or profit claim was created. Data checks and full exact-head browser CI remain required before merging and publishing this accumulated research branch.

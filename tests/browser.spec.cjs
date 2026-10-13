@@ -580,6 +580,17 @@ test('Drifting / Shortening Tracker shows all race leaders, historical coverage 
  expect(close.y).toBeGreaterThanOrEqual(0);expect(close.y+close.height).toBeLessThanOrEqual(780);
  await page.locator('#jcm-drift-overlay .jcm-close').click();await expect(page.locator('#jcm-drift-overlay')).not.toHaveClass(/open/);
 });
+test('latest Exchange capture is append-only and remains blocked research',async({request})=>{
+ const response=await request.get('http://127.0.0.1:8765/data/drifting-odds-2026-10-13.json');expect(response.ok()).toBe(true);
+ const data=await response.json(),latest=data.observations.at(-1);expect(data.latest_observation_at).toBe('2026-10-13T17:41:07.434Z');
+ expect(data.observations).toHaveLength(6);expect(latest.rows).toHaveLength(38);
+ const counts=latest.rows.reduce((out,row)=>{const key=row.current.direction||row.current.status;out[key]=(out[key]||0)+1;return out;},{});
+ expect(counts).toEqual({DRIFT:1,SHORTENED:3,STALE_OR_MISSING_CLOSE:34});
+ for(const [index,row] of data.rows.entries()){
+  expect(row.current).toEqual(latest.rows[index].current);expect(row.current.source).toBe('The Racing API · Betfair Exchange');expect(row.current.price_side).toBe('UNSPECIFIED');
+  expect(row.opportunity_status).toBe('BLOCKED_UNVERIFIED_EXECUTION_AND_UNVALIDATED_FORECAST');
+ }
+});
 test('screenshot date archive preserves unknown capture times and reported comparison',async({page})=>{
  await openDrift(page);await page.locator('[data-drift-tab="screenshots"]').click();
  await expect(page.locator('[data-drift-screenshot]')).toHaveCount(16);

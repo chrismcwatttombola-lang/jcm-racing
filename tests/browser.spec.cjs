@@ -399,6 +399,7 @@ test('mobile result tiles group confidence, finish and winner details',async({pa
  });
 
  test('overall research counters and clickable lists include all current outcomes',async({page})=>{
+ await page.clock.install({time:new Date('2026-10-13T12:00:00Z')});
  await page.goto(URL);await expect(page.locator('.metrics')).toHaveAttribute('data-overall-state','ready');
  const cards=page.locator('.metrics .metric');await expect(cards.nth(0)).toContainText('72.7%');await expect(cards.nth(0)).toContainText('16/22');await expect(cards.nth(1)).toContainText('16');await expect(cards.nth(2)).toContainText('6');
  await cards.nth(1).click();await expect(page.locator('.jcm-category-row')).toHaveCount(16);await expect(page.locator('#jcm-detail-content')).toContainText('Nostrum');await expect(page.locator('#jcm-detail-content')).toContainText("Rory's Royale");await page.locator('#jcm-detail-overlay .jcm-close').click();
@@ -616,14 +617,15 @@ test('missing odds data fails closed and preserves horse popup navigation',async
  await expect(page.locator('.jcm-result-card')).toBeVisible();
 });
 
-test('13 October accepted Miss Denver result reaches overview, detail and all strategy settlements',async({page,request})=>{
+test('13 October accepted Miss Denver result reaches overview, detail and per-race settlement',async({page,request})=>{
  await page.clock.install({time:new Date('2026-10-13T12:44:00Z')});
  await builderToday(page,'race');await page.locator('#builder-amount').fill('100');await page.locator('#builder-confirm').click();
  await page.clock.fastForward(32*60*1000);await page.locator('[data-account-mode="race"]').click();
- await expect(page.locator('[data-builder-row="0"]')).toContainText('Result: WIN');
+ await expect(page.locator('[data-builder-row="0"]')).toContainText('Result: Horse lost');
  await expect(page.locator('[data-builder-reserved]')).toHaveText('£1,400.00');
  await expect(page.locator('[data-builder-balance]')).toHaveText('£5,105.56');
  await page.locator('#jcm-detail-overlay .jcm-close').click();await page.locator('[data-page="picks"]').click();await page.locator('#date').selectOption('2026-10-13');
+ await expect(page.locator('.metrics .metric').first()).toContainText('17/23');
  const row=page.locator('[data-research-index]').filter({hasText:'Miss Denver'});await expect(row).toContainText('Horse lost');await row.click();
  await expect(page.locator('.jcm-result-card')).toContainText('Finished 2nd of 5');await expect(page.locator('.jcm-result-card')).toContainText('Blue Topaz');
  const data=await(await request.get('http://127.0.0.1:8765/data/competition-research-2026-10-13.json')).json();

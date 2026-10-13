@@ -80,7 +80,13 @@
       "race_id": "rac_32300855509",
       "horse_id": "hrs_48818973",
       "racecard_url": "https://www.sportinglife.com/racing/racecards/2026-10-13/hereford/racecard/943157/betting-bet-free-racing-tips-mares-national-hunt-maiden-hurdle-gbb-race",
-      "website_race_id": "943157"
+      "website_race_id": "943157",
+      "position": "2",
+      "field_size": 5,
+      "race_name": "Betting.Bet Free Racing Tips Mares' 'National Hunt' Maiden Hurdle Race (GBB Race)",
+      "winner": "Blue Topaz",
+      "winning_margin_lengths": 4,
+      "selected_beaten_lengths": 4
     },
     {
       "date": "2026-10-13",

@@ -191,4 +191,8 @@ function chart(points,dates){
 }
 window.jcmOpenDummyAccount=()=>open('fixed');
 window.jcmOpenBuilderStrategy=open;
+const accountOverlay=document.getElementById('jcm-detail-overlay');
+accountOverlay.querySelector('.jcm-close').addEventListener('click',stop);
+accountOverlay.addEventListener('click',e=>{if(e.target===accountOverlay)stop();});
+document.addEventListener('keydown',e=>{if(e.key==='Escape')stop();});
 })();

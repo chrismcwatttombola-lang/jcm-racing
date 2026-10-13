@@ -235,7 +235,7 @@ test('accepted provider results populate picks, rating groups and fictional sett
  await page.locator('#jcm-detail-overlay .jcm-close').click();
  await expect.poll(()=>page.evaluate(()=>window.jcmRatedCounts?true:false)).toBeTruthy();
  const counts=await page.evaluate(async()=>window.jcmRatedCounts([await (await fetch('data/competition-research-2026-10-12.json')).json()]));
- expect(counts.high).toEqual({win:4,loss:1});expect(counts.medium).toEqual({win:4,loss:3});expect(counts.unbanded).toEqual({win:2,loss:1});
+ expect(counts.high).toEqual({win:4,loss:1});expect(counts.medium).toEqual({win:4,loss:3});expect(counts.low).toEqual({win:2,loss:1});
  await page.evaluate(()=>window.jcmOpenDummyAccount());
  await expect(page.locator('#jcm-detail-content')).toContainText('One Of The Boys');
  await expect(page.locator('#jcm-detail-content')).toContainText('£4,905.54');
@@ -252,6 +252,7 @@ test('provider identity mismatch remains pending',async({page,request})=>{
 
  test('mobile daily rate and reachable account close after scrolling', async ({page}) => {
  await page.setViewportSize({width:390,height:664});
+ await page.clock.install({time:new Date('2026-10-12T21:00:00Z')});
  await page.goto('http://127.0.0.1:8765/#hub');
  await expect(page.locator('#jcm-daily-rate')).toContainText('66.7% success · 10/15 settled');
  const logo=await page.locator('.jcm-hub-mark').boundingBox();expect(logo.y).toBeGreaterThanOrEqual(24);expect(logo.y).toBeLessThan(60);
@@ -389,12 +390,12 @@ test('mobile result tiles group confidence, finish and winner details',async({pa
  await page.evaluate(()=>window.jcmOpenDummyAccount());await expect(page.locator('#jcm-detail-content')).toContainText('£4,905.54');await expect(page.locator('#jcm-detail-content')).toContainText('all 0 outstanding');
  });
 
- test('confidence bands use 80 and 70 boundaries without a Low rating',async({page,request})=>{
+ test('confidence bands use 80 and 70 boundaries including a Low rating',async({page,request})=>{
  const d=await(await request.get('http://127.0.0.1:8765/data/competition-research-2026-10-12.json')).json();
  for(const [i,p] of [80,79,70,69].entries())d.high_competition[i].competition_confidence_percent=p;
  await page.route('**/data/competition-research-2026-10-12.json',route=>route.fulfill({json:d}));await page.goto(URL);await page.locator('#date').selectOption('2026-10-12');
- for(const [i,tier] of ['high','medium','medium','unbanded'].entries()){const row=page.locator('[data-research-index]').filter({hasText:d.high_competition[i].horse});await expect(row).toHaveClass(new RegExp('jcm-rating-'+tier));await row.click();await expect(page.locator('.jcm-confidence')).not.toContainText('Low');await page.locator('#jcm-detail-overlay .jcm-close').click();}
- await page.evaluate(()=>window.jcmOpenRatedPerformance());await expect(page.locator('.jcm-rated-table tbody tr')).toHaveCount(2);await expect(page.locator('.jcm-rated-table')).not.toContainText('Low');
+ for(const [i,tier] of ['high','medium','medium','low'].entries()){const row=page.locator('[data-research-index]').filter({hasText:d.high_competition[i].horse});await expect(row).toHaveClass(new RegExp('jcm-rating-'+tier));await row.click();await expect(page.locator('#jcm-detail-content .jcm-confidence')).toContainText(tier==='low'?'Low':tier==='high'?'High':'Medium');await page.locator('#jcm-detail-overlay .jcm-close').click();}
+ await page.evaluate(()=>window.jcmOpenRatedPerformance());await expect(page.locator('.jcm-rated-table tbody tr')).toHaveCount(3);await expect(page.locator('.jcm-rated-table')).toContainText('Low');
  });
 
  test('overall research counters and clickable lists include all current outcomes',async({page})=>{
@@ -403,3 +404,28 @@ test('mobile result tiles group confidence, finish and winner details',async({pa
  await cards.nth(1).click();await expect(page.locator('.jcm-category-row')).toHaveCount(16);await expect(page.locator('#jcm-detail-content')).toContainText('Nostrum');await expect(page.locator('#jcm-detail-content')).toContainText("Rory's Royale");await page.locator('#jcm-detail-overlay .jcm-close').click();
  await cards.nth(2).click();await expect(page.locator('.jcm-category-row')).toHaveCount(6);await expect(page.locator('#jcm-detail-content')).toContainText('Niffler');
  });
+
+
+test('13 October confirmed picks, colours, percentages and yesterday Low results',async({page,request})=>{
+ await page.setViewportSize({width:390,height:844});await page.clock.install({time:new Date('2026-10-13T07:30:00Z')});
+ await page.goto(URL);await expect(page.locator('#date')).toHaveValue('2026-10-13');
+ await expect(page.locator('[data-research-index]')).toHaveCount(16);await expect(page.locator('.jcm-competition-watchlist')).toHaveCount(9);
+ await expect(page.locator('[data-research-index] .jcm-confidence.high')).toHaveCount(7);await expect(page.locator('[data-research-index] .jcm-confidence.medium')).toHaveCount(3);await expect(page.locator('[data-research-index] .jcm-confidence.low')).toHaveCount(6);
+ const d=await(await request.get('http://127.0.0.1:8765/data/competition-research-2026-10-13.json')).json();
+ for(const r of [...d.high_competition,...d.competition_watchlist]){const row=page.locator('[data-research-index]').filter({hasText:r.horse});await expect(row).toContainText(r.off_time_uk);await expect(row).toContainText(r.competition_confidence_percent+'%');await expect(row).toContainText('Pending');}
+ const orange=page.locator('[data-research-index]').filter({hasText:'Miss Denver'});expect(await orange.evaluate(e=>getComputedStyle(e).borderTopColor)).toBe('rgb(237, 189, 87)');
+ await orange.click();await expect(page.locator('#jcm-detail-content')).toContainText('13 Oct 2026');await expect(page.locator('#jcm-detail-content .jcm-confidence')).toContainText('Low');await expect(page.getByRole('link',{name:'View this racecard'})).toHaveAttribute('href',/\/2026-10-13\/hereford\/racecard\/943157\//);await page.locator('#jcm-detail-overlay .jcm-close').click();
+ expect(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth)).toBe(true);
+ await page.locator('#date').selectOption('2026-10-12');await expect(page.locator('[data-research-index]')).toHaveCount(15);await expect(page.locator('[data-research-index] .jcm-confidence.low')).toHaveCount(3);await expect(page.locator('#jcm-official-panel .jcm-accuracy')).toContainText('66.7%');
+ await page.evaluate(()=>window.jcmOpenRatedPerformance());await expect(page.locator('.jcm-rated-table')).toContainText('Low');await expect(page.locator('.jcm-rated-table tbody tr').filter({hasText:'Low'})).toContainText('2 / 1');await page.locator('#jcm-detail-overlay .jcm-close').click();
+ await page.locator('#date').selectOption('2026-10-09');await expect(page.locator('#jcm-watch-panel')).toBeVisible();await page.locator('#date').selectOption('2026-10-13');await expect(page.locator('[data-research-index]')).toHaveCount(16);await expect(page.locator('#jcm-watch-panel')).toBeHidden();await expect(page.locator('.metrics')).toContainText('72.7%');
+});
+
+test('13 October picks survive delayed history and racing date fetches',async({page})=>{
+ await page.clock.install({time:new Date('2026-10-13T07:30:00Z')});
+ let release;const gate=new Promise(r=>release=r);
+ await page.route(/data\/(betfair-results|unverified-results)\.json/,async r=>{await gate;await r.continue()});
+ await page.goto(URL);await expect(page.locator('[data-research-index]')).toHaveCount(16);release();await page.waitForLoadState('networkidle');await expect(page.locator('[data-research-index]')).toHaveCount(16);
+ await page.route('**/data/competition-research-2026-10-12.json',async r=>{await new Promise(resolve=>setTimeout(resolve,300));await r.continue()});
+ await page.locator('#date').selectOption('2026-10-12');await page.locator('#date').selectOption('2026-10-13');await page.waitForLoadState('networkidle');await expect(page.locator('[data-research-index]')).toHaveCount(16);await expect(page.locator('#jcm-official-panel')).not.toContainText('Mighty Fleur');
+});

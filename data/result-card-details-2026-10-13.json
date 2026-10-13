@@ -220,7 +220,13 @@
       "race_id": "rac_32300901997",
       "horse_id": "hrs_47655377",
       "racecard_url": "https://www.sportinglife.com/racing/racecards/2026-10-13/wolverhampton/racecard/943174/stay-at-the-wolverhampton-holiday-inn-handicap-gbbplus-race",
-      "website_race_id": "943174"
+      "website_race_id": "943174",
+      "position": "1",
+      "field_size": 7,
+      "race_name": "Stay At The Wolverhampton Holiday Inn Handicap Stakes (gbbplus Race)",
+      "winner": "Zachary Hickes",
+      "winning_margin_lengths": 1,
+      "selected_beaten_lengths": 0
     },
     {
       "date": "2026-10-13",

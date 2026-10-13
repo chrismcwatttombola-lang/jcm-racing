@@ -72,7 +72,13 @@
       "race_id": "rac_32300892312",
       "horse_id": "hrs_32046462",
       "racecard_url": "https://www.sportinglife.com/racing/racecards/2026-10-13/southwell/racecard/943169/golf-and-gallop-handicap-hurdle",
-      "website_race_id": "943169"
+      "website_race_id": "943169",
+      "position": "1",
+      "field_size": 6,
+      "race_name": "Golf And Gallop Handicap Hurdle Race",
+      "winner": "Luminaries",
+      "winning_margin_lengths": 1,
+      "selected_beaten_lengths": 0
     },
     {
       "date": "2026-10-13",

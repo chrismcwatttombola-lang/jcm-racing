@@ -601,7 +601,7 @@ test('same-market hedge calculator handles both directions, commission, adverse 
  await page.locator('#drift-exit').fill('2');await page.locator('#drift-commission').fill('101');
  await expect(page.locator('#drift-hedge-result')).toContainText('valid commission');
 });
-test('missing odds data fails closed and late responses cannot overwrite another popup',async({page})=>{
+test('missing odds data fails closed and preserves horse popup navigation',async({page})=>{
  await page.clock.install({time:new Date('2026-10-13T11:00:00Z')});
  await page.route('**/data/drifting-odds-2026-10-13.json',route=>route.fulfill({status:500,body:'Unavailable'}));
  await page.goto('http://127.0.0.1:8765/#hub');await page.locator('[data-page="drifting-odds"]').click();

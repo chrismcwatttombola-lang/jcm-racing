@@ -38,7 +38,8 @@
  function screenshots(){
   const records=data.screenshots||[],paired=records.filter(r=>r.pre_off&&Number(r.pre_off.lay_odds)>1&&Number(r.lay_odds)>1),pending=records.filter(r=>r.status!=='NR'&&!r.pre_off).length;
   const intro='<section class="drift-tile"><h3>Morning → T−5 screenshots · '+esc(data.date)+'</h3><p><strong>'+records.length+' morning records</strong> · '+paired.length+' paired · '+pending+' awaiting pre-off · '+records.filter(r=>r.status==='NR').length+' non-runners</p><p>Morning lay prices are preserved separately from later T−5 observations. The screenshot filenames identify supplied records, not verified capture times or image URLs. Actual screenshot images are shown only when an archived image URL is provided. Later quotes are never assumed or invented.</p></section>';
-  return intro+records.map(r=>{
+  const reported=data.reported_comparison?'<section class="drift-tile"><strong>Previously reported comparison · '+esc(data.reported_comparison.horse)+'</strong><p>Reported early lay 2.62 → later lay 2.44 (−6.9%). Quote capture times and matched bets unverified; hedged profit unavailable.</p></section>':'';
+  return intro+reported+records.map(r=>{
    const late=r.pre_off,valid=Number(r.lay_odds)>1&&Number(late?.lay_odds)>1&&r.status!=='NR',change=valid?(Number(late.lay_odds)/Number(r.lay_odds)-1)*100:null;
    const movement=change==null?'Awaiting T−5 quote':change>0?'DRIFT '+pct(change):change<0?'SHORTENED '+pct(change):'UNCHANGED 0.0%';
    const morningImg=typeof r.image_url==='string'&&/^https:\/\//.test(r.image_url)?'<a href="'+esc(r.image_url)+'" target="_blank" rel="noopener noreferrer">View morning screenshot ↗</a>':'<small>Morning image not hosted; quote record available</small>';

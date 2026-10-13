@@ -587,14 +587,17 @@ test('screenshot date archive preserves unknown capture times and reported compa
 });
 test('same-market hedge calculator handles both directions, commission, adverse moves and invalid prices',async({page})=>{
  await openDrift(page);await page.locator('[data-drift-tab="calculator"]').click();
- await page.locator('#drift-entry').fill('2');await page.locator('#drift-exit').fill('3');
- await expect(page.locator('#drift-hedge-result')).toContainText('£66.67');
- await expect(page.locator('#drift-hedge-result')).toContainText('£31.66');
- await page.locator('#drift-order').selectOption('lay');
  await page.locator('#drift-entry').fill('3');await page.locator('#drift-exit').fill('2');
  await expect(page.locator('#drift-hedge-result')).toContainText('£150.00');
  await expect(page.locator('#drift-hedge-result')).toContainText('£47.50');
- await expect(page.locator('#drift-hedge-result')).toContainText('£200.00');
+ await page.locator('#drift-order').selectOption('lay');
+ await page.locator('#drift-entry').fill('2');await page.locator('#drift-exit').fill('3');
+ await expect(page.locator('#drift-hedge-result')).toContainText('£66.67');
+ await expect(page.locator('#drift-hedge-result')).toContainText('£31.66');
+ await expect(page.locator('#drift-hedge-result')).toContainText('£100.00');
+ await page.locator('#drift-entry').fill('3');await page.locator('#drift-exit').fill('2');
+ await expect(page.locator('#drift-hedge-result .drift-negative')).toContainText('-£50.00');
+ await page.locator('#drift-order').selectOption('back');
  await page.locator('#drift-entry').fill('2');await page.locator('#drift-exit').fill('3');
  await expect(page.locator('#drift-hedge-result .drift-negative')).toContainText('-£33.34');
  await page.locator('#drift-exit').fill('1');await expect(page.locator('#drift-hedge-result')).toContainText('odds of at least 1.01');

@@ -1,5 +1,5 @@
 #jcm-drift-overlay{z-index:105}
-.drift-modal{width:min(94vw,740px);max-height:calc(100dvh - 60px - env(safe-area-inset-top,0px) - env(safe-area-inset-bottom,0px));padding:16px}
+.drift-modal{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);overflow:auto;background:#202b40;border:1px solid #61728c;border-radius:18px;color:#fff;box-shadow:0 20px 60px #0009;width:min(94vw,740px);max-height:calc(100dvh - 60px - env(safe-area-inset-top,0px) - env(safe-area-inset-bottom,0px));padding:16px}
 .drift-modal>.jcm-close{position:sticky;top:0;z-index:2;float:right;background:#34445c;min-width:44px;min-height:44px}
 .drift-modal h2{color:#edbd57;padding-right:50px;font-size:26px}
 .drift-modal h3{margin:0 0 10px;color:#edbd57}

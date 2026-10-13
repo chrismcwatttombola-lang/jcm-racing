@@ -26,7 +26,12 @@
       "race_id": "rac_32300884564",
       "horse_id": "hrs_40920131",
       "racecard_url": "https://www.sportinglife.com/racing/racecards/2026-10-13/southwell/racecard/943165/case-ih-drive-performance-drive-puma-handicap-chase-gbb-race",
-      "website_race_id": "943165"
+      "website_race_id": "943165",
+      "position": "PU",
+      "field_size": 4,
+      "race_name": "Case Ih Drive Performance Drive Puma Handicap Steeple Chase (gbb Race)",
+      "winner": "Palamon",
+      "winning_margin_lengths": 32
     },
     {
       "date": "2026-10-13",
@@ -36,7 +41,12 @@
       "race_id": "rac_32301302956",
       "horse_id": "hrs_60594744",
       "racecard_url": "https://www.sportinglife.com/racing/racecards/2026-10-13/punchestown/racecard/943385/william-hill-challenge-series-handicap-hurdle-0-100-div-1",
-      "website_race_id": "943385"
+      "website_race_id": "943385",
+      "position": "NR",
+      "field_size": 15,
+      "race_name": "William Hill Challenge Series Handicap Hurdle (Div I)",
+      "winner": "Another Challenge",
+      "winning_margin_lengths": 0.5
     },
     {
       "date": "2026-10-13",
@@ -46,7 +56,13 @@
       "race_id": "rac_32300876816",
       "horse_id": "hrs_58251515",
       "racecard_url": "https://www.sportinglife.com/racing/racecards/2026-10-13/leicester/racecard/943183/happy-80th-reg-ling-handicap",
-      "website_race_id": "943183"
+      "website_race_id": "943183",
+      "position": "4",
+      "field_size": 17,
+      "race_name": "Happy 80th Reg Ling Handicap Stakes",
+      "winner": "Foreseen",
+      "winning_margin_lengths": 0.3,
+      "selected_beaten_lengths": 2
     },
     {
       "date": "2026-10-13",
@@ -118,7 +134,13 @@
       "race_id": "rac_32300861320",
       "horse_id": "hrs_21826966",
       "racecard_url": "https://www.sportinglife.com/racing/racecards/2026-10-13/hereford/racecard/943160/betting-bet-free-bets-handicap-hurdle",
-      "website_race_id": "943160"
+      "website_race_id": "943160",
+      "position": "2",
+      "field_size": 8,
+      "race_name": "Betting.Bet Free Bets Handicap Hurdle Race",
+      "winner": "Jaramillo",
+      "winning_margin_lengths": 8.5,
+      "selected_beaten_lengths": 8.5
     },
     {
       "date": "2026-10-13",
@@ -128,7 +150,13 @@
       "race_id": "rac_32300872942",
       "horse_id": "hrs_34470982",
       "racecard_url": "https://www.sportinglife.com/racing/racecards/2026-10-13/leicester/racecard/943181/join-racing-tv-now-handicap",
-      "website_race_id": "943181"
+      "website_race_id": "943181",
+      "position": "1",
+      "field_size": 18,
+      "race_name": "Join Racing TV Now Handicap Stakes",
+      "winner": "Irish Nectar",
+      "winning_margin_lengths": 3.25,
+      "selected_beaten_lengths": 0
     },
     {
       "date": "2026-10-13",
@@ -138,7 +166,13 @@
       "race_id": "rac_32300894249",
       "horse_id": "hrs_36779932",
       "racecard_url": "https://www.sportinglife.com/racing/racecards/2026-10-13/wolverhampton/racecard/943170/download-the-raceday-ready-app-apprentice-handicap-div-2",
-      "website_race_id": "943170"
+      "website_race_id": "943170",
+      "position": "4",
+      "field_size": 9,
+      "race_name": "Download The Raceday Ready App Apprentice Handicap Stakes (Div II)",
+      "winner": "Lady Delila",
+      "winning_margin_lengths": 0.5,
+      "selected_beaten_lengths": 0.75
     },
     {
       "date": "2026-10-13",
@@ -148,7 +182,13 @@
       "race_id": "rac_32300977540",
       "horse_id": "hrs_34002983",
       "racecard_url": "https://www.sportinglife.com/racing/racecards/2026-10-13/punchestown/racecard/943386/william-hill-challenge-series-handicap-hurdle-0-100-div-2",
-      "website_race_id": "943386"
+      "website_race_id": "943386",
+      "position": "9",
+      "field_size": 17,
+      "race_name": "William Hill Challenge Series Handicap Hurdle (Div II)",
+      "winner": "Tuckmill",
+      "winning_margin_lengths": 8,
+      "selected_beaten_lengths": 32.5
     },
     {
       "date": "2026-10-13",
@@ -158,7 +198,13 @@
       "race_id": "rac_32300878753",
       "horse_id": "hrs_39147990",
       "racecard_url": "https://www.sportinglife.com/racing/racecards/2026-10-13/leicester/racecard/943184/racingtv-com-handicap",
-      "website_race_id": "943184"
+      "website_race_id": "943184",
+      "position": "3",
+      "field_size": 13,
+      "race_name": "racingtv.com Handicap Stakes",
+      "winner": "Grindleton",
+      "winning_margin_lengths": 0.2,
+      "selected_beaten_lengths": 1.5
     },
     {
       "date": "2026-10-13",

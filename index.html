@@ -816,6 +816,8 @@ async function open(next='fixed'){
  refreshTimer=setInterval(async()=>{if(mode!=='manual'||!overlay.classList.contains('open')){clearInterval(refreshTimer);return;}try{const next=await read('data/fictional-account-'+day+'.json');const nextRows=rowsFrom(next);if(JSON.stringify(next)!==JSON.stringify(data)){data=next;rows=nextRows;draw('Published results refreshed.')}}catch(_){node.querySelector('#jcm-manual-message').textContent='Results refresh unavailable; retaining last loaded statement.'}},30000);
  }catch(_){if(mode==='manual'){node.innerHTML='<h2>Bet Builder · Manual stakes</h2><p>INSUFFICIENT VERIFIED DATA — manual statement unavailable.</p>';window.jcmAddAccountSwitch(node,'manual');}}
 }
+window.jcmOpenLegacyStrategy=open;
+window.jcmStopLegacyAccount=()=>{mode='inactive';clearTimeout(timer);clearInterval(refreshTimer);};
 window.jcmOpenDummyAccount=()=>open('fixed');
 })();
 </script>
@@ -833,5 +835,7 @@ window.jcmOpenDummyAccount=()=>open('fixed');
 #jcm-official-panel .jcm-status.win{color:#85efb8}#jcm-official-panel .jcm-status.loss{color:#ff849d}
 @media(max-width:380px){.jcm-result-card{padding:18px 12px}.jcm-result-grid strong{font-size:17px}}
 </style>
+<link rel="stylesheet" href="scripts/bet-builder.css?v=20261013">
+<script src="scripts/bet-builder.js?v=20261013"></script>
 </body></html>
 

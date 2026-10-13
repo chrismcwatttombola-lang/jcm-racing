@@ -88,7 +88,12 @@
       "race_id": "rac_32300903934",
       "horse_id": "hrs_52615220",
       "racecard_url": "https://www.sportinglife.com/racing/racecards/2026-10-13/wolverhampton/racecard/943175/cavani-champion-style-handicap",
-      "website_race_id": "943175"
+      "website_race_id": "943175",
+      "position": "NR",
+      "field_size": 12,
+      "race_name": "Cavani Champion Style Handicap Stakes",
+      "winner": "Far Too Fizzy",
+      "winning_margin_lengths": 1
     },
     {
       "date": "2026-10-13",
@@ -98,7 +103,13 @@
       "race_id": "rac_32300905871",
       "horse_id": "hrs_49141904",
       "racecard_url": "https://www.sportinglife.com/racing/racecards/2026-10-13/wolverhampton/racecard/943176/race-rest-wolverhampton-holiday-inn-handicap",
-      "website_race_id": "943176"
+      "website_race_id": "943176",
+      "position": "1",
+      "field_size": 10,
+      "race_name": "Race & Rest - Wolverhampton Holiday Inn Handicap Stakes",
+      "winner": "Coxy's Star",
+      "winning_margin_lengths": 0.3,
+      "selected_beaten_lengths": 0
     },
     {
       "date": "2026-10-13",
@@ -236,7 +247,13 @@
       "race_id": "rac_32300907808",
       "horse_id": "hrs_55795019",
       "racecard_url": "https://www.sportinglife.com/racing/racecards/2026-10-13/wolverhampton/racecard/943177/cavani-raceday-style-handicap",
-      "website_race_id": "943177"
+      "website_race_id": "943177",
+      "position": "1",
+      "field_size": 11,
+      "race_name": "Cavani Raceday Style Handicap Stakes",
+      "winner": "Midnight Media",
+      "winning_margin_lengths": 2.5,
+      "selected_beaten_lengths": 0
     }
   ]
 }

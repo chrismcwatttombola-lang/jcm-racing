@@ -292,7 +292,7 @@
       "identified_challengers": [],
       "tier": "high",
       "selection_status": "USER_CONFIRMED_RESEARCH",
-      "result_status": "PENDING",
+      "result_status": "NR",
       "official_accuracy_eligible": false,
       "race_id": "rac_32300903934",
       "horse_id": "hrs_52615220",
@@ -308,7 +308,26 @@
         "source_message_at": "2026-10-13T07:12:59Z",
         "added_at": "2026-10-13T09:52:52.657Z",
         "qualification_status": "NOT_REVALIDATED"
-      }
+      },
+      "position": "NR",
+      "placing": "NR",
+      "result_source": "THE_RACING_API",
+      "verification_status": "PROVIDER_ACCEPTED",
+      "result_date": "2026-10-13",
+      "result_off_time_uk": "19:30",
+      "result_course": "Wolverhampton",
+      "result_horse": "Koffee And Kale",
+      "result_race_id": "rac_32300903934",
+      "result_horse_id": "hrs_52615220",
+      "result_winner": "Far Too Fizzy",
+      "result_field_size": 12,
+      "result_evidence": "The Racing API individual result explicitly lists the selected horse as a non-runner; date, scheduled UK off-time, normalized course, race ID and horse ID matched",
+      "result_non_runners": [
+        "Koffee And Kale"
+      ],
+      "result_source_url": "https://api.theracingapi.com/v1/results/rac_32300903934",
+      "result_off_dt": "2026-10-13T19:30:00+01:00",
+      "result_retrieved_at": "2026-10-13T21:44:52Z"
     },
     {
       "race_date": "2026-10-13",
@@ -320,7 +339,7 @@
       "identified_challengers": [],
       "tier": "high",
       "selection_status": "USER_CONFIRMED_RESEARCH",
-      "result_status": "PENDING",
+      "result_status": "LOSS",
       "official_accuracy_eligible": false,
       "race_id": "rac_32300905871",
       "horse_id": "hrs_49141904",
@@ -338,7 +357,29 @@
         "source_message_at": "2026-10-13T07:12:59Z",
         "added_at": "2026-10-13T09:52:52.657Z",
         "qualification_status": "NOT_REVALIDATED"
-      }
+      },
+      "position": "1",
+      "placing": "1st",
+      "result_source": "THE_RACING_API",
+      "verification_status": "PROVIDER_ACCEPTED",
+      "result_date": "2026-10-13",
+      "result_off_time_uk": "20:00",
+      "result_course": "Wolverhampton",
+      "result_horse": "Coxy’s Star",
+      "result_race_id": "rac_32300905871",
+      "result_horse_id": "hrs_49141904",
+      "result_winner": "Coxy's Star",
+      "result_field_size": 10,
+      "result_evidence": "The Racing API individual result matched by date, scheduled UK off-time, normalized course, race ID, horse and horse ID",
+      "result_non_runners": [
+        "Carwyn",
+        "Aurelune",
+        "Snaafy"
+      ],
+      "result_source_url": "https://api.theracingapi.com/v1/results/rac_32300905871",
+      "result_off_dt": "2026-10-13T20:00:00+01:00",
+      "result_retrieved_at": "2026-10-13T21:44:52Z",
+      "result_industry_starting_price": 3
     }
   ],
   "competition_watchlist": [
@@ -811,7 +852,7 @@
       "identified_challengers": [],
       "tier": "watchlist",
       "selection_status": "USER_CONFIRMED_RESEARCH",
-      "result_status": "PENDING",
+      "result_status": "LOSS",
       "official_accuracy_eligible": false,
       "race_id": "rac_32300907808",
       "horse_id": "hrs_55795019",
@@ -828,7 +869,25 @@
         "source_message_at": "2026-10-13T07:12:59Z",
         "added_at": "2026-10-13T09:52:52.657Z",
         "qualification_status": "NOT_REVALIDATED"
-      }
+      },
+      "position": "1",
+      "placing": "1st",
+      "result_source": "THE_RACING_API",
+      "verification_status": "PROVIDER_ACCEPTED",
+      "result_date": "2026-10-13",
+      "result_off_time_uk": "20:30",
+      "result_course": "Wolverhampton",
+      "result_horse": "Midnight Media",
+      "result_race_id": "rac_32300907808",
+      "result_horse_id": "hrs_55795019",
+      "result_winner": "Midnight Media",
+      "result_field_size": 11,
+      "result_evidence": "The Racing API individual result matched by date, scheduled UK off-time, normalized course, race ID, horse and horse ID",
+      "result_non_runners": [],
+      "result_source_url": "https://api.theracingapi.com/v1/results/rac_32300907808",
+      "result_off_dt": "2026-10-13T20:30:00+01:00",
+      "result_retrieved_at": "2026-10-13T21:44:52Z",
+      "result_industry_starting_price": 2.25
     }
   ]
 }

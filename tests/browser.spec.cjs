@@ -128,6 +128,7 @@ test('wrong date, non-Betfair source, outcome mismatch and duplicate evidence st
   await openOct9(page);await expect(page.locator('#jcm-watch-panel .jcm-status.pending')).toHaveCount(8);
 });
 test('today retains all 15 horses, confidence and chronological order; rated totals include accepted outcomes', async ({page}) => {
+ await page.clock.install({time:new Date('2026-10-12T23:59:00Z')});
  await page.goto(URL);await page.locator('#date').selectOption('2026-10-12');
  await expect(page.locator('#jcm-official-panel .jcm-row')).toHaveCount(15);
  await expect(page.locator('#jcm-official-panel .jcm-status.pending')).toHaveCount(0);

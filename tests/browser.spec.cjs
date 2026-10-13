@@ -172,7 +172,7 @@ test('phone: stake control is first and full liability stays on a single include
  await expect(page.locator('#jcm-best-selection')).toHaveAttribute('open','');
  await expect(page.locator('#jcm-best-selection')).toContainText('Wadooda');
  await expect(page.locator('[data-account-row]:checked')).toHaveCount(15);
- await expect(page.locator('#jcm-detail-content > :first-child')).toHaveClass(/jcm-account-switch/);await expect(page.locator('#jcm-detail-content > :nth-child(3)')).toHaveAttribute('id','jcm-account-controls');
+ await expect(page.locator('#jcm-detail-content > :first-child')).toHaveClass(/jcm-account-switch/);await expect(page.locator('#jcm-detail-content > :nth-child(4)')).toHaveAttribute('id','jcm-account-controls');
  for(let i=1;i<15;i++)await page.locator('[data-account-row="'+i+'"]').uncheck();
  await expect(page.locator('#jcm-account-controls')).toContainText('Selected total liability: £1,000.00');
  await expect(page.locator('#jcm-detail-content')).toContainText('1 horses · £1,000.00 total liability');
@@ -276,7 +276,7 @@ async function confirmManual(page,i,amount){
 test('manual: independent bank, funded reserves, persistence and individual scheduled locks',async({page})=>{
  await page.setViewportSize({width:390,height:664});await page.clock.install({time:new Date('2026-10-12T17:30:00Z')});
  await manualView(page);await expect(page.locator('#jcm-manual-bank')).toContainText('£5,000.00');
- await expect(page.locator('[data-manual-include]:checked')).toHaveCount(0);await expect(page.locator('#jcm-detail-content')).not.toContainText('Wadooda');
+ await expect(page.locator('[data-manual-include]:checked')).toHaveCount(4);await expect(page.locator('#jcm-detail-content')).not.toContainText('Wadooda');
  await page.locator('[data-manual-include="0"]').check();await page.locator('[data-manual-amount="0"]').fill('1000');
  await expect(page.locator('[data-manual-reserved]')).toHaveText('£0.00');await page.locator('[data-manual-confirm="0"]').click();
  await expect(page.locator('[data-manual-reserved]')).toHaveText('£1,000.00');await expect(page.locator('[data-manual-available]')).toHaveText('£4,000.00');
@@ -505,4 +505,24 @@ test('builder carries yesterday saved bank and holds a mismatched race result',a
 });
 test('builder timers stop on close and cannot overwrite a horse detail popup',async({page})=>{
  await page.clock.install({time:new Date('2026-10-13T12:44:00Z')});await builderToday(page,'race');await page.locator('#jcm-detail-overlay .jcm-close').click();await page.locator('[data-page="picks"]').click();await page.locator('[data-research-index]').filter({hasText:'Miss Denver'}).click();await expect(page.locator('.jcm-result-card')).toBeVisible();await page.clock.fastForward(70*1000);await expect(page.locator('.jcm-result-card')).toBeVisible();await expect(page.locator('#jcm-detail-content')).toContainText('Selected horse');await expect(page.locator('[data-builder-row]')).toHaveCount(0);
+});
+test('all Bet Builder views: visible red/green boxes, default selections, atomic select-all and preserved choices',async({page})=>{
+ await page.clock.install({time:new Date('2026-10-13T08:30:00Z')});await builderToday(page);
+ for(const style of ['fixed','race','manual']){
+ await page.locator('[data-account-mode="'+style+'"]').click();await expect(page.locator('[data-builder-row]')).toHaveCount(16);await expect(page.locator('[data-builder-include]:checked')).toHaveCount(15);await expect(page.locator('#builder-select-all')).toBeChecked();
+ const checkbox=page.locator('[data-builder-include="0"]');expect(await checkbox.evaluate(e=>getComputedStyle(e).backgroundColor)).toBe('rgb(20, 121, 76)');expect((await checkbox.boundingBox()).width).toBeGreaterThanOrEqual(28);
+ await page.locator('#builder-select-all').uncheck();await expect(page.locator('[data-builder-include]:checked')).toHaveCount(0);await expect(page.locator('[data-builder-reserved]')).toHaveText('£0.00');expect(await checkbox.evaluate(e=>getComputedStyle(e).backgroundColor)).toBe('rgb(169, 35, 61)');
+ await page.locator('#builder-select-all').check();await expect(page.locator('[data-builder-include]:checked')).toHaveCount(15);
+ if(style==='race'){await page.locator('#builder-amount').fill('100');await page.locator('#builder-confirm').click();await expect(page.locator('[data-builder-reserved]')).toHaveText('£1,500.00');await page.locator('#builder-select-all').uncheck();await expect(page.locator('[data-builder-reserved]')).toHaveText('£0.00');await page.locator('#builder-select-all').check();await expect(page.locator('[data-builder-reserved]')).toHaveText('£1,500.00');}
+ if(style==='manual'){await expect(page.locator('[data-builder-reserved]')).toHaveText('£0.00');await page.locator('[data-builder-liability="0"]').fill('200');await page.locator('[data-builder-confirm-row="0"]').click();await expect(page.locator('[data-builder-reserved]')).toHaveText('£200.00');await page.locator('#builder-select-all').uncheck();await expect(page.locator('[data-builder-reserved]')).toHaveText('£0.00');}
+ }
+ await page.reload();await page.locator('[data-page="dummy-account"]').click();await page.locator('[data-account-mode="manual"]').click();await expect(page.locator('[data-builder-include]:checked')).toHaveCount(0);await expect(page.locator('[data-builder-reserved]')).toHaveText('£0.00');
+});
+test('select-all only changes editable races and keeps an already-started liability',async({page})=>{
+ await page.clock.install({time:new Date('2026-10-13T12:44:00Z')});await builderToday(page,'race');await page.locator('#builder-amount').fill('100');await page.locator('#builder-confirm').click();await page.clock.fastForward(61*1000);
+ await expect(page.locator('[data-builder-include="0"]')).toBeDisabled();await expect(page.locator('[data-builder-include="0"]')).toBeChecked();await page.locator('#builder-select-all').uncheck();await expect(page.locator('[data-builder-include]:checked')).toHaveCount(1);await expect(page.locator('[data-builder-reserved]')).toHaveText('£100.00');await page.locator('#builder-select-all').check();await expect(page.locator('[data-builder-include]:checked')).toHaveCount(15);
+});
+test('historical controls: select-all in daily and manual views changes no locked races',async({page})=>{
+ await page.clock.install({time:new Date('2026-10-12T13:00:00Z')});await page.goto('http://127.0.0.1:8765/#hub');await page.locator('[data-page="dummy-account"]').click();await page.locator('#builder-select-all').uncheck();await expect(page.locator('[data-account-row]:checked')).toHaveCount(0);await page.reload();await page.locator('[data-page="dummy-account"]').click();await expect(page.locator('[data-account-row]:checked')).toHaveCount(0);await page.locator('#builder-select-all').check();await expect(page.locator('[data-account-row]:checked')).toHaveCount(15);
+ await page.clock.fastForward(5*60*60*1000);await page.locator('[data-account-mode="manual"]').click();await expect(page.locator('[data-manual-include]:checked')).toHaveCount(4);await page.locator('#builder-select-all').uncheck();await expect(page.locator('[data-manual-include]:checked')).toHaveCount(0);await page.locator('#builder-select-all').check();await expect(page.locator('[data-manual-include]:checked')).toHaveCount(4);await expect(page.locator('[data-manual-reserved]')).toHaveText('£0.00');await page.clock.fastForward(2*60*60*1000);await expect(page.locator('#builder-select-all')).toBeDisabled();
 });

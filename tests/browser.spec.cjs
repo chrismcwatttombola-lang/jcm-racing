@@ -464,7 +464,7 @@ test('builder today: per-race checkbox and odds lock independently; manual funds
  await page.locator('[data-builder-include="1"]').check();await page.locator('[data-builder-liability="1"]').fill('5100');await builderOdds(page,1);await expect(page.locator('#builder-message')).toContainText('Insufficient available balance');
  await page.locator('[data-builder-liability="1"]').fill('500');await builderOdds(page,1);await expect(page.locator('[data-builder-reserved]')).toHaveText('£500.00');
  await page.locator('[data-builder-include="1"]').uncheck();await expect(page.locator('[data-builder-reserved]')).toHaveText('£0.00');
- await page.locator('[data-account-mode="fixed"]').click();await expect(page.locator('#builder-confirm')).toBeDisabled();await expect(page.locator('[data-builder-reserved]')).toHaveText('£0.00');
+ await page.locator('[data-account-mode="fixed"]').click();await expect(page.locator('#builder-confirm')).toBeDisabled();await expect(page.locator('[data-builder-reserved]')).toHaveText('£1,000.00');
 });
 function builderResult(r,win=true){return {...r,result_status:win?'WIN':'LOSS',position:win?'2':'1',result_source:'THE_RACING_API',verification_status:'PROVIDER_ACCEPTED',result_source_url:'https://api.theracingapi.com/v1/results?start_date=2026-10-13&end_date=2026-10-13',result_retrieved_at:'2026-10-13T20:00:00Z',result_date:r.race_date,result_off_dt:r.scheduled_off_dt,result_off_time_uk:r.off_time_uk,result_course:r.course,result_horse:r.horse,result_race_id:r.race_id,result_horse_id:r.horse_id,official_accuracy_eligible:false};}
 test('builder settlements and results graph: all three independent closes, brand lines, directional dots, no future closes',async({page,request})=>{
@@ -476,7 +476,7 @@ test('builder settlements and results graph: all three independent closes, brand
  settled=true;await page.clock.fastForward(12*60*60*1000);await page.locator('[data-account-mode="results"]').click();await expect(page.locator('[data-strategy-dot][data-date="2026-10-13"]')).toHaveCount(3);
  await expect(page.locator('[data-strategy-dot="manual"][data-date="2026-10-13"]')).toHaveAttribute('fill','#ff5776');await expect(page.locator('[data-strategy-dot="race"]')).toHaveAttribute('fill','#43bd84');await expect(page.locator('[data-strategy-dot="fixed"][data-date="2026-10-13"]')).toHaveAttribute('fill','#43bd84');
  await expect(page.locator('[data-strategy-line="fixed"]')).toHaveAttribute('stroke','#edbd57');await expect(page.locator('[data-strategy-line="race"]')).toHaveAttribute('stroke','#00bfc1');await expect(page.locator('[data-strategy-line="manual"]')).toHaveAttribute('stroke','#ae90ff');
- await expect(page.locator('#jcm-detail-content')).toContainText('£5,382.85');await expect(page.locator('#jcm-detail-content')).toContainText('£4,000.00');
+ await expect(page.locator('#jcm-detail-content')).toContainText('£5,288.39');await expect(page.locator('#jcm-detail-content')).toContainText('£4,000.00');
  await page.locator('[data-account-mode="race"]').click();await expect(page.locator('[data-builder-reserved]')).toHaveText('£0.00');await expect(page.locator('[data-builder-balance]')).toHaveText('£5,612.50');
 });
 test('builder fails closed on missing odds and wrong result identity; rejects corrupt saved choices',async({page,request})=>{
@@ -495,4 +495,11 @@ test('builder screenshot prices: all active selections priced and withdrawn sele
  await expect(page.locator('[data-builder-row="0"] [data-builder-odds]')).toHaveValue('1.9');
  await expect(page.locator('[data-builder-row="0"]')).toContainText('Insufficient for full simulated stake');
  await page.locator('[data-account-mode="race"]').click();await page.locator('#builder-amount').fill('100');await page.locator('#builder-confirm').click();await expect(page.locator('[data-builder-reserved]')).toHaveText('£1,500.00');
+});
+test('builder carries yesterday saved bank and holds a mismatched race result',async({page,request})=>{
+ await page.clock.install({time:new Date('2026-10-13T08:30:00Z')});await builderFixture(page);await builderToday(page);
+ await expect(page.locator('[data-builder-balance]')).toHaveText('£4,905.54');
+ await page.locator('[data-account-mode="race"]').click();await page.locator('#builder-amount').fill('100');await page.locator('#builder-confirm').click();for(let i=0;i<16;i++)await builderOdds(page,i);
+ const card=await(await request.get('http://127.0.0.1:8765/data/competition-research-2026-10-13.json')).json();await page.route('**/data/competition-research-2026-10-13.json',route=>route.fulfill({json:{...card,high_competition:card.high_competition.map(r=>builderResult(r)),competition_watchlist:card.competition_watchlist.map(r=>({...builderResult(r),...(r.horse==='Miss Denver'?{result_horse_id:'hrs_999'}:{})}))}}));
+ await page.clock.fastForward(12*60*60*1000);await page.locator('[data-account-mode="race"]').click();await expect(page.locator('[data-builder-reserved]')).toHaveText('£100.00');await expect(page.locator('[data-builder-row="0"]')).toContainText('Result: Pending');await page.locator('[data-account-mode="results"]').click();await expect(page.locator('[data-strategy-dot="race"]')).toHaveCount(0);
 });

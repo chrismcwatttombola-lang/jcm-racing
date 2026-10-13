@@ -31,3 +31,11 @@ The Pro racecard endpoint again returned all 38 UK/Irish races. The frozen 11:03
 At retrieval, four leaders still had a complete morning-to-latest Exchange proxy pair within the 30-minute freshness rule: 1 drifted and 3 shortened. The other 34 rows were stale because their races had already passed; none lacked a named Betfair Exchange series. Historical pre-off points remain descriptive only and were not relabelled as live or executable observations.
 
 Every opportunity remains blocked. The API series still has unspecified price side and no verified spread, liquidity, matching, commission or complete withdrawal status, and predictive value remains unvalidated. No trade, return or profit claim was created. Data checks and full exact-head browser CI remain required before merging and publishing this accumulated research branch.
+
+## 23:08–23:09 UK end-of-day capture
+
+Racing API Pro still returned all 38 UK/Irish races and all 38 frozen leaders had a named Betfair Exchange history. Appended a seventh immutable observation after all scheduled races had finished. Every current row is intentionally marked stale: the retrieved near-off points are descriptive archival evidence, not live prices or executable quotes. Two leaders lacked a qualifying 08:00–08:15 morning point; no bookmaker price was substituted.
+
+Granlahan is now retained as an explicit provider-accepted non-runner with dated result evidence and excluded from movement filters. No replacement leader was locked prospectively before the race, so the separate replacement record is marked unavailable rather than selecting one retrospectively. The original cohort, all earlier observations, screenshots, historical comparisons and app data remain unchanged.
+
+No executable opportunity qualified. Price side, spread, liquidity, matching and predictive value remain unverified. This final capture still requires data checks, full exact-head browser CI and successful Pages deployment before publication.

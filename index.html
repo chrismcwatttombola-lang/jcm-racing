@@ -697,6 +697,7 @@ window.jcmOpenFixedAccount=async function(){
   return d.rows.map(r=>({...r,liability:allocations.get(key(r))||0,included:allocations.has(key(r))}));
  }
  function draw(message){
+  if(window.jcmBuilderLegacyActive===false)return;
   const rows=allocated(),budget=settings.budget_cents/100;
   const profit=r=>Math.round(r.liability/(r.lay_odds-1)*(1-d.commission_rate)*100)/100;
   const settled=rows.reduce((a,r)=>a+(!r.included?0:r.result_status==='WIN'?profit(r):r.result_status==='LOSS'?-r.liability:0),0);
@@ -798,7 +799,7 @@ async function open(next='fixed'){
  if(totals().available<0)throw Error('Saved account is unfunded');
  function draw(message=''){
  if(mode!=='manual'||!overlay.classList.contains('open'))return;
- const t=totals();node.innerHTML='<h2>Bet Builder · Manual stakes</h2><section id="jcm-manual-bank"><p>Separate opening bank: <strong>'+money(5000)+'</strong><br>Balance: <strong data-manual-balance>'+money(t.balance/100)+'</strong><br>Reserved liability: <strong data-manual-reserved>'+money(t.reserved/100)+'</strong><br>Available balance: <strong data-manual-available>'+money(t.available/100)+'</strong></p><p>Settled net movement: '+money(t.movement/100)+'<br>Potential account balance if all outstanding selections are beaten: '+money((t.balance+t.projected)/100)+'</p></section><p id="jcm-manual-message" role="status">'+safe(message)+'</p><p>Only races remaining when this strategy was introduced are shown. Choose a race, enter its liability and press Confirm race. No amount is redistributed. Each race locks at its scheduled UK start time.</p><p style="font-size:12px">Screenshot odds; full matching assumed. Exact quote times are unknown and displayed liquidity may be insufficient. 5% commission on positive net market winnings. Choices and time locks use this device; the two strategies have independent banks.</p><h3>12 October · Manual statement</h3>'+rows.map((r,i)=>{
+ const t=totals();node.innerHTML='<h2>Bet Builder · Manual stakes</h2><section id="jcm-manual-bank"><p>Separate opening bank: <strong>'+money(5000)+'</strong><br>Balance: <strong data-manual-balance>'+money(t.balance/100)+'</strong><br>Reserved liability: <strong data-manual-reserved>'+money(t.reserved/100)+'</strong><br>Available balance: <strong data-manual-available>'+money(t.available/100)+'</strong></p><p>Settled net movement: '+money(t.movement/100)+'<br>Potential account balance if all outstanding selections are beaten: '+money((t.balance+t.projected)/100)+'</p></section><p id="jcm-manual-message" role="status">'+safe(message)+'</p><p>Only races remaining when this strategy was introduced are shown. Choose a race, enter its liability and press Confirm race. No amount is redistributed. Each race locks at its scheduled UK start time.</p><p style="font-size:12px">Screenshot odds; full matching assumed. Exact quote times are unknown and displayed liquidity may be insufficient. 5% commission on positive net market winnings. Choices and time locks use this device; the strategies have independent banks.</p><h3>12 October · Manual statement</h3>'+rows.map((r,i)=>{
  const v=settings[key(r)]||{included:false,liability_cents:0};const locked=Date.now()>=off(r),st=status(r),p=profit(r,v.liability_cents);return '<section class="jcm-manual-row" data-manual-row="'+i+'"><strong>'+safe(r.horse)+'</strong><p>'+safe(r.off_time_uk)+' · '+safe(r.course)+' · '+(locked?'Locked':'Editable')+'</p><label><input data-manual-include="'+i+'" type="checkbox" '+(v.included?'checked ':'')+(locked?'disabled':'')+'> Include race</label><label style="display:block;margin-top:10px" for="manual-amount-'+i+'">Individual liability (£)</label><input id="manual-amount-'+i+'" data-manual-amount="'+i+'" type="number" min="0.01" max="'+((t.available+(v.included&&st==='PENDING'?v.liability_cents:0))/100)+'" step="0.01" value="'+(v.liability_cents?v.liability_cents/100:'')+'" '+(locked?'disabled':'')+'><button type="button" data-manual-confirm="'+i+'" '+(locked?'disabled':'')+'>Confirm race</button><p>Confirmed liability: '+money((v.included?v.liability_cents:0)/100)+'<br>Lay odds: '+r.lay_odds+' · Indicative lay stake: '+money((v.included?v.liability_cents:0)/100/(r.lay_odds-1))+'<br>Potential net profit: '+money((v.included?p:0)/100)+'<br>Result: '+safe(st)+' · '+(v.included?'Included':'Excluded')+'<br>Net movement: '+money(!v.included?0:st==='WIN'?p/100:st==='LOSS'?-v.liability_cents/100:0)+'</p>'+((v.included&&r.available_stake_gbp<v.liability_cents/100/(r.lay_odds-1))?'<p>Insufficient displayed liquidity · illustrative return</p>':'')+'</section>';
  }).join('');window.jcmAddAccountSwitch(node,'manual');
  node.querySelectorAll('[data-manual-confirm]').forEach(button=>button.addEventListener('click',()=>{
@@ -816,6 +817,8 @@ async function open(next='fixed'){
  refreshTimer=setInterval(async()=>{if(mode!=='manual'||!overlay.classList.contains('open')){clearInterval(refreshTimer);return;}try{const next=await read('data/fictional-account-'+day+'.json');const nextRows=rowsFrom(next);if(JSON.stringify(next)!==JSON.stringify(data)){data=next;rows=nextRows;draw('Published results refreshed.')}}catch(_){node.querySelector('#jcm-manual-message').textContent='Results refresh unavailable; retaining last loaded statement.'}},30000);
  }catch(_){if(mode==='manual'){node.innerHTML='<h2>Bet Builder · Manual stakes</h2><p>INSUFFICIENT VERIFIED DATA — manual statement unavailable.</p>';window.jcmAddAccountSwitch(node,'manual');}}
 }
+window.jcmOpenLegacyStrategy=open;
+window.jcmStopLegacyAccount=()=>{mode='inactive';clearTimeout(timer);clearInterval(refreshTimer);};
 window.jcmOpenDummyAccount=()=>open('fixed');
 })();
 </script>
@@ -833,5 +836,7 @@ window.jcmOpenDummyAccount=()=>open('fixed');
 #jcm-official-panel .jcm-status.win{color:#85efb8}#jcm-official-panel .jcm-status.loss{color:#ff849d}
 @media(max-width:380px){.jcm-result-card{padding:18px 12px}.jcm-result-grid strong{font-size:17px}}
 </style>
+<link rel="stylesheet" href="scripts/bet-builder.css?v=20261013">
+<script src="scripts/bet-builder.js?v=20261013"></script>
 </body></html>
 

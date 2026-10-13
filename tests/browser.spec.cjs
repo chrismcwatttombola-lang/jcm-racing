@@ -653,6 +653,7 @@ test('13 October full API results replace partial screenshot evidence without up
  const data=await(await request.get('http://127.0.0.1:8765/data/competition-research-2026-10-13.json')).json();
  for(const selected of [...data.high_competition,...data.competition_watchlist].filter(r=>['Chantilly Wings','Four Springs'].includes(r.horse))){
   expect(selected.official_accuracy_eligible).toBe(false);expect(selected.verification_status).toBe('PROVIDER_ACCEPTED');expect(selected.screenshot_result_evidence.result_source).toBe('BETFAIR_EXCHANGE_USER_SCREENSHOT');
+  expect(selected.position).toBe(selected.horse==='Chantilly Wings'?'6':'1');expect(selected.result_field_size).toBe(selected.horse==='Chantilly Wings'?11:4);
   expect(selected.result_source_url).toBe('https://api.theracingapi.com/v1/results/'+selected.result_race_id);expect(await page.evaluate(r=>window.jcmAcceptedResult(r),selected)).toBe(true);
  }
 });

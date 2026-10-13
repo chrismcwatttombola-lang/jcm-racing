@@ -11,3 +11,9 @@ Data validation and custom preservation/identity/timestamp/freshness/arithmetic 
 ## 13:27–13:30 UK follow-up
 
 Appended a second complete 38-leader `get_odds` capture without changing the frozen cohort, morning quotes, historical comparisons or screenshots. The upper-bound retrieval timestamp was recorded immediately after the paced connector batches; individual call completion times were not retained. One scheduled off had passed by completion, so only its pre-off history point was admitted. Latest status: 14 drifted, 15 shortened, 2 unchanged, 2 missing morning quotes and 5 stale latest points. All prices remain unspecified-side Exchange proxies with no verified spread, liquidity, matching or complete withdrawal status. No opportunity qualified and no simulated or actual return was published.
+
+## 14:20–14:23 UK follow-up
+
+Appended a third complete 38-leader `get_odds` capture and a separate whole-field Bet365 snapshot from all 38 returned UK/Irish racecards. Exact per-horse completion timestamps were retained. Only timezone-aware numeric Exchange points at or before both retrieval and scheduled off were admitted; a current pair additionally required a quote no more than 30 minutes old at that horse's retrieval. Latest status: 14 drifted, 17 shortened, 0 unchanged and 7 stale or missing pairs. Known screenshot NR Koffee And Kale was explicitly excluded from the later bookmaker-leader snapshot; all other withdrawal status remains unverified.
+
+The original 11:03 cohort, earlier observations, historical comparisons and screenshots remain unchanged. Exchange side, spread, liquidity, matching, commission and predictive value are still unverified, so every opportunity remains blocked and no return is published. This observation requires data checks and full exact-head browser CI before any merge or deployment.

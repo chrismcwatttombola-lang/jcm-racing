@@ -11,3 +11,7 @@ Restored the accepted settled-result success percentage on the hub picks tile an
 
 ## 12 October: compact safe-area header
 Removed stacked header/standalone padding. Hub and dashboard each use one safe-area allowance plus compact clearance. Moved home into the logo/date grid so all three share one center line, including narrow phone widths. Dialog close behavior remains intact.
+
+
+## 13 October: simpler Daily Picks overview
+User requested removal of confidence figures from overview rows, using the existing borders as the indicator. Removed the overview badge and retained confidence percentages and bands in horse-detail pop-ups. Existing mobile regression checks now verify absent overview badges, retained border classes, and detailed confidence for both dates. No data or calculation changes.

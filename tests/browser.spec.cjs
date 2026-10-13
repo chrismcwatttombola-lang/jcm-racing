@@ -128,6 +128,7 @@ test('wrong date, non-Betfair source, outcome mismatch and duplicate evidence st
   await openOct9(page);await expect(page.locator('#jcm-watch-panel .jcm-status.pending')).toHaveCount(8);
 });
 test('today retains all 15 horses, confidence and chronological order; rated totals include accepted outcomes', async ({page}) => {
+ await page.clock.install({time:new Date('2026-10-12T23:59:00Z')});
  await page.goto(URL);await page.locator('#date').selectOption('2026-10-12');
  await expect(page.locator('#jcm-official-panel .jcm-row')).toHaveCount(15);
  await expect(page.locator('#jcm-official-panel .jcm-status.pending')).toHaveCount(0);
@@ -579,6 +580,17 @@ test('Drifting / Shortening Tracker shows all race leaders, historical coverage 
  expect(close.y).toBeGreaterThanOrEqual(0);expect(close.y+close.height).toBeLessThanOrEqual(780);
  await page.locator('#jcm-drift-overlay .jcm-close').click();await expect(page.locator('#jcm-drift-overlay')).not.toHaveClass(/open/);
 });
+test('latest Exchange capture is append-only and remains blocked research',async({request})=>{
+ const response=await request.get('http://127.0.0.1:8765/data/drifting-odds-2026-10-13.json');expect(response.ok()).toBe(true);
+ const data=await response.json(),latest=data.observations.at(-1);expect(data.latest_observation_at).toBe('2026-10-13T17:41:07.434Z');
+ expect(data.observations).toHaveLength(6);expect(latest.rows).toHaveLength(38);
+ const counts=latest.rows.reduce((out,row)=>{const key=row.current.direction||row.current.status;out[key]=(out[key]||0)+1;return out;},{});
+ expect(counts).toEqual({DRIFT:1,SHORTENED:3,STALE_OR_MISSING_CLOSE:34});
+ for(const [index,row] of data.rows.entries()){
+  expect(row.current).toEqual(latest.rows[index].current);expect(row.current.source).toBe('The Racing API · Betfair Exchange');expect(row.current.price_side).toBe('UNSPECIFIED');
+  expect(row.opportunity_status).toBe('BLOCKED_UNVERIFIED_EXECUTION_AND_UNVALIDATED_FORECAST');
+ }
+});
 test('screenshot date archive preserves unknown capture times and reported comparison',async({page})=>{
  await openDrift(page);await page.locator('[data-drift-tab="screenshots"]').click();
  await expect(page.locator('[data-drift-screenshot]')).toHaveCount(16);
@@ -639,6 +651,25 @@ test('13 October accepted Miss Denver result reaches overview, detail and per-ra
  expect(await page.evaluate(r=>window.jcmAcceptedResult({...r,result_source_url:'https://api.theracingapi.com/v1/results/rac_999'}),selected)).toBe(false);
 });
 
+test('13 October full API results replace partial screenshot evidence without upgrading official accuracy',async({page,request})=>{
+ await page.clock.install({time:new Date('2026-10-13T14:20:00Z')});
+ await page.goto(URL);await page.locator('#date').selectOption('2026-10-13');
+ await expect(page.locator('.metrics .metric').first()).toContainText('18/25');
+ for(const expected of [
+  {horse:'Chantilly Wings',status:'Horse lost',finish:'Finished 6th of 11',winner:'Build A Bridge',source:'rac_32300969792'},
+  {horse:'Four Springs',status:'Horse won',finish:'Finished 1st of 4',winner:'Four Springs',source:'rac_32300882627'}
+ ]){
+  const row=page.locator('[data-research-index]').filter({hasText:expected.horse});await expect(row).toContainText(expected.status);await row.click();
+  await expect(page.locator('.jcm-result-card')).toContainText(expected.finish);await expect(page.locator('.jcm-result-card')).toContainText(expected.winner);await page.locator('#jcm-detail-overlay .jcm-close').click();
+ }
+ const data=await(await request.get('http://127.0.0.1:8765/data/competition-research-2026-10-13.json')).json();
+ for(const selected of [...data.high_competition,...data.competition_watchlist].filter(r=>['Chantilly Wings','Four Springs'].includes(r.horse))){
+  expect(selected.official_accuracy_eligible).toBe(false);expect(selected.verification_status).toBe('PROVIDER_ACCEPTED');expect(selected.screenshot_result_evidence.result_source).toBe('BETFAIR_EXCHANGE_USER_SCREENSHOT');
+  expect(selected.position).toBe(selected.horse==='Chantilly Wings'?'6':'1');expect(selected.result_field_size).toBe(selected.horse==='Chantilly Wings'?11:4);
+  expect(selected.result_source_url).toBe('https://api.theracingapi.com/v1/results/'+selected.result_race_id);expect(await page.evaluate(r=>window.jcmAcceptedResult(r),selected)).toBe(true);
+ }
+});
+
 
 for(const source of ['The Racing API · Bet365',null]){
  test('tracker rejects non-Exchange or unidentified price source '+source,async({page})=>{
@@ -649,3 +680,26 @@ for(const source of ['The Racing API · Bet365',null]){
   await expect(page.locator('[data-drift-race]')).toHaveCount(0);
  });
 }
+
+test('provider pulled-up and explicit NR outcomes settle, unknown codes stay pending', async ({page,request})=>{
+ await page.clock.install({time:new Date('2026-10-13T18:00:00Z')});await page.goto(URL);await page.locator('#date').selectOption('2026-10-13');
+ const data=await(await request.get('http://127.0.0.1:8765/data/competition-research-2026-10-13.json')).json();
+ const dream=data.high_competition.find(r=>r.horse==='Dream Diamond'),nr=data.high_competition.find(r=>r.horse==='Granlahan');
+ expect(await page.evaluate(r=>window.jcmAcceptedResult(r),dream)).toBe(true);
+ expect(await page.evaluate(r=>window.jcmAcceptedResult(r),nr)).toBe(true);
+ expect(await page.evaluate(r=>window.jcmAcceptedResult({...r,position:'UNKNOWN'}),dream)).toBe(false);
+ expect(await page.evaluate(r=>window.jcmAcceptedResult({...r,result_non_runners:[]}),nr)).toBe(false);
+ expect(await page.evaluate(r=>window.jcmAcceptedResult({...r,result_status:'LOSS'}),dream)).toBe(false);
+ await expect(page.locator('[data-research-index]').filter({hasText:'Dream Diamond'})).toContainText('Horse lost');
+ await expect(page.locator('[data-research-index]').filter({hasText:'Granlahan'})).toContainText('NR');
+});
+
+test('Luminaries provider result updates overview, detail and account data', async ({page,request})=>{
+ await page.clock.install({time:new Date('2026-10-13T17:00:00Z')});await page.goto(URL);await page.locator('#date').selectOption('2026-10-13');
+ const row=page.locator('[data-research-index]').filter({hasText:'Luminaries'});await expect(row).toContainText('Horse won');await row.click();
+ await expect(page.locator('.jcm-result-card')).toContainText('Finished 1st of 6');await expect(page.locator('.jcm-result-card')).toContainText('Luminaries');
+ const research=await(await request.get('http://127.0.0.1:8765/data/competition-research-2026-10-13.json')).json();
+ const account=await(await request.get('http://127.0.0.1:8765/data/bet-builder-2026-10-13.json')).json();
+ const selected=research.high_competition.find(r=>r.horse==='Luminaries'),settled=account.rows.find(r=>r.horse==='Luminaries');
+ for(const result of [selected,settled]){expect(result.result_status).toBe('LOSS');expect(result.position).toBe('1');expect(result.result_field_size).toBe(6);expect(result.official_accuracy_eligible).toBe(false);expect(await page.evaluate(r=>window.jcmAcceptedResult(r),result)).toBe(true);}
+});

@@ -23,3 +23,11 @@ The original 11:03 cohort, earlier observations, historical comparisons and scre
 Appended a fourth complete 38-leader `get_odds` capture with exact per-horse completion timestamps. Only the named Betfair Exchange series was admitted; numeric points had to be timezone-aware and no later than both retrieval and scheduled off. At each horse's retrieval, 23 rows had a complete morning-to-current pair within the 30-minute freshness rule: 10 drifted, 12 shortened and 1 was unchanged. The remaining 15 were stale or lacked a morning pair as earlier races moved beyond the freshness window. No missing Exchange series or connector failures occurred.
 
 The frozen 11:03 cohort, all earlier captures, 149-start historical study and screenshots remain unchanged. Other withdrawal status is still unverified. Price side, spread, liquidity, matching, commission and predictive value remain unverified, so no executable opportunity qualified and no return was published. Full exact-head browser CI remains mandatory before merge and deployment.
+
+## 18:40–18:41 UK follow-up
+
+The Pro racecard endpoint again returned all 38 UK/Irish races. The frozen 11:03 cohort was not reselected. Appended a fifth follow-up `get_odds` capture for all 38 frozen leaders with exact per-horse completion timestamps, retaining every earlier observation, historical comparison and screenshot record.
+
+At retrieval, four leaders still had a complete morning-to-latest Exchange proxy pair within the 30-minute freshness rule: 1 drifted and 3 shortened. The other 34 rows were stale because their races had already passed; none lacked a named Betfair Exchange series. Historical pre-off points remain descriptive only and were not relabelled as live or executable observations.
+
+Every opportunity remains blocked. The API series still has unspecified price side and no verified spread, liquidity, matching, commission or complete withdrawal status, and predictive value remains unvalidated. No trade, return or profit claim was created. Data checks and full exact-head browser CI remain required before merging and publishing this accumulated research branch.

@@ -416,7 +416,7 @@ sel.addEventListener('change',renderMarket);renderMarket();
 (function(){
  const logo=document.querySelector('.identity img');
  const hub=document.createElement('div');hub.id='jcm-hub';hub.setAttribute('aria-label','JCM Racing Hub');
- hub.innerHTML='<div class="jcm-hub-inner"><div class="jcm-hub-top">'+(logo?'<img class="jcm-hub-mark" alt="JCM" src="'+logo.getAttribute('src')+'">':'')+'<div><div class="jcm-hub-eyebrow">JCM RACING <span class="jcm-hub-tagline">Better, informed.</span></div><h1 class="jcm-hub-title">Your racing hub</h1></div></div><div class="jcm-hub-grid"><button class="jcm-hub-tile" data-page="picks"><span id="jcm-daily-rate" class="jcm-daily-rate" aria-live="polite">Today · Loading results…</span><span class="jcm-hub-icon">🎯</span><strong>False Favourites</strong><span>Vulnerable favourites</span><span class="jcm-hub-state">OPEN DASHBOARD ↗</span></button><button type="button" class="jcm-hub-tile" data-page="dummy-account"><span class="jcm-hub-icon">💷</span><strong>Bet Builder</strong><span>A risk free environment to test your betting theories.</span><span class="jcm-hub-state">VIEW ACCOUNT STATEMENT ↗</span></button><button type="button" class="jcm-hub-tile" data-page="rated-performance"><span class="jcm-hub-icon">📊</span><strong>Rated Performance</strong><span id="jcm-rated-ratios" aria-live="polite">Loading Win / Loss ratios…</span><span class="jcm-hub-state">VIEW WIN / LOSS ↗</span></button></div><p class="jcm-hub-foot">JCM Favourite Vulnerability · Research, not betting advice</p></div>';
+ hub.innerHTML='<div class="jcm-hub-inner"><div class="jcm-hub-top">'+(logo?'<img class="jcm-hub-mark" alt="JCM" src="'+logo.getAttribute('src')+'">':'')+'<div><div class="jcm-hub-eyebrow">JCM RACING <span class="jcm-hub-tagline">Better, informed.</span></div><h1 class="jcm-hub-title">Your racing hub</h1></div></div><div class="jcm-hub-grid"><button class="jcm-hub-tile" data-page="picks"><span id="jcm-daily-rate" class="jcm-daily-rate" aria-live="polite">Today · Loading results…</span><span class="jcm-hub-icon">🎯</span><strong>False Favourites</strong><span>Vulnerable favourites</span><span class="jcm-hub-state">OPEN DASHBOARD ↗</span></button><button type="button" class="jcm-hub-tile" data-page="dummy-account"><span class="jcm-hub-icon">💷</span><strong>Bet Builder</strong><span>A risk free environment to test your betting theories.</span><span class="jcm-hub-state">VIEW ACCOUNT STATEMENT ↗</span></button><button type="button" class="jcm-hub-tile" data-page="drifting-odds"><span class="jcm-hub-icon">📈</span><strong>Drifting Odds</strong><span>Favourite price history, screenshot comparisons and simulated hedges.</span><span class="jcm-hub-state">EXPLORE PRICE MOVEMENT ↗</span></button><button type="button" class="jcm-hub-tile" data-page="rated-performance"><span class="jcm-hub-icon">📊</span><strong>Rated Performance</strong><span id="jcm-rated-ratios" aria-live="polite">Loading Win / Loss ratios…</span><span class="jcm-hub-state">VIEW WIN / LOSS ↗</span></button></div><p class="jcm-hub-foot">JCM Favourite Vulnerability · Research, not betting advice</p></div>';
  document.body.append(hub);
  const head=document.querySelector('header .head');
  const home=document.createElement('button');home.type='button';home.className='jcm-home-link';home.innerHTML='<svg width="21" height="21" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m3 10 9-7 9 7"/><path d="M5 9v12h14V9"/><path d="M9 21v-8h6v8"/></svg>';home.setAttribute('aria-label','Return to JCM Hub');
@@ -432,6 +432,7 @@ sel.addEventListener('change',renderMarket);renderMarket();
   if(page==='picks')navigate('picks',true);
   else if(page==='dummy-account')window.jcmOpenDummyAccount?.();
   else if(page==='rated-performance')window.jcmOpenRatedPerformance?.();
+  else if(page==='drifting-odds')window.jcmOpenDriftingOdds?.();
   else if(page==='odds')alert('Live Odds Tracker is in development. Market-data access and alert criteria must be validated before launch.');
   else if(page==='performance')alert('Performance analytics is planned. Official picks and Watchlist will remain separately measured.');
   else alert('More JCM tools are planned. This section is not live yet.');
@@ -848,5 +849,7 @@ window.jcmOpenDummyAccount=()=>open('fixed');
 </style>
 <link rel="stylesheet" href="scripts/bet-builder.css?v=checkboxes-20261013">
 <script src="scripts/bet-builder.js?v=checkboxes-20261013"></script>
+<link rel="stylesheet" href="scripts/drifting-odds.css">
+<script src="scripts/drifting-odds.js"></script>
 </body></html>
 

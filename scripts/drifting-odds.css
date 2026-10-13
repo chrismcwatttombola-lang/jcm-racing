@@ -1,0 +1,21 @@
+#jcm-drift-overlay{z-index:105}
+.drift-modal{width:min(94vw,740px);max-height:calc(100dvh - 60px - env(safe-area-inset-top,0px) - env(safe-area-inset-bottom,0px));padding:16px}
+.drift-modal>.jcm-close{position:sticky;top:0;z-index:2;float:right;background:#34445c;min-width:44px;min-height:44px}
+.drift-modal h2{color:#edbd57;padding-right:50px;font-size:26px}
+.drift-modal h3{margin:0 0 10px;color:#edbd57}
+.drift-modal p,.drift-modal small{line-height:1.55}.drift-modal small{display:block;color:#cfdaea;font-size:12px}
+.drift-tabs{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:6px;margin:15px 0}
+.drift-tabs button{padding:12px 5px;background:#121626;border:1px solid #6b7a91;color:#fff;border-radius:9px;font:inherit;font-size:13px;cursor:pointer}
+.drift-tabs button[aria-pressed=true]{background:#edbd57;color:#121626;font-weight:800}
+.drift-date,.drift-filter{display:flex;gap:10px;align-items:center;flex-wrap:wrap;margin:12px 0}
+.drift-modal select,.drift-modal input{background:#121626;border:1px solid #6b7a91;border-radius:8px;color:#fff;font:inherit;padding:10px;min-height:44px;max-width:100%;width:100%;box-sizing:border-box}
+.drift-date select,.drift-filter select{width:auto}
+.drift-tile{border:1px solid #52647b;border-radius:12px;background:#162238;padding:14px;margin:12px 0;overflow-wrap:anywhere}
+.drift-head{display:flex;justify-content:space-between;align-items:flex-start;flex-wrap:wrap;gap:10px}.drift-head strong{font-size:18px}.drift-head span{font-size:12px;color:#cfdaea}.drift-pill{padding:5px 8px;border:1px solid #52647b;border-radius:6px}
+.drift-prices{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px;margin:12px 0}.drift-prices span{font-size:12px}.drift-prices strong{display:block;font-size:20px;color:#fff;margin:5px 0;overflow-wrap:anywhere}
+.drift-trace{display:block;width:100%;max-height:60px;margin:10px 0}
+.drift-history{display:flex;flex-direction:column;gap:5px;padding:10px 0;border-bottom:1px solid #52647b;font-size:13px}
+.drift-tile summary{cursor:pointer;padding:8px 0;color:#6de1ed}.drift-caution{color:#f5ce79;font-size:13px}
+.drift-form{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}.drift-form label{display:flex;flex-direction:column;gap:8px;font-size:13px}
+.drift-positive{color:#80e4b2}.drift-negative{color:#ff9bad}
+@media(max-width:430px){.drift-modal{padding:12px}.drift-form{grid-template-columns:1fr}.drift-prices strong{font-size:18px}.drift-tabs button{font-size:12px}.drift-tile{padding:12px}}

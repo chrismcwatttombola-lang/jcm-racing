@@ -550,3 +550,64 @@ test('all 13 October selections show recovered reasons with counterarguments and
  await page.locator('[data-research-index]').first().click();
  await expect(page.locator('.jcm-result-card')).toBeVisible();
 });
+
+async function openDrift(page){
+ await page.setViewportSize({width:360,height:780});
+ await page.clock.install({time:new Date('2026-10-13T11:00:00Z')});
+ await page.goto('http://127.0.0.1:8765/#hub');
+ await page.locator('[data-page="drifting-odds"]').click();
+ await expect(page.locator('#jcm-drift-overlay')).toHaveClass(/open/);
+ await expect(page.locator('[data-drift-race]')).toHaveCount(38);
+}
+test('Drifting Odds shows all race leaders, historical coverage and blocked execution',async({page})=>{
+ await openDrift(page);
+ await expect(page.locator('#drift-content')).toContainText('113/149');
+ await expect(page.locator('#drift-content')).toContainText('No executable opportunities qualified');
+ await expect(page.locator('[data-drift-race]').filter({hasText:'Koffee And Kale'})).toHaveCount(0);
+ await page.locator('#drift-filter').selectOption('DRIFT');
+ const rows=page.locator('[data-drift-race]');expect(await rows.count()).toBeGreaterThan(0);
+ await expect(rows.first()).toContainText('DRIFT');
+ const width=await page.locator('.drift-modal').evaluate(e=>({scroll:e.scrollWidth,client:e.clientWidth}));
+ expect(width.scroll).toBeLessThanOrEqual(width.client+1);
+ await page.locator('.drift-modal').evaluate(e=>e.scrollTop=e.scrollHeight);
+ const close=await page.locator('#jcm-drift-overlay .jcm-close').boundingBox();
+ expect(close.y).toBeGreaterThanOrEqual(0);expect(close.y+close.height).toBeLessThanOrEqual(780);
+ await page.locator('#jcm-drift-overlay .jcm-close').click();await expect(page.locator('#jcm-drift-overlay')).not.toHaveClass(/open/);
+});
+test('screenshot date archive preserves unknown capture times and reported comparison',async({page})=>{
+ await openDrift(page);await page.locator('[data-drift-tab="screenshots"]').click();
+ await expect(page.locator('[data-drift-screenshot]')).toHaveCount(16);
+ await expect(page.locator('[data-drift-screenshot]').filter({hasText:'Koffee And Kale'})).toContainText('NR · excluded');
+ await expect(page.locator('#drift-content')).toContainText('Capture time unknown');
+ await page.locator('#drift-date').selectOption('2026-10-12');
+ await expect(page.locator('[data-drift-screenshot]')).toHaveCount(15);
+ await expect(page.locator('#drift-content')).toContainText('Mighty Fleur');
+ await expect(page.locator('#drift-content')).toContainText('hedged profit unavailable');
+ await expect(page.locator('#drift-content')).toContainText('2.62');
+});
+test('same-market hedge calculator handles both directions, commission, adverse moves and invalid prices',async({page})=>{
+ await openDrift(page);await page.locator('[data-drift-tab="calculator"]').click();
+ await page.locator('#drift-entry').fill('2');await page.locator('#drift-exit').fill('3');
+ await expect(page.locator('#drift-hedge-result')).toContainText('£66.67');
+ await expect(page.locator('#drift-hedge-result')).toContainText('£31.66');
+ await page.locator('#drift-order').selectOption('lay');
+ await page.locator('#drift-entry').fill('3');await page.locator('#drift-exit').fill('2');
+ await expect(page.locator('#drift-hedge-result')).toContainText('£150.00');
+ await expect(page.locator('#drift-hedge-result')).toContainText('£47.50');
+ await expect(page.locator('#drift-hedge-result')).toContainText('£200.00');
+ await page.locator('#drift-entry').fill('2');await page.locator('#drift-exit').fill('3');
+ await expect(page.locator('#drift-hedge-result .drift-negative')).toContainText('-£33.34');
+ await page.locator('#drift-exit').fill('1');await expect(page.locator('#drift-hedge-result')).toContainText('odds of at least 1.01');
+ await page.locator('#drift-exit').fill('2');await page.locator('#drift-commission').fill('101');
+ await expect(page.locator('#drift-hedge-result')).toContainText('valid commission');
+});
+test('missing odds data fails closed and late responses cannot overwrite another popup',async({page})=>{
+ await page.clock.install({time:new Date('2026-10-13T11:00:00Z')});
+ await page.route('**/data/drifting-odds-2026-10-13.json',route=>route.fulfill({status:500,body:'Unavailable'}));
+ await page.goto('http://127.0.0.1:8765/#hub');await page.locator('[data-page="drifting-odds"]').click();
+ await expect(page.locator('#drift-content')).toContainText('INSUFFICIENT VERIFIED DATA');
+ await expect(page.locator('[data-drift-race]')).toHaveCount(0);
+ await page.locator('#jcm-drift-overlay .jcm-close').click();
+ await page.locator('[data-page="picks"]').click();await page.locator('[data-research-index]').first().click();
+ await expect(page.locator('.jcm-result-card')).toBeVisible();
+});

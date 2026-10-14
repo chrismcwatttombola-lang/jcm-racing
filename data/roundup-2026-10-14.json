@@ -6,6 +6,23 @@
     "Price drift or shortening will not drive the fundamental assessment. We will retain both outcomes and use the results to assess this approach without changing today’s original selections."
   ],
   "learnings": [
-    "Pending today’s results. Once both races are settled, this section will review how the theory performed and record any approach worth repeating or proposed change for the following day."
+    "Both agreed selections are settled: Il Est Francais finished fifth of eight, beaten 13.25 lengths by Torneo (WIN / horse lost); Gingerbred won by 3.75 lengths (LOSS / horse won). The recorded form-led vulnerability theory produced one non-winner from two selections: 50%, with no pending selections or non-runners. Il Est Francais’s result is consistent with the concern recorded before racing; Gingerbred’s win shows that poor recent form and an absence did not prevent success. Neither outcome establishes what caused the performance.",
+    "Gingerbred’s reduced handicap mark, course record and stable change were recorded counterarguments, not discoveries after the result. A proposal for future testing is to weigh such recovery arguments more explicitly against negative recent form, with user approval before changing any fields or methods. These two races do not establish a predictive edge; today’s original theory, selections and confidence records remain unchanged."
+  ],
+  "reviews": [
+    {
+      "reviewed_at": "2026-10-14T16:51:51.230Z",
+      "source": "THE_RACING_API",
+      "verification_status": "PROVIDER_ACCEPTED",
+      "result_race_ids": [
+        "rac_32301033713",
+        "rac_32301035650"
+      ],
+      "wins": 1,
+      "losses": 1,
+      "non_runners": 0,
+      "pending": 0,
+      "official_accuracy_eligible": false
+    }
   ]
 }

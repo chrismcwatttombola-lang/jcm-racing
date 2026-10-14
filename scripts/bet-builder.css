@@ -9,3 +9,7 @@ input[type=checkbox]{appearance:none!important;-webkit-appearance:none!important
 @media(max-height:720px){.builder-results-compact .builder-tile svg{max-height:170px}.builder-results-compact .builder-results-table th,.builder-results-compact .builder-results-table td{padding:8px 3px}}
 .builder-results-compact .builder-results-table{width:calc(100% - 2px)}
 .builder-results-compact .builder-results-table thead th:last-child{font-size:10px;white-space:normal;overflow-wrap:anywhere}
+
+.builder-date select{width:190px;min-width:190px;max-width:100%;flex-shrink:0;padding-right:28px}.builder-month-nav{display:flex;align-items:center;justify-content:space-between;margin:5px 0;font-size:13px}.builder-month-nav button{width:28px;height:26px;background:#26324b;color:#fff;border:1px solid #65748a;border-radius:6px;font-size:18px}.builder-no-results{font-size:12px;color:#cbd5e1}@media(max-width:370px){.builder-date{gap:8px;font-size:14px}.builder-date select{width:180px;min-width:180px}}
+
+@media(max-height:720px){.builder-results-compact .builder-tile svg{max-height:146px}}

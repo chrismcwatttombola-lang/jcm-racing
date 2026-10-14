@@ -749,3 +749,21 @@ test('13 October closes with two final winners and an explicit non-runner', asyn
   await expect(page.locator('[data-research-index]').filter({hasText:expected.horse})).toContainText(expected.status==='NR'?'NR':'Horse won');
  }
 });
+
+test('14 October publishes only agreed unrated picks and preserves final 13 October totals',async({page})=>{
+ await page.clock.install({time:new Date('2026-10-14T08:00:00Z')});
+ await page.setViewportSize({width:390,height:844});await page.goto(URL);
+ await expect(page.locator('#date')).toHaveValue('2026-10-14');
+ await expect(page.locator('[data-research-index]')).toHaveCount(2);
+ await expect(page.locator('#jcm-official-panel')).not.toContainText('Fast Track Harry');
+ for(const expected of [{horse:'Il Est Francais',time:'16:38',reason:'Three consecutive pulled-up'},{horse:'Gingerbred',time:'17:13',reason:'202-day absence'}]){
+  const row=page.locator('[data-research-index]').filter({hasText:expected.horse});await expect(row).toContainText(expected.time);await expect(row).toContainText('Pending');await row.click();
+  await expect(page.locator('#jcm-detail-content')).toContainText('Not rated');await expect(page.locator('#jcm-detail-content')).toContainText(expected.reason);await expect(page.locator('#jcm-detail-content')).toContainText('Counterargument');
+  await page.locator('#jcm-detail-overlay .jcm-close').click();
+ }
+ await expect(page.locator('.metrics')).toHaveAttribute('data-overall-state','ready');
+ expect(await page.evaluate(()=>window.jcmOverallCounts)).toEqual({wins:24,losses:12,nr:2,total:36});
+ await expect(page.locator('.metrics')).toContainText('66.7%');
+ await page.locator('#date').selectOption('2026-10-13');await expect(page.locator('[data-research-index]')).toHaveCount(16);await expect(page.locator('#jcm-official-panel')).toContainText('57.1% success');
+ await expect(page.locator('[data-research-index] .jcm-status.win')).toHaveCount(8);await expect(page.locator('[data-research-index] .jcm-status.loss')).toHaveCount(6);await expect(page.locator('[data-research-index] .jcm-status.nr')).toHaveCount(2);
+});

@@ -2,6 +2,7 @@
   "schema_version": 1,
   "sources": [
     "data/competition-research-2026-10-12.json",
-    "data/competition-research-2026-10-13.json"
+    "data/competition-research-2026-10-13.json",
+    "data/competition-research-2026-10-14.json"
   ]
 }

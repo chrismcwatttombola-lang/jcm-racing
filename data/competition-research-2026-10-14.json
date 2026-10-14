@@ -1,0 +1,87 @@
+{
+  "schema_version": 1,
+  "mode": "research_only_not_official_picks",
+  "date": "2026-10-14",
+  "selection_source": "User-approved morning research decisions; user Betfair Exchange screenshots ~08:05 BST",
+  "confidence_definition": "Not estimated or validated; no numeric confidence supplied",
+  "high_competition": [
+    {
+      "race_date": "2026-10-14",
+      "off_time_uk": "16:38",
+      "course": "Ffos Las",
+      "horse": "Il Est Francais",
+      "tier": "high",
+      "selection_status": "USER_CONFIRMED_RESEARCH",
+      "result_status": "PENDING",
+      "official_accuracy_eligible": false,
+      "race_id": "rac_32301033713",
+      "selection_reason": {
+        "summary": "Three consecutive pulled-up races and 187-day absence",
+        "counterargument": "High historic class, major rating advantage and first start for Dan Skelton",
+        "qualification_status": "NOT_VALIDATED",
+        "evidence_status": "RECOVERED_PRIOR_ANALYSIS_NOT_REVERIFIED",
+        "source": "14 October 2026 morning research conversation",
+        "source_message_at": "2026-10-14T07:07:54Z",
+        "added_at": "2026-10-14T07:40:13.595963+00:00",
+        "challengers": []
+      },
+      "morning_market": {
+        "source": "BETFAIR_EXCHANGE_USER_SCREENSHOT",
+        "display_time_approx": "08:05 BST",
+        "best_back": 3.8,
+        "best_lay": 3.95,
+        "quote_time_verified": false
+      },
+      "known_non_runners": [
+        "Somespring Special"
+      ],
+      "horse_id": "hrs_27821493",
+      "scheduled_off_dt": "2026-10-14T16:38:00+01:00",
+      "identified_challengers": [],
+      "going": "Good To Soft",
+      "race_identity_checked_at": "2026-10-14T07:40:13.595963+00:00",
+      "race_identity_source_url": "https://api.theracingapi.com/v1/racecards/rac_32301033713"
+    },
+    {
+      "race_date": "2026-10-14",
+      "off_time_uk": "17:13",
+      "course": "Ffos Las",
+      "horse": "Gingerbred",
+      "tier": "high",
+      "selection_status": "USER_CONFIRMED_RESEARCH",
+      "result_status": "PENDING",
+      "official_accuracy_eligible": false,
+      "race_id": "rac_32301035650",
+      "selection_reason": {
+        "summary": "202-day absence and recent unconvincing staying-chase form",
+        "counterargument": "Reduced handicap mark, prior course success and stable change",
+        "qualification_status": "NOT_VALIDATED",
+        "evidence_status": "RECOVERED_PRIOR_ANALYSIS_NOT_REVERIFIED",
+        "source": "14 October 2026 morning research conversation",
+        "source_message_at": "2026-10-14T07:07:54Z",
+        "added_at": "2026-10-14T07:40:13.595963+00:00",
+        "challengers": []
+      },
+      "morning_market": {
+        "source": "BETFAIR_EXCHANGE_USER_SCREENSHOT",
+        "display_time_approx": "08:05 BST",
+        "best_back": 2.16,
+        "best_lay": 2.3,
+        "quote_time_verified": false
+      },
+      "horse_id": "hrs_29212561",
+      "scheduled_off_dt": "2026-10-14T17:13:00+01:00",
+      "identified_challengers": [],
+      "going": "Good To Soft",
+      "race_identity_checked_at": "2026-10-14T07:40:13.595963+00:00",
+      "race_identity_source_url": "https://api.theracingapi.com/v1/racecards/rac_32301035650"
+    }
+  ],
+  "competition_watchlist": [],
+  "excluded_from_recommendations": [
+    "Fast Track Harry"
+  ],
+  "results_status": "PENDING_INDEPENDENT_VERIFICATION",
+  "publication_authorisation": "User requested publication of agreed picks on 14 October 2026",
+  "recorded_at": "2026-10-14T07:40:13.595963+00:00"
+}

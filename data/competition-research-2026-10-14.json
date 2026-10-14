@@ -1,0 +1,63 @@
+{
+  "schema_version": 1,
+  "mode": "research_only_not_official_picks",
+  "date": "2026-10-14",
+  "selection_source": "User-approved morning research decisions; user Betfair Exchange screenshots ~08:05 BST",
+  "confidence_definition": "Not estimated or validated; no numeric confidence supplied",
+  "high_competition": [
+    {
+      "race_date": "2026-10-14",
+      "off_time_uk": "16:38",
+      "course": "Ffos Las",
+      "horse": "Il Est Francais",
+      "tier": "high",
+      "selection_status": "USER_CONFIRMED_RESEARCH",
+      "result_status": "PENDING",
+      "official_accuracy_eligible": false,
+      "race_id": "rac_32301033713",
+      "selection_reason": {
+        "summary": "Three consecutive pulled-up races and 187-day absence",
+        "counterargument": "High historic class, major rating advantage and first start for Dan Skelton",
+        "qualification_status": "NOT_VALIDATED"
+      },
+      "morning_market": {
+        "source": "BETFAIR_EXCHANGE_USER_SCREENSHOT",
+        "display_time_approx": "08:05 BST",
+        "best_back": 3.8,
+        "best_lay": 3.95,
+        "quote_time_verified": false
+      },
+      "known_non_runners": [
+        "Somespring Special"
+      ]
+    },
+    {
+      "race_date": "2026-10-14",
+      "off_time_uk": "17:13",
+      "course": "Ffos Las",
+      "horse": "Gingerbred",
+      "tier": "high",
+      "selection_status": "USER_CONFIRMED_RESEARCH",
+      "result_status": "PENDING",
+      "official_accuracy_eligible": false,
+      "race_id": "rac_32301035650",
+      "selection_reason": {
+        "summary": "202-day absence and recent unconvincing staying-chase form",
+        "counterargument": "Reduced handicap mark, prior course success and stable change",
+        "qualification_status": "NOT_VALIDATED"
+      },
+      "morning_market": {
+        "source": "BETFAIR_EXCHANGE_USER_SCREENSHOT",
+        "display_time_approx": "08:05 BST",
+        "best_back": 2.16,
+        "best_lay": 2.3,
+        "quote_time_verified": false
+      }
+    }
+  ],
+  "competition_watchlist": [],
+  "excluded_from_recommendations": [
+    "Fast Track Harry"
+  ],
+  "results_status": "PENDING_INDEPENDENT_VERIFICATION"
+}

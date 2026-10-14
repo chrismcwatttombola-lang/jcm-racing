@@ -1,0 +1,3 @@
+# False favourites focus — 14 October 2026
+User requested removal of Test 1 and Drifting / Shortening Tracker and pause of their work. Hub buttons and production module loads removed; historical records and archived modules retained. Tracker automation disabled. No Test 1 scheduler found. Archived browser tests load modules explicitly for preservation checks only.
+Roundup: dated manifest, separate Theory and Learnings, UK current date default, 18px text. Today's theory summarises approved morning discussion retrospectively and is not lock evidence. Learnings pending. Future reviews must preserve theory, outcomes and losses; propose changes without automatically adopting model changes. No accuracy reset. Trial reset awaits user instruction.

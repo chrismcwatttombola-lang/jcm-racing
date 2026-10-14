@@ -431,7 +431,7 @@ async function openDrift(page){
  await page.setViewportSize({width:360,height:780});
  await page.clock.install({time:new Date('2026-10-13T11:00:00Z')});
  await page.goto('http://127.0.0.1:8765/#hub');
- await page.locator('[data-page="drifting-odds"]').click();
+ await page.addStyleTag({url:'http://127.0.0.1:8765/scripts/drifting-odds.css'});await page.addScriptTag({url:'http://127.0.0.1:8765/scripts/drifting-odds.js'});await page.evaluate(()=>window.jcmOpenDriftingOdds());
  await expect(page.locator('#jcm-drift-overlay')).toHaveClass(/open/);
  await expect(page.locator('[data-drift-race]')).toHaveCount(38);
 }
@@ -517,7 +517,7 @@ test('same-market hedge calculator handles both directions, commission, adverse 
 test('missing odds data fails closed and preserves horse popup navigation',async({page})=>{
  await page.clock.install({time:new Date('2026-10-13T11:00:00Z')});
  await page.route('**/data/drifting-odds-2026-10-13.json',route=>route.fulfill({status:500,body:'Unavailable'}));
- await page.goto('http://127.0.0.1:8765/#hub');await page.locator('[data-page="drifting-odds"]').click();
+ await page.goto('http://127.0.0.1:8765/#hub');await page.addStyleTag({url:'http://127.0.0.1:8765/scripts/drifting-odds.css'});await page.addScriptTag({url:'http://127.0.0.1:8765/scripts/drifting-odds.js'});await page.evaluate(()=>window.jcmOpenDriftingOdds());
  await expect(page.locator('#drift-content')).toContainText('INSUFFICIENT VERIFIED DATA');
  await expect(page.locator('[data-drift-race]')).toHaveCount(0);
  await page.locator('#jcm-drift-overlay .jcm-close').click();
@@ -568,7 +568,7 @@ for(const source of ['The Racing API · Bet365',null]){
  test('tracker rejects non-Exchange or unidentified price source '+source,async({page})=>{
   await page.clock.install({time:new Date('2026-10-13T11:00:00Z')});
   await page.route('**/data/drifting-odds-2026-10-13.json',async route=>{const response=await route.fetch();const d=await response.json();d.rows[0].current.source=source;await route.fulfill({json:d});});
-  await page.goto('http://127.0.0.1:8765/#hub');await page.locator('[data-page="drifting-odds"]').click();
+  await page.goto('http://127.0.0.1:8765/#hub');await page.addStyleTag({url:'http://127.0.0.1:8765/scripts/drifting-odds.css'});await page.addScriptTag({url:'http://127.0.0.1:8765/scripts/drifting-odds.js'});await page.evaluate(()=>window.jcmOpenDriftingOdds());
   await expect(page.locator('#drift-content')).toContainText('INSUFFICIENT VERIFIED DATA');
   await expect(page.locator('[data-drift-race]')).toHaveCount(0);
  });
@@ -653,7 +653,7 @@ test('14 October screenshot quotes populate all builder strategies and tracker',
    const row=page.locator('[data-builder-row="'+i+'"]');await expect(row).toContainText(horse);await expect(row.locator('[data-builder-odds]')).toHaveValue(price);await expect(row).toContainText('Displayed liquidity: '+liquidity);await expect(row).toContainText('Pending');
   }
  }
- await page.locator('#jcm-detail-overlay .jcm-close').click();await page.locator('[data-page="drifting-odds"]').click();await page.locator('[data-drift-tab="screenshots"]').click();
+ await page.locator('#jcm-detail-overlay .jcm-close').click();await page.addStyleTag({url:'http://127.0.0.1:8765/scripts/drifting-odds.css'});await page.addScriptTag({url:'http://127.0.0.1:8765/scripts/drifting-odds.js'});await page.evaluate(()=>window.jcmOpenDriftingOdds());await page.locator('[data-drift-tab="screenshots"]').click();
  await expect(page.locator('[data-drift-screenshot]')).toHaveCount(2);await expect(page.locator('[data-drift-screenshot]').first()).toContainText('08:49');
  const d=await(await request.get('http://127.0.0.1:8765/data/competition-research-2026-10-14.json')).json();
  expect(d.high_competition.map(r=>r.morning_market.best_lay)).toEqual([3.95,2.3]);
@@ -720,5 +720,18 @@ test('shared graph uses ordinal angled days, a lower legend and unaltered percen
  const positions=await page.locator('#builder-chart').evaluate(e=>{const axis=e.querySelector('[data-calendar-day]').getBBox(),legend=e.querySelector('[data-chart-legend]').getBoundingClientRect(),day=e.querySelector('[data-calendar-day]').getBoundingClientRect();return {legend:legend.top,day:day.bottom};});expect(positions.legend).toBeGreaterThan(positions.day);
  const ys=await page.locator('[data-strategy-dot][data-date="2026-10-13"]').evaluateAll(es=>es.map(e=>Number(e.getAttribute('cy'))));expect(Math.max(...ys)-Math.min(...ys)).toBeLessThan(.1);
  const dash=await page.locator('[data-strategy-line] polyline').evaluateAll(es=>es.map(e=>e.getAttribute('stroke-dasharray')));expect(new Set(dash).size).toBe(3);
- await expect(page.locator('#jcm-detail-content')).not.toContainText('How these figures work');await page.locator('#jcm-detail-overlay .jcm-close').click();await page.locator('[data-page="drifting-odds"]').click();await expect(page.locator('#drift-content')).not.toContainText('Exploratory');await expect(page.locator('#drift-content')).toContainText('API proxy');
+ await expect(page.locator('#jcm-detail-content')).not.toContainText('How these figures work');await page.locator('#jcm-detail-overlay .jcm-close').click();await page.addStyleTag({url:'http://127.0.0.1:8765/scripts/drifting-odds.css'});await page.addScriptTag({url:'http://127.0.0.1:8765/scripts/drifting-odds.js'});await page.evaluate(()=>window.jcmOpenDriftingOdds());await expect(page.locator('#drift-content')).not.toContainText('Exploratory');await expect(page.locator('#drift-content')).toContainText('API proxy');
 });
+
+ test('Roundup replaces paused tiles with readable daily theory and learnings',async({page})=>{
+ await page.clock.install({time:new Date('2026-10-14T11:00:00Z')});
+ await page.setViewportSize({width:360,height:640});await page.goto('http://127.0.0.1:8765/#hub');
+ await expect(page.locator('[data-page="test-1"],[data-page="drifting-odds"]')).toHaveCount(0);
+ await page.locator('[data-page="roundup"]').click();
+ await expect(page.locator('#roundup-date')).toHaveValue('2026-10-14');
+ await expect(page.locator('.roundup-box h3')).toHaveText(['Theory','Learnings']);
+ await expect(page.locator('#roundup-content')).toContainText('Pending today');
+ expect(await page.locator('.roundup-box p').first().evaluate(e=>parseFloat(getComputedStyle(e).fontSize))).toBeGreaterThanOrEqual(18);
+ expect(await page.locator('.roundup-modal').evaluate(e=>e.scrollWidth<=e.clientWidth)).toBe(true);
+ await page.keyboard.press('Escape');await expect(page.locator('#jcm-roundup-overlay')).not.toHaveClass(/open/);
+ });

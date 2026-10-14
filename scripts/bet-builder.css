@@ -8,3 +8,4 @@ input[type=checkbox]{appearance:none!important;-webkit-appearance:none!important
 @media(max-width:370px){.builder-results-compact .builder-results-table th,.builder-results-compact .builder-results-table td{font-size:11px}.builder-results-compact .builder-results-table tr>:first-child{font-size:10px}}
 @media(max-height:720px){.builder-results-compact .builder-tile svg{max-height:170px}.builder-results-compact .builder-results-table th,.builder-results-compact .builder-results-table td{padding:8px 3px}}
 .builder-results-compact .builder-results-table{width:calc(100% - 2px)}
+.builder-results-compact .builder-results-table thead th:last-child{font-size:10px;white-space:normal;overflow-wrap:anywhere}

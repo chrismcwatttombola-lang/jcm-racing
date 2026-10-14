@@ -438,10 +438,10 @@ async function openDrift(page){
 test('Drifting / Shortening Tracker shows all race leaders, historical coverage and blocked execution',async({page})=>{
  await openDrift(page);
  await expect(page.locator('#drift-title')).toHaveText('Drifting / Shortening Tracker');
- await expect(page.locator('#drift-content')).toContainText('Betfair Exchange only, via Racing API');
- await expect(page.locator('#drift-content')).toContainText('never used to fill missing Exchange quotes');
+ await expect(page.locator('#drift-content')).toContainText('Betfair Exchange only');
+ await expect(page.locator('#drift-content')).toContainText('back/lay side unknown');
  await expect(page.locator('#drift-content')).toContainText('113/149');
- await expect(page.locator('#drift-content')).toContainText('No executable opportunities qualified');
+ await expect(page.locator('#drift-content')).toContainText('no executable opportunities qualified');
  await expect(page.locator('#drift-content')).toContainText('Similar opening prices (±25%)');
  await expect(page.locator('[data-drift-race]').filter({hasText:'Koffee And Kale'})).toHaveCount(0);
  await page.locator('#drift-filter').selectOption('DRIFT');
@@ -678,7 +678,7 @@ test('daily metrics reconcile liability percentage returns and retain NR refunds
  for(const [day,m,staked,returned,percentage] of [['2026-10-12','fixed','£1,000.00','£905.54','-9.45%'],['2026-10-12','race','£7,500.00','£6,791.53','-9.45%'],['2026-10-12','manual','£3,750.00','£3,395.75','-9.45%'],['2026-10-13','fixed','£933.33','£723.20','-22.51%'],['2026-10-13','race','£7,000.00','£5,423.80','-22.52%'],['2026-10-13','manual','£3,500.00','£2,711.90','-22.52%']]){
   await page.locator('#builder-results-day').selectOption(day);await expect(cell(day,m).locator('[data-result-staked]')).toHaveText(staked);await expect(cell(day,m).locator('[data-result-returned]')).toHaveText(returned);await expect(cell(day,m).locator('[data-result-percentage]')).toHaveText(percentage);
  }
- await expect(page.locator('#builder-chart')).toHaveAttribute('aria-label',/percentage return/);await expect(page.locator('#builder-chart')).not.toContainText('£8507');await expect(page.locator('#builder-chart [data-strategy-lane] text').nth(1)).toContainText('%');await expect(page.locator('[data-break-even]')).toHaveCount(0);
+ await expect(page.locator('#builder-chart')).toHaveAttribute('aria-label',/percentage return/);await expect(page.locator('#builder-chart')).not.toContainText('£8507');await expect(page.locator('#builder-chart [data-percentage-axis]').first()).toContainText('%');await expect(page.locator('[data-break-even]')).toHaveCount(0);
  expect(Number(await page.locator('[data-strategy-dot="race"][data-date="2026-10-13"]').getAttribute('data-percentage'))).toBeCloseTo(-157620/700000*100,8);
  expect(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth)).toBe(true);const tableFit=await page.locator('.builder-table-wrap').evaluate(e=>({scroll:e.scrollWidth,width:e.clientWidth,cells:[...e.querySelectorAll('th,td')].map(c=>({text:c.textContent,width:c.clientWidth,scroll:c.scrollWidth}))}));expect(tableFit.scroll,JSON.stringify(tableFit)).toBeLessThanOrEqual(tableFit.width+1);await expect(cell('2026-10-13','manual')).toBeVisible();
 });
@@ -695,15 +695,15 @@ test('all three potential winnings boxes incorporate live accepted losses and NR
 });
 
 for(const size of [{width:390,height:844},{width:360,height:640}])test('compact results fit phone '+size.width+'x'+size.height+' with three separate trends and day navigation',async({page})=>{
- await page.setViewportSize(size);await page.clock.install({time:new Date('2026-10-14T08:00:00Z')});await page.goto('http://127.0.0.1:8765/#hub');await page.locator('[data-page="dummy-account"]').click();await expect(page.locator('.builder-potential h3')).toHaveText('Profit / Loss Calculator');await page.locator('[data-account-mode="results"]').click();await expect(page.locator('.builder-results-table tbody tr')).toHaveCount(3);await expect(page.locator('[data-strategy-lane]')).toHaveCount(3);await expect(page.locator('[data-strategy-line]')).toHaveCount(3);await expect(page.locator('#builder-results-day')).toHaveValue('2026-10-13');await page.locator('[data-results-prev]').click();await expect(page.locator('#builder-results-day')).toHaveValue('2026-10-12');await page.locator('[data-results-next]').click();await expect(page.locator('#builder-results-day')).toHaveValue('2026-10-13');await expect(page.locator('.builder-results-help')).not.toHaveAttribute('open','');
+ await page.setViewportSize(size);await page.clock.install({time:new Date('2026-10-14T08:00:00Z')});await page.goto('http://127.0.0.1:8765/#hub');await page.locator('[data-page="dummy-account"]').click();await expect(page.locator('.builder-potential h3')).toHaveText('Profit / Loss Calculator');await page.locator('[data-account-mode="results"]').click();await expect(page.locator('.builder-results-table tbody tr')).toHaveCount(3);await expect(page.locator('[data-shared-plot]')).toHaveCount(1);await expect(page.locator('[data-strategy-lane]')).toHaveCount(0);await expect(page.locator('[data-chart-legend]')).toHaveCount(1);await expect(page.locator('[data-strategy-line]')).toHaveCount(3);await expect(page.locator('#builder-results-day')).toHaveValue('2026-10-13');await page.locator('[data-results-prev]').click();await expect(page.locator('#builder-results-day')).toHaveValue('2026-10-12');await page.locator('[data-results-next]').click();await expect(page.locator('#builder-results-day')).toHaveValue('2026-10-13');await expect(page.locator('.builder-results-help')).toHaveCount(0);
  const dim=await page.locator('.jcm-modal').evaluate(e=>({height:e.clientHeight,scroll:e.scrollHeight,width:e.clientWidth,scrollWidth:e.scrollWidth}));expect(dim.scroll).toBeLessThanOrEqual(dim.height+2);expect(dim.scrollWidth).toBeLessThanOrEqual(dim.width+1);
- const ys=await page.locator('[data-strategy-dot][data-date="2026-10-12"]').evaluateAll(es=>es.map(e=>Number(e.getAttribute('cy'))));expect(new Set(ys.map(y=>Math.round(y))).size).toBe(3);
+ const ys=await page.locator('[data-strategy-dot][data-date="2026-10-12"]').evaluateAll(es=>es.map(e=>Number(e.getAttribute('cy'))));expect(Math.max(...ys)-Math.min(...ys)).toBeLessThan(.1);
  const date=await page.locator('.builder-results-date').boundingBox(),table=await page.locator('.builder-results-table').boundingBox();expect(date.y).toBeLessThan(table.y);
 });
 
 test('monthly calendar navigation shows blanks, leap years and exact observed percentage bounds',async({page})=>{
  await page.clock.install({time:new Date('2026-10-14T08:00:00Z')});await page.goto('http://127.0.0.1:8765/#hub');await page.locator('[data-page="dummy-account"]').click();await page.locator('[data-account-mode="results"]').click();
- await expect(page.locator('[data-calendar-day]')).toHaveCount(31);await expect(page.locator('[data-calendar-day]').first()).toHaveText('1');await expect(page.locator('[data-calendar-day]').last()).toHaveText('31');await expect(page.locator('[data-strategy-dot]')).toHaveCount(6);
+ await expect(page.locator('[data-calendar-day]')).toHaveCount(31);await expect(page.locator('[data-calendar-day]').first()).toHaveText('1st');await expect(page.locator('[data-calendar-day]').last()).toHaveText('31st');await expect(page.locator('[data-strategy-dot]')).toHaveCount(6);
  const bounds=await page.locator('#builder-chart').evaluate(e=>({min:Number(e.dataset.min),max:Number(e.dataset.max),values:[...e.querySelectorAll('[data-percentage]')].map(p=>Number(p.dataset.percentage))}));expect(bounds.min).toBe(Math.min(...bounds.values));expect(bounds.max).toBe(Math.max(...bounds.values));
  await page.locator('[data-month-prev]').click();await expect(page.locator('[data-calendar-day]')).toHaveCount(30);await expect(page.locator('[data-strategy-dot]')).toHaveCount(0);await expect(page.locator('.builder-no-results')).toBeVisible();await page.locator('[data-month-next]').click();await expect(page.locator('[data-strategy-dot]')).toHaveCount(6);
  for(let i=0;i<32;i++)await page.locator('[data-month-prev]').click();await expect(page.locator('.builder-month-nav')).toContainText('February 2024');await expect(page.locator('[data-calendar-day]')).toHaveCount(29);
@@ -711,4 +711,14 @@ test('monthly calendar navigation shows blanks, leap years and exact observed pe
 for(const width of [360,390])test('full racing date has space in all strategies at '+width,async({page})=>{
  await page.setViewportSize({width,height:844});await page.clock.install({time:new Date('2026-10-14T08:00:00Z')});await page.goto('http://127.0.0.1:8765/#hub');await page.locator('[data-page="dummy-account"]').click();
  for(const m of ['fixed','race','manual']){await page.locator('[data-account-mode="'+m+'"]').click();const fit=await page.locator('#builder-day').evaluate(e=>{const canvas=document.createElement('canvas'),ctx=canvas.getContext('2d'),s=getComputedStyle(e);ctx.font=s.font;return {width:e.clientWidth,needed:ctx.measureText(e.selectedOptions[0].textContent).width+parseFloat(s.paddingLeft)+parseFloat(s.paddingRight)+20};});expect(fit.width).toBeGreaterThanOrEqual(fit.needed);}
+});
+
+test('shared graph uses ordinal angled days, a lower legend and unaltered percentages',async({page})=>{
+ await page.clock.install({time:new Date('2026-10-14T08:00:00Z')});await page.goto('http://127.0.0.1:8765/#hub');await page.locator('[data-page="dummy-account"]').click();await expect(page.locator('#jcm-detail-content')).not.toContainText('Green = selected');await page.locator('[data-account-mode="results"]').click();
+ await expect(page.locator('[data-shared-plot]')).toHaveCount(1);await expect(page.locator('[data-chart-legend]')).toContainText('£1000 a day');await expect(page.locator('[data-legend-strategy]')).toHaveCount(3);
+ for(const [n,label] of [[1,'1st'],[2,'2nd'],[3,'3rd'],[11,'11th'],[12,'12th'],[13,'13th'],[21,'21st'],[22,'22nd'],[23,'23rd'],[31,'31st']]){const tick=page.locator('[data-calendar-day="2026-10-'+String(n).padStart(2,'0')+'"]');await expect(tick).toHaveText(label);await expect(tick).toHaveAttribute('transform',/rotate\(45\)/);}
+ const positions=await page.locator('#builder-chart').evaluate(e=>{const axis=e.querySelector('[data-calendar-day]').getBBox(),legend=e.querySelector('[data-chart-legend]').getBoundingClientRect(),day=e.querySelector('[data-calendar-day]').getBoundingClientRect();return {legend:legend.top,day:day.bottom};});expect(positions.legend).toBeGreaterThan(positions.day);
+ const ys=await page.locator('[data-strategy-dot][data-date="2026-10-13"]').evaluateAll(es=>es.map(e=>Number(e.getAttribute('cy'))));expect(Math.max(...ys)-Math.min(...ys)).toBeLessThan(.1);
+ const dash=await page.locator('[data-strategy-line] polyline').evaluateAll(es=>es.map(e=>e.getAttribute('stroke-dasharray')));expect(new Set(dash).size).toBe(3);
+ await expect(page.locator('#jcm-detail-content')).not.toContainText('How these figures work');await page.locator('#jcm-detail-overlay .jcm-close').click();await page.locator('[data-page="drifting-odds"]').click();await expect(page.locator('#drift-content')).not.toContainText('Exploratory');await expect(page.locator('#drift-content')).toContainText('API proxy');
 });

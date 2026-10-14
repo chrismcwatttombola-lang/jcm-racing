@@ -9,7 +9,7 @@ const percent=v=>v===null?'N/A':(v>0?'+':'')+v.toFixed(2)+'%';
 const safe=v=>String(v??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const key=r=>[r.off_time_uk,r.course,r.horse].join('|');
 const labelDate=d=>new Date(d+'T12:00:00Z').toLocaleDateString('en-GB',{day:'numeric',month:'short',year:'numeric'});
-let mode='fixed',generation=0,lockTimer,refreshTimer,resultsDay=null;
+let mode='fixed',generation=0,lockTimer,refreshTimer,resultsDay=null,resultsMonth=null;
 const read=async path=>{const r=await fetch(path,{cache:'no-store'});if(!r.ok)throw Error('Unavailable');return r.json();};
 const day=()=>document.getElementById('date').value;
 const storage=(d,m)=>'jcm-builder-v3-'+d+'-'+m;
@@ -174,34 +174,46 @@ async function history(days){
 async function results(node,days,token){
  const {points,issues}=await history(days);
  if(token!==generation)return;
- const dates=[...new Set(Object.values(points).flat().map(p=>p.date))].sort();
+ const allDates=[...new Set(Object.values(points).flat().map(p=>p.date))].sort();
+ if(!resultsMonth)resultsMonth=(allDates.at(-1)||day()).slice(0,7);
+ const dates=allDates.filter(d=>d.startsWith(resultsMonth));
  if(!dates.includes(resultsDay))resultsDay=dates.at(-1)||null;
+ const monthLabel=new Date(resultsMonth+'-01T12:00:00Z').toLocaleDateString('en-GB',{month:'long',year:'numeric'});
  const d=resultsDay,i=dates.indexOf(d);
  node.innerHTML='<div class="builder-results-compact"><h2>Bet Builder · Results</h2><p class="builder-results-subtitle">Daily percentage trends · after commission</p>'+
-  (dates.length?chart(points,dates):'<section class="builder-tile">No completed daily balances yet.</section>')+
+  '<div class="builder-month-nav"><button data-month-prev aria-label="Previous month">‹</button><strong>'+monthLabel+'</strong><button data-month-next aria-label="Next month">›</button></div>'+chart(points,resultsMonth)+
   (d?'<section class="builder-day-card" data-results-day="'+d+'"><div class="builder-results-date"><label for="builder-results-day">Date <select id="builder-results-day">'+dates.map(v=>'<option value="'+v+'" '+(v===d?'selected':'')+'>'+labelDate(v)+'</option>').join('')+'</select></label><div><button data-results-prev '+(i<=0?'disabled':'')+' aria-label="Previous day">‹</button><button data-results-next '+(i>=dates.length-1?'disabled':'')+' aria-label="Next day">›</button></div></div><div class="builder-table-wrap"><table class="builder-results-table"><thead><tr><th scope="col">Theory</th><th scope="col">Stake</th><th scope="col">Returns</th><th scope="col">Percentage</th></tr></thead><tbody>'+['fixed','race','manual'].map(m=>{const p=points[m].find(p=>p.date===d);return '<tr data-results-strategy="'+m+'"><th scope="row"><i style="background:'+colours[m]+'"></i>'+names[m]+'</th><td data-result-staked>'+(p?money(p.staked):'—')+'</td><td data-result-returned>'+(p?money(p.returned):'—')+'</td><td data-result-percentage class="'+(p?.percentage>0?'builder-positive':p?.percentage<0?'builder-negative':'')+'">'+(p?percent(p.percentage):'Pending')+'</td></tr>';}).join('')+'</tbody></table></div><p class="builder-day-basis">'+(d<'2026-10-14'?'Backfilled default simulations':'Published simulation / saved device choices')+'</p></section>':'')+
-  '<details class="builder-results-help"><summary>How these figures work</summary><p>Percentage = (Returns − Stake) ÷ Stake × 100. Stake means settled liability, excluding NR; Returns means liability plus net profit/loss after 5% commission. Full matching is assumed, not verified. Zero stake is N/A. Missing prices/results remain pending.</p><p>Each coloured line uses the same percentage scale in its own labelled lane, so matching returns cannot hide another strategy. Green dots mean improvement versus the previous day; red decline; gold unchanged. First dots compare with 0%. Equal proportional stakes can produce the same percentage return. Daily figures are not compounded; short backfilled history cannot establish long-term stability.</p><p>Defaults require no daily confirmation. Manual settings and exclusions remain saved on this device. Historical simulation provenance is unchanged.</p>'+ (issues.length?'<p role="status">INSUFFICIENT VERIFIED DATA for '+safe(issues.join(', '))+'. These dates are omitted.</p>':'')+'</details></div>';
+  '<details class="builder-results-help"><summary>How these figures work</summary><p>Percentage = (Returns − Stake) ÷ Stake × 100. Stake means the actual liability risked, excluding NR. Returns means that liability plus net profit/loss after 5% commission. Unused opening bank funds do not enter the percentage. Zero stake is N/A. Full matching is assumed, not verified.  Missing prices/results remain pending.</p><p>Every calendar day is shown for the selected month. Missing or pending days are blank and lines stop at gaps. Each coloured line uses the same scale, from the lowest to highest recorded percentage in that month, in its own labelled lane. If all values match, a small display range is used. Green dots mean improvement versus the previous day; red decline; gold unchanged. First dots compare with 0%. Equal proportional stakes on the same selections produce the same percentage apart from penny rounding. Changing allocations or exclusions can change the percentage; stake size alone cannot. Daily figures are not compounded; short backfilled history cannot establish long-term stability.</p><p>Defaults require no daily confirmation. Manual settings and exclusions remain saved on this device. Historical simulation provenance is unchanged.</p>'+ (issues.length?'<p role="status">INSUFFICIENT VERIFIED DATA for '+safe(issues.join(', '))+'. These dates have no plotted result.</p>':'')+'</details></div>';
  window.jcmAddAccountSwitch(node,'results');
  const change=v=>{resultsDay=v;results(node,days,token);};
+ const moveMonth=delta=>{const dt=new Date(resultsMonth+'-01T12:00:00Z');dt.setUTCMonth(dt.getUTCMonth()+delta);resultsMonth=dt.toISOString().slice(0,7);resultsDay=null;results(node,days,token);};
+ node.querySelector('[data-month-prev]').addEventListener('click',()=>moveMonth(-1));
+ node.querySelector('[data-month-next]').addEventListener('click',()=>moveMonth(1));
  node.querySelector('#builder-results-day')?.addEventListener('change',e=>change(e.target.value));
  node.querySelector('[data-results-prev]')?.addEventListener('click',()=>change(dates[i-1]));
  node.querySelector('[data-results-next]')?.addEventListener('click',()=>change(dates[i+1]));
 }
-function chart(points,dates){
- const values=Object.values(points).flat().map(p=>p.percentage).filter(Number.isFinite).concat(0),lo=Math.min(...values),hi=Math.max(...values),pad=Math.max((hi-lo)*.15,1),min=lo-pad,max=hi+pad;
- const x=d=>54+(dates.length===1?164:dates.indexOf(d)/(dates.length-1)*328);
- let svg='<svg id="builder-chart" viewBox="0 0 420 278" role="img" aria-label="Three separate daily net percentage return trends on the same scale"><title>Daily percentage returns after commission; three aligned lanes, one shared scale</title>';
- dates.filter((d,i)=>i===0||i===dates.length-1||i%Math.max(1,Math.ceil(dates.length/5))===0).forEach(d=>svg+='<text x="'+x(d)+'" y="271" text-anchor="middle" fill="#fff" font-size="11">'+new Date(d+'T12:00:00Z').toLocaleDateString('en-GB',{day:'numeric',month:'short'})+'</text>');
+function chart(points,month){
+ const count=new Date(Number(month.slice(0,4)),Number(month.slice(5)),0).getDate();
+ const dates=Array.from({length:count},(_,i)=>month+'-'+String(i+1).padStart(2,'0'));
+ const monthly=Object.fromEntries(Object.entries(points).map(([m,ps])=>[m,ps.filter(p=>p.date.startsWith(month)&&Number.isFinite(p.percentage))]));
+ const values=Object.values(monthly).flat().map(p=>p.percentage),lo=values.length?Math.min(...values):0,hi=values.length?Math.max(...values):0;
+ const min=lo===hi?lo-1:lo,max=lo===hi?hi+1:hi;
+ const x=d=>54+dates.indexOf(d)/(count-1)*332;
+ let svg='<svg id="builder-chart" data-month="'+month+'" data-min="'+min+'" data-max="'+max+'" viewBox="0 0 420 278" role="img" aria-label="Three separate daily net percentage return trends across every calendar day of the month"><title>'+month+' daily percentage returns after commission; blank days have no completed result</title>';
+ dates.forEach((d,i)=>svg+='<text data-calendar-day="'+d+'" x="'+x(d)+'" y="271" text-anchor="middle" fill="#fff" font-size="8">'+(i+1)+'</text>');
  for(const [lane,[m,colour]] of Object.entries(colours).entries()){
-  const top=lane*86,y=v=>top+78-(v-min)/(max-min)*51,ps=points[m].filter(p=>Number.isFinite(p.percentage));
+  const top=lane*86,y=v=>top+78-(v-min)/(max-min)*51,ps=monthly[m];
   svg+='<g data-strategy-lane="'+m+'"><text x="54" y="'+(top+14)+'" fill="'+colour+'" font-size="13" font-weight="700">'+names[m]+'</text>';
-  for(const value of [min,max]){const py=y(value);svg+='<line x1="54" x2="386" y1="'+py+'" y2="'+py+'" stroke="#52647b" opacity=".6"/><text x="48" y="'+(py+4)+'" text-anchor="end" fill="#fff" font-size="10">'+value.toFixed(1)+'%</text>';}
-  svg+='<line data-break-even="0" x1="54" x2="386" y1="'+y(0)+'" y2="'+y(0)+'" stroke="#fff" stroke-dasharray="4 5" opacity=".65"/>';
-  if(ps.length)svg+='<polyline data-strategy-line="'+m+'" points="'+ps.map(p=>x(p.date)+','+y(p.percentage)).join(' ')+'" fill="none" stroke="'+colour+'" stroke-width="3"/>';
-  ps.forEach((p,i)=>{const previous=i?ps[i-1].percentage:0,delta=p.percentage-previous,fill=delta>1e-9?'#43bd84':delta<-1e-9?'#ff5776':'#edbd57';svg+='<circle data-strategy-dot="'+m+'" data-date="'+p.date+'" data-percentage="'+p.percentage+'" cx="'+x(p.date)+'" cy="'+y(p.percentage)+'" r="'+(dates.length>15?2.5:4)+'" fill="'+fill+'" stroke="'+colour+'" stroke-width="1.5"><title>'+names[m]+' · '+p.date+' · '+percent(p.percentage)+' · Staked '+money(p.staked)+' · Returned '+money(p.returned)+' · '+safe(p.basis)+'</title></circle>';});
+  for(const value of [min,max]){const py=y(value);svg+='<line x1="54" x2="386" y1="'+py+'" y2="'+py+'" stroke="#52647b" opacity=".6"/><text x="48" y="'+(py+4)+'" text-anchor="end" fill="#fff" font-size="10">'+value.toFixed(2)+'%</text>';}
+  if(min<=0&&max>=0)svg+='<line data-break-even="0" x1="54" x2="386" y1="'+y(0)+'" y2="'+y(0)+'" stroke="#fff" stroke-dasharray="4 5" opacity=".65"/>';
+  const byDate=new Map(ps.map(p=>[p.date,p])),segments=[];let segment=[];
+  for(const d of dates){const p=byDate.get(d);if(p)segment.push(p);else if(segment.length){segments.push(segment);segment=[];}}if(segment.length)segments.push(segment);
+  if(ps.length)svg+='<g data-strategy-line="'+m+'">'+segments.map(segment=>'<polyline points="'+segment.map(p=>x(p.date)+','+y(p.percentage)).join(' ')+'" fill="none" stroke="'+colour+'" stroke-width="3"/>').join('')+'</g>';
+  ps.forEach(p=>{const full=points[m].filter(p=>Number.isFinite(p.percentage)),i=full.findIndex(v=>v.date===p.date),previous=i>0?full[i-1].percentage:0,delta=p.percentage-previous,fill=delta>1e-9?'#43bd84':delta<-1e-9?'#ff5776':'#edbd57';svg+='<circle data-strategy-dot="'+m+'" data-date="'+p.date+'" data-percentage="'+p.percentage+'" cx="'+x(p.date)+'" cy="'+y(p.percentage)+'" r="3" fill="'+fill+'" stroke="'+colour+'" stroke-width="1.5"><title>'+names[m]+' · '+p.date+' · '+percent(p.percentage)+' · Staked '+money(p.staked)+' · Returned '+money(p.returned)+' · '+safe(p.basis)+'</title></circle>';});
   svg+='</g>';
  }
- return '<section class="builder-tile">'+svg+'</svg></section>';
+ return '<section class="builder-tile">'+svg+'</svg></section>'+(values.length?'':'<p class="builder-no-results">No completed percentage results this month.</p>');
 }
 window.jcmOpenDummyAccount=()=>open('fixed');
 window.jcmOpenBuilderStrategy=open;

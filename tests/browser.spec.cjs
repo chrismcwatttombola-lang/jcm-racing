@@ -596,6 +596,20 @@ test('latest Exchange capture is append-only and remains blocked research',async
  expect(granlahan.withdrawal_evidence.status).toBe('PROVIDER_ACCEPTED');
  expect(data.replacement_observations).toEqual([expect.objectContaining({withdrawn_horse:'Granlahan',status:'NOT_CAPTURED_PROSPECTIVELY',replacement_horse:null})]);
 });
+test('14 October morning cohort preserves ties, Exchange-only evidence and blocked qualification',async({request})=>{
+ const manifest=await(await request.get('http://127.0.0.1:8765/data/drifting-odds-days.json')).json();
+ expect(manifest.days).toContain('2026-10-14');
+ const response=await request.get('http://127.0.0.1:8765/data/drifting-odds-2026-10-14.json');expect(response.ok()).toBe(true);
+ const data=await response.json();expect(data.rows).toHaveLength(45);expect(new Set(data.rows.map(row=>row.race_id)).size).toBe(39);
+ expect(data.coverage).toEqual(expect.objectContaining({race_count:39,leader_count:45,current_valid_pairs:38,current_missing_pairs:7,requested_past_starts:225,returned_past_starts:178,usable_past_comparisons:145}));
+ const counts=data.rows.reduce((out,row)=>{const key=row.current.direction||'MISSING_PAIR';out[key]=(out[key]||0)+1;return out;},{});
+ expect(counts).toEqual({DRIFT:17,UNCHANGED:8,SHORTENED:13,MISSING_PAIR:7});
+ for(const row of data.rows){
+  expect(row.current.source).toBe('The Racing API · Betfair Exchange');expect(row.current.price_side).toBe('UNSPECIFIED');
+  expect(row.opportunity_status).toBe('BLOCKED_UNVERIFIED_EXECUTION_AND_UNVALIDATED_FORECAST');
+  for(const prior of row.past){expect(prior.source).toBe('The Racing API · Betfair Exchange');expect(prior.price_side).toBe('UNSPECIFIED');}
+ }
+});
 test('screenshot date archive preserves unknown capture times and reported comparison',async({page})=>{
  await openDrift(page);await page.locator('[data-drift-tab="screenshots"]').click();
  await expect(page.locator('[data-drift-screenshot]')).toHaveCount(16);
@@ -734,4 +748,22 @@ test('13 October closes with two final winners and an explicit non-runner', asyn
   expect(card).toMatchObject({position:expected.position,field_size:expected.field});
   await expect(page.locator('[data-research-index]').filter({hasText:expected.horse})).toContainText(expected.status==='NR'?'NR':'Horse won');
  }
+});
+
+test('14 October publishes only agreed unrated picks and preserves final 13 October totals',async({page})=>{
+ await page.clock.install({time:new Date('2026-10-14T08:00:00Z')});
+ await page.setViewportSize({width:390,height:844});await page.goto(URL);
+ await expect(page.locator('#date')).toHaveValue('2026-10-14');
+ await expect(page.locator('[data-research-index]')).toHaveCount(2);
+ await expect(page.locator('#jcm-official-panel')).not.toContainText('Fast Track Harry');
+ for(const expected of [{horse:'Il Est Francais',time:'16:38',reason:'Three consecutive pulled-up'},{horse:'Gingerbred',time:'17:13',reason:'202-day absence'}]){
+  const row=page.locator('[data-research-index]').filter({hasText:expected.horse});await expect(row).toContainText(expected.time);await expect(row).toContainText('Pending');await row.click();
+  await expect(page.locator('#jcm-detail-content')).toContainText('Not rated');await expect(page.locator('#jcm-detail-content')).toContainText(expected.reason);await expect(page.locator('#jcm-detail-content')).toContainText('Counterargument');
+  await page.locator('#jcm-detail-overlay .jcm-close').click();
+ }
+ await expect(page.locator('.metrics')).toHaveAttribute('data-overall-state','ready');
+ expect(await page.evaluate(()=>window.jcmOverallCounts)).toEqual({wins:24,losses:12,nr:2,total:36});
+ await expect(page.locator('.metrics')).toContainText('66.7%');
+ await page.locator('#date').selectOption('2026-10-13');await expect(page.locator('[data-research-index]')).toHaveCount(16);await expect(page.locator('#jcm-official-panel')).toContainText('57.1% success');
+ await expect(page.locator('[data-research-index] .jcm-status.win')).toHaveCount(8);await expect(page.locator('[data-research-index] .jcm-status.loss')).toHaveCount(6);await expect(page.locator('[data-research-index] .jcm-status.nr')).toHaveCount(2);
 });

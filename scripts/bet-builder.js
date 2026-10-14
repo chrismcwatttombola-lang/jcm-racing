@@ -145,7 +145,7 @@ async function open(next='fixed'){
     candidate.entries[key(r)]={...v,odds,default_entry:false,confirmed_at:new Date().toISOString()};commit(candidate,'Race saved.');
    }));
    node.querySelectorAll('[data-builder-liability]').forEach(input=>{
-    const save=()=>{node.jcmAutoSaving=true;try{node.querySelector('[data-builder-confirm-row="'+input.dataset.builderLiability+'"]').click();}finally{node.jcmAutoSaving=false;}};
+    const save=()=>{const i=Number(input.dataset.builderLiability),v=s.entries[key(rows[i])];if(cents(input.value)===v?.liability_cents&&price(node.querySelector('[data-builder-odds="'+i+'"]').value)===v?.odds)return;node.jcmAutoSaving=true;try{node.querySelector('[data-builder-confirm-row="'+input.dataset.builderLiability+'"]').click();}finally{node.jcmAutoSaving=false;}};
     input.addEventListener('change',save);input.addEventListener('keydown',e=>{if(e.key==='Enter'){e.preventDefault();save();}});
    });
    clearTimeout(lockTimer);const future=rows.map(off).filter(t=>t>Date.now());if(future.length)lockTimer=setTimeout(()=>draw('Race controls locked at the scheduled start.'),Math.min(...future)-Date.now()+1);

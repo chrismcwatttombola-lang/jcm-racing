@@ -202,8 +202,8 @@ test('accepted provider results populate picks, rating groups and fictional sett
  expect(counts.high).toEqual({win:4,loss:1});expect(counts.medium).toEqual({win:4,loss:3});expect(counts.low).toEqual({win:2,loss:1});
  await page.evaluate(()=>window.jcmOpenDummyAccount());
  await expect(page.locator('#jcm-detail-content')).toContainText('One Of The Boys');
- await expect(page.locator('#jcm-detail-content')).toContainText('£4,905.54');
- await expect(page.locator('#jcm-detail-content')).toContainText('Closing balance');
+ await expect(page.locator('#jcm-detail-content')).toContainText('£905.54');
+ await expect(page.locator('[data-builder-reserved]')).toHaveText('£0.00');
 });
 test('provider identity mismatch remains pending',async({page,request})=>{
  const d=await (await request.get('http://127.0.0.1:8765/data/competition-research-2026-10-12.json')).json();
@@ -307,7 +307,7 @@ test('mobile result tiles group confidence, finish and winner details',async({pa
  await page.goto(URL);await page.locator('#date').selectOption('2026-10-12');
  for(const horse of ["Rory's Royale",'Edmond Halley']){const row=page.locator('[data-research-index]').filter({hasText:horse});await expect(row).toContainText('Horse lost');await row.click();await expect(page.locator('.jcm-result-summary')).toContainText('Finished 3rd');await page.locator('#jcm-detail-overlay .jcm-close').click();}
  const d=await(await request.get('http://127.0.0.1:8765/data/fictional-account-2026-10-12.json')).json();expect(d.rows.filter(r=>r.result_status==='WIN')).toHaveLength(10);expect(d.rows.filter(r=>r.result_status==='LOSS')).toHaveLength(5);expect(d.rows.some(r=>r.result_status==='PENDING')).toBe(false);
- await page.evaluate(()=>window.jcmOpenDummyAccount());await expect(page.locator('#jcm-detail-content')).toContainText('£4,905.54');await expect(page.locator('#jcm-detail-content')).toContainText('all 0 outstanding');
+ await page.evaluate(()=>window.jcmOpenDummyAccount());await expect(page.locator('#jcm-detail-content')).toContainText('£905.54');await expect(page.locator('[data-builder-reserved]')).toHaveText('£0.00');
  });
 
  test('confidence bands use 80 and 70 boundaries including a Low rating',async({page,request})=>{

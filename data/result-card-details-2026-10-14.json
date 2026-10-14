@@ -1,0 +1,40 @@
+{
+  "schema_version": 1,
+  "date": "2026-10-14",
+  "details": [
+    {
+      "date": "2026-10-14",
+      "off_time_uk": "16:38",
+      "course": "Ffos Las",
+      "horse": "Il Est Francais",
+      "race_id": "rac_32301033713",
+      "horse_id": "hrs_27821493",
+      "position": "5",
+      "field_size": 8,
+      "race_name": "Faucets Handicap Steeple Chase (GBB Race)",
+      "winner": "Torneo",
+      "winning_margin_lengths": "2",
+      "selected_beaten_lengths": "13.25",
+      "racecard_url": "https://www.sportinglife.com/racing/racecards/2026-10-14/ffos-las/racecard/943400/faucets-handicap-chase-gbb-race",
+      "website_race_id": "943400",
+      "results_url": "https://www.sportinglife.com/racing/results/2026-10-14/ffos-las/943400/faucets-handicap-chase-gbb-race"
+    },
+    {
+      "date": "2026-10-14",
+      "off_time_uk": "17:13",
+      "course": "Ffos Las",
+      "horse": "Gingerbred",
+      "race_id": "rac_32301035650",
+      "horse_id": "hrs_29212561",
+      "position": "1",
+      "field_size": 7,
+      "race_name": "Enigma Flooring Handicap Steeple Chase (GBB Race)",
+      "winner": "Gingerbred",
+      "winning_margin_lengths": "3.75",
+      "selected_beaten_lengths": "0",
+      "racecard_url": "https://www.sportinglife.com/racing/racecards/2026-10-14/ffos-las/racecard/943401/enigma-flooring-handicap-chase-gbb-race",
+      "website_race_id": "943401",
+      "results_url": "https://www.sportinglife.com/racing/results/2026-10-14/ffos-las/943401/enigma-flooring-handicap-chase-gbb-race"
+    }
+  ]
+}

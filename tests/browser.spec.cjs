@@ -688,7 +688,7 @@ test('zero included stakes have N/A percentage without inventing returns',async(
 });
 test('all three potential winnings boxes incorporate live accepted losses and NR without changing defaults',async({page,request})=>{
  await page.clock.install({time:new Date('2026-10-14T08:00:00Z')});const card=await(await request.get('http://127.0.0.1:8765/data/competition-research-2026-10-14.json')).json();let phase=0;
- await page.route('**/data/competition-research-2026-10-14.json',route=>{const d=structuredClone(card);if(phase)for(const [i,r] of d.high_competition.entries()){if(i===1&&phase===1)continue;Object.assign(r,{result_status:i?'NR':'LOSS',position:i?'NR':'1',result_non_runners:i?[r.horse]:[],result_source:'THE_RACING_API',verification_status:'PROVIDER_ACCEPTED',result_source_url:'https://api.theracingapi.com/v1/results/'+r.race_id,result_retrieved_at:i?'2026-10-14T16:15:00Z':'2026-10-14T15:39:00Z',result_date:r.race_date,result_off_dt:r.scheduled_off_dt,result_off_time_uk:r.off_time_uk,result_course:r.course,result_horse:r.horse,result_race_id:r.race_id,result_horse_id:r.horse_id,official_accuracy_eligible:false});}return route.fulfill({json:d});});
+ await page.route('**/data/competition-research-2026-10-14.json',route=>{const d=structuredClone(card);for(const r of d.high_competition)r.result_status='PENDING';if(phase)for(const [i,r] of d.high_competition.entries()){if(i===1&&phase===1)continue;Object.assign(r,{result_status:i?'NR':'LOSS',position:i?'NR':'1',result_non_runners:i?[r.horse]:[],result_source:'THE_RACING_API',verification_status:'PROVIDER_ACCEPTED',result_source_url:'https://api.theracingapi.com/v1/results/'+r.race_id,result_retrieved_at:i?'2026-10-14T16:15:00Z':'2026-10-14T15:39:00Z',result_date:r.race_date,result_off_dt:r.scheduled_off_dt,result_off_time_uk:r.off_time_uk,result_course:r.course,result_horse:r.horse,result_race_id:r.race_id,result_horse_id:r.horse_id,official_accuracy_eligible:false});}return route.fulfill({json:d});});
  await page.goto('http://127.0.0.1:8765/#hub');await page.locator('[data-page="dummy-account"]').click();for(const [m,amount] of [['fixed','£537.78'],['race','£537.78'],['manual','£268.89']]){await page.locator('[data-account-mode="'+m+'"]').click();await expect(page.locator('[data-builder-potential]')).toHaveText(amount);await expect(page.locator('#builder-amount-box')).toHaveCount(0);}
  phase=1;await page.clock.fastForward(8*60*60*1000);await page.locator('[data-account-mode="race"]').click();await expect(page.locator('[data-builder-potential]')).toHaveText('£-110.66');await page.locator('[data-account-mode="manual"]').click();await expect(page.locator('[data-builder-potential]')).toHaveText('£-55.33');
  phase=2;await page.clock.fastForward(60*60*1000);await page.locator('[data-account-mode="fixed"]').click();await expect(page.locator('[data-builder-potential]')).toHaveText('£-500.00');await page.locator('[data-account-mode="manual"]').click();await expect(page.locator('[data-builder-potential]')).toHaveText('£-250.00');
@@ -730,8 +730,26 @@ test('shared graph uses ordinal angled days, a lower legend and unaltered percen
  await page.locator('[data-page="roundup"]').click();
  await expect(page.locator('#roundup-date')).toHaveValue('2026-10-14');
  await expect(page.locator('.roundup-box h3')).toHaveText(['Theory','Learnings']);
- await expect(page.locator('#roundup-content')).toContainText('Pending today');
+ await expect(page.locator('#roundup-content')).toContainText('one non-winner from two selections: 50%');
  expect(await page.locator('.roundup-box p').first().evaluate(e=>parseFloat(getComputedStyle(e).fontSize))).toBeGreaterThanOrEqual(18);
  expect(await page.locator('.roundup-modal').evaluate(e=>e.scrollWidth<=e.clientWidth)).toBe(true);
  await page.keyboard.press('Escape');await expect(page.locator('#jcm-roundup-overlay')).not.toHaveClass(/open/);
  });
+
+test('14 October accepted results reconcile picks details default closes and Roundup',async({page,request})=>{
+ await page.clock.install({time:new Date('2026-10-14T19:00:00Z')});
+ await page.setViewportSize({width:390,height:844});await page.goto('http://127.0.0.1:8765/#picks');
+ await page.locator('#date').selectOption('2026-10-14');
+ await expect(page.locator('#jcm-official-panel')).toContainText('50% success');
+ const rows=page.locator('[data-research-index]');await expect(rows).toHaveCount(2);
+ await expect(rows.nth(0)).toContainText('Horse lost');await expect(rows.nth(1)).toContainText('Horse won');
+ await rows.nth(0).click();await expect(page.locator('.jcm-result-finish')).toHaveText('Finished 5th of 8');await expect(page.locator('#jcm-detail-content')).toContainText('13.25 lengths');await page.keyboard.press('Escape');
+ await rows.nth(1).click();await expect(page.locator('.jcm-result-finish')).toHaveText('Finished 1st of 7');await expect(page.locator('#jcm-detail-content')).toContainText('3.75 lengths');await page.keyboard.press('Escape');
+ const p=await(await request.get('http://127.0.0.1:8765/data/competition-research-2026-10-14.json')).json(),b=await(await request.get('http://127.0.0.1:8765/data/bet-builder-2026-10-14.json')).json();
+ for(const r of p.high_competition){expect(r.official_accuracy_eligible).toBe(false);expect(await page.evaluate(r=>window.jcmAcceptedResult(r),r)).toBe(true);expect(await page.evaluate(r=>window.jcmAcceptedResult({...r,result_horse:'Wrong'}),r)).toBe(false);const a=b.rows.find(x=>x.race_id===r.race_id);for(const k of Object.keys(r).filter(k=>k.startsWith('result_')))expect(a[k]).toEqual(r[k]);}
+ await page.evaluate(()=>window.jcmOpenBuilderStrategy('fixed'));await expect(page.locator('[data-builder-balance]')).toHaveText('£648.44');
+ await page.locator('[data-account-mode="race"]').click();await expect(page.locator('[data-builder-balance]')).toHaveText('£4,648.44');
+ await page.locator('[data-account-mode="manual"]').click();await expect(page.locator('[data-builder-balance]')).toHaveText('£4,824.22');
+ await page.locator('[data-account-mode="results"]').click();await expect(page.locator('#builder-results-day')).toHaveValue('2026-10-14');await expect(page.locator('[data-strategy-dot][data-date="2026-10-14"]')).toHaveCount(3);
+ expect(await page.evaluate(()=>Object.keys(localStorage).filter(k=>k.startsWith('jcm-builder-v3')).length)).toBe(0);
+});

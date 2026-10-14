@@ -12,7 +12,7 @@
       "horse": "Il Est Francais",
       "tier": "high",
       "selection_status": "USER_CONFIRMED_RESEARCH",
-      "result_status": "PENDING",
+      "result_status": "WIN",
       "official_accuracy_eligible": false,
       "race_id": "rac_32301033713",
       "selection_reason": {
@@ -56,7 +56,19 @@
           "screenshot": "IMG_9707.png",
           "recorded_at": "2026-10-14T07:53:41.238622+00:00"
         }
-      ]
+      ],
+      "position": "5",
+      "result_source": "THE_RACING_API",
+      "verification_status": "PROVIDER_ACCEPTED",
+      "result_date": "2026-10-14",
+      "result_off_time_uk": "16:38",
+      "result_course": "Ffos Las",
+      "result_horse": "Il Est Francais",
+      "result_off_dt": "2026-10-14T16:38:00+01:00",
+      "result_retrieved_at": "2026-10-14T16:49:21.318Z",
+      "result_race_id": "rac_32301033713",
+      "result_horse_id": "hrs_27821493",
+      "result_source_url": "https://api.theracingapi.com/v1/results/rac_32301033713"
     },
     {
       "race_date": "2026-10-14",
@@ -65,7 +77,7 @@
       "horse": "Gingerbred",
       "tier": "high",
       "selection_status": "USER_CONFIRMED_RESEARCH",
-      "result_status": "PENDING",
+      "result_status": "LOSS",
       "official_accuracy_eligible": false,
       "race_id": "rac_32301035650",
       "selection_reason": {
@@ -106,7 +118,19 @@
           "screenshot": "IMG_9708.png",
           "recorded_at": "2026-10-14T07:53:41.238622+00:00"
         }
-      ]
+      ],
+      "position": "1",
+      "result_source": "THE_RACING_API",
+      "verification_status": "PROVIDER_ACCEPTED",
+      "result_date": "2026-10-14",
+      "result_off_time_uk": "17:13",
+      "result_course": "Ffos Las",
+      "result_horse": "Gingerbred",
+      "result_off_dt": "2026-10-14T17:13:00+01:00",
+      "result_retrieved_at": "2026-10-14T16:49:20.732Z",
+      "result_race_id": "rac_32301035650",
+      "result_horse_id": "hrs_29212561",
+      "result_source_url": "https://api.theracingapi.com/v1/results/rac_32301035650"
     }
   ],
   "competition_watchlist": [],

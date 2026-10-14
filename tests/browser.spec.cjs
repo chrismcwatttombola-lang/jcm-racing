@@ -767,3 +767,21 @@ test('14 October publishes only agreed unrated picks and preserves final 13 Octo
  await page.locator('#date').selectOption('2026-10-13');await expect(page.locator('[data-research-index]')).toHaveCount(16);await expect(page.locator('#jcm-official-panel')).toContainText('57.1% success');
  await expect(page.locator('[data-research-index] .jcm-status.win')).toHaveCount(8);await expect(page.locator('[data-research-index] .jcm-status.loss')).toHaveCount(6);await expect(page.locator('[data-research-index] .jcm-status.nr')).toHaveCount(2);
 });
+
+test('14 October screenshot quotes populate all builder strategies and tracker',async({page,request})=>{
+ await page.clock.install({time:new Date('2026-10-14T09:00:00Z')});
+ await page.setViewportSize({width:390,height:844});await page.goto(URL+'#hub');
+ await page.locator('[data-page="dummy-account"]').click();
+ for(const style of ['fixed','race','manual']){
+  await page.locator('[data-account-mode="'+style+'"]').click();
+  await expect(page.locator('[data-builder-row]')).toHaveCount(2);
+  for(const [i,horse,price,liquidity] of [[0,'Il Est Francais','4.2','£11.00'],[1,'Gingerbred','2.22','£26.00']]){
+   const row=page.locator('[data-builder-row="'+i+'"]');await expect(row).toContainText(horse);await expect(row.locator('[data-builder-odds]')).toHaveValue(price);await expect(row).toContainText('Displayed liquidity: '+liquidity);await expect(row).toContainText('Pending');
+  }
+ }
+ await page.locator('#jcm-detail-overlay .jcm-close').click();await page.locator('[data-page="drifting-odds"]').click();await page.locator('[data-drift-tab="screenshots"]').click();
+ await expect(page.locator('[data-drift-screenshot]')).toHaveCount(2);await expect(page.locator('[data-drift-screenshot]').first()).toContainText('08:49');
+ const d=await(await request.get('http://127.0.0.1:8765/data/competition-research-2026-10-14.json')).json();
+ expect(d.high_competition.map(r=>r.morning_market.best_lay)).toEqual([3.95,2.3]);
+ expect(d.high_competition.map(r=>r.market_observations.at(-1).lay_odds)).toEqual([4.2,2.22]);
+});

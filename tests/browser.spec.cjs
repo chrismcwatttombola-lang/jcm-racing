@@ -596,6 +596,20 @@ test('latest Exchange capture is append-only and remains blocked research',async
  expect(granlahan.withdrawal_evidence.status).toBe('PROVIDER_ACCEPTED');
  expect(data.replacement_observations).toEqual([expect.objectContaining({withdrawn_horse:'Granlahan',status:'NOT_CAPTURED_PROSPECTIVELY',replacement_horse:null})]);
 });
+test('14 October morning cohort preserves ties, Exchange-only evidence and blocked qualification',async({request})=>{
+ const manifest=await(await request.get('http://127.0.0.1:8765/data/drifting-odds-days.json')).json();
+ expect(manifest.days).toContain('2026-10-14');
+ const response=await request.get('http://127.0.0.1:8765/data/drifting-odds-2026-10-14.json');expect(response.ok()).toBe(true);
+ const data=await response.json();expect(data.rows).toHaveLength(45);expect(new Set(data.rows.map(row=>row.race_id)).size).toBe(39);
+ expect(data.coverage).toEqual(expect.objectContaining({race_count:39,leader_count:45,current_valid_pairs:38,current_missing_pairs:7,requested_past_starts:225,returned_past_starts:178,usable_past_comparisons:145}));
+ const counts=data.rows.reduce((out,row)=>{const key=row.current.direction||'MISSING_PAIR';out[key]=(out[key]||0)+1;return out;},{});
+ expect(counts).toEqual({DRIFT:17,UNCHANGED:8,SHORTENED:13,MISSING_PAIR:7});
+ for(const row of data.rows){
+  expect(row.current.source).toBe('The Racing API · Betfair Exchange');expect(row.current.price_side).toBe('UNSPECIFIED');
+  expect(row.opportunity_status).toBe('BLOCKED_UNVERIFIED_EXECUTION_AND_UNVALIDATED_FORECAST');
+  for(const prior of row.past){expect(prior.source).toBe('The Racing API · Betfair Exchange');expect(prior.price_side).toBe('UNSPECIFIED');}
+ }
+});
 test('screenshot date archive preserves unknown capture times and reported comparison',async({page})=>{
  await openDrift(page);await page.locator('[data-drift-tab="screenshots"]').click();
  await expect(page.locator('[data-drift-screenshot]')).toHaveCount(16);

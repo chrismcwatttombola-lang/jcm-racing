@@ -209,7 +209,7 @@ function chart(points,month){
   if(min<=0&&max>=0)svg+='<line data-break-even="0" x1="54" x2="386" y1="'+y(0)+'" y2="'+y(0)+'" stroke="#fff" stroke-dasharray="4 5" opacity=".65"/>';
   const byDate=new Map(ps.map(p=>[p.date,p])),segments=[];let segment=[];
   for(const d of dates){const p=byDate.get(d);if(p)segment.push(p);else if(segment.length){segments.push(segment);segment=[];}}if(segment.length)segments.push(segment);
-  if(ps.length)svg+='<g data-strategy-line="'+m+'">'+segments.map(segment=>'<polyline points="'+segment.map(p=>x(p.date)+','+y(p.percentage)).join(' ')+'" fill="none" stroke="'+colour+'" stroke-width="3"/>').join('')+'</g>';
+  if(ps.length)svg+='<g data-strategy-line="'+m+'" stroke="'+colour+'">'+segments.map(segment=>'<polyline points="'+segment.map(p=>x(p.date)+','+y(p.percentage)).join(' ')+'" fill="none" stroke="'+colour+'" stroke-width="3"/>').join('')+'</g>';
   ps.forEach(p=>{const full=points[m].filter(p=>Number.isFinite(p.percentage)),i=full.findIndex(v=>v.date===p.date),previous=i>0?full[i-1].percentage:0,delta=p.percentage-previous,fill=delta>1e-9?'#43bd84':delta<-1e-9?'#ff5776':'#edbd57';svg+='<circle data-strategy-dot="'+m+'" data-date="'+p.date+'" data-percentage="'+p.percentage+'" cx="'+x(p.date)+'" cy="'+y(p.percentage)+'" r="3" fill="'+fill+'" stroke="'+colour+'" stroke-width="1.5"><title>'+names[m]+' · '+p.date+' · '+percent(p.percentage)+' · Staked '+money(p.staked)+' · Returned '+money(p.returned)+' · '+safe(p.basis)+'</title></circle>';});
   svg+='</g>';
  }

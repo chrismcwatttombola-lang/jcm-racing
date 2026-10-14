@@ -5,6 +5,7 @@ const names={fixed:'£1000 a day',race:'£500 a race',manual:'Manual betting',re
 const policy='daily-defaults-20261014';
 const colours={fixed:'#edbd57',race:'#00bfc1',manual:'#ae90ff'};
 const money=v=>'£'+(v/100).toLocaleString('en-GB',{minimumFractionDigits:2,maximumFractionDigits:2});
+const percent=v=>v===null?'N/A':(v>0?'+':'')+v.toFixed(2)+'%';
 const safe=v=>String(v??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const key=r=>[r.off_time_uk,r.course,r.horse].join('|');
 const labelDate=d=>new Date(d+'T12:00:00Z').toLocaleDateString('en-GB',{day:'numeric',month:'short',year:'numeric'});
@@ -78,14 +79,15 @@ function allocation(s,rows,amount,m){
  return next;
 }
 function totals(c,rows,s){
- let movement=0,reserved=0,unresolved=0,selected=0;
+ let movement=0,reserved=0,unresolved=0,selected=0,staked=0,outstandingProfit=0,potentialAvailable=true;
  for(const r of rows){const v=s.entries[key(r)];if(!v?.included)continue;selected++;const st=status(r);
   if(st==='NR')continue;
-  if(st==='PENDING'||v.odds===null){reserved+=v.liability_cents;unresolved++;continue;}
+  staked+=v.liability_cents;
+  if(st==='PENDING'||v.odds===null){reserved+=v.liability_cents;unresolved++;if(v.odds===null)potentialAvailable=false;else outstandingProfit+=Math.round(v.liability_cents/(v.odds-1)*(1-c.commission_rate));continue;}
   movement+=st==='LOSS'?-v.liability_cents:Math.round(v.liability_cents/(v.odds-1)*(1-c.commission_rate));
  }
  const balance=(c.account_opening_cents??Math.round(c.opening_balance_gbp*100))+movement;
- return {movement,reserved,unresolved,selected,balance,available:balance-reserved};
+ return {movement,reserved,unresolved,selected,staked,returned:staked+movement,percentage:staked?movement/staked*100:null,potential:potentialAvailable?movement+outstandingProfit:null,balance,available:balance-reserved};
 }
 function persist(c,m,s){localStorage.setItem(storage(c.date,m),JSON.stringify(s));}
 async function open(next='fixed'){
@@ -107,7 +109,7 @@ async function open(next='fixed'){
   function commit(candidate,message){
    if(totals(c,rows,candidate).available<0){say('Insufficient available balance. Reduce the amount or uncheck an editable race.');return;}
    candidate.basis='Saved device choices';try{persist(c,next,candidate);}catch(_){say('Unable to save. Choices unchanged.');return;}
-   s=candidate;if(node.jcmAutoSaving){const t=totals(c,rows,s);for(const [name,value] of Object.entries({balance:t.balance,reserved:t.reserved,available:t.available}))node.querySelector('[data-builder-'+name+']').textContent=money(value);node.querySelectorAll('[data-builder-row]').forEach((el,i)=>{const v=s.entries[key(rows[i])];el.querySelector('[data-builder-liability-value]').textContent=money(v?.included?v.liability_cents:0);});say(message);}else draw(message);
+   s=candidate;if(node.jcmAutoSaving){const t=totals(c,rows,s);for(const [name,value] of Object.entries({balance:t.balance,reserved:t.reserved,available:t.available}))node.querySelector('[data-builder-'+name+']').textContent=money(value);node.querySelector('[data-builder-potential]').textContent=t.potential===null?'Unavailable':money(t.potential);node.querySelectorAll('[data-builder-row]').forEach((el,i)=>{const v=s.entries[key(rows[i])];el.querySelector('[data-builder-liability-value]').textContent=money(v?.included?v.liability_cents:0);});say(message);}else draw(message);
   }
   function say(message){node.querySelector('#builder-message').textContent=message;}
   function draw(message=''){
@@ -115,7 +117,7 @@ async function open(next='fixed'){
    const t=totals(c,rows,s),amountLocked=Date.now()>=first;
    node.innerHTML='<h2>Bet Builder · '+names[next]+'</h2><label class="builder-date">Racing day <select id="builder-day">'+days.days.map(v=>'<option value="'+v+'" '+(v===d?'selected':'')+'>'+labelDate(v)+'</option>').join('')+'</select></label>'+
     '<section class="builder-tile"><div class="builder-bank"><div>Opening bank<strong>'+money(c.account_opening_cents)+'</strong></div><div>Balance<strong data-builder-balance>'+money(t.balance)+'</strong></div><div>Reserved<strong data-builder-reserved>'+money(t.reserved)+'</strong></div><div>Available<strong data-builder-available>'+money(t.available)+'</strong></div></div></section>'+
-    (next==='manual'?'':'<section class="builder-tile" id="builder-amount-box"><h3>'+ (next==='fixed'?'Total liability for the day':'Liability on every included race')+'</h3><label for="builder-amount">Amount (£)</label><div class="builder-input-group"><input id="builder-amount" type="number" min="0.01" max="'+c.account_opening_cents/100+'" step="0.01" value="'+(s.amount_cents?s.amount_cents/100:'')+'" '+'disabled'+'><button id="builder-confirm" '+'disabled'+'>Locked</button></div><p>'+ (next==='fixed'?'£1,000 locked every day. Split equally across included races; choices lock at the first race.':'The same amount is applied to each included race. The £500 amount is locked; each checkbox locks at its own start. Unchecking does not redistribute funds.')+'</p></section>')+
+    '<section class="builder-tile builder-potential"><h3>Total Potential Winnings</h3><strong data-builder-potential>'+ (t.potential===null?'Unavailable':money(t.potential))+'</strong><p class="builder-note">Net daily profit/loss after 5% commission if every remaining included horse is beaten. Recorded results are already included; a negative figure means a loss. At completion this is the final net profit/loss. Full matching assumed, not guaranteed winnings. Missing prices keep this unavailable.</p></section>'+
     '<p id="builder-message" role="status">'+safe(message)+'</p><p class="builder-note">Green = selected, red = unselected. New cards start with every active race selected. Default amounts are automatically included; no confirmation or daily visit is required. Fictional liability, no real bets. Screenshot lay prices; full matching assumed. Quote times are recorded where available; otherwise unknown. Displayed liquidity may be insufficient. You can change illustrative odds before each race starts. Missing odds keep returns unavailable. Daily opening banks reset: £1,000 a day; £500 a race uses at least £5,000, increased to cover all £500 liabilities; Manual betting starts at £5,000 with £250 per race. Historical defaults are backfilled simulations, not pre-off confirmed bets. 5% commission on positive market winnings. Choices are saved on this device; locks use its clock.</p>'+
     '<h3>'+labelDate(d)+' · '+rows.length+' races</h3>'+rows.map((r,i)=>{
      const v=s.entries[key(r)]||{included:false,liability_cents:0,odds:r.lay_odds??null},locked=Date.now()>=off(r),st=status(r),checkboxLocked=withdrawn(r)||(next==='fixed'?amountLocked:locked);
@@ -161,7 +163,7 @@ async function history(days){
    const c=await card(d),rows=c.rows;if(Date.now()<Math.max(...rows.map(off)))continue;
    for(const m of ['fixed','race','manual']){
     try{const s=loadSettings(c,m)||initial(c,m);c.account_opening_cents=opening(c,m);const t=totals(c,rows,s);
-     if(!t.unresolved&&t.available>=0)points[m].push({date:d,balance:t.balance,opening:c.account_opening_cents,basis:s.basis||'Saved device choices'});
+     if(!t.unresolved&&t.available>=0)points[m].push({date:d,balance:t.balance,opening:c.account_opening_cents,staked:t.staked,returned:t.returned,percentage:t.percentage,basis:s.basis||'Saved device choices'});
      else issues.push(d+' · '+names[m]+' pending or missing prices');
     }catch(_){issues.push(d+' · '+names[m]+' invalid saved choices');}
    }
@@ -173,23 +175,24 @@ async function results(node,days,token){
  const {points,issues}=await history(days);
  if(token!==generation)return;
  const dates=[...new Set(Object.values(points).flat().map(p=>p.date))].sort();
- node.innerHTML='<h2>Bet Builder · Results</h2><p>Daily finishing banks · three separate fictional accounts · daily opening banks reset</p><div class="builder-legend">'+Object.entries(colours).map(([m,c])=>'<span><i style="background:'+c+'"></i>'+names[m]+'</span>').join('')+'</div>'+
+ node.innerHTML='<h2>Bet Builder · Results</h2><p>Daily percentage returns · after 5% commission · three fictional strategies</p><div class="builder-legend">'+Object.entries(colours).map(([m,c])=>'<span><i style="background:'+c+'"></i>'+names[m]+'</span>').join('')+'</div>'+
   (dates.length?chart(points,dates):'<section class="builder-tile">No completed daily balances yet.</section>')+
-  '<p class="builder-note">Green dots: up from the previous recorded close. Red: down. Gold: unchanged. The first dot compares with that strategy’s opening bank. Only completed, price-supported entries are plotted. 12–13 October use clearly labelled backfilled defaults; these are retrospective simulations. Saved choices belong to this device.</p>'+
-  '<div class="builder-table-wrap"><table class="jcm-rated-table"><thead><tr><th>Date</th>'+['fixed','race','manual'].map(m=>'<th>'+names[m]+'</th>').join('')+'</tr></thead><tbody>'+dates.map(d=>'<tr><td>'+labelDate(d)+'</td>'+['fixed','race','manual'].map(m=>{const p=points[m].find(p=>p.date===d);return '<td>'+(p?money(p.balance):'—')+'</td>';}).join('')+'</tr>').join('')+'</tbody></table></div>'+
+  '<p class="builder-note">Percentage difference = (Total Returned − Total Staked) ÷ Total Staked × 100. Total Staked is settled liability at risk, not the Exchange lay-stake size; confirmed non-runners are excluded. Total Returned is that liability plus net profit/loss after commission, not a bookmaker payout. These are simulated returns assuming full matching. Green dots: percentage improved from the previous recorded day; red: declined; gold: unchanged. The first dot compares with 0%. The dashed baseline is break-even. Only complete, price-supported days are plotted; zero-stake days show N/A. 12–13 October remain labelled backfilled simulations.</p>'+
+  '<p class="builder-note">Equal-proportion defaults can overlap: changing only stake size does not change percentage return. Manual changes can create differences. Daily percentages are not compounded or cumulative; two days cannot establish long-term stability.</p>'+
+  '<div class="builder-table-wrap" tabindex="0" role="region" aria-label="Daily strategy metrics; scroll horizontally to compare all strategies"><table class="jcm-rated-table builder-results-table"><thead><tr><th scope="col">Date</th>'+['fixed','race','manual'].map(m=>'<th scope="col">'+names[m]+'</th>').join('')+'</tr></thead><tbody>'+dates.map(d=>'<tr data-results-day="'+d+'"><th scope="row">'+labelDate(d)+'</th>'+['fixed','race','manual'].map(m=>{const p=points[m].find(p=>p.date===d);return '<td data-results-strategy="'+m+'">'+(p?'<dl class="builder-day-metrics"><div><dt>Total Staked</dt><dd data-result-staked>'+money(p.staked)+'</dd></div><div><dt>Total Returned</dt><dd data-result-returned>'+money(p.returned)+'</dd></div><div><dt>Percentage Difference</dt><dd data-result-percentage class="'+(p.percentage===null?'':p.percentage>0?'builder-positive':p.percentage<0?'builder-negative':'')+'">'+percent(p.percentage)+'</dd></div></dl><small class="builder-metric-basis">'+safe(p.basis)+'</small>':'<p>Pending / unavailable</p>')+'</td>';}).join('')+'</tr>').join('')+'</tbody></table></div>'+
   '<p>Default simulations appear even if you never open Bet Builder. Saved Manual betting amounts and exclusions belong to this device. Old strategy settings are retained separately. Today stays open until every included financial result is resolved. Days with missing prices remain pending.</p>'+(issues.length?'<p role="status">INSUFFICIENT VERIFIED DATA for '+safe(issues.join(', '))+'. These dates are omitted.</p>':'');
  window.jcmAddAccountSwitch(node,'results');
 }
 function chart(points,dates){
- const values=Object.values(points).flat().flatMap(p=>[p.balance,p.opening]),lo=Math.min(...values),hi=Math.max(...values),pad=Math.max((hi-lo)*.15,1000),min=lo-pad,max=hi+pad;
+ const values=Object.values(points).flat().map(p=>p.percentage).filter(Number.isFinite).concat(0),lo=Math.min(...values),hi=Math.max(...values),pad=Math.max((hi-lo)*.15,1),min=lo-pad,max=hi+pad;
  const x=d=>70+(dates.length===1?240:dates.indexOf(d)/(dates.length-1)*470),y=v=>230-(v-min)/(max-min)*180;
- let svg='<svg id="builder-chart" viewBox="0 0 580 290" role="img" aria-label="Daily closing fictional bank balances for three strategies">';
- for(let i=0;i<4;i++){const value=min+(max-min)*i/3,py=y(value);svg+='<line x1="70" x2="550" y1="'+py+'" y2="'+py+'" stroke="#52647b"/><text x="64" y="'+(py+4)+'" text-anchor="end" fill="#fff" font-size="12">£'+(value/100).toFixed(0)+'</text>';}
- svg+='<line x1="70" x2="550" y1="'+y(500000)+'" y2="'+y(500000)+'" stroke="#fff" stroke-dasharray="4 5" opacity=".5"/>';
+ let svg='<svg id="builder-chart" viewBox="0 0 580 290" role="img" aria-label="Daily net percentage return on settled liability for three strategies"><title>Daily percentage returns after commission</title>';
+ for(let i=0;i<4;i++){const value=min+(max-min)*i/3,py=y(value);svg+='<line x1="70" x2="550" y1="'+py+'" y2="'+py+'" stroke="#52647b"/><text x="64" y="'+(py+4)+'" text-anchor="end" fill="#fff" font-size="12">'+value.toFixed(1)+'%</text>';}
+ svg+='<line data-break-even="0" x1="70" x2="550" y1="'+y(0)+'" y2="'+y(0)+'" stroke="#fff" stroke-dasharray="4 5" opacity=".7"/>';
  dates.filter((d,i)=>i===0||i===dates.length-1||i%Math.max(1,Math.ceil(dates.length/6))===0).forEach(d=>svg+='<text x="'+x(d)+'" y="260" text-anchor="middle" fill="#fff" font-size="13">'+new Date(d+'T12:00:00Z').toLocaleDateString('en-GB',{day:'numeric',month:'short'})+'</text>');
- for(const [m,colour] of Object.entries(colours)){const ps=points[m];if(!ps.length)continue;
-  svg+='<polyline data-strategy-line="'+m+'" points="'+ps.map(p=>x(p.date)+','+y(p.balance)).join(' ')+'" fill="none" stroke="'+colour+'" stroke-width="3"/>';
-  ps.forEach((p,i)=>{const previous=i?ps[i-1].balance:p.opening,fill=p.balance>previous?'#43bd84':p.balance<previous?'#ff5776':'#edbd57';svg+='<circle data-strategy-dot="'+m+'" data-date="'+p.date+'" cx="'+x(p.date)+'" cy="'+y(p.balance)+'" r="'+(dates.length>15?3:6)+'" fill="'+fill+'" stroke="'+colour+'" stroke-width="2"><title>'+names[m]+' · '+p.date+' · '+money(p.balance)+' · '+p.basis+'</title></circle>';});
+ for(const [m,colour] of Object.entries(colours)){const ps=points[m].filter(p=>Number.isFinite(p.percentage));if(!ps.length)continue;
+  svg+='<polyline data-strategy-line="'+m+'" points="'+ps.map(p=>x(p.date)+','+y(p.percentage)).join(' ')+'" fill="none" stroke="'+colour+'" stroke-width="'+({fixed:5,race:3,manual:2}[m])+'" stroke-dasharray="'+({fixed:'none',race:'8 5',manual:'2 5'}[m])+'"/>';
+  ps.forEach((p,i)=>{const previous=i?ps[i-1].percentage:0,delta=p.percentage-previous,fill=delta>1e-9?'#43bd84':delta<-1e-9?'#ff5776':'#edbd57';svg+='<circle data-strategy-dot="'+m+'" data-date="'+p.date+'" data-percentage="'+p.percentage+'" cx="'+x(p.date)+'" cy="'+y(p.percentage)+'" r="'+(dates.length>15?{fixed:5,race:4,manual:3}[m]:{fixed:8,race:6,manual:4}[m])+'" fill="'+fill+'" stroke="'+colour+'" stroke-width="2"><title>'+names[m]+' · '+p.date+' · '+percent(p.percentage)+' · Staked '+money(p.staked)+' · Returned '+money(p.returned)+' · '+safe(p.basis)+'</title></circle>';});
  }
  return '<section class="builder-tile">'+svg+'</svg></section>';
 }

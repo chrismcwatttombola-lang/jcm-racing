@@ -12,7 +12,9 @@
     "requested_past_starts": 225,
     "returned_past_starts": 178,
     "usable_past_comparisons": 145,
-    "missing_past_slots": 47
+    "missing_past_slots": 47,
+    "current_valid_pairs": 38,
+    "current_missing_pairs": 7
   },
   "rows": [
     {

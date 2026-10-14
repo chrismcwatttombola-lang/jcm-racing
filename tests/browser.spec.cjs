@@ -601,7 +601,7 @@ test('14 October morning cohort preserves ties, Exchange-only evidence and block
  expect(manifest.days).toContain('2026-10-14');
  const response=await request.get('http://127.0.0.1:8765/data/drifting-odds-2026-10-14.json');expect(response.ok()).toBe(true);
  const data=await response.json();expect(data.rows).toHaveLength(45);expect(new Set(data.rows.map(row=>row.race_id)).size).toBe(39);
- expect(data.coverage).toEqual(expect.objectContaining({race_count:39,leader_count:45,requested_past_starts:225,returned_past_starts:178,usable_past_comparisons:145}));
+ expect(data.coverage).toEqual(expect.objectContaining({race_count:39,leader_count:45,current_valid_pairs:38,current_missing_pairs:7,requested_past_starts:225,returned_past_starts:178,usable_past_comparisons:145}));
  const counts=data.rows.reduce((out,row)=>{const key=row.current.direction||'MISSING_PAIR';out[key]=(out[key]||0)+1;return out;},{});
  expect(counts).toEqual({DRIFT:17,UNCHANGED:8,SHORTENED:13,MISSING_PAIR:7});
  for(const row of data.rows){

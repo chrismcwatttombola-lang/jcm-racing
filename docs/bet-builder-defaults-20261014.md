@@ -19,3 +19,12 @@ Five percent commission on positive net market profit; one lay per market. Full 
 ## Ongoing maintenance
 
 For each newly user-approved published selection card, maintain the matching Bet Builder date card and days manifest. Only copy supplied explicit lay-price evidence with identity, timestamps and liquidity where available; absent quotes stay null. Use the same accepted identity-matched result feed as Daily Picks. Defaults need no stored device confirmation. Do not generate or publish new selections under this maintenance authority.
+
+## Independently reproduced backfill (penny rounding)
+
+| Date | £1000 a day close | £500 a race close | Manual betting close |
+| --- | ---: | ---: | ---: |
+| 12 October | £905.54 | £6,791.53 | £4,645.75 |
+| 13 October | £789.87 | £5,923.80 | £4,211.90 |
+
+Per-race opening bank is £7,500 on each date; Manual opens at £5,000. Calculation separately reproduced in Python Decimal with half-up pennies. These use untouched defaults; device overrides may differ. All three simulated outcomes are losses on each day. Software validation is separate from predictive performance.

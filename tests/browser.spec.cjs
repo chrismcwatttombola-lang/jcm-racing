@@ -659,3 +659,14 @@ test('14 October screenshot quotes populate all builder strategies and tracker',
  expect(d.high_competition.map(r=>r.morning_market.best_lay)).toEqual([3.95,2.3]);
  expect(d.high_competition.map(r=>r.market_observations.at(-1).lay_odds)).toEqual([4.2,2.22]);
 });
+
+test('a month of untouched published cards produces all three trends without stored confirmations',async({page,request})=>{
+ await page.clock.install({time:new Date('2026-10-14T08:00:00Z')});
+ const template=await(await request.get('http://127.0.0.1:8765/data/bet-builder-2026-10-14.json')).json();const dates=Array.from({length:30},(_,i)=>'2026-09-'+String(i+1).padStart(2,'0'));
+ await page.route('**/data/bet-builder-days.json',r=>r.fulfill({json:{schema_version:1,days:dates}}));
+ await page.route(/\/data\/(bet-builder|competition-research)-2026-09-\d{2}\.json$/,r=>{
+  const date=r.request().url().match(/2026-09-\d{2}/)[0],rows=template.rows.map((row,i)=>{const dt=date+'T'+row.off_time_uk+':00+01:00';return {...row,race_date:date,scheduled_off_dt:dt,result_status:i?'LOSS':'WIN',position:i?'1':'2',result_source:'THE_RACING_API',verification_status:'PROVIDER_ACCEPTED',result_source_url:'https://api.theracingapi.com/v1/results?start_date='+date+'&end_date='+date,result_retrieved_at:date+'T20:00:00Z',result_date:date,result_off_dt:dt,result_off_time_uk:row.off_time_uk,result_course:row.course,result_horse:row.horse,result_race_id:row.race_id,result_horse_id:row.horse_id,official_accuracy_eligible:false};});
+  r.fulfill({json:r.request().url().includes('competition-research')?{schema_version:1,date,high_competition:rows,competition_watchlist:[]}:{...template,date,introduced_at:date+'T07:00:00Z',rows}});
+ });
+ await page.goto('http://127.0.0.1:8765/#hub');await page.locator('[data-page="dummy-account"]').click();await page.locator('[data-account-mode="results"]').click();await expect(page.locator('[data-strategy-dot]')).toHaveCount(90);await expect(page.locator('.builder-table-wrap tbody tr')).toHaveCount(30);await expect(page.locator('#builder-chart')).toContainText('Sep');expect(await page.evaluate(()=>Object.keys(localStorage).filter(k=>k.startsWith('jcm-builder-v3')).length)).toBe(0);
+});

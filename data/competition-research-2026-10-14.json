@@ -40,7 +40,23 @@
       "identified_challengers": [],
       "going": "Good To Soft",
       "race_identity_checked_at": "2026-10-14T07:40:13.595963+00:00",
-      "race_identity_source_url": "https://api.theracingapi.com/v1/racecards/rac_32301033713"
+      "race_identity_source_url": "https://api.theracingapi.com/v1/racecards/rac_32301033713",
+      "market_observations": [
+        {
+          "source": "BETFAIR_EXCHANGE_USER_SCREENSHOT",
+          "quote_timestamp": "2026-10-14T08:49:00+01:00",
+          "quote_timestamp_precision": "minute",
+          "timestamp_basis": "Device clock displayed in screenshot; actual market update time unknown",
+          "quote_time_verified": false,
+          "lay_odds": 4.2,
+          "available_stake_gbp": 11,
+          "back_odds": 3.9,
+          "available_back_stake_gbp": 15,
+          "market_matched_gbp": 4579,
+          "screenshot": "IMG_9707.png",
+          "recorded_at": "2026-10-14T07:53:41.238622+00:00"
+        }
+      ]
     },
     {
       "race_date": "2026-10-14",
@@ -74,7 +90,23 @@
       "identified_challengers": [],
       "going": "Good To Soft",
       "race_identity_checked_at": "2026-10-14T07:40:13.595963+00:00",
-      "race_identity_source_url": "https://api.theracingapi.com/v1/racecards/rac_32301035650"
+      "race_identity_source_url": "https://api.theracingapi.com/v1/racecards/rac_32301035650",
+      "market_observations": [
+        {
+          "source": "BETFAIR_EXCHANGE_USER_SCREENSHOT",
+          "quote_timestamp": "2026-10-14T08:49:00+01:00",
+          "quote_timestamp_precision": "minute",
+          "timestamp_basis": "Device clock displayed in screenshot; actual market update time unknown",
+          "quote_time_verified": false,
+          "lay_odds": 2.22,
+          "available_stake_gbp": 26,
+          "back_odds": 2.16,
+          "available_back_stake_gbp": 31,
+          "market_matched_gbp": 3857,
+          "screenshot": "IMG_9708.png",
+          "recorded_at": "2026-10-14T07:53:41.238622+00:00"
+        }
+      ]
     }
   ],
   "competition_watchlist": [],

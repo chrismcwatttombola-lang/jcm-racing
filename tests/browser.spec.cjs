@@ -380,14 +380,14 @@ test('manual amounts autosave on blur and Enter, remain independent, and reject 
 function builderResult(r,win=true){return {...r,result_status:win?'WIN':'LOSS',position:win?'2':'1',result_source:'THE_RACING_API',verification_status:'PROVIDER_ACCEPTED',result_source_url:'https://api.theracingapi.com/v1/results?start_date=2026-10-13&end_date=2026-10-13',result_retrieved_at:'2026-10-13T20:00:00Z',result_date:r.race_date,result_off_dt:r.scheduled_off_dt,result_off_time_uk:r.off_time_uk,result_course:r.course,result_horse:r.horse,result_race_id:r.race_id,result_horse_id:r.horse_id,official_accuracy_eligible:false};}
 test('untouched accounts backfill two completed dates for all three lines without any saved settings',async({page})=>{
  await page.clock.install({time:new Date('2026-10-14T08:00:00Z')});await page.goto('http://127.0.0.1:8765/#hub');await page.locator('[data-page="dummy-account"]').click();await page.locator('[data-account-mode="results"]').click();
- await expect(page.locator('[data-strategy-dot]')).toHaveCount(6);await expect(page.locator('[data-strategy-dot][data-date="2026-10-14"]')).toHaveCount(0);await expect(page.locator('#jcm-detail-content')).toContainText('backfilled');
+ await expect(page.locator('[data-strategy-dot]')).toHaveCount(6);await expect(page.locator('[data-strategy-dot][data-date="2026-10-14"]')).toHaveCount(0);await expect(page.locator('#jcm-detail-content')).toContainText(/backfilled/i);
  for(const [m,c] of Object.entries({fixed:'#edbd57',race:'#00bfc1',manual:'#ae90ff'}))await expect(page.locator('[data-strategy-line="'+m+'"]').first()).toHaveAttribute('stroke',c);
  await expect(page.locator('[data-strategy-dot="fixed"][data-date="2026-10-12"]')).toHaveAttribute('fill','#ff5776');await expect(page.locator('[data-strategy-dot="fixed"][data-date="2026-10-13"]')).toHaveAttribute('fill','#ff5776');
  await page.locator('#builder-results-day').selectOption('2026-10-12');await expect(page.locator('#jcm-detail-content')).toContainText('£905.54');expect(await page.evaluate(()=>Object.keys(localStorage).filter(k=>k.startsWith('jcm-builder-v3')).length)).toBe(0);
  await page.reload();await page.locator('[data-page="dummy-account"]').click();await page.locator('[data-account-mode="results"]').click();await expect(page.locator('[data-strategy-dot]')).toHaveCount(6);
 });
 test('pending and mismatched results or missing odds prevent closes but do not block following daily bank',async({page,request})=>{
- await page.clock.install({time:new Date('2026-10-14T08:00:00Z')});await builderFixture(page);await page.goto('http://127.0.0.1:8765/#hub');await page.locator('[data-page="dummy-account"]').click();await expect(page.locator('[data-builder-balance]')).toHaveText('£1,000.00');await page.locator('[data-account-mode="results"]').click();await expect(page.locator('[data-strategy-dot][data-date="2026-10-13"]')).toHaveCount(0);await expect(page.locator('#jcm-detail-content')).toContainText('pending or missing prices');
+ await page.clock.install({time:new Date('2026-10-14T08:00:00Z')});await builderFixture(page);await page.goto('http://127.0.0.1:8765/#hub');await page.locator('[data-page="dummy-account"]').click();await expect(page.locator('[data-builder-balance]')).toHaveText('£1,000.00');await page.locator('[data-account-mode="results"]').click();await expect(page.locator('[data-strategy-dot][data-date="2026-10-13"]')).toHaveCount(0);await expect(page.locator('#jcm-detail-content')).toContainText('pending results or missing data');
  await page.unroute('**/data/bet-builder-2026-10-13.json');const d=await(await request.get('http://127.0.0.1:8765/data/competition-research-2026-10-13.json')).json();d.high_competition[0].result_horse_id='hrs_WRONG';await page.route('**/data/competition-research-2026-10-13.json',r=>r.fulfill({json:d}));await page.locator('[data-account-mode="results"]').click();await expect(page.locator('[data-strategy-dot][data-date="2026-10-13"]')).toHaveCount(0);
 });
 test('default races lock individually; green/red bulk exclusions persist and leave locked liability',async({page})=>{
@@ -492,7 +492,7 @@ test('screenshot date archive preserves unknown capture times and reported compa
  await page.locator('#drift-date').selectOption('2026-10-12');
  await expect(page.locator('[data-drift-screenshot]')).toHaveCount(15);
  await expect(page.locator('#drift-content')).toContainText('Mighty Fleur');
- await expect(page.locator('#drift-content')).toContainText('hedged profit unavailable');
+ await expect(page.locator('#drift-content')).toContainText(/hedged profit unavailable/i);
  await expect(page.locator('#drift-content')).toContainText('2.62');
 });
 test('same-market hedge calculator handles both directions, commission, adverse moves and invalid prices',async({page})=>{

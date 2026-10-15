@@ -67,6 +67,40 @@
       "verification_status": "PROVIDER_ACCEPTED",
       "retrieved_at": "2026-10-15T13:21:31.458Z",
       "result_source_url": "https://api.theracingapi.com/v1/results/rac_32301082138"
+    },
+    {
+      "off_time_uk": "15:40",
+      "course": "Perth",
+      "horse": "Minella Marathon",
+      "race_id": "rac_32301118941",
+      "horse_id": "hrs_51341388",
+      "date": "2026-10-15",
+      "position": "2",
+      "field_size": 8,
+      "winner": "Tanking Along",
+      "winning_margin_lengths": "4.75",
+      "selected_beaten_lengths": "4.75",
+      "result_source": "THE_RACING_API",
+      "verification_status": "PROVIDER_ACCEPTED",
+      "retrieved_at": "2026-10-15T15:09:07.579776+00:00",
+      "result_source_url": "https://api.theracingapi.com/v1/results/rac_32301118941"
+    },
+    {
+      "off_time_uk": "15:50",
+      "course": "Brighton",
+      "horse": "Deep Sleep",
+      "race_id": "rac_32301074390",
+      "horse_id": "hrs_55484569",
+      "date": "2026-10-15",
+      "position": "5",
+      "field_size": 11,
+      "winner": "Thundering Breeze",
+      "winning_margin_lengths": "0.3",
+      "selected_beaten_lengths": "5",
+      "result_source": "THE_RACING_API",
+      "verification_status": "PROVIDER_ACCEPTED",
+      "retrieved_at": "2026-10-15T15:09:07.579776+00:00",
+      "result_source_url": "https://api.theracingapi.com/v1/results/rac_32301074390"
     }
   ]
 }

@@ -124,6 +124,21 @@
       "reason": "Second favourite despite sixth-ranked Pro performance rating (114/9); no wins in last five starts",
       "counterargument": "Race-fit after a close Perth third 22 days earlier; several leading rivals return from long breaks",
       "status": "pending"
+    },
+    {
+      "race_date": "2026-10-15",
+      "off_time_uk": "15:15",
+      "course": "Brighton",
+      "horse": "Cosmic Girl",
+      "race_id": "rac_32301072453",
+      "horse_id": "hrs_64590533",
+      "scheduled_off_dt": "2026-10-15T15:15:00+01:00",
+      "lay_odds": 4.8,
+      "liability_gbp_10_stake": 38,
+      "source": "User Betfair Exchange screenshot 14:45 BST, 15 October 2026",
+      "reason": "Second favourite despite performance rating 59 below Shifra 62 and Skimming Along 61; winless in four starts; longer trip to prove",
+      "counterargument": "Lightly raced Andrew Balding runner with scope to improve for handicap debut; speed rating 63",
+      "status": "pending"
     }
   ],
   "excluded": [

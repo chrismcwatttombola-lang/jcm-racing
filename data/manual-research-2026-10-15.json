@@ -155,6 +155,21 @@
       "reason": "Second favourite despite performance rating 59 below Shifra 62 and Skimming Along 61; winless in four starts; longer trip to prove",
       "counterargument": "Lightly raced Andrew Balding runner with scope to improve for handicap debut; speed rating 63",
       "status": "pending"
+    },
+    {
+      "race_date": "2026-10-15",
+      "off_time_uk": "15:40",
+      "course": "Perth",
+      "horse": "Minella Marathon",
+      "race_id": "rac_32301118941",
+      "horse_id": "hrs_51341388",
+      "scheduled_off_dt": "2026-10-15T15:40:00+01:00",
+      "lay_odds": 4.6,
+      "liability_gbp_10_stake": 36,
+      "source": "User Betfair Exchange screenshot 14:54 BST, 15 October 2026",
+      "reason": "Near joint favourite despite API performance 114 below Orderoftheday 121 and Hombre de Guerra 125; returning from 271 days off; last two runs seventh and sixth",
+      "counterargument": "Two wins in last four starts, Dan Skelton yard in form and potential improvement following wind surgery",
+      "status": "pending"
     }
   ],
   "excluded": [

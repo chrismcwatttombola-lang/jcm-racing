@@ -170,7 +170,22 @@
       "source": "User Betfair Exchange screenshot 14:45 BST, 15 October 2026",
       "reason": "Second favourite despite performance rating 59 below Shifra 62 and Skimming Along 61; winless in four starts; longer trip to prove",
       "counterargument": "Lightly raced Andrew Balding runner with scope to improve for handicap debut; speed rating 63",
-      "status": "pending"
+      "status": "settled",
+      "result_status": "WIN",
+      "official_accuracy_eligible": false,
+      "position": "4",
+      "placing": "4th",
+      "result_source": "THE_RACING_API",
+      "verification_status": "PROVIDER_ACCEPTED",
+      "result_source_url": "https://api.theracingapi.com/v1/results/rac_32301072453",
+      "result_retrieved_at": "2026-10-15T14:31:20Z",
+      "result_date": "2026-10-15",
+      "result_off_dt": "2026-10-15T15:15:00+01:00",
+      "result_off_time_uk": "15:15",
+      "result_course": "Brighton",
+      "result_horse": "Cosmic Girl",
+      "result_race_id": "rac_32301072453",
+      "result_horse_id": "hrs_64590533"
     },
     {
       "race_date": "2026-10-15",

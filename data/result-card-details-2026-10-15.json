@@ -8,11 +8,21 @@
       "course": "Brighton",
       "horse": "Roman Spring",
       "race_id": "rac_32301492782",
-      "race_name": "Racing Value At bet365 Handicap",
+      "race_name": "Racing Value At bet365 Handicap Stakes",
       "racecard_url": "https://www.sportinglife.com/racing/racecards/2026-10-15/brighton/racecard/944163/racing-value-at-bet365-handicap",
       "website_race_id": "944163",
       "source_url": "https://www.sportinglife.com/racing/racecards/2026-10-15/brighton/racecard/944163/racing-value-at-bet365-handicap",
-      "metadata_verified_at": "2026-10-15T10:48:46.650410+00:00"
+      "metadata_verified_at": "2026-10-15T10:48:46.650410+00:00",
+      "horse_id": "hrs_31069234",
+      "position": "1",
+      "field_size": 9,
+      "winner": "Roman Spring",
+      "winning_margin_lengths": "0.3",
+      "selected_beaten_lengths": "0",
+      "result_source": "THE_RACING_API",
+      "verification_status": "PROVIDER_ACCEPTED",
+      "retrieved_at": "2026-10-15T13:21:27.747Z",
+      "result_source_url": "https://api.theracingapi.com/v1/results/rac_32301492782"
     },
     {
       "date": "2026-10-15",
@@ -24,7 +34,17 @@
       "racecard_url": "https://www.sportinglife.com/racing/racecards/2026-10-15/curragh/racecard/943366/dng-nationwide-handicap",
       "website_race_id": "943366",
       "source_url": "https://www.sportinglife.com/racing/racecards/2026-10-15/curragh/racecard/943366/dng-nationwide-handicap",
-      "metadata_verified_at": "2026-10-15T10:48:46.650410+00:00"
+      "metadata_verified_at": "2026-10-15T10:48:46.650410+00:00",
+      "horse_id": "hrs_36894263",
+      "position": "3",
+      "field_size": 13,
+      "winner": "Unique Journey",
+      "winning_margin_lengths": "4",
+      "selected_beaten_lengths": "4.25",
+      "result_source": "THE_RACING_API",
+      "verification_status": "PROVIDER_ACCEPTED",
+      "retrieved_at": "2026-10-15T13:21:29.960Z",
+      "result_source_url": "https://api.theracingapi.com/v1/results/rac_32301039524"
     },
     {
       "date": "2026-10-15",
@@ -32,11 +52,21 @@
       "course": "Fontwell",
       "horse": "Motazzen",
       "race_id": "rac_32301082138",
-      "race_name": "Betting.Bet Free Racing Tips Conditional Jockeys’ Handicap Hurdle",
+      "race_name": "BETTING.BET Free Racing Tips Conditional Jockeys' Handicap Hurdle Race",
       "racecard_url": "https://www.sportinglife.com/racing/racecards/2026-10-15/fontwell/racecard/943565/bettingbet-free-racing-tips-conditional-jockeys-handicap-hurdle",
       "website_race_id": "943565",
       "source_url": "https://www.sportinglife.com/racing/racecards/2026-10-15/fontwell/racecard/943565/bettingbet-free-racing-tips-conditional-jockeys-handicap-hurdle",
-      "metadata_verified_at": "2026-10-15T10:48:46.650410+00:00"
+      "metadata_verified_at": "2026-10-15T10:48:46.650410+00:00",
+      "horse_id": "hrs_24867115",
+      "position": "2",
+      "field_size": 5,
+      "winner": "Crooked Path",
+      "winning_margin_lengths": "5.5",
+      "selected_beaten_lengths": "5.5",
+      "result_source": "THE_RACING_API",
+      "verification_status": "PROVIDER_ACCEPTED",
+      "retrieved_at": "2026-10-15T13:21:31.458Z",
+      "result_source_url": "https://api.theracingapi.com/v1/results/rac_32301082138"
     }
   ]
 }

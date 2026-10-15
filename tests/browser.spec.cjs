@@ -764,13 +764,13 @@ test('15 October picks keep reasoning and history usable with Today’s Plan',as
  await expect(page.locator('#roundup-title')).toHaveText('Today’s Plan');
  await expect(page.locator('#roundup-date')).toHaveValue('2026-10-15');
  await expect(page.locator('.roundup-box').first()).toContainText('one screenshot and one race at a time');
- await expect(page.locator('.roundup-box').last()).toContainText('Results pending');
+ await expect(page.locator('.roundup-box').last()).toContainText('2 WIN / 1 LOSS');
  await page.locator('#roundup-date').selectOption('2026-10-14');
  await expect(page.locator('#roundup-content')).toContainText('one non-winner from two selections: 50%');
  await page.keyboard.press('Escape');
  await page.locator('[data-page="picks"]').click();
  await expect(page.locator('#date')).toHaveValue('2026-10-15');
- await expect(page.locator('[data-manual-index] .jcm-horse')).toHaveText(['Roman Spring','Moltophino','Motazzen']);
+ await expect(page.locator('[data-manual-index] .jcm-horse')).toHaveText(['Roman Spring','Moltophino','Motazzen','I Wish You','Magnolia']);
  for(const [i,name] of ['Roman Spring','Moltophino','Motazzen'].entries()){
   await page.locator('[data-manual-index="'+i+'"]').click();
   await expect(page.locator('#jcm-detail-content')).toContainText(name);
@@ -790,7 +790,7 @@ test('15 October picks keep reasoning and history usable with Today’s Plan',as
  await expect(page.locator('#jcm-detail-content')).toContainText('Il Est Francais');
  await page.locator('#jcm-detail-overlay .jcm-close').click();
  await page.locator('#date').selectOption('2026-10-15');
- await expect(page.locator('[data-manual-index]')).toHaveCount(3);
+ await expect(page.locator('[data-manual-index]')).toHaveCount(5);
 });
 
 
@@ -802,7 +802,7 @@ test('today cards retain pending outcomes and reject mismatched racecard metadat
   await route.fulfill({response,json:data});
  });
  await page.goto(URL);
- await expect(page.locator('[data-manual-index]')).toHaveCount(3);
+ await expect(page.locator('[data-manual-index]')).toHaveCount(5);
  await page.locator('[data-manual-index="0"]').click();
  await expect(page.locator('.jcm-result-outcome')).toHaveText('Pending');
  await expect(page.locator('.jcm-result-card')).toContainText('Exact racecard link not verified.');
@@ -839,4 +839,44 @@ test('15 October Bet Builder matches the three Lay Bets and preserves separate s
  await expect(page.locator('[data-builder-reserved]')).toHaveText('£1,000.00');
  await page.locator('[data-account-mode="manual"]').click();
  await expect(page.locator('[data-builder-liability-value]')).toHaveText(['£100.00','£250.00','£250.00']);
+});
+
+test('15 October matched results preserve all five picks, three locked builder rows and source evidence',async({page,request})=>{
+ await page.clock.install({time:new Date('2026-10-15T13:30:00Z')});
+ await page.setViewportSize({width:390,height:844});await page.goto(URL);await page.locator('#date').selectOption('2026-10-15');
+ await expect(page.locator('[data-manual-index]')).toHaveCount(5);
+ await expect(page.locator('#jcm-official-panel')).toContainText('66.7% success · 2/3 settled');
+ const labels=['Horse won','Horse lost','Horse lost','Pending','Pending'];
+ for(let i=0;i<5;i++)await expect(page.locator('[data-manual-index="'+i+'"] .jcm-status')).toHaveText(labels[i]);
+ for(const [i,finish] of [[0,'Finished 1st of 9'],[1,'Finished 3rd of 13'],[2,'Finished 2nd of 5']]){
+  await page.locator('[data-manual-index="'+i+'"]').click();await expect(page.locator('.jcm-result-finish')).toHaveText(finish);
+  await expect(page.locator('.jcm-result-card')).toContainText('Counterargument');expect(await page.locator('.jcm-modal').evaluate(e=>e.scrollWidth<=e.clientWidth)).toBe(true);await page.keyboard.press('Escape');
+ }
+ const p=await(await request.get('http://127.0.0.1:8765/data/manual-research-2026-10-15.json')).json();
+ const b=await(await request.get('http://127.0.0.1:8765/data/bet-builder-2026-10-15.json')).json();
+ expect(b.rows).toHaveLength(3);expect(b.rows.map(r=>r.lay_odds)).toEqual([6.6,8,5.5]);
+ for(const r of p.selections.slice(0,3)){
+  expect(r.official_accuracy_eligible).toBe(false);expect(r.result_source_url).toBe('https://api.theracingapi.com/v1/results/'+r.race_id);
+  expect(await page.evaluate(r=>window.jcmAcceptedResult(r),r)).toBe(true);
+  for(const change of [{result_horse:'Wrong'},{result_date:'2026-10-14'},{result_off_time_uk:'00:00'},{result_source_url:'https://api.theracingapi.com/v1/results/rac_1'},{result_retrieved_at:'2099-01-01T00:00:00Z'},{position:'UR'},{official_accuracy_eligible:true}]){
+   expect(await page.evaluate(r=>window.jcmAcceptedResult(r),{...r,...change})).toBe(false);
+  }
+  const match=b.rows.find(x=>x.race_id===r.race_id);for(const k of Object.keys(r).filter(k=>k.startsWith('result_')))expect(match[k]).toEqual(r[k]);
+ }
+ await page.evaluate(()=>window.jcmOpenBuilderStrategy('fixed'));await expect(page.locator('[data-builder-balance]')).toHaveText('£782.27');await expect(page.locator('[data-builder-liability-value]')).toHaveText(['£333.34','£333.33','£333.33']);
+ await page.locator('[data-account-mode="race"]').click();await expect(page.locator('[data-builder-balance]')).toHaveText('£4,673.42');
+ await page.locator('[data-account-mode="manual"]').click();await expect(page.locator('[data-builder-balance]')).toHaveText('£4,836.71');
+ await page.locator('[data-account-mode="results"]').click();await expect(page.locator('[data-strategy-dot][data-date="2026-10-15"]')).toHaveCount(3);
+ expect(await page.evaluate(()=>Object.keys(localStorage).filter(k=>k.startsWith('jcm-builder-v3')).length)).toBe(0);
+});
+
+test('15 October fallback retains the same accepted outcomes when JSON is unavailable',async({page})=>{
+ await page.clock.install({time:new Date('2026-10-15T13:30:00Z')});
+ await page.route('**/data/manual-research-2026-10-15.json',route=>route.abort());
+ await page.goto(URL);await expect(page.locator('[data-manual-index]')).toHaveCount(5);
+ await expect(page.locator('[data-manual-index="0"]')).toContainText('Horse won');
+ await expect(page.locator('[data-manual-index="1"]')).toContainText('Horse lost');
+ await expect(page.locator('[data-manual-index="2"]')).toContainText('Horse lost');
+ await expect(page.locator('[data-manual-index="3"]')).toContainText('Pending');
+ await expect(page.locator('[data-manual-index="4"]')).toContainText('Pending');
 });

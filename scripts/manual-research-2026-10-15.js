@@ -18,7 +18,7 @@
   try{
    const response=await fetch('data/manual-research-2026-10-15.json',{cache:'no-store'});if(!response.ok)throw Error('unavailable');
    const d=await response.json();
-   if(d.date!==day||d.mode!=='manual_pre_race_research'||!Array.isArray(d.selections)||d.selections.length!==4||d.selections.some(r=>r.race_date!==day||!r.race_id||!r.horse||!r.course||!r.reason))throw Error('invalid');
+   if(d.date!==day||d.mode!=='manual_pre_race_research'||!Array.isArray(d.selections)||d.selections.length!==5||d.selections.some(r=>r.race_date!==day||!r.race_id||!r.horse||!r.course||!r.reason))throw Error('invalid');
    rows=d.selections.map(r=>({...r,identified_challengers:[],selection_reason:{summary:r.reason,counterargument:r.counterargument,evidence_status:'ORIGINAL_SCREENSHOT_ANALYSIS'}}));
   }catch{state='error';render();return;}
   try{

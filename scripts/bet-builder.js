@@ -37,8 +37,9 @@ function validateConfig(c,d){
  return c;
 }
 function mergeResults(c,p){
- if(p.date!==c.date||!Array.isArray(p.high_competition)||!Array.isArray(p.competition_watchlist))throw Error('Wrong results');
- const all=[...p.high_competition,...p.competition_watchlist].map(a=>({...a,race_id:a.race_id??a.result_race_id,horse_id:a.horse_id??a.result_horse_id,scheduled_off_dt:a.scheduled_off_dt??a.result_off_dt}));
+ const manual=c.selection_mode==='manual_pre_race_research';
+ if(p.date!==c.date||(manual?p.mode!=='manual_pre_race_research'||!Array.isArray(p.selections):!Array.isArray(p.high_competition)||!Array.isArray(p.competition_watchlist)))throw Error('Wrong results');
+ const all=(manual?p.selections:[...p.high_competition,...p.competition_watchlist]).map(a=>({...a,race_id:a.race_id??a.result_race_id,horse_id:a.horse_id??a.result_horse_id,scheduled_off_dt:a.scheduled_off_dt??a.result_off_dt}));
  return c.rows.map(r=>{const matches=all.filter(a=>a.race_date===r.race_date&&a.race_id===r.race_id&&a.horse_id===r.horse_id&&key(a)===key(r)&&a.scheduled_off_dt===r.scheduled_off_dt);if(matches.length!==1)throw Error('Result identity mismatch');return {...matches[0],...r,result_status:matches[0].result_status,...Object.fromEntries(Object.entries(matches[0]).filter(([k])=>k.startsWith('result_')||['verification_status','position','placing','official_accuracy_eligible'].includes(k)))};});
 }
 function loadSettings(c,m){
@@ -66,9 +67,10 @@ function initial(c,m){
  for(const r of c.rows.filter(withdrawn)){s.choices[key(r)]=false;s.entries[key(r)]={included:false,liability_cents:0,odds:r.lay_odds??null,confirmed_at:null,default_entry:true};}
  return s;
 }
+const research=c=>read('data/'+(c.selection_mode==='manual_pre_race_research'?'manual-research-':'competition-research-')+c.date+'.json');
 async function card(d){
  const c=validateConfig(await read('data/bet-builder-'+d+'.json'),d);
- return {...c,rows:mergeResults(c,await read('data/competition-research-'+d+'.json'))};
+ return {...c,rows:mergeResults(c,await research(c))};
 }
 function allocation(s,rows,amount,m){
  const next=structuredClone(s),picked=rows.filter(r=>selected(s,r)),stamp=new Date().toISOString();
@@ -153,7 +155,7 @@ async function open(next='fixed'){
    clearTimeout(lockTimer);const future=rows.map(off).filter(t=>t>Date.now());if(future.length)lockTimer=setTimeout(()=>draw('Race controls locked at the scheduled start.'),Math.min(...future)-Date.now()+1);
   }
   draw();
-  refreshTimer=setInterval(async()=>{if(token!==generation||!overlay.classList.contains('open')){clearInterval(refreshTimer);return;}try{const updated=validateConfig(await read('data/bet-builder-'+d+'.json'),d);if(JSON.stringify(updated.rows.map(key))!==JSON.stringify(c.rows.map(key)))throw Error('Card changed');updated.account_opening_cents=c.account_opening_cents;const fresh=mergeResults(updated,await read('data/competition-research-'+d+'.json'));if(JSON.stringify(fresh)!==JSON.stringify(rows)){c=updated;rows=fresh;applyQuotes();draw('Published prices and results refreshed.');}}catch(_){say('Results refresh unavailable; retaining the last loaded card.');}},30000);
+  refreshTimer=setInterval(async()=>{if(token!==generation||!overlay.classList.contains('open')){clearInterval(refreshTimer);return;}try{const updated=validateConfig(await read('data/bet-builder-'+d+'.json'),d);if(JSON.stringify(updated.rows.map(key))!==JSON.stringify(c.rows.map(key)))throw Error('Card changed');updated.account_opening_cents=c.account_opening_cents;const fresh=mergeResults(updated,await research(updated));if(JSON.stringify(fresh)!==JSON.stringify(rows)){c=updated;rows=fresh;applyQuotes();draw('Published prices and results refreshed.');}}catch(_){say('Results refresh unavailable; retaining the last loaded card.');}},30000);
  }catch(_){if(token===generation){node.innerHTML='<h2>Bet Builder · '+names[next]+'</h2><p>INSUFFICIENT VERIFIED DATA — strategy unavailable. Saved choices retained.</p>';window.jcmAddAccountSwitch(node,next);}}
 }
 async function history(days){

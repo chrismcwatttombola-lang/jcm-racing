@@ -46,12 +46,12 @@ function loadSettings(c,m){
  const raw=localStorage.getItem(storage(c.date,m));
  if(!raw)return null;
  const s=JSON.parse(raw);
- // Only the explicitly published three-row card may expand. Validate old settings
+ // Only explicitly published prior cards may expand. Validate old settings
  // against their original identities before adding excluded rows; never rewrite storage.
  if(s&&c.expansion_from_keys&&Object.keys(s.entries||{}).length!==c.rows.length){
-  const keys=Object.keys(s.entries||{}),base=c.expansion_from_keys;
+  const keys=Object.keys(s.entries||{}),base=(c.expansion_from_keysets||[c.expansion_from_keys]).find(base=>Array.isArray(base)&&keys.length===base.length&&base.every(k=>keys.includes(k)));
   if(!Array.isArray(base)||keys.length!==base.length||!base.every(k=>keys.includes(k)))throw Error('Unrecognised saved card');
-  const old=loadSettings({...c,rows:c.rows.filter(r=>base.includes(key(r))),expansion_from_keys:null},m);
+  const old=loadSettings({...c,rows:c.rows.filter(r=>base.includes(key(r))),expansion_from_keys:null,expansion_from_keysets:null},m);
   const migrated=structuredClone(old);migrated.choices={...old.choices};
   for(const r of c.rows.filter(r=>!base.includes(key(r)))){migrated.entries[key(r)]={included:false,liability_cents:0,odds:r.lay_odds??null,confirmed_at:null,default_entry:true};migrated.choices[key(r)]=false;}
   migrated.basis='Saved device choices; later additions excluded';return migrated;

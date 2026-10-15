@@ -923,6 +923,7 @@ test('Cosmic Girl fourth settles fifth lay win with eight picks preserved',async
 
 
 test('latest eight settled results and expanded builder separate realised and pending profit',async({page})=>{
+ await page.route('**/data/bet-builder-2026-10-15.json',async route=>{const response=await route.fetch(),data=await response.json();data.rows=data.rows.slice(0,11);await route.fulfill({response,json:data});});
  await page.clock.install({time:new Date('2026-10-15T15:11:00Z')});await page.goto(URL);
  await expect(page.locator('#jcm-official-panel')).toContainText('87.5% success · 7/8 settled');
  for(const [i,finish] of [[6,'Finished 2nd of 8'],[7,'Finished 5th of 11']]){await page.locator('[data-manual-index="'+i+'"]').click();await expect(page.locator('.jcm-result-finish')).toHaveText(finish);await page.keyboard.press('Escape');}
@@ -944,7 +945,31 @@ test('expanded card preserves existing device allocations and raw storage',async
  await page.clock.install({time:new Date('2026-10-15T15:11:00Z')});await page.goto(URL);
  await page.evaluate(s=>localStorage.setItem('jcm-builder-v3-2026-10-15-fixed',JSON.stringify(s)),saved);
  await page.evaluate(()=>window.jcmOpenBuilderStrategy('fixed'));
- await expect(page.locator('[data-builder-row]')).toHaveCount(11);await expect(page.locator('[data-builder-settled]')).toHaveText('£-217.73');
- await expect(page.locator('[data-builder-liability-value]')).toHaveText(['£333.34','£333.33','£333.33',...Array(8).fill('£0.00')]);
+ await expect(page.locator('[data-builder-row]')).toHaveCount(16);await expect(page.locator('[data-builder-settled]')).toHaveText('£-217.73');
+ await expect(page.locator('[data-builder-liability-value]')).toHaveText(['£333.34','£333.33','£333.33',...Array(13).fill('£0.00')]);
+ expect(await page.evaluate(()=>JSON.parse(localStorage.getItem('jcm-builder-v3-2026-10-15-fixed')))).toEqual(saved);
+});
+
+test('latest results and sixteen-pick builder show settled losses and pending exposure',async({page})=>{
+ await page.clock.install({time:new Date('2026-10-15T16:40:00Z')});await page.goto(URL);
+ await expect(page.locator('#jcm-official-panel')).toContainText('71.4% success · 10/14 settled');
+ await page.evaluate(()=>window.jcmOpenBuilderStrategy('fixed'));
+ await expect(page.locator('[data-builder-row]')).toHaveCount(16);
+ await expect(page.locator('[data-builder-liability-value]')).toHaveText(Array(16).fill('£62.50'));
+ await expect(page.locator('[data-builder-settled]')).toHaveText('£-55.99');
+ await expect(page.locator('[data-builder-reserved]')).toHaveText('£125.00');
+ await page.locator('[data-account-mode="race"]').click();await expect(page.locator('[data-builder-settled]')).toHaveText('£-447.95');
+ await page.locator('[data-account-mode="manual"]').click();await expect(page.locator('[data-builder-settled]')).toHaveText('£-223.97');
+});
+
+test('sixteen-pick card preserves saved eleven-pick allocations without rewriting storage',async({page,request})=>{
+ const c=await(await request.get('http://127.0.0.1:8765/data/bet-builder-2026-10-15.json')).json();
+ const entries=Object.fromEntries(c.rows.slice(0,11).map((r,i)=>[[r.off_time_uk,r.course,r.horse].join('|'),{included:true,liability_cents:i===10?9090:9091,odds:r.lay_odds,confirmed_at:null,default_entry:true}]));
+ const saved={version:3,policy:'daily-defaults-20261014',date:c.date,mode:'fixed',amount_cents:100000,confirmed_at:null,entries,choices:Object.fromEntries(Object.keys(entries).map(k=>[k,true]))};
+ await page.clock.install({time:new Date('2026-10-15T16:40:00Z')});await page.goto(URL);
+ await page.evaluate(s=>localStorage.setItem('jcm-builder-v3-2026-10-15-fixed',JSON.stringify(s)),saved);
+ await page.evaluate(()=>window.jcmOpenBuilderStrategy('fixed'));
+ await expect(page.locator('[data-builder-row]')).toHaveCount(16);
+ await expect(page.locator('[data-builder-liability-value]')).toHaveText([...Array(10).fill('£90.91'),'£90.90',...Array(5).fill('£0.00')]);
  expect(await page.evaluate(()=>JSON.parse(localStorage.getItem('jcm-builder-v3-2026-10-15-fixed')))).toEqual(saved);
 });

@@ -6,10 +6,23 @@
     "The three agreed picks are Roman Spring, Moltophino and Motazzen. Today’s focus is the gap between market expectations and comparative performance, with ratings considered alongside recent wins, handicap changes and the opposition. We aim to get every selection right, but no outcome is guaranteed. We will retain the original prices and reasoning, record every result, and assess accuracy alongside price and liability."
   ],
   "learnings": [
-    "16:08 BST update: Minella Marathon finished second of eight and Deep Sleep fifth of eleven, both successful non-win selections. Today stands at 7 WIN / 1 LOSS: 87.5% from eight settled selections. Roi du Risk, Kado Sacree and Uncle Remus remain pending. Original selections, prices and reasoning are retained.",
-    "Bet Builder now includes all published selections at their recorded screenshot prices. Its expanded default daily split is a recalculated simulation after results, not a claim of a pre-race portfolio. Saved device allocations are preserved. Accuracy and simulated profit remain separate measures; no permanent selection-method changes are adopted."
+    "Latest verified update: 10 successful non-win selections and 4 unsuccessful selections from 14 settled (71.4%). Roi du Risk finished third, Kado Sacree second and Noble Guest eighth; Uncle Remus, Magic Trip and Ballymoreen won their races and are recorded as lay losses. Harry Mole remains unconfirmed and Distillate is pending.",
+    "Bet Builder includes all 16 published picks and their recorded screenshot prices. The £1,000 daily default is redistributed as a recalculated simulation; saved allocations remain unchanged and later additions are excluded from existing saved portfolios. Recent form and improvement were material counterarguments in today’s losses; no permanent method change is adopted."
   ],
   "reviews": [
+    {
+      "recorded_at": "2026-10-15T16:35:28.540522+00:00",
+      "source": "THE_RACING_API",
+      "status": "PARTIAL_REVIEW",
+      "win": 10,
+      "loss": 4,
+      "nr": 0,
+      "pending": 2,
+      "previous_learnings": [
+        "16:08 BST update: Minella Marathon finished second of eight and Deep Sleep fifth of eleven, both successful non-win selections. Today stands at 7 WIN / 1 LOSS: 87.5% from eight settled selections. Roi du Risk, Kado Sacree and Uncle Remus remain pending. Original selections, prices and reasoning are retained.",
+        "Bet Builder now includes all published selections at their recorded screenshot prices. Its expanded default daily split is a recalculated simulation after results, not a claim of a pre-race portfolio. Saved device allocations are preserved. Accuracy and simulated profit remain separate measures; no permanent selection-method changes are adopted."
+      ]
+    },
     {
       "recorded_at": "2026-10-15T15:09:07.579776+00:00",
       "source": "THE_RACING_API",

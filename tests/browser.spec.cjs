@@ -753,3 +753,36 @@ test('14 October accepted results reconcile picks details default closes and Rou
  await page.locator('[data-account-mode="results"]').click();await expect(page.locator('#builder-results-day')).toHaveValue('2026-10-14');await expect(page.locator('[data-strategy-dot][data-date="2026-10-14"]')).toHaveCount(3);
  expect(await page.evaluate(()=>Object.keys(localStorage).filter(k=>k.startsWith('jcm-builder-v3')).length)).toBe(0);
 });
+
+test('15 October picks keep reasoning and history usable with Today’s Plan',async({page})=>{
+ await page.clock.install({time:new Date('2026-10-15T10:40:00Z')});
+ await page.setViewportSize({width:390,height:844});
+ await page.goto('http://127.0.0.1:8765/#hub');
+ await expect(page.locator('[data-page="picks"] strong')).toHaveText('Lay Bets');
+ await expect(page.locator('[data-page="roundup"] strong')).toHaveText('Today’s Plan');
+ await page.locator('[data-page="roundup"]').click();
+ await expect(page.locator('#roundup-title')).toHaveText('Today’s Plan');
+ await expect(page.locator('#roundup-date')).toHaveValue('2026-10-15');
+ await expect(page.locator('.roundup-box').first()).toContainText('one screenshot and one race at a time');
+ await expect(page.locator('.roundup-box').last()).toContainText('Results pending');
+ await page.locator('#roundup-date').selectOption('2026-10-14');
+ await expect(page.locator('#roundup-content')).toContainText('one non-winner from two selections: 50%');
+ await page.keyboard.press('Escape');
+ await page.locator('[data-page="picks"]').click();
+ await expect(page.locator('#date')).toHaveValue('2026-10-15');
+ await expect(page.locator('[data-manual-index] .jcm-horse')).toHaveText(['Roman Spring','Moltophino','Motazzen']);
+ for(const [i,name] of ['Roman Spring','Moltophino','Motazzen'].entries()){
+  await page.locator('[data-manual-index="'+i+'"]').click();
+  await expect(page.locator('#jcm-detail-content')).toContainText(name);
+  await expect(page.locator('#jcm-detail-content')).toContainText('Reason:');
+  await expect(page.locator('#jcm-detail-content')).toContainText('Counterargument:');
+  await expect(page.locator('#jcm-detail-content')).toContainText('Source: Betfair user screenshot');
+  await page.locator('#jcm-detail-overlay .jcm-close').click();
+ }
+ await page.locator('#date').selectOption('2026-10-14');
+ await page.locator('[data-research-index="0"]').click();
+ await expect(page.locator('#jcm-detail-content')).toContainText('Il Est Francais');
+ await page.locator('#jcm-detail-overlay .jcm-close').click();
+ await page.locator('#date').selectOption('2026-10-15');
+ await expect(page.locator('[data-manual-index]')).toHaveCount(3);
+});

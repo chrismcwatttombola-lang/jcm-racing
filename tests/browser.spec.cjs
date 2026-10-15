@@ -764,7 +764,7 @@ test('15 October picks keep reasoning and history usable with Today’s Plan',as
  await expect(page.locator('#roundup-title')).toHaveText('Today’s Plan');
  await expect(page.locator('#roundup-date')).toHaveValue('2026-10-15');
  await expect(page.locator('.roundup-box').first()).toContainText('one screenshot and one race at a time');
- await expect(page.locator('.roundup-box').last()).toContainText('10 successful non-win selections and 4 unsuccessful selections');
+ await expect(page.locator('.roundup-box').last()).toContainText('11 successful non-win selections and 5 unsuccessful selections');
  await page.locator('#roundup-date').selectOption('2026-10-14');
  await expect(page.locator('#roundup-content')).toContainText('one non-winner from two selections: 50%');
  await page.keyboard.press('Escape');
@@ -972,4 +972,16 @@ test('sixteen-pick card preserves saved eleven-pick allocations without rewritin
  await expect(page.locator('[data-builder-row]')).toHaveCount(16);
  await expect(page.locator('[data-builder-liability-value]')).toHaveText([...Array(10).fill('£90.91'),'£90.90',...Array(5).fill('£0.00')]);
  expect(await page.evaluate(()=>JSON.parse(localStorage.getItem('jcm-builder-v3-2026-10-15-fixed')))).toEqual(saved);
+});
+
+
+test('all sixteen evening results settle without pending liability',async({page})=>{
+ await page.clock.install({time:new Date('2026-10-15T20:00:00Z')});await page.goto(URL);
+ await expect(page.locator('#jcm-official-panel')).toContainText('68.8% success · 11/16 settled');
+ await page.locator('[data-manual-index="14"]').click();await expect(page.locator('.jcm-result-finish')).toHaveText('Finished 4th of 9');await page.keyboard.press('Escape');
+ await page.locator('[data-manual-index="15"]').click();await expect(page.locator('.jcm-result-finish')).toHaveText('Finished 1st of 11');await page.keyboard.press('Escape');
+ await page.evaluate(()=>window.jcmOpenBuilderStrategy('fixed'));
+ await expect(page.locator('[data-builder-settled]')).toHaveText('£-73.17');await expect(page.locator('[data-builder-reserved]')).toHaveText('£0.00');
+ await page.locator('[data-account-mode="race"]').click();await expect(page.locator('[data-builder-settled]')).toHaveText('£-585.35');
+ await page.locator('[data-account-mode="manual"]').click();await expect(page.locator('[data-builder-settled]')).toHaveText('£-292.67');
 });

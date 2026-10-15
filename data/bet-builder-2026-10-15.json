@@ -1,0 +1,62 @@
+{
+  "schema_version": 2,
+  "fictional_only": true,
+  "date": "2026-10-15",
+  "introduced_at": "2026-10-15T10:58:47.804126+00:00",
+  "opening_balance_gbp": 5000,
+  "commission_rate": 0.05,
+  "selection_mode": "manual_pre_race_research",
+  "rows": [
+    {
+      "race_date": "2026-10-15",
+      "off_time_uk": "13:32",
+      "course": "Brighton",
+      "horse": "Roman Spring",
+      "race_id": "rac_32301492782",
+      "horse_id": "hrs_31069234",
+      "scheduled_off_dt": "2026-10-15T13:32:00+01:00",
+      "lay_odds": 6.6,
+      "source": "BETFAIR_EXCHANGE_USER_SCREENSHOT",
+      "price_basis": "Betfair user screenshot ~09:47 BST; recorded screenshot lay price, full matching assumed for simulation",
+      "quote_time_verified": false,
+      "available_stake_gbp": null,
+      "result_status": "PENDING",
+      "official_accuracy_eligible": false,
+      "recorded_at": "2026-10-15T10:58:47.804126+00:00"
+    },
+    {
+      "race_date": "2026-10-15",
+      "off_time_uk": "13:37",
+      "course": "Curragh",
+      "horse": "Moltophino",
+      "race_id": "rac_32301039524",
+      "horse_id": "hrs_36894263",
+      "scheduled_off_dt": "2026-10-15T13:37:00+01:00",
+      "lay_odds": 8,
+      "source": "BETFAIR_EXCHANGE_USER_SCREENSHOT",
+      "price_basis": "Betfair user screenshot ~10:04 BST; recorded screenshot lay price, full matching assumed for simulation",
+      "quote_time_verified": false,
+      "available_stake_gbp": null,
+      "result_status": "PENDING",
+      "official_accuracy_eligible": false,
+      "recorded_at": "2026-10-15T10:58:47.804126+00:00"
+    },
+    {
+      "race_date": "2026-10-15",
+      "off_time_uk": "13:44",
+      "course": "Fontwell",
+      "horse": "Motazzen",
+      "race_id": "rac_32301082138",
+      "horse_id": "hrs_24867115",
+      "scheduled_off_dt": "2026-10-15T13:44:00+01:00",
+      "lay_odds": 5.5,
+      "source": "BETFAIR_EXCHANGE_USER_SCREENSHOT",
+      "price_basis": "Betfair user screenshot morning 15 October; recorded screenshot lay price, full matching assumed for simulation",
+      "quote_time_verified": false,
+      "available_stake_gbp": null,
+      "result_status": "PENDING",
+      "official_accuracy_eligible": false,
+      "recorded_at": "2026-10-15T10:58:47.804126+00:00"
+    }
+  ]
+}

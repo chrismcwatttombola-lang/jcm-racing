@@ -809,3 +809,34 @@ test('today cards retain pending outcomes and reject mismatched racecard metadat
  await expect(page.locator('.jcm-result-card a[href*="example.com"]')).toHaveCount(0);
  await expect(page.locator('.jcm-result-card')).toContainText('Performance 51');
 });
+
+test('15 October Bet Builder matches the three Lay Bets and preserves separate strategy settings',async({page})=>{
+ await page.clock.install({time:new Date('2026-10-15T11:15:00Z')});
+ await page.goto('http://127.0.0.1:8765/#hub');
+ await page.locator('[data-page="dummy-account"]').click();
+ await expect(page.locator('#builder-day')).toHaveValue('2026-10-15');
+ await expect(page.locator('.builder-row>strong')).toHaveText(['Roman Spring','Moltophino','Motazzen']);
+ await expect(page.locator('[data-builder-liability-value]')).toHaveText(['£333.34','£333.33','£333.33']);
+ await expect(page.locator('[data-builder-reserved]')).toHaveText('£1,000.00');
+ await expect(page.locator('[data-builder-potential]')).toHaveText('£172.16');
+ await expect(page.locator('[data-builder-odds="0"]')).toHaveValue('6.6');
+ await expect(page.locator('[data-builder-odds="1"]')).toHaveValue('8');
+ await expect(page.locator('[data-builder-odds="2"]')).toHaveValue('5.5');
+ await expect(page.locator('.builder-row').first()).toContainText('Displayed liquidity: Unavailable');
+ await page.locator('[data-builder-include="2"]').uncheck();
+ await expect(page.locator('[data-builder-liability-value]')).toHaveText(['£500.00','£500.00','£0.00']);
+ await page.locator('[data-builder-include="2"]').check();
+ await expect(page.locator('[data-builder-liability-value]')).toHaveText(['£333.34','£333.33','£333.33']);
+ await page.locator('[data-account-mode="race"]').click();
+ await expect(page.locator('[data-builder-liability-value]')).toHaveText(['£500.00','£500.00','£500.00']);
+ await expect(page.locator('[data-builder-reserved]')).toHaveText('£1,500.00');
+ await page.locator('[data-account-mode="manual"]').click();
+ await expect(page.locator('[data-builder-liability-value]')).toHaveText(['£250.00','£250.00','£250.00']);
+ await page.locator('[data-builder-liability="0"]').fill('100');
+ await page.locator('[data-builder-confirm-row="0"]').click();
+ await expect(page.locator('[data-builder-reserved]')).toHaveText('£600.00');
+ await page.locator('[data-account-mode="fixed"]').click();
+ await expect(page.locator('[data-builder-reserved]')).toHaveText('£1,000.00');
+ await page.locator('[data-account-mode="manual"]').click();
+ await expect(page.locator('[data-builder-liability-value]')).toHaveText(['£100.00','£250.00','£250.00']);
+});

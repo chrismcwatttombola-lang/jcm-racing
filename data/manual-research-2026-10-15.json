@@ -14,7 +14,11 @@
       "liability_gbp_10_stake": 56,
       "source": "Betfair user screenshot ~09:47 BST",
       "reason": "Performance 51 versus stronger-rated market rivals; higher handicap mark",
-      "counterargument": "Two recent wins including course and distance"
+      "counterargument": "Two recent wins including course and distance",
+      "horse_id": "hrs_31069234",
+      "scheduled_off_dt": "2026-10-15T13:32:00+01:00",
+      "identity_verified_at": "2026-10-15T10:58:47.804126+00:00",
+      "identity_source_url": "https://api.theracingapi.com/v1/racecards/rac_32301492782"
     },
     {
       "race_date": "2026-10-15",
@@ -26,7 +30,11 @@
       "liability_gbp_10_stake": 70,
       "source": "Betfair user screenshot ~10:04 BST",
       "reason": "Performance 88 ranked ninth of thirteen despite short market price",
-      "counterargument": "Recent second, win and third; competitive at Curragh"
+      "counterargument": "Recent second, win and third; competitive at Curragh",
+      "horse_id": "hrs_36894263",
+      "scheduled_off_dt": "2026-10-15T13:37:00+01:00",
+      "identity_verified_at": "2026-10-15T10:58:47.804126+00:00",
+      "identity_source_url": "https://api.theracingapi.com/v1/racecards/rac_32301039524"
     },
     {
       "race_date": "2026-10-15",
@@ -38,7 +46,11 @@
       "liability_gbp_10_stake": 45,
       "source": "Betfair user screenshot morning 15 October",
       "reason": "Performance 112 fourth of five; official mark up from 102 to 112",
-      "counterargument": "Two consecutive Fontwell wins"
+      "counterargument": "Two consecutive Fontwell wins",
+      "horse_id": "hrs_24867115",
+      "scheduled_off_dt": "2026-10-15T13:44:00+01:00",
+      "identity_verified_at": "2026-10-15T10:58:47.804126+00:00",
+      "identity_source_url": "https://api.theracingapi.com/v1/racecards/rac_32301082138"
     }
   ],
   "excluded": [

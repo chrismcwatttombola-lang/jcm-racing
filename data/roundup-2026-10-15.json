@@ -6,10 +6,39 @@
     "The three agreed picks are Roman Spring, Moltophino and Motazzen. Today’s focus is the gap between market expectations and comparative performance, with ratings considered alongside recent wins, handicap changes and the opposition. We aim to get every selection right, but no outcome is guaranteed. We will retain the original prices and reasoning, record every result, and assess accuracy alongside price and liability."
   ],
   "learnings": [
-    "15:31 BST update: Cosmic Girl finished fourth of nine at Brighton, won by Skimming Along. Today now stands at 5 WIN / 1 LOSS: 83.3% from six settled selections, with Minella Marathon and Deep Sleep pending. All eight published selections and their original assessments are retained.",
-    "Moltophino, Motazzen, I Wish You, Magnolia and Cosmic Girl did not win; Roman Spring won. I Wish You unseated its rider, so that result does not establish the pre-race ratings or fitness hypothesis. Recent winning form remains an important counterargument after Roman Spring. No permanent change to the selection method is adopted from this small sample."
+    "16:08 BST update: Minella Marathon finished second of eight and Deep Sleep fifth of eleven, both successful non-win selections. Today stands at 7 WIN / 1 LOSS: 87.5% from eight settled selections. Roi du Risk, Kado Sacree and Uncle Remus remain pending. Original selections, prices and reasoning are retained.",
+    "Bet Builder now includes all published selections at their recorded screenshot prices. Its expanded default daily split is a recalculated simulation after results, not a claim of a pre-race portfolio. Saved device allocations are preserved. Accuracy and simulated profit remain separate measures; no permanent selection-method changes are adopted."
   ],
   "reviews": [
+    {
+      "recorded_at": "2026-10-15T15:09:07.579776+00:00",
+      "source": "THE_RACING_API",
+      "status": "PARTIAL_REVIEW",
+      "win": 7,
+      "loss": 1,
+      "nr": 0,
+      "pending": 3,
+      "result_references": [
+        {
+          "race_id": "rac_32301118941",
+          "horse_id": "hrs_51341388",
+          "position": "2",
+          "source_url": "https://api.theracingapi.com/v1/results/rac_32301118941",
+          "retrieved_at": "2026-10-15T15:09:07.579776+00:00"
+        },
+        {
+          "race_id": "rac_32301074390",
+          "horse_id": "hrs_55484569",
+          "position": "5",
+          "source_url": "https://api.theracingapi.com/v1/results/rac_32301074390",
+          "retrieved_at": "2026-10-15T15:09:07.579776+00:00"
+        }
+      ],
+      "previous_learnings": [
+        "15:31 BST update: Cosmic Girl finished fourth of nine at Brighton, won by Skimming Along. Today now stands at 5 WIN / 1 LOSS: 83.3% from six settled selections, with Minella Marathon and Deep Sleep pending. All eight published selections and their original assessments are retained.",
+        "Moltophino, Motazzen, I Wish You, Magnolia and Cosmic Girl did not win; Roman Spring won. I Wish You unseated its rider, so that result does not establish the pre-race ratings or fitness hypothesis. Recent winning form remains an important counterargument after Roman Spring. No permanent change to the selection method is adopted from this small sample."
+      ]
+    },
     {
       "recorded_at": "2026-10-15T14:31:20Z",
       "source": "THE_RACING_API",

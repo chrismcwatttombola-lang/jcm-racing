@@ -45,7 +45,18 @@ function mergeResults(c,p){
 function loadSettings(c,m){
  const raw=localStorage.getItem(storage(c.date,m));
  if(!raw)return null;
- const s=JSON.parse(raw);if(!s||Object.keys(s.entries||{}).length!==c.rows.length||s.version!==3||s.policy!==policy||s.date!==c.date||s.mode!==m||!s.entries||typeof s.entries!=='object'||Array.isArray(s.entries)||!Number.isSafeInteger(s.amount_cents)||s.amount_cents<0)throw Error('Invalid saved strategy');
+ const s=JSON.parse(raw);
+ // Only the explicitly published three-row card may expand. Validate old settings
+ // against their original identities before adding excluded rows; never rewrite storage.
+ if(s&&c.expansion_from_keys&&Object.keys(s.entries||{}).length!==c.rows.length){
+  const keys=Object.keys(s.entries||{}),base=c.expansion_from_keys;
+  if(!Array.isArray(base)||keys.length!==base.length||!base.every(k=>keys.includes(k)))throw Error('Unrecognised saved card');
+  const old=loadSettings({...c,rows:c.rows.filter(r=>base.includes(key(r))),expansion_from_keys:null},m);
+  const migrated=structuredClone(old);migrated.choices={...old.choices};
+  for(const r of c.rows.filter(r=>!base.includes(key(r)))){migrated.entries[key(r)]={included:false,liability_cents:0,odds:r.lay_odds??null,confirmed_at:null,default_entry:true};migrated.choices[key(r)]=false;}
+  migrated.basis='Saved device choices; later additions excluded';return migrated;
+ }
+ if(!s||Object.keys(s.entries||{}).length!==c.rows.length||s.version!==3||s.policy!==policy||s.date!==c.date||s.mode!==m||!s.entries||typeof s.entries!=='object'||Array.isArray(s.entries)||!Number.isSafeInteger(s.amount_cents)||s.amount_cents<0)throw Error('Invalid saved strategy');
  const first=Math.min(...c.rows.map(off));
  if(m!=='manual'&&s.confirmed_at!==null&&(!Number.isFinite(Date.parse(s.confirmed_at))||Date.parse(s.confirmed_at)>=first||Date.parse(s.confirmed_at)>Date.now()||Date.parse(s.confirmed_at)<Date.parse(c.introduced_at)))throw Error('Invalid amount lock');
  for(const [k,v] of Object.entries(s.entries)){
@@ -81,15 +92,16 @@ function allocation(s,rows,amount,m){
  return next;
 }
 function totals(c,rows,s){
- let movement=0,reserved=0,unresolved=0,selected=0,staked=0,outstandingProfit=0,potentialAvailable=true;
+ let movement=0,reserved=0,unresolved=0,selected=0,staked=0,settledRisk=0,outstandingProfit=0,potentialAvailable=true;
  for(const r of rows){const v=s.entries[key(r)];if(!v?.included)continue;selected++;const st=status(r);
   if(st==='NR')continue;
   staked+=v.liability_cents;
   if(st==='PENDING'||v.odds===null){reserved+=v.liability_cents;unresolved++;if(v.odds===null)potentialAvailable=false;else outstandingProfit+=Math.round(v.liability_cents/(v.odds-1)*(1-c.commission_rate));continue;}
+  settledRisk+=v.liability_cents;
   movement+=st==='LOSS'?-v.liability_cents:Math.round(v.liability_cents/(v.odds-1)*(1-c.commission_rate));
  }
  const balance=(c.account_opening_cents??Math.round(c.opening_balance_gbp*100))+movement;
- return {movement,reserved,unresolved,selected,staked,returned:staked+movement,percentage:staked?movement/staked*100:null,potential:potentialAvailable?movement+outstandingProfit:null,balance,available:balance-reserved};
+ return {movement,reserved,unresolved,selected,staked,settledRisk,returned:staked+movement,percentage:settledRisk?movement/settledRisk*100:null,potential:potentialAvailable?movement+outstandingProfit:null,balance,available:balance-reserved};
 }
 function persist(c,m,s){localStorage.setItem(storage(c.date,m),JSON.stringify(s));}
 async function open(next='fixed'){
@@ -119,6 +131,8 @@ async function open(next='fixed'){
    const t=totals(c,rows,s),amountLocked=Date.now()>=first;
    node.innerHTML='<h2>Bet Builder · '+names[next]+'</h2><label class="builder-date">Racing day <select id="builder-day">'+days.days.map(v=>'<option value="'+v+'" '+(v===d?'selected':'')+'>'+labelDate(v)+'</option>').join('')+'</select></label>'+
     '<section class="builder-tile"><div class="builder-bank"><div>Opening bank<strong>'+money(c.account_opening_cents)+'</strong></div><div>Balance<strong data-builder-balance>'+money(t.balance)+'</strong></div><div>Reserved<strong data-builder-reserved>'+money(t.reserved)+'</strong></div><div>Available<strong data-builder-available>'+money(t.available)+'</strong></div></div></section>'+
+    '<section class="builder-tile"><h3>Settled profit / loss</h3><strong data-builder-settled>'+money(t.movement)+'</strong><p class="builder-note">'+percent(t.percentage)+' on '+money(t.settledRisk)+' settled liability · after 5% commission. Pending liability: '+money(t.reserved)+'.</p></section>'+
+    (c.simulation_note?'<p class="builder-note">'+safe(c.simulation_note)+'</p>':'')+
     '<section class="builder-tile builder-potential"><h3>Profit / Loss Calculator</h3><strong data-builder-potential>'+ (t.potential===null?'Unavailable':money(t.potential))+'</strong><p class="builder-note">Simulation · after 5% commission · assumes remaining horses are beaten.</p></section>'+
     '<p id="builder-message" role="status">'+safe(message)+'</p><p class="builder-note">Simulation · liability at risk · saved on this device.</p>'+
     '<h3>'+labelDate(d)+' · '+rows.length+' races</h3>'+rows.map((r,i)=>{

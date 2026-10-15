@@ -764,13 +764,13 @@ test('15 October picks keep reasoning and history usable with Today’s Plan',as
  await expect(page.locator('#roundup-title')).toHaveText('Today’s Plan');
  await expect(page.locator('#roundup-date')).toHaveValue('2026-10-15');
  await expect(page.locator('.roundup-box').first()).toContainText('one screenshot and one race at a time');
- await expect(page.locator('.roundup-box').last()).toContainText('5 WIN / 1 LOSS');
+ await expect(page.locator('.roundup-box').last()).toContainText('7 WIN / 1 LOSS');
  await page.locator('#roundup-date').selectOption('2026-10-14');
  await expect(page.locator('#roundup-content')).toContainText('one non-winner from two selections: 50%');
  await page.keyboard.press('Escape');
  await page.locator('[data-page="picks"]').click();
  await expect(page.locator('#date')).toHaveValue('2026-10-15');
- await expect(page.locator('[data-manual-index] .jcm-horse')).toHaveText(['Roman Spring','Moltophino','Motazzen','I Wish You','Magnolia','Cosmic Girl','Minella Marathon','Deep Sleep']);
+ await expect(page.locator('[data-manual-index] .jcm-horse')).toHaveText(['Roman Spring','Moltophino','Motazzen','I Wish You','Magnolia','Cosmic Girl','Minella Marathon','Deep Sleep','Roi du Risk','Kado Sacree','Uncle Remus']);
  for(const [i,name] of ['Roman Spring','Moltophino','Motazzen'].entries()){
   await page.locator('[data-manual-index="'+i+'"]').click();
   await expect(page.locator('#jcm-detail-content')).toContainText(name);
@@ -790,7 +790,7 @@ test('15 October picks keep reasoning and history usable with Today’s Plan',as
  await expect(page.locator('#jcm-detail-content')).toContainText('Il Est Francais');
  await page.locator('#jcm-detail-overlay .jcm-close').click();
  await page.locator('#date').selectOption('2026-10-15');
- await expect(page.locator('[data-manual-index]')).toHaveCount(8);
+ await expect(page.locator('[data-manual-index]')).toHaveCount(11);
 });
 
 
@@ -802,7 +802,7 @@ test('today cards retain pending outcomes and reject mismatched racecard metadat
   await route.fulfill({response,json:data});
  });
  await page.goto(URL);
- await expect(page.locator('[data-manual-index]')).toHaveCount(8);
+ await expect(page.locator('[data-manual-index]')).toHaveCount(11);
  await page.locator('[data-manual-index="0"]').click();
  await expect(page.locator('.jcm-result-outcome')).toHaveText('Pending');
  await expect(page.locator('.jcm-result-card')).toContainText('Exact racecard link not verified.');
@@ -811,6 +811,7 @@ test('today cards retain pending outcomes and reject mismatched racecard metadat
 });
 
 test('15 October Bet Builder matches the three Lay Bets and preserves separate strategy settings',async({page})=>{
+ await page.route('**/data/bet-builder-2026-10-15.json',async route=>{const response=await route.fetch(),data=await response.json();data.rows=data.rows.slice(0,3);delete data.expansion_from_keys;await route.fulfill({response,json:data});});
  await page.clock.install({time:new Date('2026-10-15T11:15:00Z')});
  await page.goto('http://127.0.0.1:8765/#hub');
  await page.locator('[data-page="dummy-account"]').click();
@@ -842,9 +843,10 @@ test('15 October Bet Builder matches the three Lay Bets and preserves separate s
 });
 
 test('15 October matched results preserve all five picks, three locked builder rows and source evidence',async({page,request})=>{
+ await page.route('**/data/bet-builder-2026-10-15.json',async route=>{const response=await route.fetch(),data=await response.json();data.rows=data.rows.slice(0,3);delete data.expansion_from_keys;await route.fulfill({response,json:data});});
  await page.clock.install({time:new Date('2026-10-15T13:30:00Z')});
  await page.setViewportSize({width:390,height:844});await page.goto(URL);await page.locator('#date').selectOption('2026-10-15');
- await expect(page.locator('[data-manual-index]')).toHaveCount(8);
+ await expect(page.locator('[data-manual-index]')).toHaveCount(11);
  await expect(page.locator('#jcm-official-panel')).toContainText('66.7% success · 2/3 settled');
  const labels=['Horse won','Horse lost','Horse lost','Pending','Pending','Pending','Pending','Pending'];
  for(let i=0;i<8;i++)await expect(page.locator('[data-manual-index="'+i+'"] .jcm-status')).toHaveText(labels[i]);
@@ -854,7 +856,7 @@ test('15 October matched results preserve all five picks, three locked builder r
  }
  const p=await(await request.get('http://127.0.0.1:8765/data/manual-research-2026-10-15.json')).json();
  const b=await(await request.get('http://127.0.0.1:8765/data/bet-builder-2026-10-15.json')).json();
- expect(b.rows).toHaveLength(3);expect(b.rows.map(r=>r.lay_odds)).toEqual([6.6,8,5.5]);
+ expect(b.rows.slice(0,3).map(r=>r.lay_odds)).toEqual([6.6,8,5.5]);
  for(const r of p.selections.slice(0,3)){
   expect(r.official_accuracy_eligible).toBe(false);expect(r.result_source_url).toBe('https://api.theracingapi.com/v1/results/'+r.race_id);
   expect(await page.evaluate(r=>window.jcmAcceptedResult(r),r)).toBe(true);
@@ -873,7 +875,7 @@ test('15 October matched results preserve all five picks, three locked builder r
 test('15 October fallback retains the same accepted outcomes when JSON is unavailable',async({page})=>{
  await page.clock.install({time:new Date('2026-10-15T13:30:00Z')});
  await page.route('**/data/manual-research-2026-10-15.json',route=>route.abort());
- await page.goto(URL);await expect(page.locator('[data-manual-index]')).toHaveCount(8);
+ await page.goto(URL);await expect(page.locator('[data-manual-index]')).toHaveCount(11);
  await expect(page.locator('[data-manual-index="0"]')).toContainText('Horse won');
  await expect(page.locator('[data-manual-index="1"]')).toContainText('Horse lost');
  await expect(page.locator('[data-manual-index="2"]')).toContainText('Horse lost');
@@ -897,7 +899,7 @@ test('I Wish You unseat counts as lay win, retains reasoning and is not NR',asyn
 
 test('Magnolia verified website result counts as fourth lay win without losing later picks',async({page})=>{
  await page.clock.install({time:new Date('2026-10-15T14:30:00Z')});await page.goto(URL);
- await expect(page.locator('[data-manual-index]')).toHaveCount(8);
+ await expect(page.locator('[data-manual-index]')).toHaveCount(11);
  await expect(page.locator('#jcm-official-panel')).toContainText('80% success · 4/5 settled');
  await expect(page.locator('[data-manual-index="4"]')).toContainText('Horse lost');
  await page.locator('[data-manual-index="4"]').click();await expect(page.locator('.jcm-result-finish')).toHaveText('3rd');
@@ -910,11 +912,39 @@ test('Magnolia verified website result counts as fourth lay win without losing l
 
 test('Cosmic Girl fourth settles fifth lay win with eight picks preserved',async({page})=>{
  await page.clock.install({time:new Date('2026-10-15T14:35:00Z')});await page.goto(URL);
- await expect(page.locator('[data-manual-index]')).toHaveCount(8);
+ await expect(page.locator('[data-manual-index]')).toHaveCount(11);
  await expect(page.locator('#jcm-official-panel')).toContainText('83.3% success · 5/6 settled');
  await page.locator('[data-manual-index="5"]').click();await expect(page.locator('.jcm-result-finish')).toHaveText('4th');
  await expect(page.locator('.jcm-result-card')).toContainText('handicap debut');await page.keyboard.press('Escape');
  await page.route('**/data/manual-research-2026-10-15.json',r=>r.abort());await page.reload();
  await expect(page.locator('#jcm-official-panel')).toContainText('83.3% success · 5/6 settled');
  for(const i of [6,7])await expect(page.locator('[data-manual-index="'+i+'"]')).toContainText('Pending');
+});
+
+
+test('latest eight settled results and expanded builder separate realised and pending profit',async({page})=>{
+ await page.clock.install({time:new Date('2026-10-15T15:11:00Z')});await page.goto(URL);
+ await expect(page.locator('#jcm-official-panel')).toContainText('87.5% success · 7/8 settled');
+ for(const [i,finish] of [[6,'2nd'],[7,'5th']]){await page.locator('[data-manual-index="'+i+'"]').click();await expect(page.locator('.jcm-result-finish')).toHaveText(finish);await page.keyboard.press('Escape');}
+ await page.evaluate(()=>window.jcmOpenBuilderStrategy('fixed'));
+ await expect(page.locator('[data-builder-row]')).toHaveCount(11);
+ await expect(page.locator('[data-builder-liability-value]')).toHaveText(['£90.91',...Array(9).fill('£90.91'),'£90.90']);
+ await expect(page.locator('[data-builder-settled]')).toHaveText('£62.92');
+ await expect(page.locator('[data-builder-reserved]')).toHaveText('£272.72');
+ await expect(page.locator('[data-builder-potential]')).toHaveText('£192.93');
+ await page.locator('[data-account-mode="race"]').click();await expect(page.locator('[data-builder-settled]')).toHaveText('£346.01');
+ await page.locator('[data-account-mode="manual"]').click();await expect(page.locator('[data-builder-settled]')).toHaveText('£173.00');
+ await page.locator('[data-account-mode="results"]').click();await expect(page.locator('[data-strategy-dot][data-date="2026-10-15"]')).toHaveCount(0);
+});
+
+test('expanded card preserves existing device allocations and raw storage',async({page,request})=>{
+ const c=await(await request.get('http://127.0.0.1:8765/data/bet-builder-2026-10-15-before-expansion.json')).json();
+ const entries=Object.fromEntries(c.rows.map((r,i)=>[[r.off_time_uk,r.course,r.horse].join('|'),{included:true,liability_cents:i===0?33334:33333,odds:r.lay_odds,confirmed_at:null,default_entry:true}]));
+ const saved={version:3,policy:'daily-defaults-20261014',date:c.date,mode:'fixed',amount_cents:100000,confirmed_at:null,entries,choices:Object.fromEntries(Object.keys(entries).map(k=>[k,true]))};
+ await page.clock.install({time:new Date('2026-10-15T15:11:00Z')});await page.goto(URL);
+ await page.evaluate(s=>localStorage.setItem('jcm-builder-v3-2026-10-15-fixed',JSON.stringify(s)),saved);
+ await page.evaluate(()=>window.jcmOpenBuilderStrategy('fixed'));
+ await expect(page.locator('[data-builder-row]')).toHaveCount(11);await expect(page.locator('[data-builder-settled]')).toHaveText('£-217.73');
+ await expect(page.locator('[data-builder-liability-value]')).toHaveText(['£333.34','£333.33','£333.33',...Array(8).fill('£0.00')]);
+ expect(await page.evaluate(()=>JSON.parse(localStorage.getItem('jcm-builder-v3-2026-10-15-fixed')))).toEqual(saved);
 });

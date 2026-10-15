@@ -764,7 +764,7 @@ test('15 October picks keep reasoning and history usable with Today’s Plan',as
  await expect(page.locator('#roundup-title')).toHaveText('Today’s Plan');
  await expect(page.locator('#roundup-date')).toHaveValue('2026-10-15');
  await expect(page.locator('.roundup-box').first()).toContainText('one screenshot and one race at a time');
- await expect(page.locator('.roundup-box').last()).toContainText('7 WIN / 1 LOSS');
+ await expect(page.locator('.roundup-box').last()).toContainText('10 successful non-win selections and 4 unsuccessful selections');
  await page.locator('#roundup-date').selectOption('2026-10-14');
  await expect(page.locator('#roundup-content')).toContainText('one non-winner from two selections: 50%');
  await page.keyboard.press('Escape');
@@ -790,7 +790,7 @@ test('15 October picks keep reasoning and history usable with Today’s Plan',as
  await expect(page.locator('#jcm-detail-content')).toContainText('Il Est Francais');
  await page.locator('#jcm-detail-overlay .jcm-close').click();
  await page.locator('#date').selectOption('2026-10-15');
- await expect(page.locator('[data-manual-index]')).toHaveCount(11);
+ await expect(page.locator('[data-manual-index]')).toHaveCount(16);
 });
 
 
@@ -802,7 +802,7 @@ test('today cards retain pending outcomes and reject mismatched racecard metadat
   await route.fulfill({response,json:data});
  });
  await page.goto(URL);
- await expect(page.locator('[data-manual-index]')).toHaveCount(11);
+ await expect(page.locator('[data-manual-index]')).toHaveCount(16);
  await page.locator('[data-manual-index="0"]').click();
  await expect(page.locator('.jcm-result-outcome')).toHaveText('Pending');
  await expect(page.locator('.jcm-result-card')).toContainText('Exact racecard link not verified.');
@@ -846,7 +846,7 @@ test('15 October matched results preserve all five picks, three locked builder r
  await page.route('**/data/bet-builder-2026-10-15.json',async route=>{const response=await route.fetch(),data=await response.json();data.rows=data.rows.slice(0,3);delete data.expansion_from_keys;await route.fulfill({response,json:data});});
  await page.clock.install({time:new Date('2026-10-15T13:30:00Z')});
  await page.setViewportSize({width:390,height:844});await page.goto(URL);await page.locator('#date').selectOption('2026-10-15');
- await expect(page.locator('[data-manual-index]')).toHaveCount(11);
+ await expect(page.locator('[data-manual-index]')).toHaveCount(16);
  await expect(page.locator('#jcm-official-panel')).toContainText('66.7% success · 2/3 settled');
  const labels=['Horse won','Horse lost','Horse lost','Pending','Pending','Pending','Pending','Pending'];
  for(let i=0;i<8;i++)await expect(page.locator('[data-manual-index="'+i+'"] .jcm-status')).toHaveText(labels[i]);
@@ -875,7 +875,7 @@ test('15 October matched results preserve all five picks, three locked builder r
 test('15 October fallback retains the same accepted outcomes when JSON is unavailable',async({page})=>{
  await page.clock.install({time:new Date('2026-10-15T13:30:00Z')});
  await page.route('**/data/manual-research-2026-10-15.json',route=>route.abort());
- await page.goto(URL);await expect(page.locator('[data-manual-index]')).toHaveCount(11);
+ await page.goto(URL);await expect(page.locator('[data-manual-index]')).toHaveCount(16);
  await expect(page.locator('[data-manual-index="0"]')).toContainText('Horse won');
  await expect(page.locator('[data-manual-index="1"]')).toContainText('Horse lost');
  await expect(page.locator('[data-manual-index="2"]')).toContainText('Horse lost');
@@ -899,7 +899,7 @@ test('I Wish You unseat counts as lay win, retains reasoning and is not NR',asyn
 
 test('Magnolia verified website result counts as fourth lay win without losing later picks',async({page})=>{
  await page.clock.install({time:new Date('2026-10-15T14:30:00Z')});await page.goto(URL);
- await expect(page.locator('[data-manual-index]')).toHaveCount(11);
+ await expect(page.locator('[data-manual-index]')).toHaveCount(16);
  await expect(page.locator('#jcm-official-panel')).toContainText('80% success · 4/5 settled');
  await expect(page.locator('[data-manual-index="4"]')).toContainText('Horse lost');
  await page.locator('[data-manual-index="4"]').click();await expect(page.locator('.jcm-result-finish')).toHaveText('3rd');
@@ -912,7 +912,7 @@ test('Magnolia verified website result counts as fourth lay win without losing l
 
 test('Cosmic Girl fourth settles fifth lay win with eight picks preserved',async({page})=>{
  await page.clock.install({time:new Date('2026-10-15T14:35:00Z')});await page.goto(URL);
- await expect(page.locator('[data-manual-index]')).toHaveCount(11);
+ await expect(page.locator('[data-manual-index]')).toHaveCount(16);
  await expect(page.locator('#jcm-official-panel')).toContainText('83.3% success · 5/6 settled');
  await page.locator('[data-manual-index="5"]').click();await expect(page.locator('.jcm-result-finish')).toHaveText('4th');
  await expect(page.locator('.jcm-result-card')).toContainText('handicap debut');await page.keyboard.press('Escape');

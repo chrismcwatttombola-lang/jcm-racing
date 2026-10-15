@@ -64,6 +64,21 @@
       "source": "User Betfair screenshot 13:19 BST",
       "reason": "Second favourite despite fifth-ranked API performance figure (124); 180-day absence",
       "counterargument": "Close Class 2 third at Ayr and proven Perth form"
+    },
+    {
+      "race_date": "2026-10-15",
+      "off_time_uk": "15:05",
+      "course": "Perth",
+      "horse": "Magnolia",
+      "race_id": "rac_32301117004",
+      "horse_id": "hrs_35243250",
+      "scheduled_off_dt": "2026-10-15T15:05:00+01:00",
+      "lay_odds": 3.75,
+      "liability_gbp_10_stake": 27.5,
+      "source": "User Betfair Exchange screenshot 13:54 BST, 15 October",
+      "reason": "Second favourite despite sixth-ranked Pro performance rating (114/9); no wins in last five starts",
+      "counterargument": "Race-fit after a close Perth third 22 days earlier; several leading rivals return from long breaks",
+      "status": "pending"
     }
   ],
   "excluded": [

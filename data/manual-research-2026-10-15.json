@@ -216,6 +216,21 @@
       "reason": "Recent form 8th, 10th, 7th despite being among shortest market prices; reduced handicap mark yet no recent proof of renewed competitiveness; Rogers Dream and Port Darwin credible rivals",
       "counterargument": "Joint-top API performance rating 70, competitive speed 61 and James Owen yard 9/52 last 14 days",
       "status": "pending"
+    },
+    {
+      "race_date": "2026-10-15",
+      "off_time_uk": "16:15",
+      "course": "Perth",
+      "horse": "Kado Sacree",
+      "race_id": "rac_32301120878",
+      "horse_id": "hrs_48853994",
+      "scheduled_off_dt": "2026-10-15T16:15:00+01:00",
+      "lay_odds": 2.55,
+      "liability_gbp_10_stake": 15.5,
+      "source": "User Exchange screenshot 15:54 BST, 15 October 2026",
+      "reason": "Clear favourite despite API performance rating 113 below Cossack Chach 118 and Bois Guillbert 118; returns after 154 days and official mark up from 108 to 118",
+      "counterargument": "Two consecutive victories including Perth course-and-distance; Sean Bowen and Olly Murphy combination",
+      "status": "pending"
     }
   ],
   "excluded": [

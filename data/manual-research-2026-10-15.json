@@ -291,6 +291,21 @@
       "reason": "Second favourite despite API performance rating 90 versus Chief Sunday 106 and Western Soldier 94; inconsistent earlier form and official mark up from 84 to 89",
       "counterargument": "Recent Uttoxeter win followed by second only 11 days ago; race-fit and improving, while higher-rated Chief Sunday returns from 148 days off",
       "status": "pending"
+    },
+    {
+      "race_date": "2026-10-15",
+      "off_time_uk": "16:55",
+      "course": "Brighton",
+      "horse": "Noble Guest",
+      "race_id": "rac_32301078264",
+      "horse_id": "hrs_43163848",
+      "scheduled_off_dt": "2026-10-15T16:55:00+01:00",
+      "lay_odds": 5.8,
+      "liability_gbp_10_stake": 48,
+      "source": "User Exchange screenshot 16:40 BST, 15 October 2026",
+      "reason": "Market leader despite recent finishes ninth, eighth, fourth and seventh, with last two API performance figures 54; Berning Hot, Nutcracker and Blue Collar Lad provide credible opposition",
+      "counterargument": "Highest API performance rating 72, speed rating 68 and proven winning form over the distance; reduced handicap mark offers opportunity to rebound",
+      "status": "pending"
     }
   ],
   "excluded": [

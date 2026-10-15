@@ -298,7 +298,8 @@
       "result_course": "Fontwell",
       "result_horse": "Roi du Risk",
       "result_race_id": "rac_32301089886",
-      "result_horse_id": "hrs_46265562"
+      "result_horse_id": "hrs_46265562",
+      "result_retrieved_at": "2026-10-15T16:36:56.310493+00:00"
     },
     {
       "race_date": "2026-10-15",
@@ -331,7 +332,8 @@
       "result_course": "Perth",
       "result_horse": "Kado Sacree",
       "result_race_id": "rac_32301120878",
-      "result_horse_id": "hrs_48853994"
+      "result_horse_id": "hrs_48853994",
+      "result_retrieved_at": "2026-10-15T16:36:56.310493+00:00"
     },
     {
       "race_date": "2026-10-15",
@@ -364,7 +366,8 @@
       "result_course": "Fontwell",
       "result_horse": "Uncle Remus",
       "result_race_id": "rac_32301091823",
-      "result_horse_id": "hrs_47313658"
+      "result_horse_id": "hrs_47313658",
+      "result_retrieved_at": "2026-10-15T16:36:56.310493+00:00"
     },
     {
       "race_date": "2026-10-15",
@@ -397,7 +400,8 @@
       "price_basis": "User Exchange screenshot 16:40 BST, 15 October 2026; full matching assumed for simulation",
       "quote_time_verified": false,
       "available_stake_gbp": null,
-      "recorded_at": "2026-10-15T16:35:28.540522+00:00"
+      "recorded_at": "2026-10-15T16:35:28.540522+00:00",
+      "result_retrieved_at": "2026-10-15T16:36:56.310493+00:00"
     },
     {
       "race_date": "2026-10-15",
@@ -430,7 +434,8 @@
       "price_basis": "User Exchange screenshot 16:57 BST, 15 October 2026; full matching assumed for simulation",
       "quote_time_verified": false,
       "available_stake_gbp": null,
-      "recorded_at": "2026-10-15T16:35:28.540522+00:00"
+      "recorded_at": "2026-10-15T16:35:28.540522+00:00",
+      "result_retrieved_at": "2026-10-15T16:36:56.310493+00:00"
     },
     {
       "race_date": "2026-10-15",
@@ -463,7 +468,8 @@
       "price_basis": "User Exchange screenshot 17:03 BST, 15 October 2026; full matching assumed for simulation",
       "quote_time_verified": false,
       "available_stake_gbp": null,
-      "recorded_at": "2026-10-15T16:35:28.540522+00:00"
+      "recorded_at": "2026-10-15T16:35:28.540522+00:00",
+      "result_retrieved_at": "2026-10-15T16:36:56.310493+00:00"
     },
     {
       "race_date": "2026-10-15",

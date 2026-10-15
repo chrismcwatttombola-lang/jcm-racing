@@ -2,7 +2,7 @@
   "schema_version": 1,
   "date": "2026-10-15",
   "mode": "manual_pre_race_research",
-  "status": "in_progress",
+  "status": "settled",
   "selections": [
     {
       "race_date": "2026-10-15",
@@ -556,9 +556,21 @@
       "source": "User Betfair Exchange screenshot 19:11 BST, 15 October 2026",
       "reason": "Clear favourite despite API performance rating 67 below Super Hit 72, Chesneys Charm 72, Jodhpur Blue 71 and Newport 68; recent form 2-4-7-4 without win, credible rivals",
       "counterargument": "Recent Southwell second beaten half a length, race-fit nine days later and carrying less weight than several rivals",
-      "status": "pending",
-      "result_status": "PENDING",
-      "official_accuracy_eligible": false
+      "status": "settled",
+      "result_status": "LOSS",
+      "official_accuracy_eligible": false,
+      "position": "1",
+      "placing": "1st",
+      "result_source": "THE_RACING_API",
+      "verification_status": "PROVIDER_ACCEPTED",
+      "result_source_url": "https://api.theracingapi.com/v1/results/rac_32301101508",
+      "result_date": "2026-10-15",
+      "result_off_dt": "2026-10-15T20:30:00+01:00",
+      "result_off_time_uk": "20:30",
+      "result_course": "Southwell (AW)",
+      "result_horse": "Norflondonforever",
+      "result_race_id": "rac_32301101508",
+      "result_horse_id": "hrs_47685064"
     }
   ],
   "excluded": [

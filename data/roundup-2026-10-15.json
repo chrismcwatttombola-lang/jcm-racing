@@ -6,10 +6,27 @@
     "The three agreed picks are Roman Spring, Moltophino and Motazzen. Today’s focus is the gap between market expectations and comparative performance, with ratings considered alongside recent wins, handicap changes and the opposition. We aim to get every selection right, but no outcome is guaranteed. We will retain the original prices and reasoning, record every result, and assess accuracy alongside price and liability."
   ],
   "learnings": [
+    "14:51 BST update: I Wish You unseated its rider in the 14:30 Perth race, won by Thunder Rock. This counts as a successful non-win selection, not a non-runner: 3 WIN / 1 LOSS, 75% from four settled selections; Magnolia remains pending. An unseat does not establish that the pre-race ratings or fitness concerns predicted the outcome. No selection-method changes are adopted.",
     "Three of the five currently published selections have accepted results: Moltophino finished third of 13, Motazzen second of five, and Roman Spring won. That is 2 WIN / 1 LOSS (66.7% of three settled), with I Wish You and Magnolia pending and no confirmed non-runners. The original three-selection morning Theory and its timestamp are preserved; the two later additions are included in this review without rewriting that Theory.",
     "The market-versus-performance concern was followed by defeats for Moltophino and Motazzen, but not Roman Spring: the recorded counterargument of two recent wins including course and distance remained material. Three results do not establish causation or a reliable predictive edge. Any stronger weighting of recent winning/course form is a proposal for review, not an approved model change. Bet Builder’s existing three-race card is settled at its frozen screenshot prices; its locked allocations are not redistributed retrospectively for the two later selections."
   ],
   "reviews": [
+    {
+      "recorded_at": "2026-10-15T13:51:12Z",
+      "source": "THE_RACING_API",
+      "status": "PARTIAL_REVIEW",
+      "win": 3,
+      "loss": 1,
+      "nr": 0,
+      "pending": 1,
+      "result_references": [{
+        "race_id": "rac_32301115067",
+        "horse_id": "hrs_37987908",
+        "source_url": "https://api.theracingapi.com/v1/results/rac_32301115067",
+        "retrieved_at": "2026-10-15T13:51:12Z",
+        "position": "UR"
+      }]
+    },
     {
       "recorded_at": "2026-10-15T13:24:12.581Z",
       "source": "THE_RACING_API",

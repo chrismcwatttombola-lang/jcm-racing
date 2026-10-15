@@ -858,7 +858,7 @@ test('15 October matched results preserve all five picks, three locked builder r
  for(const r of p.selections.slice(0,3)){
   expect(r.official_accuracy_eligible).toBe(false);expect(r.result_source_url).toBe('https://api.theracingapi.com/v1/results/'+r.race_id);
   expect(await page.evaluate(r=>window.jcmAcceptedResult(r),r)).toBe(true);
-  for(const change of [{result_horse:'Wrong'},{result_date:'2026-10-14'},{result_off_time_uk:'00:00'},{result_source_url:'https://api.theracingapi.com/v1/results/rac_1'},{result_retrieved_at:'2099-01-01T00:00:00Z'},{position:'UR'},{official_accuracy_eligible:true}]){
+  for(const change of [{result_horse:'Wrong'},{result_date:'2026-10-14'},{result_off_time_uk:'00:00'},{result_source_url:'https://api.theracingapi.com/v1/results/rac_1'},{result_retrieved_at:'2099-01-01T00:00:00Z'},{position:'NR'},{official_accuracy_eligible:true}]){
    expect(await page.evaluate(r=>window.jcmAcceptedResult(r),{...r,...change})).toBe(false);
   }
   const match=b.rows.find(x=>x.race_id===r.race_id);for(const k of Object.keys(r).filter(k=>k.startsWith('result_')))expect(match[k]).toEqual(r[k]);
@@ -879,4 +879,18 @@ test('15 October fallback retains the same accepted outcomes when JSON is unavai
  await expect(page.locator('[data-manual-index="2"]')).toContainText('Horse lost');
  await expect(page.locator('[data-manual-index="3"]')).toContainText('Pending');
  await expect(page.locator('[data-manual-index="4"]')).toContainText('Pending');
+});
+
+test('I Wish You unseat counts as lay win, retains reasoning and is not NR',async({page})=>{
+ await page.clock.install({time:new Date('2026-10-15T14:00:00Z')});
+ await page.goto(URL);await page.locator('#date').selectOption('2026-10-15');
+ await expect(page.locator('#jcm-official-panel')).toContainText('75% success · 3/4 settled');
+ await expect(page.locator('[data-manual-index="3"]')).toContainText('Horse lost');
+ await expect(page.locator('[data-manual-index="4"]')).toContainText('Pending');
+ await page.locator('[data-manual-index="3"]').click();
+ await expect(page.locator('.jcm-result-finish')).toHaveText('Unseated rider');
+ await expect(page.locator('.jcm-result-card')).toContainText('180-day absence');
+ await page.keyboard.press('Escape');
+ await page.route('**/data/manual-research-2026-10-15.json',r=>r.abort());
+ await page.reload();await expect(page.locator('#jcm-official-panel')).toContainText('75% success · 3/4 settled');
 });

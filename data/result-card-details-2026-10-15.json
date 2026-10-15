@@ -1,0 +1,42 @@
+{
+  "schema_version": 1,
+  "date": "2026-10-15",
+  "details": [
+    {
+      "date": "2026-10-15",
+      "off_time_uk": "13:32",
+      "course": "Brighton",
+      "horse": "Roman Spring",
+      "race_id": "rac_32301492782",
+      "race_name": "Racing Value At bet365 Handicap",
+      "racecard_url": "https://www.sportinglife.com/racing/racecards/2026-10-15/brighton/racecard/944163/racing-value-at-bet365-handicap",
+      "website_race_id": "944163",
+      "source_url": "https://www.sportinglife.com/racing/racecards/2026-10-15/brighton/racecard/944163/racing-value-at-bet365-handicap",
+      "metadata_verified_at": "2026-10-15T10:48:46.650410+00:00"
+    },
+    {
+      "date": "2026-10-15",
+      "off_time_uk": "13:37",
+      "course": "Curragh",
+      "horse": "Moltophino",
+      "race_id": "rac_32301039524",
+      "race_name": "DNG Nationwide Handicap",
+      "racecard_url": "https://www.sportinglife.com/racing/racecards/2026-10-15/curragh/racecard/943366/dng-nationwide-handicap",
+      "website_race_id": "943366",
+      "source_url": "https://www.sportinglife.com/racing/racecards/2026-10-15/curragh/racecard/943366/dng-nationwide-handicap",
+      "metadata_verified_at": "2026-10-15T10:48:46.650410+00:00"
+    },
+    {
+      "date": "2026-10-15",
+      "off_time_uk": "13:44",
+      "course": "Fontwell",
+      "horse": "Motazzen",
+      "race_id": "rac_32301082138",
+      "race_name": "Betting.Bet Free Racing Tips Conditional Jockeys’ Handicap Hurdle",
+      "racecard_url": "https://www.sportinglife.com/racing/racecards/2026-10-15/fontwell/racecard/943565/bettingbet-free-racing-tips-conditional-jockeys-handicap-hurdle",
+      "website_race_id": "943565",
+      "source_url": "https://www.sportinglife.com/racing/racecards/2026-10-15/fontwell/racecard/943565/bettingbet-free-racing-tips-conditional-jockeys-handicap-hurdle",
+      "metadata_verified_at": "2026-10-15T10:48:46.650410+00:00"
+    }
+  ]
+}

@@ -774,9 +774,15 @@ test('15 October picks keep reasoning and history usable with Today’s Plan',as
  for(const [i,name] of ['Roman Spring','Moltophino','Motazzen'].entries()){
   await page.locator('[data-manual-index="'+i+'"]').click();
   await expect(page.locator('#jcm-detail-content')).toContainText(name);
-  await expect(page.locator('#jcm-detail-content')).toContainText('Reason:');
-  await expect(page.locator('#jcm-detail-content')).toContainText('Counterargument:');
+  await expect(page.locator('#jcm-detail-content')).toContainText('Reason for selection');
+  await expect(page.locator('#jcm-detail-content')).toContainText('Counterargument');
   await expect(page.locator('#jcm-detail-content')).toContainText('Source: Betfair user screenshot');
+  await expect(page.locator('.jcm-result-tile h3')).toHaveText(['Selected horse','Race winner','Reason for selection','Recorded lay price','Racecard','Race results','Race video']);
+  await expect(page.locator('.jcm-result-finish')).toHaveText('Pending');
+  await expect(page.getByRole('link',{name:'View this racecard ↗'})).toHaveAttribute('href',/sportinglife\.com\/racing\/racecards\/2026-10-15\//);
+  await expect(page.getByRole('link',{name:'View race videos here'})).toHaveAttribute('href','https://www.sportinglife.com/racing/results');
+  await expect(page.locator('.jcm-result-card')).toContainText('Exact race result link not yet verified.');
+  expect(await page.locator('.jcm-modal').evaluate(e=>e.scrollWidth<=e.clientWidth)).toBe(true);
   await page.locator('#jcm-detail-overlay .jcm-close').click();
  }
  await page.locator('#date').selectOption('2026-10-14');
@@ -785,4 +791,21 @@ test('15 October picks keep reasoning and history usable with Today’s Plan',as
  await page.locator('#jcm-detail-overlay .jcm-close').click();
  await page.locator('#date').selectOption('2026-10-15');
  await expect(page.locator('[data-manual-index]')).toHaveCount(3);
+});
+
+
+test('today cards retain pending outcomes and reject mismatched racecard metadata',async({page})=>{
+ await page.clock.install({time:new Date('2026-10-15T10:50:00Z')});
+ await page.route('**/data/result-card-details-2026-10-15.json',async route=>{
+  const response=await route.fetch(),data=await response.json();
+  data.details.forEach(d=>{d.horse='Wrong horse';d.results_url='https://example.com/result';});
+  await route.fulfill({response,json:data});
+ });
+ await page.goto(URL);
+ await expect(page.locator('[data-manual-index]')).toHaveCount(3);
+ await page.locator('[data-manual-index="0"]').click();
+ await expect(page.locator('.jcm-result-outcome')).toHaveText('Pending');
+ await expect(page.locator('.jcm-result-card')).toContainText('Exact racecard link not verified.');
+ await expect(page.locator('.jcm-result-card a[href*="example.com"]')).toHaveCount(0);
+ await expect(page.locator('.jcm-result-card')).toContainText('Performance 51');
 });

@@ -1,0 +1,53 @@
+{
+  "schema_version": 1,
+  "date": "2026-10-15",
+  "mode": "manual_pre_race_research",
+  "status": "pending",
+  "selections": [
+    {
+      "race_date": "2026-10-15",
+      "off_time_uk": "13:32",
+      "course": "Brighton",
+      "horse": "Roman Spring",
+      "race_id": "rac_32301492782",
+      "lay_odds": 6.6,
+      "liability_gbp_10_stake": 56,
+      "source": "Betfair user screenshot ~09:47 BST",
+      "reason": "Performance 51 versus stronger-rated market rivals; higher handicap mark",
+      "counterargument": "Two recent wins including course and distance"
+    },
+    {
+      "race_date": "2026-10-15",
+      "off_time_uk": "13:37",
+      "course": "Curragh",
+      "horse": "Moltophino",
+      "race_id": "rac_32301039524",
+      "lay_odds": 8,
+      "liability_gbp_10_stake": 70,
+      "source": "Betfair user screenshot ~10:04 BST",
+      "reason": "Performance 88 ranked ninth of thirteen despite short market price",
+      "counterargument": "Recent second, win and third; competitive at Curragh"
+    },
+    {
+      "race_date": "2026-10-15",
+      "off_time_uk": "13:44",
+      "course": "Fontwell",
+      "horse": "Motazzen",
+      "race_id": "rac_32301082138",
+      "lay_odds": 5.5,
+      "liability_gbp_10_stake": 45,
+      "source": "Betfair user screenshot morning 15 October",
+      "reason": "Performance 112 fourth of five; official mark up from 102 to 112",
+      "counterargument": "Two consecutive Fontwell wins"
+    }
+  ],
+  "excluded": [
+    {
+      "race_date": "2026-10-15",
+      "off_time_uk": "12:55",
+      "course": "Perth",
+      "horse": "Petersham Place",
+      "status": "NO_SELECTION"
+    }
+  ]
+}

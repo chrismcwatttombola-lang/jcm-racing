@@ -770,7 +770,7 @@ test('15 October picks keep reasoning and history usable with Today’s Plan',as
  await page.keyboard.press('Escape');
  await page.locator('[data-page="picks"]').click();
  await expect(page.locator('#date')).toHaveValue('2026-10-15');
- await expect(page.locator('[data-manual-index] .jcm-horse')).toHaveText(['Roman Spring','Moltophino','Motazzen','I Wish You','Magnolia','Cosmic Girl','Minella Marathon','Deep Sleep','Roi du Risk','Kado Sacree','Uncle Remus']);
+ await expect(page.locator('[data-manual-index] .jcm-horse')).toHaveText(['Roman Spring','Moltophino','Motazzen','I Wish You','Magnolia','Cosmic Girl','Minella Marathon','Deep Sleep','Roi du Risk','Kado Sacree','Uncle Remus','Noble Guest','Magic Trip','Ballymoreen','Harry Mole','Distillate']);
  for(const [i,name] of ['Roman Spring','Moltophino','Motazzen'].entries()){
   await page.locator('[data-manual-index="'+i+'"]').click();
   await expect(page.locator('#jcm-detail-content')).toContainText(name);

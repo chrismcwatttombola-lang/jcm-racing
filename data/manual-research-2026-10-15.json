@@ -246,6 +246,21 @@
       "reason": "Clear favourite despite API performance rating 113 below Cossack Chach 118 and Bois Guillbert 118; returns after 154 days and official mark up from 108 to 118",
       "counterargument": "Two consecutive victories including Perth course-and-distance; Sean Bowen and Olly Murphy combination",
       "status": "pending"
+    },
+    {
+      "race_date": "2026-10-15",
+      "off_time_uk": "16:39",
+      "course": "Fontwell",
+      "horse": "Uncle Remus",
+      "race_id": "rac_32301091823",
+      "horse_id": "hrs_47313658",
+      "scheduled_off_dt": "2026-10-15T16:39:00+01:00",
+      "lay_odds": 5.4,
+      "liability_gbp_10_stake": 44,
+      "source": "User Exchange screenshot 16:04 BST, 15 October 2026",
+      "reason": "Second favourite despite API performance rating 90 versus Chief Sunday 106 and Western Soldier 94; inconsistent earlier form and official mark up from 84 to 89",
+      "counterargument": "Recent Uttoxeter win followed by second only 11 days ago; race-fit and improving, while higher-rated Chief Sunday returns from 148 days off",
+      "status": "pending"
     }
   ],
   "excluded": [

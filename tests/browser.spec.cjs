@@ -976,7 +976,7 @@ test('sixteen-pick card preserves saved eleven-pick allocations without rewritin
 
 
 test('all sixteen evening results settle without pending liability',async({page})=>{
- await page.clock.install({time:new Date('2026-10-15T23:00:00Z')});await page.goto(URL);
+ await page.clock.install({time:new Date('2026-10-15T20:00:00Z')});await page.goto(URL);
  await expect(page.locator('#jcm-official-panel')).toContainText('68.8% success · 11/16 settled');
  await page.locator('[data-manual-index="14"]').click();await expect(page.locator('.jcm-result-finish')).toHaveText('Finished 4th of 9');await page.keyboard.press('Escape');
  await page.locator('[data-manual-index="15"]').click();await expect(page.locator('.jcm-result-finish')).toHaveText('Finished 1st of 11');await page.keyboard.press('Escape');

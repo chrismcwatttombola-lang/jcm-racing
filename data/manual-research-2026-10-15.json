@@ -274,7 +274,8 @@
       "result_course": "Fontwell",
       "result_horse": "Roi du Risk",
       "result_race_id": "rac_32301089886",
-      "result_horse_id": "hrs_46265562"
+      "result_horse_id": "hrs_46265562",
+      "result_retrieved_at": "2026-10-15T16:36:56.310493+00:00"
     },
     {
       "race_date": "2026-10-15",
@@ -303,7 +304,8 @@
       "result_course": "Perth",
       "result_horse": "Kado Sacree",
       "result_race_id": "rac_32301120878",
-      "result_horse_id": "hrs_48853994"
+      "result_horse_id": "hrs_48853994",
+      "result_retrieved_at": "2026-10-15T16:36:56.310493+00:00"
     },
     {
       "race_date": "2026-10-15",
@@ -332,7 +334,8 @@
       "result_course": "Fontwell",
       "result_horse": "Uncle Remus",
       "result_race_id": "rac_32301091823",
-      "result_horse_id": "hrs_47313658"
+      "result_horse_id": "hrs_47313658",
+      "result_retrieved_at": "2026-10-15T16:36:56.310493+00:00"
     },
     {
       "race_date": "2026-10-15",
@@ -361,7 +364,8 @@
       "result_course": "Brighton",
       "result_horse": "Noble Guest",
       "result_race_id": "rac_32301078264",
-      "result_horse_id": "hrs_43163848"
+      "result_horse_id": "hrs_43163848",
+      "result_retrieved_at": "2026-10-15T16:36:56.310493+00:00"
     },
     {
       "race_date": "2026-10-15",
@@ -390,7 +394,8 @@
       "result_course": "Southwell (AW)",
       "result_horse": "Magic Trip",
       "result_race_id": "rac_32301095697",
-      "result_horse_id": "hrs_56591101"
+      "result_horse_id": "hrs_56591101",
+      "result_retrieved_at": "2026-10-15T16:36:56.310493+00:00"
     },
     {
       "race_date": "2026-10-15",
@@ -419,7 +424,8 @@
       "result_course": "Fontwell",
       "result_horse": "Ballymoreen",
       "result_race_id": "rac_32301093760",
-      "result_horse_id": "hrs_48259407"
+      "result_horse_id": "hrs_48259407",
+      "result_retrieved_at": "2026-10-15T16:36:56.310493+00:00"
     },
     {
       "race_date": "2026-10-15",

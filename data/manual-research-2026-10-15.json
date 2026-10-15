@@ -351,6 +351,21 @@
       "reason": "Short-priced favourite despite no wins in six starts; API performance rating 58 marginally below Be An Angel and Honour Your Dreams (59 each), while Bated Breeze has speed rating 69 versus Harry Mole 64",
       "counterargument": "Consistent top-four finisher in six recent starts, including five placed efforts; suited by distance and repeatedly competitive against similar opposition",
       "status": "pending"
+    },
+    {
+      "race_date": "2026-10-15",
+      "off_time_uk": "18:30",
+      "course": "Southwell (AW)",
+      "horse": "Distillate",
+      "race_id": "rac_32301610939",
+      "horse_id": "hrs_30096675",
+      "scheduled_off_dt": "2026-10-15T18:30:00+01:00",
+      "lay_odds": 4.3,
+      "liability_gbp_10_stake": 33,
+      "source": "User Betfair Exchange screenshot 17:24 BST, 15 October 2026",
+      "reason": "Market leader despite two consecutive eighth-place finishes and inconsistent recent form; drawn 12, while Based (API performance 62), Men Of Honour (63) and course-and-distance winner Mickey Mongoose provide opposition",
+      "counterargument": "API performance rating 62 among strongest in field and speed rating 65 joint highest; proven at seven furlongs and could rebound under suitable conditions",
+      "status": "pending"
     }
   ],
   "excluded": [

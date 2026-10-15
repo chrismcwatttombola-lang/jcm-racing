@@ -321,6 +321,21 @@
       "reason": "Among market leaders despite API performance rating 79 below Rajeko 94, Jungle Ruler 86, Diligent Resdev 84 and Island Bear 83; winless in last six, latest Southwell third beaten four lengths",
       "counterargument": "Race-fit after 12 days; recent second and third, suited by Southwell mile; Andrew Balding stable has recent winners",
       "status": "pending"
+    },
+    {
+      "race_date": "2026-10-15",
+      "off_time_uk": "17:14",
+      "course": "Fontwell",
+      "horse": "Ballymoreen",
+      "race_id": "rac_32301093760",
+      "horse_id": "hrs_48259407",
+      "scheduled_off_dt": "2026-10-15T17:14:00+01:00",
+      "lay_odds": 1.92,
+      "liability_gbp_10_stake": 9.2,
+      "source": "User Exchange screenshot 17:03 BST, 15 October 2026",
+      "reason": "Clear favourite despite API performance rating 98 below Painted Wolf 102, That Is Blue 100 and Brave Guest 100; returning from 192 days off; latest Hereford second beaten 26 lengths",
+      "counterargument": "Previous winning form, carries 156 lb and Harry Cobden rides; capable of improving, and Painted Wolf also returns from 192 days off",
+      "status": "pending"
     }
   ],
   "excluded": [

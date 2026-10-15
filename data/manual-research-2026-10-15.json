@@ -306,6 +306,21 @@
       "reason": "Market leader despite recent finishes ninth, eighth, fourth and seventh, with last two API performance figures 54; Berning Hot, Nutcracker and Blue Collar Lad provide credible opposition",
       "counterargument": "Highest API performance rating 72, speed rating 68 and proven winning form over the distance; reduced handicap mark offers opportunity to rebound",
       "status": "pending"
+    },
+    {
+      "race_date": "2026-10-15",
+      "off_time_uk": "17:00",
+      "course": "Southwell (AW)",
+      "horse": "Magic Trip",
+      "race_id": "rac_32301095697",
+      "horse_id": "hrs_56591101",
+      "scheduled_off_dt": "2026-10-15T17:00:00+01:00",
+      "lay_odds": 4.7,
+      "liability_gbp_10_stake": 37,
+      "source": "User Exchange screenshot 16:57 BST, 15 October 2026",
+      "reason": "Among market leaders despite API performance rating 79 below Rajeko 94, Jungle Ruler 86, Diligent Resdev 84 and Island Bear 83; winless in last six, latest Southwell third beaten four lengths",
+      "counterargument": "Race-fit after 12 days; recent second and third, suited by Southwell mile; Andrew Balding stable has recent winners",
+      "status": "pending"
     }
   ],
   "excluded": [

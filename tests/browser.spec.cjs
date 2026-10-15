@@ -925,7 +925,7 @@ test('Cosmic Girl fourth settles fifth lay win with eight picks preserved',async
 test('latest eight settled results and expanded builder separate realised and pending profit',async({page})=>{
  await page.clock.install({time:new Date('2026-10-15T15:11:00Z')});await page.goto(URL);
  await expect(page.locator('#jcm-official-panel')).toContainText('87.5% success · 7/8 settled');
- for(const [i,finish] of [[6,'2nd'],[7,'5th']]){await page.locator('[data-manual-index="'+i+'"]').click();await expect(page.locator('.jcm-result-finish')).toHaveText(finish);await page.keyboard.press('Escape');}
+ for(const [i,finish] of [[6,'Finished 2nd of 8'],[7,'Finished 5th of 11']]){await page.locator('[data-manual-index="'+i+'"]').click();await expect(page.locator('.jcm-result-finish')).toHaveText(finish);await page.keyboard.press('Escape');}
  await page.evaluate(()=>window.jcmOpenBuilderStrategy('fixed'));
  await expect(page.locator('[data-builder-row]')).toHaveCount(11);
  await expect(page.locator('[data-builder-liability-value]')).toHaveText(['£90.91',...Array(9).fill('£90.91'),'£90.90']);

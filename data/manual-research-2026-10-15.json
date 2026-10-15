@@ -219,6 +219,21 @@
     },
     {
       "race_date": "2026-10-15",
+      "off_time_uk": "16:04",
+      "course": "Fontwell",
+      "horse": "Roi du Risk",
+      "race_id": "rac_32301089886",
+      "horse_id": "hrs_46265562",
+      "scheduled_off_dt": "2026-10-15T16:04:00+01:00",
+      "lay_odds": 2.58,
+      "liability_gbp_10_stake": 15.8,
+      "source": "Exchange screenshot 15:22 BST 15 October",
+      "reason": "Favourite with performance rating 120 versus Miralago 128 and Koukeo 127; 222-day absence",
+      "counterargument": "Prior Leicester win and Fontwell second",
+      "status": "pending"
+    },
+    {
+      "race_date": "2026-10-15",
       "off_time_uk": "16:15",
       "course": "Perth",
       "horse": "Kado Sacree",

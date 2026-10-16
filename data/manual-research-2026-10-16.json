@@ -72,6 +72,27 @@
       "selection_origin": "User-directed third selection",
       "analysis_status": "USER_CONFIRMED_RESEARCH_PICK",
       "selection_order": 3
+    },
+    {
+      "race_date": "2026-10-16",
+      "off_time_uk": "15:47",
+      "scheduled_off_dt": "2026-10-16T15:47:00+01:00",
+      "course": "Uttoxeter",
+      "horse": "Bleu d'Enfer",
+      "race_id": "rac_32301262279",
+      "horse_id": "hrs_29523060",
+      "result_status": "PENDING",
+      "lay_odds": null,
+      "exchange_reference_odds": 5.5,
+      "exchange_reference_changed_at": "2026-10-16 14:24:11",
+      "exchange_reference_source": "Racing API Pro Betfair Exchange-labelled reference; market side and executable liquidity unverified",
+      "source": "User-confirmed fourth JCM research selection following Racing API Pro analysis",
+      "reason": "Winless in ten returned recent chase results despite three seconds. Last three historical performance figures 118, 117, 116 compared with earlier 127 peaks. Second at Uttoxeter over today's trip and going last time but beaten 18 lengths. Some recorded jumping errors.",
+      "counterargument": "Highest official mark in the five-runner field (120) and joint-highest API performance assessment (123). Previously produced 127-rated runs and now competes from a lower handicap mark.",
+      "price_note": "5.5 is an API-reported Exchange reference, not a verified executable lay quote. No stake or liability allocated.",
+      "selection_origin": "User-directed fourth selection",
+      "analysis_status": "USER_CONFIRMED_RESEARCH_PICK",
+      "selection_order": 4
     }
   ]
 }

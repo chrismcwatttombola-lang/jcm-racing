@@ -1,0 +1,24 @@
+const assert = require('node:assert/strict');
+const fs = require('node:fs');
+const vm = require('node:vm');
+const ledger = JSON.parse(fs.readFileSync('data/manual-research-2026-10-16.json'));
+const details = JSON.parse(fs.readFileSync('data/result-card-details-2026-10-16.json'));
+const html = fs.readFileSync('index.html', 'utf8');
+const acceptance = html.match(/window\.jcmAcceptedResult\s*=[\s\S]*?\n};/)[0];
+const panel = {innerHTML:'',addEventListener(){}};
+const tile = {};
+const date = {value:ledger.date, options:[{value:ledger.date}],addEventListener(){}};
+const context = {Date, URL, console, window:{}, document:{getElementById:id=>({'date':date,'jcm-official-panel':panel,'jcm-daily-rate':tile}[id])},fetch:async path=>({ok:true,json:async()=>path.includes('result-card-details')?details:ledger})};
+vm.createContext(context);
+vm.runInContext(acceptance,context);
+context.window.jcmResearchResultView = r => context.window.jcmAcceptedResult(r) ? ({WIN:{css:'win',label:'Horse lost'},LOSS:{css:'loss',label:'Horse won'},NR:{css:'nr',label:'NR'}}[r.result_status]) : {css:'pending',label:'Pending'};
+assert.equal(ledger.selections.length,4);
+ledger.selections.forEach(r=>assert.equal(context.window.jcmAcceptedResult(r),true,r.horse));
+vm.runInContext(fs.readFileSync('scripts/manual-research-2026-10-16.js','utf8'),context);
+setImmediate(()=>{
+ assert.match(panel.innerHTML,/50% success · 2\/4 settled/);
+ assert.equal((panel.innerHTML.match(/jcm-status win/g)||[]).length,2);
+ assert.equal((panel.innerHTML.match(/jcm-status loss/g)||[]).length,2);
+ assert.match(tile.textContent,/50%/);
+ console.log('16 October result acceptance, daily totals and statuses passed');
+});

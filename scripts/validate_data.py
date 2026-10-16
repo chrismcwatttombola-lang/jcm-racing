@@ -27,3 +27,21 @@ for record in ledger["selections"]:
     assert lock.tzinfo is not None, "Lock must include timezone"
     assert record["market_snapshot"]["source_url"].startswith("https://")
 print(f"JCM validation passed: {len(ids)} automated locked selections; feeds: {status['mode']}")
+
+# Publication gate for all current/future manually approved picks.
+for path in sorted((root / "data").glob("manual-research-*.json")):
+    day = json.loads(path.read_text())
+    detail_path = root / "data" / ("result-card-details-" + day["date"] + ".json")
+    details = json.loads(detail_path.read_text())["details"] if detail_path.exists() else []
+    for row in day["selections"]:
+        assert isinstance(row.get("reason"), str) and row["reason"].strip(), f"{path.name}: missing reason"
+        assert isinstance(row.get("counterargument"), str) and row["counterargument"].strip(), f"{path.name}: missing counterargument"
+        matches = [m for m in details if m.get("race_id") == row["race_id"] and m.get("horse") == row["horse"]]
+        metadata = row if row.get("racecard_url") else matches[0] if len(matches) == 1 else {}
+        from urllib.parse import urlparse
+        url = urlparse(metadata.get("racecard_url", ""))
+        course = row["course"].lower().replace(" (aw)", "").replace(" ", "-")
+        assert url.scheme == "https" and url.hostname == "www.sportinglife.com" and url.path.startswith("/racing/racecards/" + day["date"] + "/" + course + "/racecard/"), f"{path.name}: missing/mismatched racecard for {row['horse']}"
+        if row.get("result_status") in {"WIN", "LOSS"}:
+            assert row.get("result_retrieved_at") and row.get("result_off_dt"), f"{path.name}: incomplete result evidence for {row['horse']}"
+print("Manual-pick publication gate passed: reasons, counterarguments, racecards and settled evidence")

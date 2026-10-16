@@ -79,9 +79,14 @@ function initial(c,m){
  return s;
 }
 const research=c=>read('data/'+(c.selection_mode==='manual_pre_race_research'?'manual-research-':'competition-research-')+c.date+'.json');
+function coverage(c,p){
+ if(c.selection_mode!=='manual_pre_race_research'||!Array.isArray(p.selections)||p.selections.length===c.rows.length)return '';
+ const settled=p.selections.filter(r=>['WIN','LOSS'].includes(status(r))),wins=settled.filter(r=>status(r)==='WIN').length;
+ return 'Full research record: '+wins+' lay wins / '+(settled.length-wins)+' lay losses · '+(settled.length?Math.round(wins/settled.length*1000)/10+'%':'N/A')+' · '+settled.length+'/'+p.selections.length+' settled. Financial simulation: '+c.rows.length+'-pick historical snapshot only; '+(p.selections.length-c.rows.length)+' later picks are outside this snapshot. Full-day profit is unavailable where verified lay prices are missing.';
+}
 async function card(d){
  const c=validateConfig(await read('data/bet-builder-'+d+'.json'),d);
- return {...c,rows:mergeResults(c,await research(c))};
+ const p=await research(c);return {...c,research_summary:coverage(c,p),rows:mergeResults(c,p)};
 }
 function allocation(s,rows,amount,m){
  const next=structuredClone(s),picked=rows.filter(r=>selected(s,r)),stamp=new Date().toISOString();
@@ -132,6 +137,7 @@ async function open(next='fixed'){
    node.innerHTML='<h2>Bet Builder · '+names[next]+'</h2><label class="builder-date">Racing day <select id="builder-day">'+days.days.map(v=>'<option value="'+v+'" '+(v===d?'selected':'')+'>'+labelDate(v)+'</option>').join('')+'</select></label>'+
     '<section class="builder-tile"><div class="builder-bank"><div>Opening bank<strong>'+money(c.account_opening_cents)+'</strong></div><div>Balance<strong data-builder-balance>'+money(t.balance)+'</strong></div><div>Reserved<strong data-builder-reserved>'+money(t.reserved)+'</strong></div><div>Available<strong data-builder-available>'+money(t.available)+'</strong></div></div></section>'+
     '<section class="builder-tile"><h3>Settled profit / loss</h3><strong data-builder-settled>'+money(t.movement)+'</strong><p class="builder-note">'+percent(t.percentage)+' on '+money(t.settledRisk)+' settled liability · after 5% commission. Pending liability: '+money(t.reserved)+'.</p></section>'+
+    (c.research_summary?'<p class="builder-note" data-research-coverage>'+safe(c.research_summary)+'</p>':'')+
     (c.simulation_note?'<p class="builder-note">'+safe(c.simulation_note)+'</p>':'')+
     '<section class="builder-tile builder-potential"><h3>Profit / Loss Calculator</h3><strong data-builder-potential>'+ (t.potential===null?'Unavailable':money(t.potential))+'</strong><p class="builder-note">Simulation · after 5% commission · assumes remaining horses are beaten.</p></section>'+
     '<p id="builder-message" role="status">'+safe(message)+'</p><p class="builder-note">Simulation · liability at risk · saved on this device.</p>'+
@@ -173,10 +179,10 @@ async function open(next='fixed'){
  }catch(_){if(token===generation){node.innerHTML='<h2>Bet Builder · '+names[next]+'</h2><p>INSUFFICIENT VERIFIED DATA — strategy unavailable. Saved choices retained.</p>';window.jcmAddAccountSwitch(node,next);}}
 }
 async function history(days){
- const points={fixed:[],race:[],manual:[]},issues=[];
+ const points={fixed:[],race:[],manual:[]},issues=[],coverageNotes={};
  for(const d of [...days.days].sort()){
   try{
-   const c=await card(d),rows=c.rows;if(Date.now()<Math.max(...rows.map(off)))continue;
+   const c=await card(d),rows=c.rows;if(c.research_summary)coverageNotes[d]=c.research_summary;if(Date.now()<Math.max(...rows.map(off)))continue;
    for(const m of ['fixed','race','manual']){
     try{const s=loadSettings(c,m)||initial(c,m);c.account_opening_cents=opening(c,m);const t=totals(c,rows,s);
      if(!t.unresolved&&t.available>=0)points[m].push({date:d,balance:t.balance,opening:c.account_opening_cents,staked:t.staked,returned:t.returned,percentage:t.percentage,basis:s.basis||'Saved device choices'});
@@ -185,10 +191,10 @@ async function history(days){
    }
   }catch(_){issues.push(d+' unavailable');}
  }
- return {points,issues};
+ return {points,issues,coverageNotes};
 }
 async function results(node,days,token){
- const {points,issues}=await history(days);
+ const {points,issues,coverageNotes}=await history(days);
  if(token!==generation)return;
  const allDates=[...new Set(Object.values(points).flat().map(p=>p.date))].sort();
  if(!resultsMonth)resultsMonth=(allDates.at(-1)||day()).slice(0,7);
@@ -199,6 +205,7 @@ async function results(node,days,token){
  node.innerHTML='<div class="builder-results-compact"><h2>Bet Builder · Results</h2><p class="builder-results-subtitle">Daily percentage trends · after commission</p>'+
   '<div class="builder-month-nav"><button data-month-prev aria-label="Previous month">‹</button><strong>'+monthLabel+'</strong><button data-month-next aria-label="Next month">›</button></div>'+chart(points,resultsMonth)+
   (d?'<section class="builder-day-card" data-results-day="'+d+'"><div class="builder-results-date"><label for="builder-results-day">Date <select id="builder-results-day">'+dates.map(v=>'<option value="'+v+'" '+(v===d?'selected':'')+'>'+labelDate(v)+'</option>').join('')+'</select></label><div><button data-results-prev '+(i<=0?'disabled':'')+' aria-label="Previous day">‹</button><button data-results-next '+(i>=dates.length-1?'disabled':'')+' aria-label="Next day">›</button></div></div><div class="builder-table-wrap"><table class="builder-results-table"><thead><tr><th scope="col">Theory</th><th scope="col">Stake</th><th scope="col">Returns</th><th scope="col">Percentage</th></tr></thead><tbody>'+['fixed','race','manual'].map(m=>{const p=points[m].find(p=>p.date===d);return '<tr data-results-strategy="'+m+'"><th scope="row"><i style="background:'+colours[m]+'"></i>'+names[m]+'</th><td data-result-staked>'+(p?money(p.staked):'—')+'</td><td data-result-returned>'+(p?money(p.returned):'—')+'</td><td data-result-percentage class="'+(p?.percentage>0?'builder-positive':p?.percentage<0?'builder-negative':'')+'">'+(p?percent(p.percentage):'Pending')+'</td></tr>';}).join('')+'</tbody></table></div><p class="builder-day-basis">'+(d<'2026-10-14'?'Backfilled default simulations':'Published simulation / saved device choices')+'</p></section>':'')+
+  (d&&coverageNotes[d]?'<p class="builder-note" data-research-coverage>'+safe(coverageNotes[d])+'</p>':'')+
   (issues.length?'<p class="builder-results-status" role="status">Some dates have pending results or missing data.</p>':'')+'</div>';
  window.jcmAddAccountSwitch(node,'results');
  const change=v=>{resultsDay=v;results(node,days,token);};

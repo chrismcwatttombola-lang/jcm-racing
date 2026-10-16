@@ -764,13 +764,13 @@ test('15 October picks keep reasoning and history usable with Today’s Plan',as
  await expect(page.locator('#roundup-title')).toHaveText('Today’s Plan');
  await expect(page.locator('#roundup-date')).toHaveValue('2026-10-15');
  await expect(page.locator('.roundup-box').first()).toContainText('one screenshot and one race at a time');
- await expect(page.locator('.roundup-box').last()).toContainText('11 successful non-win selections and 5 unsuccessful selections');
+ await expect(page.locator('.roundup-box').last()).toContainText('12 successful non-win selections and 7 unsuccessful selections');
  await page.locator('#roundup-date').selectOption('2026-10-14');
  await expect(page.locator('#roundup-content')).toContainText('one non-winner from two selections: 50%');
  await page.keyboard.press('Escape');
  await page.locator('[data-page="picks"]').click();
  await expect(page.locator('#date')).toHaveValue('2026-10-15');
- await expect(page.locator('[data-manual-index] .jcm-horse')).toHaveText(['Roman Spring','Moltophino','Motazzen','I Wish You','Magnolia','Cosmic Girl','Minella Marathon','Deep Sleep','Roi du Risk','Kado Sacree','Uncle Remus','Noble Guest','Magic Trip','Ballymoreen','Harry Mole','Distillate']);
+ await expect(page.locator('[data-manual-index] .jcm-horse')).toHaveText(['Roman Spring','Moltophino','Motazzen','I Wish You','Magnolia','Cosmic Girl','Minella Marathon','Deep Sleep','Roi du Risk','Kado Sacree','Uncle Remus','Noble Guest','Magic Trip','Ballymoreen','Harry Mole','Distillate','Wadima','Yordan','Norflondonforever']);
  for(const [i,name] of ['Roman Spring','Moltophino','Motazzen'].entries()){
   await page.locator('[data-manual-index="'+i+'"]').click();
   await expect(page.locator('#jcm-detail-content')).toContainText(name);
@@ -781,7 +781,7 @@ test('15 October picks keep reasoning and history usable with Today’s Plan',as
   await expect(page.locator('.jcm-result-finish')).toHaveText('Pending');
   await expect(page.getByRole('link',{name:'View this racecard ↗'})).toHaveAttribute('href',/sportinglife\.com\/racing\/racecards\/2026-10-15\//);
   await expect(page.getByRole('link',{name:'View race videos here'})).toHaveAttribute('href','https://www.sportinglife.com/racing/results');
-  await expect(page.locator('.jcm-result-card')).toContainText('Exact race result link not yet verified.');
+  await expect(page.getByRole('link',{name:'View this race result ↗'})).toHaveAttribute('href',/sportinglife\.com\/racing\/results\/2026-10-15\//);
   expect(await page.locator('.jcm-modal').evaluate(e=>e.scrollWidth<=e.clientWidth)).toBe(true);
   await page.locator('#jcm-detail-overlay .jcm-close').click();
  }
@@ -790,7 +790,7 @@ test('15 October picks keep reasoning and history usable with Today’s Plan',as
  await expect(page.locator('#jcm-detail-content')).toContainText('Il Est Francais');
  await page.locator('#jcm-detail-overlay .jcm-close').click();
  await page.locator('#date').selectOption('2026-10-15');
- await expect(page.locator('[data-manual-index]')).toHaveCount(16);
+ await expect(page.locator('[data-manual-index]')).toHaveCount(19);
 });
 
 
@@ -802,7 +802,7 @@ test('today cards retain pending outcomes and reject mismatched racecard metadat
   await route.fulfill({response,json:data});
  });
  await page.goto(URL);
- await expect(page.locator('[data-manual-index]')).toHaveCount(16);
+ await expect(page.locator('[data-manual-index]')).toHaveCount(19);
  await page.locator('[data-manual-index="0"]').click();
  await expect(page.locator('.jcm-result-outcome')).toHaveText('Pending');
  await expect(page.locator('.jcm-result-card')).toContainText('Exact racecard link not verified.');
@@ -846,7 +846,7 @@ test('15 October matched results preserve all five picks, three locked builder r
  await page.route('**/data/bet-builder-2026-10-15.json',async route=>{const response=await route.fetch(),data=await response.json();data.rows=data.rows.slice(0,3);delete data.expansion_from_keys;await route.fulfill({response,json:data});});
  await page.clock.install({time:new Date('2026-10-15T13:30:00Z')});
  await page.setViewportSize({width:390,height:844});await page.goto(URL);await page.locator('#date').selectOption('2026-10-15');
- await expect(page.locator('[data-manual-index]')).toHaveCount(16);
+ await expect(page.locator('[data-manual-index]')).toHaveCount(19);
  await expect(page.locator('#jcm-official-panel')).toContainText('66.7% success · 2/3 settled');
  const labels=['Horse won','Horse lost','Horse lost','Pending','Pending','Pending','Pending','Pending'];
  for(let i=0;i<8;i++)await expect(page.locator('[data-manual-index="'+i+'"] .jcm-status')).toHaveText(labels[i]);
@@ -875,7 +875,7 @@ test('15 October matched results preserve all five picks, three locked builder r
 test('15 October fallback retains the same accepted outcomes when JSON is unavailable',async({page})=>{
  await page.clock.install({time:new Date('2026-10-15T13:30:00Z')});
  await page.route('**/data/manual-research-2026-10-15.json',route=>route.abort());
- await page.goto(URL);await expect(page.locator('[data-manual-index]')).toHaveCount(16);
+ await page.goto(URL);await expect(page.locator('[data-manual-index]')).toHaveCount(19);
  await expect(page.locator('[data-manual-index="0"]')).toContainText('Horse won');
  await expect(page.locator('[data-manual-index="1"]')).toContainText('Horse lost');
  await expect(page.locator('[data-manual-index="2"]')).toContainText('Horse lost');
@@ -899,7 +899,7 @@ test('I Wish You unseat counts as lay win, retains reasoning and is not NR',asyn
 
 test('Magnolia verified website result counts as fourth lay win without losing later picks',async({page})=>{
  await page.clock.install({time:new Date('2026-10-15T14:30:00Z')});await page.goto(URL);
- await expect(page.locator('[data-manual-index]')).toHaveCount(16);
+ await expect(page.locator('[data-manual-index]')).toHaveCount(19);
  await expect(page.locator('#jcm-official-panel')).toContainText('80% success · 4/5 settled');
  await expect(page.locator('[data-manual-index="4"]')).toContainText('Horse lost');
  await page.locator('[data-manual-index="4"]').click();await expect(page.locator('.jcm-result-finish')).toHaveText('3rd');
@@ -912,7 +912,7 @@ test('Magnolia verified website result counts as fourth lay win without losing l
 
 test('Cosmic Girl fourth settles fifth lay win with eight picks preserved',async({page})=>{
  await page.clock.install({time:new Date('2026-10-15T14:35:00Z')});await page.goto(URL);
- await expect(page.locator('[data-manual-index]')).toHaveCount(16);
+ await expect(page.locator('[data-manual-index]')).toHaveCount(19);
  await expect(page.locator('#jcm-official-panel')).toContainText('83.3% success · 5/6 settled');
  await page.locator('[data-manual-index="5"]').click();await expect(page.locator('.jcm-result-finish')).toHaveText('4th');
  await expect(page.locator('.jcm-result-card')).toContainText('handicap debut');await page.keyboard.press('Escape');
@@ -984,4 +984,22 @@ test('all sixteen evening results settle without pending liability',async({page}
  await expect(page.locator('[data-builder-settled]')).toHaveText('£-73.17');await expect(page.locator('[data-builder-reserved]')).toHaveText('£0.00');
  await page.locator('[data-account-mode="race"]').click();await expect(page.locator('[data-builder-settled]')).toHaveText('£-585.35');
  await page.locator('[data-account-mode="manual"]').click();await expect(page.locator('[data-builder-settled]')).toHaveText('£-292.67');
+});
+
+
+test('today pick displays stored reasoning and clickable card, results and video access',async({page})=>{
+ await page.clock.install({time:new Date('2026-10-16T10:00:00Z')});await page.goto(URL);await page.locator('#date').selectOption('2026-10-16');await page.locator('[data-oct16-index="0"]').click();
+ await expect(page.locator('.jcm-result-card')).toContainText('225-day absence');await expect(page.locator('.jcm-result-card')).toContainText('Counterargument');
+ await expect(page.getByRole('link',{name:'View this racecard ↗'})).toHaveAttribute('href',/uttoxeter\/racecard\/943755\//);
+ await expect(page.getByRole('link',{name:'Browse results for this day ↗'})).toHaveAttribute('href','https://www.sportinglife.com/racing/results/2026-10-16');
+ await expect(page.getByRole('link',{name:'View race videos here'})).toBeVisible();
+});
+test('yesterday nineteen accepted outcomes reconcile across cards, overall and financial snapshot notices',async({page,request})=>{
+ await page.clock.install({time:new Date('2026-10-16T12:00:00Z')});await page.goto(URL);await page.locator('#date').selectOption('2026-10-15');
+ await expect(page.locator('#jcm-official-panel')).toContainText('63.2% success · 12/19 settled');await expect(page.locator('[data-manual-index]')).toHaveCount(19);
+ const data=await(await request.get('http://127.0.0.1:8765/data/manual-research-2026-10-15.json')).json();
+ for(let i=0;i<19;i++){await page.locator('[data-manual-index="'+i+'"]').click();await expect(page.locator('.jcm-result-card')).toContainText(data.selections[i].reason);await expect(page.getByRole('link',{name:'View this racecard ↗'})).toHaveAttribute('href',/\/racecard\/\d+\//);await expect(page.getByRole('link',{name:'View this race result ↗'})).toHaveAttribute('href',/\/results\/2026-10-15\//);await page.keyboard.press('Escape');}
+ await expect.poll(()=>page.evaluate(()=>window.jcmOverallRows.filter(r=>r.date==='2026-10-15').length)).toBe(19);
+ await page.evaluate(()=>window.jcmOpenBuilderStrategy('fixed'));await expect(page.locator('[data-research-coverage]')).toContainText('12 lay wins / 7 lay losses');await expect(page.locator('[data-research-coverage]')).toContainText('16-pick historical snapshot');await expect(page.locator('[data-builder-settled]')).toHaveText('£-73.17');
+ await page.locator('[data-account-mode="results"]').click();await expect(page.locator('[data-research-coverage]')).toContainText('19/19 settled');await expect(page.locator('[data-results-strategy="fixed"] [data-result-percentage]')).toHaveText('-7.32%');
 });

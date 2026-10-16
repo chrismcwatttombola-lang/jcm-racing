@@ -27,7 +27,7 @@
   if(date.value!==day)return;
   const button=e.target.closest('[data-oct16-index]');if(!button)return;
   const r=rows[Number(button.dataset.oct16Index)];if(!r)return;
-  if(typeof window.jcmShowResearchCard==='function')window.jcmShowResearchCard(r,null);
+  if(typeof window.jcmShowResearchCard==='function')window.jcmShowResearchCard(r,r);
  });
  date.addEventListener('change',render);
  render();load();

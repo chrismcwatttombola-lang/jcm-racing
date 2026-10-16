@@ -23,7 +23,10 @@
       "price_note": "5.9 is an API-reported Exchange reference, NOT a verified executable lay quote. No lay stake or liability allocated.",
       "prize_first_gbp": 4700,
       "selection_origin": "User-directed selection",
-      "analysis_status": "USER_CONFIRMED_RESEARCH_PICK"
+      "analysis_status": "USER_CONFIRMED_RESEARCH_PICK",
+      "racecard_url": "https://www.sportinglife.com/racing/racecards/2026-10-16/uttoxeter/racecard/943755/insurance-connections-best-bet-handicap-chase-gbb-race",
+      "link_verified_at": "2026-10-16T09:54:40.285Z",
+      "link_source_url": "https://www.sportinglife.com/racing/racecards/2026-10-16/uttoxeter/racecard/943755/insurance-connections-best-bet-handicap-chase-gbb-race"
     }
   ]
 }

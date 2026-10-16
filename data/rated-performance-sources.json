@@ -4,5 +4,9 @@
     "data/competition-research-2026-10-12.json",
     "data/competition-research-2026-10-13.json",
     "data/competition-research-2026-10-14.json"
+  ],
+  "manual_sources": [
+    "data/manual-research-2026-10-15.json",
+    "data/manual-research-2026-10-16.json"
   ]
 }

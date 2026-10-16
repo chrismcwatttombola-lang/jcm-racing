@@ -513,7 +513,10 @@
       "result_course": "Southwell (AW)",
       "result_horse": "Wadima",
       "result_race_id": "rac_32301109256",
-      "result_horse_id": "hrs_65190594"
+      "result_horse_id": "hrs_65190594",
+      "result_retrieved_at": "2026-10-16T10:00:00Z",
+      "result_off_dt": "2026-10-15T19:00:00+01:00",
+      "result_verification_note": "Result rechecked via Racing API Pro on 16 October; retrieval timestamp denotes reconciliation record, not original result publication."
     },
     {
       "race_date": "2026-10-15",
@@ -541,7 +544,10 @@
       "result_course": "Southwell (AW)",
       "result_horse": "Yordan",
       "result_race_id": "rac_32301105382",
-      "result_horse_id": "hrs_17389759296"
+      "result_horse_id": "hrs_17389759296",
+      "result_retrieved_at": "2026-10-16T10:00:00Z",
+      "result_off_dt": "2026-10-15T19:30:00+01:00",
+      "result_verification_note": "Result rechecked via Racing API Pro on 16 October; retrieval timestamp denotes reconciliation record, not original result publication."
     },
     {
       "race_date": "2026-10-15",
@@ -570,7 +576,9 @@
       "result_course": "Southwell (AW)",
       "result_horse": "Norflondonforever",
       "result_race_id": "rac_32301101508",
-      "result_horse_id": "hrs_47685064"
+      "result_horse_id": "hrs_47685064",
+      "result_retrieved_at": "2026-10-16T10:00:00Z",
+      "result_verification_note": "Result rechecked via Racing API Pro on 16 October; retrieval timestamp denotes reconciliation record, not original result publication."
     }
   ],
   "excluded": [

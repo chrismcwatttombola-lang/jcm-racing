@@ -38,7 +38,7 @@
       "horse_id": null,
       "result_status": "PENDING",
       "lay_odds": null,
-      "exchange_reference_odds": 7.0,
+      "exchange_reference_odds": 7,
       "exchange_reference_changed_at": "2026-10-16 11:36:09",
       "exchange_reference_source": "Racing API Pro Exchange-labelled quote reported in prior analysis; timezone, market side and liquidity unverified",
       "source": "User-confirmed selection following the Racing API Pro breakdown in this conversation",
@@ -51,6 +51,27 @@
       "racecard_url": "https://www.sportinglife.com/racing/racecards/2026-10-16/haydock/racecard/944349/m6toll-road-to-victory-handicap-div-1",
       "selection_recorded_at": "2026-10-16T11:40:41+01:00",
       "selection_timestamp_note": "Conversation request time; not market quote time."
+    },
+    {
+      "race_date": "2026-10-16",
+      "off_time_uk": "15:37",
+      "scheduled_off_dt": "2026-10-16T15:37:00+01:00",
+      "course": "Redcar",
+      "horse": "Houndhill",
+      "race_id": "rac_32301246783",
+      "horse_id": "hrs_52615213",
+      "result_status": "PENDING",
+      "lay_odds": null,
+      "exchange_reference_odds": 6,
+      "exchange_reference_changed_at": "2026-10-16 12:17:06",
+      "exchange_reference_source": "Racing API Pro Betfair Exchange-labelled market reference; quote side, timezone and liquidity unverified",
+      "source": "User-confirmed third JCM selection; Racing API Pro racecard and historical results",
+      "reason": "User-confirmed research selection. Official rating 64 ranks ninth of ten, while API performance 73 ranks fourth and speed 66 is joint seventh. Two career wins in returned ten-run history were both at Newcastle AW; on turf the returned record is seven starts without a win. Last two race-specific performance ratings were 65.",
+      "counterargument": "Two five-furlong wins demonstrate ability at the distance, and latest Redcar five-furlong run on good ground was a close third, beaten three-quarters of a length after traffic problems and a sluggish start. Current racecard performance figure 73 is fourth-best.",
+      "price_note": "6.0 is an API Exchange-labelled reference, not a verified executable lay price. No stake or liability allocated.",
+      "selection_origin": "User-directed third selection",
+      "analysis_status": "USER_CONFIRMED_RESEARCH_PICK",
+      "selection_order": 3
     }
   ]
 }

@@ -1,0 +1,29 @@
+{
+  "schema_version": 1,
+  "date": "2026-10-16",
+  "mode": "manual_pre_race_research",
+  "status": "in_progress",
+  "selections": [
+    {
+      "race_date": "2026-10-16",
+      "off_time_uk": "14:02",
+      "scheduled_off_dt": "2026-10-16T14:02:00+01:00",
+      "course": "Uttoxeter",
+      "horse": "Safe Destination",
+      "race_id": "rac_32301256468",
+      "horse_id": "hrs_28824544",
+      "result_status": "PENDING",
+      "lay_odds": null,
+      "exchange_reference_odds": 5.9,
+      "exchange_reference_changed_at": "2026-10-16T10:31:00+01:00",
+      "exchange_reference_source": "The Racing API Pro / Betfair Exchange market feed (side and liquidity unverified)",
+      "source": "User-confirmed first JCM lay research selection; Racing API Pro racecard and market data",
+      "reason": "225-day absence following two consecutive pulled-up runs; most persuasive staying form dates to October 2025. Connections' reputation and 10/28 (36%) recent stable strike rate may flatter market expectations for this individual comeback. Class 4 first prize £4,700 is modest, but prize money alone does not establish lack of intent.",
+      "counterargument": "Proven course-and-distance winner, successful at Chepstow over 26f in October 2025, and a strong trainer-jockey combination capable of preparing a runner after a break.",
+      "price_note": "5.9 is an API-reported Exchange reference, NOT a verified executable lay quote. No lay stake or liability allocated.",
+      "prize_first_gbp": 4700,
+      "selection_origin": "User-directed selection",
+      "analysis_status": "USER_CONFIRMED_RESEARCH_PICK"
+    }
+  ]
+}

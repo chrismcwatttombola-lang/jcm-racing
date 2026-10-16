@@ -71,7 +71,8 @@
       "price_note": "6.0 is an API Exchange-labelled reference, not a verified executable lay price. No stake or liability allocated.",
       "selection_origin": "User-directed third selection",
       "analysis_status": "USER_CONFIRMED_RESEARCH_PICK",
-      "selection_order": 3
+      "selection_order": 3,
+      "racecard_url": "https://www.sportinglife.com/racing/racecards/2026-10-16/redcar/racecard/944359/sam-hall-memorial-handicap"
     },
     {
       "race_date": "2026-10-16",
@@ -92,7 +93,8 @@
       "price_note": "5.5 is an API-reported Exchange reference, not a verified executable lay quote. No stake or liability allocated.",
       "selection_origin": "User-directed fourth selection",
       "analysis_status": "USER_CONFIRMED_RESEARCH_PICK",
-      "selection_order": 4
+      "selection_order": 4,
+      "racecard_url": "https://www.sportinglife.com/racing/racecards/2026-10-16/uttoxeter/racecard/943758/thomas-and-sonny-crilly-plant-hire-handicap-chase-gbb-race"
     }
   ]
 }

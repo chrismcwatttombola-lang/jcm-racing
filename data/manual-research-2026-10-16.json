@@ -27,6 +27,30 @@
       "racecard_url": "https://www.sportinglife.com/racing/racecards/2026-10-16/uttoxeter/racecard/943755/insurance-connections-best-bet-handicap-chase-gbb-race",
       "link_verified_at": "2026-10-16T09:54:40.285Z",
       "link_source_url": "https://www.sportinglife.com/racing/racecards/2026-10-16/uttoxeter/racecard/943755/insurance-connections-best-bet-handicap-chase-gbb-race"
+    },
+    {
+      "race_date": "2026-10-16",
+      "off_time_uk": "14:17",
+      "scheduled_off_dt": "2026-10-16T14:17:00+01:00",
+      "course": "Haydock",
+      "horse": "Viper",
+      "race_id": null,
+      "horse_id": null,
+      "result_status": "PENDING",
+      "lay_odds": null,
+      "exchange_reference_odds": 7.0,
+      "exchange_reference_changed_at": "2026-10-16 11:36:09",
+      "exchange_reference_source": "Racing API Pro Exchange-labelled quote reported in prior analysis; timezone, market side and liquidity unverified",
+      "source": "User-confirmed selection following the Racing API Pro breakdown in this conversation",
+      "reason": "Raised 7 lb to OR 85 after his Ayr win and moves from Class 4 to Class 3 over almost a mile. His only previous mile run ended ninth; credible opposition includes Desperate Dan, Monoceros and Empirestateofmind with soft/heavy-ground form. Selected by James following the full breakdown; the analysis did not establish a validated pricing edge.",
+      "counterargument": "Lightly raced three-year-old who won comfortably by 3½ lengths on heavy ground last time. He may be improving and have found his preferred conditions; one all-weather mile defeat does not prove a lack of turf-mile stamina.",
+      "price_note": "7.0 is an API-reported Exchange reference, not a verified executable lay quote. No lay stake or liability allocated.",
+      "selection_origin": "User-directed selection",
+      "analysis_status": "USER_CONFIRMED_RESEARCH_PICK",
+      "provider_identity_status": "Provider race and horse IDs not retained in supplied conversation; not inferred.",
+      "racecard_url": "https://www.sportinglife.com/racing/racecards/2026-10-16/haydock/racecard/944349/m6toll-road-to-victory-handicap-div-1",
+      "selection_recorded_at": "2026-10-16T11:40:41+01:00",
+      "selection_timestamp_note": "Conversation request time; not market quote time."
     }
   ]
 }

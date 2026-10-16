@@ -8,8 +8,8 @@
  let rows=[],loaded=false;
  function render(){
   if(date.value!==day)return;
-  const tile=document.getElementById('jcm-daily-rate');if(tile)tile.textContent='Today · '+rows.length+' selection · pending';
-  panel.innerHTML='<div class="jcm-panel-heading"><h2>Daily picks</h2><span class="jcm-accuracy">1 selection · pending</span></div>'+
+  const tile=document.getElementById('jcm-daily-rate');if(tile)tile.textContent='Today · '+rows.length+' selection'+(rows.length===1?'':'s')+' · pending';
+  panel.innerHTML='<div class="jcm-panel-heading"><h2>Daily picks</h2><span class="jcm-accuracy">'+rows.length+' selection'+(rows.length===1?'':'s')+' · pending</span></div>'+
    (!loaded?'<p role="status">Loading selection…</p>':rows.map((r,i)=>'<button type="button" class="jcm-row jcm-research-row jcm-rating-unrated" data-oct16-index="'+i+'"><span><span class="jcm-time">'+esc(r.off_time_uk)+'</span><span class="jcm-ground">'+esc(r.course)+'</span></span><span class="jcm-horse">'+esc(r.horse)+'</span><span class="jcm-status pending">PENDING</span></button>').join(''));
  }
  async function load(){

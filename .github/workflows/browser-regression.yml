@@ -4,7 +4,11 @@ on:
     paths:
       - 'index.html'
       - 'data/unverified-results.json'
-      - 'tests/browser.spec.cjs'
+      - 'tests/fresh-tracker.spec.cjs'
+      - 'scripts/fresh-tracker.js'
+      - 'data/competition-research-*.json'
+      - 'data/result-card-details-*.json'
+      - 'data/rated-performance-sources.json'
       - 'scripts/roundup.js'
       - 'scripts/roundup.css'
       - 'data/roundup*.json'
@@ -31,4 +35,4 @@ jobs:
       - name: Start static web server
         run: python3 -m http.server 8765 --bind 127.0.0.1 > /tmp/jcm-http.log 2>&1 &
       - name: Browser regression tests
-        run: npx playwright test tests/browser.spec.cjs --browser=chromium --workers=1 --reporter=line
+        run: npx playwright test tests/fresh-tracker.spec.cjs --browser=chromium --workers=1 --reporter=line

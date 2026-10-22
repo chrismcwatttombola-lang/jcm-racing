@@ -1,0 +1,54 @@
+{
+  "schema_version": 1,
+  "date": "2026-10-21",
+  "details": [
+    {
+      "date": "2026-10-21",
+      "horse": "Lady Mariko",
+      "course": "Kempton",
+      "off_time_uk": "20:00",
+      "race_id": "rac_32301789143",
+      "horse_id": "hrs_47098863",
+      "position": "6",
+      "field_size": 11,
+      "winner": "Amelia's Joy (GB)",
+      "race_name": "Try Unibet's Improved Acca Boosts Fillies' Handicap Stakes",
+      "winning_margin_lengths": ".5",
+      "selected_beaten_lengths": "1.75",
+      "racecard_url": "https://www.sportinglife.com/racing/racecards/2026-10-21/kempton/racecard/944587/try-unibets-improved-acca-boosts-fillies-handicap",
+      "results_url": "https://www.sportinglife.com/racing/results/2026-10-21/kempton/944587/try-unibets-improved-acca-boosts-fillies-handicap"
+    },
+    {
+      "date": "2026-10-21",
+      "horse": "Diamond White",
+      "course": "Fontwell",
+      "off_time_uk": "15:07",
+      "race_id": "rac_32301769773",
+      "horse_id": "hrs_50667057",
+      "position": "1",
+      "field_size": 6,
+      "winner": "Diamond White (IRE)",
+      "race_name": "BETTING.BET Play Champion Tipster Mares' Handicap Hurdle Race",
+      "winning_margin_lengths": ".5",
+      "selected_beaten_lengths": "0",
+      "racecard_url": "https://www.sportinglife.com/racing/racecards/2026-10-21/fontwell/racecard/944571/bettingbet-play-champion-tipster-mares-handicap-hurdle",
+      "results_url": "https://www.sportinglife.com/racing/results/2026-10-21/fontwell/944571/bettingbet-play-champion-tipster-mares-handicap-hurdle"
+    },
+    {
+      "date": "2026-10-21",
+      "horse": "Farasan",
+      "course": "Kempton",
+      "off_time_uk": "18:30",
+      "race_id": "rac_32301783332",
+      "horse_id": "hrs_17390330860",
+      "position": "9",
+      "field_size": 14,
+      "winner": "Horndean (FR)",
+      "race_name": "Try Unibet's Improved Acca Boosts Nursery Handicap Stakes",
+      "winning_margin_lengths": ".75",
+      "selected_beaten_lengths": "4.5",
+      "racecard_url": "https://www.sportinglife.com/racing/racecards/2026-10-21/kempton/racecard/944584/try-unibets-improved-acca-boosts-nursery",
+      "results_url": "https://www.sportinglife.com/racing/results/2026-10-21/kempton/944584/try-unibets-improved-acca-boosts-nursery"
+    }
+  ]
+}

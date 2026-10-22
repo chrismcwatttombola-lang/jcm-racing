@@ -238,8 +238,7 @@ header .head #date{margin:0;flex:none}
  const main=document.querySelector('main'),date=document.getElementById('date');
  const esc=v=>String(v??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;','\'':'&#39;'}[c]));
  const official=document.createElement('section');official.className='jcm-panel';official.id='jcm-official-panel';
- const watch=document.createElement('section');watch.className='jcm-panel';watch.id='jcm-watch-panel';
- main.prepend(watch);main.prepend(official);
+ main.prepend(official);
  const overlay=document.createElement('div');overlay.className='jcm-overlay';overlay.id='jcm-detail-overlay';
  overlay.innerHTML='<div class="jcm-modal" role="dialog" aria-modal="true" aria-label="Horse details"><button type="button" class="jcm-close" aria-label="Close details">×</button><div id="jcm-detail-content"></div></div>';
  const side=document.createElement('div');side.className='jcm-overlay';side.id='jcm-menu-overlay';
@@ -379,7 +378,7 @@ function paint(){
  const settled=detailRows.filter(r=>['win','loss'].includes(resultView(r).css));
  const wins=settled.filter(r=>resultView(r).css==='win').length;
  const rate=state==='ready'?(settled.length?Math.round(wins/settled.length*1000)/10+'% success · '+wins+'/'+settled.length+' settled':'No settled results'):state==='error'?'Results unavailable':'Loading results…';
- const tile=document.getElementById('jcm-daily-rate');if(tile)tile.textContent='Today · '+rate;
+ const tile=document.getElementById('jcm-daily-rate');if(tile)tile.textContent=(day===new Intl.DateTimeFormat('en-CA',{timeZone:'Europe/London'}).format(new Date())?'Today':day)+' · '+rate;
  const heading='<div class="jcm-panel-heading"><h2>Daily picks</h2><span class="jcm-accuracy">'+safe(rate)+'</span></div>';
  const note='<p class="jcm-ft-note">Includes watchlist horses. Tap a horse for the original reasoning and race links.</p>';
  panel.innerHTML=heading+note+(state==='loading'?'<p role="status">Loading today’s horses…</p>':state==='error'?'<p role="status">INSUFFICIENT VERIFIED DATA — today’s list could not be loaded.</p>':detailRows.map((r,i)=>'<button type="button" class="jcm-row jcm-research-row jcm-rating-'+confidenceTier(r)+(day==='2026-10-13'&&r.tier==='watchlist'?' jcm-competition-watchlist':'')+'" data-research-index="'+i+'"><span><span class="jcm-time">'+safe(r.off_time_uk)+'</span><span class="jcm-ground">'+safe(r.course)+'</span></span><span class="jcm-horse">'+safe(r.horse)+'<small class="note" style="display:block">'+safe(r.original_status)+'</small></span><span class="jcm-status '+resultView(r).css+'">'+safe(resultView(r).label)+'</span></button>').join(''));

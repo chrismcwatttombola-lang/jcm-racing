@@ -15,7 +15,7 @@ class FreshRecord(unittest.TestCase):
      self.assertEqual(r['result_date'],r['race_date']);self.assertEqual(r['result_horse_id'],r['horse_id'])
     else:
      self.assertLess(r['selected_at'],r['scheduled_off_dt']);self.assertIsNone(r['position'])
-     self.assertEqual(r['display_status'],'Entry');self.assertEqual(r['original_status'],'Watchlist')
+     self.assertEqual(r['display_status'],'Watchlist');self.assertEqual(r['original_status'],'Watchlist')
     self.assertIsNone(r['competition_confidence_percent'])
     m=next(m for m in details if m['horse_id']==r['horse_id']);self.assertEqual(m['position'],r['position'])
     self.assertIn('/racecard/',m['racecard_url']);rows.append(r)

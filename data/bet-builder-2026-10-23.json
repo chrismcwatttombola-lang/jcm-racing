@@ -15,9 +15,9 @@
       "horse_id": "hrs_37889761",
       "scheduled_off_dt": "2026-10-23T14:25:00+01:00",
       "interest_rank": 1,
-      "tier": "entry",
+      "tier": "watchlist",
       "original_status": "Watchlist",
-      "display_status": "Entry",
+      "display_status": "Watchlist",
       "competition_confidence_percent": null,
       "identified_challengers": [
         "Wild Goose",
@@ -25,7 +25,7 @@
         "Fiveonefive",
         "Wondering Why"
       ],
-      "selection_status": "USER_CONFIRMED_ENTRY",
+      "selection_status": "WATCHLIST",
       "selected_at": "2026-10-23T08:39:31+01:00",
       "added_at": "2026-10-23T08:48:00+01:00",
       "original_assessment": "Watchlist; no firm analyst recommendation",
@@ -61,7 +61,8 @@
       },
       "trainer_jockey_evidence": "Philip Hobbs & Johnson White: 1 win from 9 runners in the API's 14-day sample. Jack Stenhouse claims 8 lb. Small trainer sample is not used as a decisive negative. No verified horse/jockey or course-specific advantage is claimed.",
       "available_stake_gbp": null,
-      "source": "User-confirmed entry; no executable lay quote supplied"
+      "source": "User-confirmed entry; no executable lay quote supplied",
+      "label_confirmation": "User requested original evidence-based labels restored: Watchlist, Moderate potential selection, or Strong recommendation when supported. Both today retain their original Watchlist assessment."
     },
     {
       "race_date": "2026-10-23",
@@ -72,9 +73,9 @@
       "horse_id": "hrs_63908691",
       "scheduled_off_dt": "2026-10-23T17:05:00+01:00",
       "interest_rank": 2,
-      "tier": "entry",
+      "tier": "watchlist",
       "original_status": "Watchlist",
-      "display_status": "Entry",
+      "display_status": "Watchlist",
       "competition_confidence_percent": null,
       "identified_challengers": [
         "Angel Gabriel",
@@ -82,7 +83,7 @@
         "Never Just A Dream",
         "Lipsink"
       ],
-      "selection_status": "USER_CONFIRMED_ENTRY",
+      "selection_status": "WATCHLIST",
       "selected_at": "2026-10-23T08:39:31+01:00",
       "added_at": "2026-10-23T08:48:00+01:00",
       "original_assessment": "Watchlist; no firm analyst recommendation",
@@ -118,7 +119,8 @@
       },
       "trainer_jockey_evidence": "Oli Rix: 0 wins from 3 runners in the API's 14-day sample; too small to treat as evidence of poor form. Saffie Osborne rides. No verified horse/jockey or soft-ground edge is claimed for Intense Vision.",
       "available_stake_gbp": null,
-      "source": "User-confirmed entry; no executable lay quote supplied"
+      "source": "User-confirmed entry; no executable lay quote supplied",
+      "label_confirmation": "User requested original evidence-based labels restored: Watchlist, Moderate potential selection, or Strong recommendation when supported. Both today retain their original Watchlist assessment."
     }
   ]
 }

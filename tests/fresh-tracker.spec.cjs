@@ -9,7 +9,7 @@ test('fresh dates, complete outcome totals and chronological rows',async({page})
  await expect(page.locator('#date')).toHaveValue('2026-10-23');
  await expect(page.locator('#jcm-official-panel .jcm-row')).toHaveCount(2);
  await expect(page.locator('#jcm-official-panel .jcm-time')).toHaveText(['14:25','17:05']);
- await expect(page.locator('#jcm-official-panel')).not.toContainText('Watchlist');
+ await expect(page.locator('#jcm-official-panel')).toContainText('Watchlist');
  await expect(page.locator('#jcm-official-panel .jcm-status.pending')).toHaveCount(2);
  await page.locator('#date').selectOption('2026-10-22');
  await expect(page.locator('#jcm-official-panel .jcm-row')).toHaveCount(5);
@@ -30,7 +30,7 @@ test('every card retains original reasoning, finishing place and race access',as
    await page.locator('#jcm-official-panel .jcm-row').filter({hasText:r.horse}).click();
    const card=page.locator('#jcm-detail-content');
    await expect(card).toContainText(r.result_status==='PENDING'?'Pending':'Finished '+r.placing);
-   if(day==='2026-10-23')await expect(card).not.toContainText('Watchlist');
+   if(day==='2026-10-23')await expect(card).toContainText('Watchlist');
    await expect(card).toContainText(r.selection_reason.summary);
    await expect(card.locator('a').filter({hasText:'View this racecard'})).toHaveAttribute('href',new RegExp('/'+day+'/'));
    await expect(card).toContainText('Race results');await expect(card).toContainText('Race video');

@@ -67,3 +67,24 @@ test('invalid result identity fails closed',async({page,request})=>{
  expect(await page.evaluate(r=>window.jcmAcceptedResult({...r,result_date:'2026-10-21'}),r)).toBe(false);
  expect(await page.evaluate(r=>window.jcmAcceptedResult({...r,result_race_id:'rac_1'}),r)).toBe(false);
 });
+test('three booked simulations retain 10000 banks and deposit-aware results',async({page})=>{
+ await page.goto(url+'#hub');
+ await page.locator('[data-page="dummy-account"]').click();
+ for(const [mode,liability,potential] of [['fixed','£500.00','£276.82'],['race','£500.00','£276.82'],['manual','£250.00','£138.41']]){
+  await page.locator('[data-account-mode="'+mode+'"]').click();
+  const card=page.locator('#jcm-detail-content');
+  await expect(card).toContainText('Net change vs starting £10,000');
+  await expect(card.locator('[data-builder-balance]')).toHaveText('£10,000.00');
+  await expect(card.locator('[data-bank-percentage]')).toHaveText('0.00%');
+  await expect(card.locator('[data-builder-liability-value]')).toHaveText([liability,liability]);
+  await expect(card.locator('[data-builder-potential]')).toHaveText(potential);
+  await expect(card.locator('[data-builder-odds="0"]')).toHaveValue('4.7');
+  await expect(card.locator('[data-builder-odds="1"]')).toHaveValue('4.2');
+  for(const input of await card.locator('[data-builder-include]').all()){await expect(input).toBeChecked();await expect(input).toBeDisabled();}
+ }
+ await page.locator('[data-account-mode="results"]').click();
+ await expect(page.locator('.builder-results-table tbody tr')).toHaveCount(3);
+ await expect(page.locator('.builder-results-table')).toContainText('Cash in');
+ await expect(page.locator('.builder-results-table')).toContainText('Cash out');
+ await expect(page.locator('.builder-results-table [data-result-percentage]')).toHaveText(['0.00% · pending','0.00% · pending','0.00% · pending']);
+});

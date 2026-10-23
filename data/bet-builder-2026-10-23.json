@@ -3,7 +3,7 @@
   "fictional_only": true,
   "date": "2026-10-23",
   "introduced_at": "2026-10-23T08:48:00+01:00",
-  "opening_balance_gbp": 5000,
+  "opening_balance_gbp": 10000,
   "commission_rate": 0.05,
   "rows": [
     {
@@ -145,5 +145,84 @@
       }
     }
   ],
-  "simulation_note": "Analysis only: 4.70 and 4.20 are earlier Betfair Exchange figures used as assumed lay prices with user approval. The feed did not identify the back/lay side. These are not verified or live lay quotes; matching and liquidity are unknown. Success rate tracks horse outcomes, not profit."
+  "simulation_note": "Analysis only: 4.70 and 4.20 are earlier Betfair Exchange figures used as assumed lay prices with user approval. The feed did not identify the back/lay side. These are not verified or live lay quotes; matching and liquidity are unknown. Success rate tracks horse outcomes, not profit.",
+  "published_simulations": {
+    "recorded_at": "2026-10-23T10:26:58+01:00",
+    "authorization": "User instructed all three simulations booked at current assumptions; each starts with \u00a310,000, carries results forward, and records a further \u00a310,000 simulated deposit only when exhausted.",
+    "fixed": {
+      "entries": [
+        {
+          "horse_id": "hrs_37889761",
+          "race_id": "rac_32301953788",
+          "odds": 4.7,
+          "liability_cents": 50000
+        },
+        {
+          "horse_id": "hrs_63908691",
+          "race_id": "rac_32302558132",
+          "odds": 4.2,
+          "liability_cents": 50000
+        }
+      ]
+    },
+    "race": {
+      "entries": [
+        {
+          "horse_id": "hrs_37889761",
+          "race_id": "rac_32301953788",
+          "odds": 4.7,
+          "liability_cents": 50000
+        },
+        {
+          "horse_id": "hrs_63908691",
+          "race_id": "rac_32302558132",
+          "odds": 4.2,
+          "liability_cents": 50000
+        }
+      ]
+    },
+    "manual": {
+      "entries": [
+        {
+          "horse_id": "hrs_37889761",
+          "race_id": "rac_32301953788",
+          "odds": 4.7,
+          "liability_cents": 25000
+        },
+        {
+          "horse_id": "hrs_63908691",
+          "race_id": "rac_32302558132",
+          "odds": 4.2,
+          "liability_cents": 25000
+        }
+      ]
+    }
+  },
+  "bank_trial": {
+    "start_date": "2026-10-23",
+    "initial_deposit_gbp": 10000,
+    "zero_balance_topup_gbp": 10000,
+    "withdrawals": [],
+    "performance_formula": "(balance + withdrawals - total deposits) / 10000 * 100",
+    "initial_deposits": [
+      {
+        "strategy": "fixed",
+        "amount_gbp": 10000,
+        "date": "2026-10-23",
+        "type": "SIMULATED_DEPOSIT"
+      },
+      {
+        "strategy": "race",
+        "amount_gbp": 10000,
+        "date": "2026-10-23",
+        "type": "SIMULATED_DEPOSIT"
+      },
+      {
+        "strategy": "manual",
+        "amount_gbp": 10000,
+        "date": "2026-10-23",
+        "type": "SIMULATED_DEPOSIT"
+      }
+    ]
+  }
 }

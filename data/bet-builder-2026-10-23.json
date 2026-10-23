@@ -51,7 +51,7 @@
       "verification_status": "PENDING",
       "official_accuracy_eligible": false,
       "going": "Good to Soft (Good in places)",
-      "lay_odds": null,
+      "lay_odds": 4.7,
       "price_snapshot": {
         "price": "7/2",
         "type": "Bookmaker back price; not an executable lay quote",
@@ -61,8 +61,19 @@
       },
       "trainer_jockey_evidence": "Philip Hobbs & Johnson White: 1 win from 9 runners in the API's 14-day sample. Jack Stenhouse claims 8 lb. Small trainer sample is not used as a decisive negative. No verified horse/jockey or course-specific advantage is claimed.",
       "available_stake_gbp": null,
-      "source": "User-confirmed entry; no executable lay quote supplied",
-      "label_confirmation": "User requested original evidence-based labels restored: Watchlist, Moderate potential selection, or Strong recommendation when supported. Both today retain their original Watchlist assessment."
+      "source": "The Racing API: Betfair Exchange; price side unverified; user-approved simulation assumption",
+      "label_confirmation": "User requested original evidence-based labels restored: Watchlist, Moderate potential selection, or Strong recommendation when supported. Both today retain their original Watchlist assessment.",
+      "simulation_price_basis": {
+        "provider": "Betfair Exchange",
+        "assumed_lay_odds": 4.7,
+        "verification_status": "UNVERIFIED_ASSUMPTION",
+        "original_price_side": "UNKNOWN",
+        "feed_updated_raw": "2026-10-23 10:10:11",
+        "feed_timezone": "not supplied",
+        "user_authorized_date": "2026-10-23",
+        "live": false,
+        "available_stake_gbp": null
+      }
     },
     {
       "race_date": "2026-10-23",
@@ -109,7 +120,7 @@
       "verification_status": "PENDING",
       "official_accuracy_eligible": false,
       "going": "Soft (Heavy in places)",
-      "lay_odds": null,
+      "lay_odds": 4.2,
       "price_snapshot": {
         "price": "7/2 joint-favourite",
         "type": "Bookmaker back price; not an executable lay quote",
@@ -119,8 +130,20 @@
       },
       "trainer_jockey_evidence": "Oli Rix: 0 wins from 3 runners in the API's 14-day sample; too small to treat as evidence of poor form. Saffie Osborne rides. No verified horse/jockey or soft-ground edge is claimed for Intense Vision.",
       "available_stake_gbp": null,
-      "source": "User-confirmed entry; no executable lay quote supplied",
-      "label_confirmation": "User requested original evidence-based labels restored: Watchlist, Moderate potential selection, or Strong recommendation when supported. Both today retain their original Watchlist assessment."
+      "source": "The Racing API: Betfair Exchange; price side unverified; user-approved simulation assumption",
+      "label_confirmation": "User requested original evidence-based labels restored: Watchlist, Moderate potential selection, or Strong recommendation when supported. Both today retain their original Watchlist assessment.",
+      "simulation_price_basis": {
+        "provider": "Betfair Exchange",
+        "assumed_lay_odds": 4.2,
+        "verification_status": "UNVERIFIED_ASSUMPTION",
+        "original_price_side": "UNKNOWN",
+        "feed_updated_raw": "2026-10-23 10:10:11",
+        "feed_timezone": "not supplied",
+        "user_authorized_date": "2026-10-23",
+        "live": false,
+        "available_stake_gbp": null
+      }
     }
-  ]
+  ],
+  "simulation_note": "Analysis only: 4.70 and 4.20 are earlier Betfair Exchange figures used as assumed lay prices with user approval. The feed did not identify the back/lay side. These are not verified or live lay quotes; matching and liquidity are unknown. Success rate tracks horse outcomes, not profit."
 }

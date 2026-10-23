@@ -3,7 +3,7 @@
   "fictional_only": true,
   "date": "2026-10-23",
   "introduced_at": "2026-10-23T08:48:00+01:00",
-  "opening_balance_gbp": 10000,
+  "opening_balance_gbp": 0,
   "commission_rate": 0.05,
   "rows": [
     {
@@ -200,29 +200,14 @@
   },
   "bank_trial": {
     "start_date": "2026-10-23",
-    "initial_deposit_gbp": 10000,
-    "zero_balance_topup_gbp": 10000,
+    "accounting_model": "ZERO_START_UNLIMITED_SIMULATED_OVERDRAFT",
+    "initial_balance_gbp": 0,
+    "percentage_benchmark_gbp": 10000,
+    "automatic_deposits": false,
+    "deposits": [],
     "withdrawals": [],
-    "performance_formula": "(balance + withdrawals - total deposits) / 10000 * 100",
-    "initial_deposits": [
-      {
-        "strategy": "fixed",
-        "amount_gbp": 10000,
-        "date": "2026-10-23",
-        "type": "SIMULATED_DEPOSIT"
-      },
-      {
-        "strategy": "race",
-        "amount_gbp": 10000,
-        "date": "2026-10-23",
-        "type": "SIMULATED_DEPOSIT"
-      },
-      {
-        "strategy": "manual",
-        "amount_gbp": 10000,
-        "date": "2026-10-23",
-        "type": "SIMULATED_DEPOSIT"
-      }
-    ]
+    "results_publish_when": "ALL_DAILY_RACES_FINISHED_AND_RESULTS_VERIFIED",
+    "performance_formula": "cumulative net profit or loss / 10000 * 100",
+    "authorization": "User replaced funded banks and top-ups with zero-start unlimited simulated overdraft; simplified results to three data columns."
   }
 }

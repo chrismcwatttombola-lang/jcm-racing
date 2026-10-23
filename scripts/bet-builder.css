@@ -15,3 +15,10 @@ input[type=checkbox]{appearance:none!important;-webkit-appearance:none!important
 @media(max-height:720px){.builder-results-compact .builder-tile svg{max-height:146px}}
 
 .builder-results-compact .builder-chart-tile{padding:4px;margin:6px 0}.builder-results-status{font-size:11px;color:#cbd5e1;margin:6px 0!important}@media(max-height:720px){.builder-results-compact .builder-chart-tile svg{max-height:166px}}
+.builder-results-compact .builder-results-table{width:100%;table-layout:fixed}
+.builder-results-compact .builder-results-table th,.builder-results-compact .builder-results-table td{width:auto;white-space:normal;overflow-wrap:anywhere;word-break:normal;text-align:center;line-height:1.4;padding:9px 5px}
+.builder-results-compact .builder-results-table tr>:first-child{width:auto;text-align:center;font-size:12px}
+.builder-results-compact .builder-results-table thead th{width:33.333%;font-size:11px}
+.builder-results-compact .builder-results-table tbody th[scope=rowgroup]{text-align:left;padding-top:16px;font-size:13px;border-bottom:0}
+.builder-results-compact .builder-results-table thead th:last-child{font-size:11px}
+.builder-switch button{white-space:normal;overflow-wrap:normal;font-size:11px;padding:10px 2px;line-height:1.35}

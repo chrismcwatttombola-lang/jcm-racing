@@ -5,12 +5,12 @@ test('fresh dates, complete outcome totals and chronological rows',async({page})
  const errors=[];page.on('pageerror',e=>errors.push(e.message));
  await page.goto(url+'#picks');
  await expect(page.locator('#date option')).toHaveCount(3);
- await expect(page.locator('.metrics .metric strong')).toHaveText(['87.5%','7','1','0']);
+ await expect(page.locator('.metrics .metric strong')).toHaveText(['88.9%','8','1','0']);
  await expect(page.locator('#date')).toHaveValue('2026-10-23');
  await expect(page.locator('#jcm-official-panel .jcm-row')).toHaveCount(2);
  await expect(page.locator('#jcm-official-panel .jcm-time')).toHaveText(['14:25','17:05']);
  await expect(page.locator('#jcm-official-panel')).toContainText('Watchlist');
- await expect(page.locator('#jcm-official-panel .jcm-status.pending')).toHaveCount(2);
+ await expect(page.locator('#jcm-official-panel .jcm-status.pending')).toHaveCount(1);
  await page.locator('#date').selectOption('2026-10-22');
  await expect(page.locator('#jcm-official-panel .jcm-row')).toHaveCount(5);
  await expect(page.locator('#jcm-official-panel')).toContainText('100% success');
@@ -48,10 +48,10 @@ test('existing hub, Bet Builder and roundup keep working with fresh dates',async
  await page.locator('#jcm-detail-overlay .jcm-close').click();
  await page.locator('[data-page="rated-performance"]').click();
  await expect(page.locator('#jcm-detail-content')).toContainText('Watchlist');
- await expect(page.locator('#jcm-detail-content')).toContainText('6 / 1');
+ await expect(page.locator('#jcm-detail-content')).toContainText('7 / 1');
  await page.locator('#jcm-detail-overlay .jcm-close').click();
  await page.locator('[data-page="roundup"]').click();
- await expect(page.locator('#roundup-content')).toContainText('Results pending');
+ await expect(page.locator('#roundup-content')).toContainText('The Hardest Geezer finished second');
 });
 test('phone layout stays within viewport and all date options exclude old data',async({page})=>{
  await page.setViewportSize({width:390,height:844});await page.goto(url+'#picks');
@@ -74,7 +74,7 @@ test('three booked simulations retain zero tallies and compact final-day results
   await page.locator('[data-account-mode="'+mode+'"]').click();
   const card=page.locator('#jcm-detail-content');
   await expect(card).toContainText('Starting tally');
-  await expect(card.locator('[data-builder-balance]')).toHaveText('£0.00');
+  await expect(card.locator('[data-builder-balance]')).toHaveText(mode==='manual'?'£64.19':'£128.38');
   await expect(card.locator('[data-builder-available]')).toHaveText('Unlimited');
   await expect(card.locator('[data-builder-liability-value]')).toHaveText([liability,liability]);
   await expect(card.locator('[data-builder-potential]')).toHaveText(potential);

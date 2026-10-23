@@ -19,9 +19,9 @@ class FreshRecord(unittest.TestCase):
     self.assertIsNone(r['competition_confidence_percent'])
     m=next(m for m in details if m['horse_id']==r['horse_id']);self.assertEqual(m['position'],r['position'])
     self.assertIn('/racecard/',m['racecard_url']);rows.append(r)
-  self.assertEqual(len(rows),10);self.assertEqual(sum(r['result_status']=='WIN' for r in rows),7)
+  self.assertEqual(len(rows),10);self.assertEqual(sum(r['result_status']=='WIN' for r in rows),8)
   self.assertEqual(sum(r['result_status']=='LOSS' for r in rows),1)
-  self.assertEqual(sum(r['result_status']=='PENDING' for r in rows),2)
+  self.assertEqual(sum(r['result_status']=='PENDING' for r in rows),1)
   self.assertEqual(len({r['race_id'] for r in rows}),10)
  def test_no_old_published_data(self):
   for p in (ROOT/'data').glob('*.json'):

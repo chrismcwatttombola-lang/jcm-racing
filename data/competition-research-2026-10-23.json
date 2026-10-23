@@ -1,0 +1,119 @@
+{
+  "schema_version": 1,
+  "mode": "research_only_not_official_picks",
+  "date": "2026-10-23",
+  "imported_at": "2026-10-23T08:48:00+01:00",
+  "high_competition": [
+    {
+      "race_date": "2026-10-23",
+      "off_time_uk": "14:25",
+      "course": "Cheltenham",
+      "horse": "The Hardest Geezer",
+      "race_id": "rac_32301953788",
+      "horse_id": "hrs_37889761",
+      "scheduled_off_dt": "2026-10-23T14:25:00+01:00",
+      "interest_rank": 1,
+      "tier": "entry",
+      "original_status": "Watchlist",
+      "display_status": "Entry",
+      "competition_confidence_percent": null,
+      "identified_challengers": [
+        "Wild Goose",
+        "Kapitein Kool",
+        "Fiveonefive",
+        "Wondering Why"
+      ],
+      "selection_status": "USER_CONFIRMED_ENTRY",
+      "selected_at": "2026-10-23T08:39:31+01:00",
+      "added_at": "2026-10-23T08:48:00+01:00",
+      "original_assessment": "Watchlist; no firm analyst recommendation",
+      "entry_confirmation": "User requested both horses as entries without a watchlist label before racing.",
+      "selection_reason": {
+        "summary": "Returns after 258 days away and faces fit, credible rivals. Wild Goose won at Southwell on 1 October; Kapitein Kool returned with a third at Chepstow on 9 October. Fiveonefive won a 20-runner Galway handicap in August. This depth of opposition makes his short price worth questioning.",
+        "counterargument": "His winter form includes fourths at Ascot and Windsor and supports his chance in this easier race. The softer ground is compatible with that form. Jack Stenhouse's 8 lb allowance helps. Wondering Why also returns from a long break. Favourite status could still be justified; fitness doubt alone is not enough for a firm recommendation.",
+        "challengers": [
+          "Wild Goose",
+          "Kapitein Kool",
+          "Fiveonefive",
+          "Wondering Why"
+        ],
+        "evidence_status": "RACING_API_AND_USER_ASSESSMENT",
+        "source": "The Racing API Pro and Sporting Life",
+        "source_message_at": "2026-10-23T08:39:31+01:00",
+        "added_at": "2026-10-23T08:48:00+01:00"
+      },
+      "position": null,
+      "placing": null,
+      "result_status": "PENDING",
+      "result_source": null,
+      "verification_status": "PENDING",
+      "official_accuracy_eligible": false,
+      "going": "Good to Soft (Good in places)",
+      "lay_odds": null,
+      "price_snapshot": {
+        "price": "7/2",
+        "type": "Bookmaker back price; not an executable lay quote",
+        "source": "Sporting Life racecard, displayed Sky Bet price",
+        "checked_at": "2026-10-23T08:37:40+01:00",
+        "url": "https://www.sportinglife.com/racing/racecards/2026-10-23/cheltenham/racecard/944906/foundation-developments-conditional-jockeys-handicap-hurdle"
+      },
+      "trainer_jockey_evidence": "Philip Hobbs & Johnson White: 1 win from 9 runners in the API's 14-day sample. Jack Stenhouse claims 8 lb. Small trainer sample is not used as a decisive negative. No verified horse/jockey or course-specific advantage is claimed."
+    },
+    {
+      "race_date": "2026-10-23",
+      "off_time_uk": "17:05",
+      "course": "Doncaster",
+      "horse": "Intense Vision",
+      "race_id": "rac_32302558132",
+      "horse_id": "hrs_63908691",
+      "scheduled_off_dt": "2026-10-23T17:05:00+01:00",
+      "interest_rank": 2,
+      "tier": "entry",
+      "original_status": "Watchlist",
+      "display_status": "Entry",
+      "competition_confidence_percent": null,
+      "identified_challengers": [
+        "Angel Gabriel",
+        "French Affair",
+        "Never Just A Dream",
+        "Lipsink"
+      ],
+      "selection_status": "USER_CONFIRMED_ENTRY",
+      "selected_at": "2026-10-23T08:39:31+01:00",
+      "added_at": "2026-10-23T08:48:00+01:00",
+      "original_assessment": "Watchlist; no firm analyst recommendation",
+      "entry_confirmation": "User requested both horses as entries without a watchlist label before racing.",
+      "selection_reason": {
+        "summary": "His last five finishes are outside the first three, most recently seventh at Ascot. Joint-favourite Angel Gabriel won on softer ground at Windsor and then finished third at Haydock on soft. French Affair has two wins and a recent third; Never Just A Dream was third at Haydock on heavy. These are concrete rivals with relevant recent form.",
+        "counterargument": "Drops from Class 2 to Class 4, is down to an official rating of 85, and showed improvement at Ascot. The API rates him narrowly best, so this is not proof he should be opposed. Almarada Prince is explicitly a non-runner on Sporting Life and is excluded from the opposition assessment.",
+        "challengers": [
+          "Angel Gabriel",
+          "French Affair",
+          "Never Just A Dream",
+          "Lipsink"
+        ],
+        "evidence_status": "RACING_API_AND_USER_ASSESSMENT",
+        "source": "The Racing API Pro and Sporting Life",
+        "source_message_at": "2026-10-23T08:39:31+01:00",
+        "added_at": "2026-10-23T08:48:00+01:00"
+      },
+      "position": null,
+      "placing": null,
+      "result_status": "PENDING",
+      "result_source": null,
+      "verification_status": "PENDING",
+      "official_accuracy_eligible": false,
+      "going": "Soft (Heavy in places)",
+      "lay_odds": null,
+      "price_snapshot": {
+        "price": "7/2 joint-favourite",
+        "type": "Bookmaker back price; not an executable lay quote",
+        "source": "Sporting Life racecard, displayed Sky Bet price",
+        "checked_at": "2026-10-23T08:37:40+01:00",
+        "url": "https://www.sportinglife.com/racing/racecards/2026-10-23/doncaster/racecard/944925/william-hill-price-boosts-every-day-handicap-div-2"
+      },
+      "trainer_jockey_evidence": "Oli Rix: 0 wins from 3 runners in the API's 14-day sample; too small to treat as evidence of poor form. Saffie Osborne rides. No verified horse/jockey or soft-ground edge is claimed for Intense Vision."
+    }
+  ],
+  "competition_watchlist": []
+}

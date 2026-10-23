@@ -1,0 +1,38 @@
+{
+  "schema_version": 1,
+  "date": "2026-10-23",
+  "details": [
+    {
+      "date": "2026-10-23",
+      "horse": "The Hardest Geezer",
+      "course": "Cheltenham",
+      "off_time_uk": "14:25",
+      "race_id": "rac_32301953788",
+      "horse_id": "hrs_37889761",
+      "position": null,
+      "field_size": 13,
+      "winner": null,
+      "race_name": "Foundation Developments Conditional Jockeys' Handicap Hurdle",
+      "winning_margin_lengths": null,
+      "selected_beaten_lengths": null,
+      "racecard_url": "https://www.sportinglife.com/racing/racecards/2026-10-23/cheltenham/racecard/944906/foundation-developments-conditional-jockeys-handicap-hurdle",
+      "results_url": null
+    },
+    {
+      "date": "2026-10-23",
+      "horse": "Intense Vision",
+      "course": "Doncaster",
+      "off_time_uk": "17:05",
+      "race_id": "rac_32302558132",
+      "horse_id": "hrs_63908691",
+      "position": null,
+      "field_size": 12,
+      "winner": null,
+      "race_name": "William Hill Price Boosts Every Day Handicap (Div 2)",
+      "winning_margin_lengths": null,
+      "selected_beaten_lengths": null,
+      "racecard_url": "https://www.sportinglife.com/racing/racecards/2026-10-23/doncaster/racecard/944925/william-hill-price-boosts-every-day-handicap-div-2",
+      "results_url": null
+    }
+  ]
+}

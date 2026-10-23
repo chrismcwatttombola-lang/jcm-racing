@@ -4,8 +4,14 @@ const url='http://127.0.0.1:8765/';
 test('fresh dates, complete outcome totals and chronological rows',async({page})=>{
  const errors=[];page.on('pageerror',e=>errors.push(e.message));
  await page.goto(url+'#picks');
- await expect(page.locator('#date option')).toHaveCount(2);
+ await expect(page.locator('#date option')).toHaveCount(3);
  await expect(page.locator('.metrics .metric strong')).toHaveText(['87.5%','7','1','0']);
+ await expect(page.locator('#date')).toHaveValue('2026-10-23');
+ await expect(page.locator('#jcm-official-panel .jcm-row')).toHaveCount(2);
+ await expect(page.locator('#jcm-official-panel .jcm-time')).toHaveText(['14:25','17:05']);
+ await expect(page.locator('#jcm-official-panel')).not.toContainText('Watchlist');
+ await expect(page.locator('#jcm-official-panel .jcm-status.pending')).toHaveCount(2);
+ await page.locator('#date').selectOption('2026-10-22');
  await expect(page.locator('#jcm-official-panel .jcm-row')).toHaveCount(5);
  await expect(page.locator('#jcm-official-panel')).toContainText('100% success');
  await expect(page.locator('#jcm-official-panel .jcm-time')).toHaveText(['13:35','14:27','14:46','16:53','17:00']);
@@ -17,13 +23,14 @@ test('fresh dates, complete outcome totals and chronological rows',async({page})
 });
 test('every card retains original reasoning, finishing place and race access',async({page,request})=>{
  await page.goto(url+'#picks');
- for(const day of ['2026-10-21','2026-10-22']){
+ for(const day of ['2026-10-21','2026-10-22','2026-10-23']){
   await page.locator('#date').selectOption(day);
   const d=await(await request.get(url+'data/competition-research-'+day+'.json')).json();
   for(const r of [...d.high_competition,...d.competition_watchlist]){
    await page.locator('#jcm-official-panel .jcm-row').filter({hasText:r.horse}).click();
    const card=page.locator('#jcm-detail-content');
-   await expect(card).toContainText('Finished '+r.placing);
+   await expect(card).toContainText(r.result_status==='PENDING'?'Pending':'Finished '+r.placing);
+   if(day==='2026-10-23')await expect(card).not.toContainText('Watchlist');
    await expect(card).toContainText(r.selection_reason.summary);
    await expect(card.locator('a').filter({hasText:'View this racecard'})).toHaveAttribute('href',new RegExp('/'+day+'/'));
    await expect(card).toContainText('Race results');await expect(card).toContainText('Race video');
@@ -35,7 +42,8 @@ test('existing hub, Bet Builder and roundup keep working with fresh dates',async
  await page.goto(url+'#hub');
  await expect(page.locator('.jcm-hub-tile')).toHaveCount(4);
  await page.locator('[data-page="dummy-account"]').click();
- await expect(page.locator('#jcm-detail-content')).toContainText('Detroit Maverick');
+ await expect(page.locator('#jcm-detail-content')).toContainText('The Hardest Geezer');
+ await expect(page.locator('#jcm-detail-content')).toContainText('Intense Vision');
  await expect(page.locator('#jcm-detail-content')).not.toContainText('Invalid');
  await page.locator('#jcm-detail-overlay .jcm-close').click();
  await page.locator('[data-page="rated-performance"]').click();
@@ -43,11 +51,11 @@ test('existing hub, Bet Builder and roundup keep working with fresh dates',async
  await expect(page.locator('#jcm-detail-content')).toContainText('6 / 1');
  await page.locator('#jcm-detail-overlay .jcm-close').click();
  await page.locator('[data-page="roundup"]').click();
- await expect(page.locator('#roundup-content')).toContainText('Recovered original discussion');
+ await expect(page.locator('#roundup-content')).toContainText('Results pending');
 });
 test('phone layout stays within viewport and all date options exclude old data',async({page})=>{
  await page.setViewportSize({width:390,height:844});await page.goto(url+'#picks');
- await expect(page.locator('#jcm-official-panel .jcm-row')).toHaveCount(5);
+ await expect(page.locator('#jcm-official-panel .jcm-row')).toHaveCount(2);
  expect(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth)).toBeTruthy();
  await page.screenshot({path:'/tmp/jcm-fresh-mobile.png',fullPage:true});
 });

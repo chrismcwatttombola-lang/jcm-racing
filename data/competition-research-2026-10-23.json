@@ -107,11 +107,11 @@
         "source_message_at": "2026-10-23T08:39:31+01:00",
         "added_at": "2026-10-23T08:48:00+01:00"
       },
-      "position": null,
-      "placing": null,
-      "result_status": "PENDING",
-      "result_source": null,
-      "verification_status": "PENDING",
+      "position": "1",
+      "placing": "1st",
+      "result_status": "LOSS",
+      "result_source": "THE_RACING_API",
+      "verification_status": "PROVIDER_ACCEPTED",
       "official_accuracy_eligible": false,
       "going": "Soft (Heavy in places)",
       "lay_odds": null,
@@ -123,7 +123,16 @@
         "url": "https://www.sportinglife.com/racing/racecards/2026-10-23/doncaster/racecard/944925/william-hill-price-boosts-every-day-handicap-div-2"
       },
       "trainer_jockey_evidence": "Oli Rix: 0 wins from 3 runners in the API's 14-day sample; too small to treat as evidence of poor form. Saffie Osborne rides. No verified horse/jockey or soft-ground edge is claimed for Intense Vision.",
-      "label_confirmation": "User requested original evidence-based labels restored: Watchlist, Moderate potential selection, or Strong recommendation when supported. Both today retain their original Watchlist assessment."
+      "label_confirmation": "User requested original evidence-based labels restored: Watchlist, Moderate potential selection, or Strong recommendation when supported. Both today retain their original Watchlist assessment.",
+      "result_date": "2026-10-23",
+      "result_off_time_uk": "17:05",
+      "result_course": "Doncaster",
+      "result_horse": "Intense Vision",
+      "result_off_dt": "2026-10-23T17:05:00+01:00",
+      "result_retrieved_at": "2026-10-23T18:38:14+01:00",
+      "result_race_id": "rac_32302558132",
+      "result_horse_id": "hrs_63908691",
+      "result_source_url": "https://api.theracingapi.com/v1/results/rac_32302558132"
     }
   ],
   "competition_watchlist": []

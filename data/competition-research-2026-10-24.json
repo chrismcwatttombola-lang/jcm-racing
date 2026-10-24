@@ -1,0 +1,162 @@
+{
+  "schema_version": 1,
+  "mode": "research_only_not_official_picks",
+  "date": "2026-10-24",
+  "imported_at": "2026-10-24T09:00:00+01:00",
+  "high_competition": [
+    {
+      "race_date": "2026-10-24",
+      "off_time_uk": "16:05",
+      "course": "Cheltenham",
+      "horse": "Derryhassen Paddy",
+      "race_id": "rac_32302135866",
+      "horse_id": "hrs_38433563",
+      "scheduled_off_dt": "2026-10-24T16:05:00+01:00",
+      "interest_rank": 1,
+      "tier": "moderate",
+      "original_status": "Moderate potential selection",
+      "display_status": "Moderate potential selection",
+      "competition_confidence_percent": null,
+      "identified_challengers": [
+        "Butch Cassidy",
+        "Catchintsavo",
+        "Turndlightsdownlow"
+      ],
+      "selection_status": "POTENTIAL_SELECTION",
+      "selected_at": "2026-10-24T09:00:00+01:00",
+      "added_at": "2026-10-24T09:00:00+01:00",
+      "original_assessment": "Moderate potential selection",
+      "selection_reason": {
+        "summary": "Returns after 346 days following an unconvincing chase debut, finishing second of three. Butch Cassidy has won twice over fences; Catchintsavo was second in the top-level Sefton hurdle at Aintree. These rivals make his narrow favourite status questionable.",
+        "counterargument": "His Cheltenham Festival third confirms considerable ability. He receives 8 lb from Butch Cassidy, and the trainer has 7 wins from 29 recent runners. A return to his best could justify favouritism.",
+        "challengers": [
+          "Butch Cassidy",
+          "Catchintsavo",
+          "Turndlightsdownlow"
+        ],
+        "evidence_status": "RACING_API_AND_USER_ASSESSMENT",
+        "source": "The Racing API Pro and Sporting Life",
+        "added_at": "2026-10-24T09:00:00+01:00"
+      },
+      "position": null,
+      "placing": null,
+      "result_status": "PENDING",
+      "result_source": null,
+      "verification_status": "PENDING",
+      "official_accuracy_eligible": false,
+      "going": "Good",
+      "lay_odds": null,
+      "price_snapshot": {
+        "price": "11/4 (best of 29 books)",
+        "type": "Best available bookmaker back prices; not executable lay quotes",
+        "source": "The Racing API Pro",
+        "checked_at": "2026-10-24T09:00:00+01:00",
+        "url": "https://www.sportinglife.com/racing/racecards/2026-10-24/cheltenham/racecard/945158/william-hill-price-boosts-chasing-excellence-novices-chase-gbb-race"
+      },
+      "trainer_jockey_evidence": "Lucinda Russell & Michael Scudamore: 7/29 (24%) in the 14-day sample. Jockey: Derek Fox. No verified horse/jockey advantage is claimed."
+    },
+    {
+      "race_date": "2026-10-24",
+      "off_time_uk": "16:30",
+      "course": "Doncaster",
+      "horse": "Crown Office",
+      "race_id": "rac_32302149425",
+      "horse_id": "hrs_54811407",
+      "scheduled_off_dt": "2026-10-24T16:30:00+01:00",
+      "interest_rank": 2,
+      "tier": "moderate",
+      "original_status": "Moderate potential selection",
+      "display_status": "Moderate potential selection",
+      "competition_confidence_percent": null,
+      "identified_challengers": [
+        "Quest For Fun",
+        "Salam Dubawi",
+        "It Just Takes Time"
+      ],
+      "selection_status": "POTENTIAL_SELECTION",
+      "selected_at": "2026-10-24T09:00:00+01:00",
+      "added_at": "2026-10-24T09:00:00+01:00",
+      "original_assessment": "Moderate potential selection",
+      "selection_reason": {
+        "summary": "Finished fifth on both latest starts when favourite. Quest For Fun brings a recent second on heavy ground and fourth in a 20-runner race; It Just Takes Time won last week. The opposition makes Crown Office's joint-favourite position questionable.",
+        "counterargument": "Crown Office is 2 lb below its last two starts and has won on soft ground. William Haggas has 8 wins from 53 recent runners. It remains capable of improvement; the opposition also has weaknesses.",
+        "challengers": [
+          "Quest For Fun",
+          "Salam Dubawi",
+          "It Just Takes Time"
+        ],
+        "evidence_status": "RACING_API_AND_USER_ASSESSMENT",
+        "source": "The Racing API Pro and Sporting Life",
+        "added_at": "2026-10-24T09:00:00+01:00"
+      },
+      "position": null,
+      "placing": null,
+      "result_status": "PENDING",
+      "result_source": null,
+      "verification_status": "PENDING",
+      "official_accuracy_eligible": false,
+      "going": "Heavy",
+      "lay_odds": null,
+      "price_snapshot": {
+        "price": "4/1 (best of 29 books)",
+        "type": "Best available bookmaker back prices; not executable lay quotes",
+        "source": "The Racing API Pro",
+        "checked_at": "2026-10-24T09:00:00+01:00",
+        "url": "https://www.sportinglife.com/racing/racecards/2026-10-24/doncaster/racecard/945165/rfj-and-bee-jays-electrical-handicap-div-1"
+      },
+      "trainer_jockey_evidence": "William Haggas: 8/53 (15%) in the 14-day sample. Jockey: Cieren Fallon. No verified horse/jockey advantage is claimed."
+    },
+    {
+      "race_date": "2026-10-24",
+      "off_time_uk": "18:00",
+      "course": "Southwell",
+      "horse": "National Anthem",
+      "race_id": "rac_32302668541",
+      "horse_id": "hrs_17393597536",
+      "scheduled_off_dt": "2026-10-24T18:00:00+01:00",
+      "interest_rank": 3,
+      "tier": "watchlist",
+      "original_status": "Watchlist",
+      "display_status": "Watchlist",
+      "competition_confidence_percent": null,
+      "identified_challengers": [
+        "Ring of Music",
+        "Night Mile",
+        "Steel Nation"
+      ],
+      "selection_status": "WATCHLIST",
+      "selected_at": "2026-10-24T09:00:00+01:00",
+      "added_at": "2026-10-24T09:00:00+01:00",
+      "original_assessment": "Watchlist",
+      "selection_reason": {
+        "summary": "Unraced favourite facing Ring of Music, who already finished third over a mile on the all-weather. Night Mile represents a trainer with 5 wins from 11 recent runners. There is concrete opposition but insufficient evidence for a stronger recommendation.",
+        "counterargument": "No race performance exists to establish National Anthem's ability. A well-bred newcomer from the Gosden yard may deserve favourite status. The other unraced runners are also unknown.",
+        "challengers": [
+          "Ring of Music",
+          "Night Mile",
+          "Steel Nation"
+        ],
+        "evidence_status": "RACING_API_AND_USER_ASSESSMENT",
+        "source": "The Racing API Pro and Sporting Life",
+        "added_at": "2026-10-24T09:00:00+01:00"
+      },
+      "position": null,
+      "placing": null,
+      "result_status": "PENDING",
+      "result_source": null,
+      "verification_status": "PENDING",
+      "official_accuracy_eligible": false,
+      "going": "Standard",
+      "lay_odds": null,
+      "price_snapshot": {
+        "price": "5/2 (best of 29 books)",
+        "type": "Best available bookmaker back prices; not executable lay quotes",
+        "source": "The Racing API Pro",
+        "checked_at": "2026-10-24T09:00:00+01:00",
+        "url": "https://www.sportinglife.com/racing/racecards/2026-10-24/southwell/racecard/945175/awc-season-14-has-begun-ebf-maiden-stakes-gbbgbbplus-race-div-1"
+      },
+      "trainer_jockey_evidence": "John & Thady Gosden: 4/30 (13%) in the 14-day sample. Jockey: Robert Havlin. No verified horse/jockey advantage is claimed."
+    }
+  ],
+  "competition_watchlist": []
+}

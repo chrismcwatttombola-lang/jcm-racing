@@ -1,0 +1,54 @@
+{
+  "schema_version": 1,
+  "date": "2026-10-24",
+  "details": [
+    {
+      "date": "2026-10-24",
+      "horse": "Derryhassen Paddy",
+      "course": "Cheltenham",
+      "off_time_uk": "16:05",
+      "race_id": "rac_32302135866",
+      "horse_id": "hrs_38433563",
+      "position": null,
+      "field_size": 6,
+      "winner": null,
+      "race_name": "William Hill Price Boosts 'chasing Excellence' Novices' Steeple Chase (gbb Race)",
+      "winning_margin_lengths": null,
+      "selected_beaten_lengths": null,
+      "racecard_url": "https://www.sportinglife.com/racing/racecards/2026-10-24/cheltenham/racecard/945158/william-hill-price-boosts-chasing-excellence-novices-chase-gbb-race",
+      "results_url": null
+    },
+    {
+      "date": "2026-10-24",
+      "horse": "Crown Office",
+      "course": "Doncaster",
+      "off_time_uk": "16:30",
+      "race_id": "rac_32302149425",
+      "horse_id": "hrs_54811407",
+      "position": null,
+      "field_size": 13,
+      "winner": null,
+      "race_name": "Rfj And Bee Jays Electrical Handicap Stakes (Div I)",
+      "winning_margin_lengths": null,
+      "selected_beaten_lengths": null,
+      "racecard_url": "https://www.sportinglife.com/racing/racecards/2026-10-24/doncaster/racecard/945165/rfj-and-bee-jays-electrical-handicap-div-1",
+      "results_url": null
+    },
+    {
+      "date": "2026-10-24",
+      "horse": "National Anthem",
+      "course": "Southwell",
+      "off_time_uk": "18:00",
+      "race_id": "rac_32302668541",
+      "horse_id": "hrs_17393597536",
+      "position": null,
+      "field_size": 10,
+      "winner": null,
+      "race_name": "AWC Season 14 Has Begun EBF Maiden Stakes (Div I) (GBB/GBBPlus Race)",
+      "winning_margin_lengths": null,
+      "selected_beaten_lengths": null,
+      "racecard_url": "https://www.sportinglife.com/racing/racecards/2026-10-24/southwell/racecard/945175/awc-season-14-has-begun-ebf-maiden-stakes-gbbgbbplus-race-div-1",
+      "results_url": null
+    }
+  ]
+}

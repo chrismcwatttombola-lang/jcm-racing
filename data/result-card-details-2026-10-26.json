@@ -1,0 +1,38 @@
+{
+  "schema_version": 1,
+  "date": "2026-10-26",
+  "details": [
+    {
+      "date": "2026-10-26",
+      "horse": "The Big Westerner",
+      "course": "Wexford",
+      "off_time_uk": "15:05",
+      "race_id": "rac_32302498085",
+      "horse_id": "hrs_39826976",
+      "position": null,
+      "field_size": 5,
+      "winner": null,
+      "race_name": "Michael Hickey Memorial Chase (Listed)",
+      "winning_margin_lengths": null,
+      "selected_beaten_lengths": null,
+      "racecard_url": "https://www.sportinglife.com/racing/racecards/2026-10-26/wexford/racecard/945549/michael-hickey-memorial-chase-listed",
+      "results_url": null
+    },
+    {
+      "date": "2026-10-26",
+      "horse": "Breathe Easy",
+      "course": "Kempton",
+      "off_time_uk": "18:45",
+      "race_id": "rac_32302372180",
+      "horse_id": "hrs_50434265",
+      "position": null,
+      "field_size": 13,
+      "winner": null,
+      "race_name": "Try Unibet's New Racing Bet Builder Handicap",
+      "winning_margin_lengths": null,
+      "selected_beaten_lengths": null,
+      "racecard_url": "https://www.sportinglife.com/racing/racecards/2026-10-26/kempton/racecard/945407/try-unibets-new-racing-bet-builder-handicap",
+      "results_url": null
+    }
+  ]
+}

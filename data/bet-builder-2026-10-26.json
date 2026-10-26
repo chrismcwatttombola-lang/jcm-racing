@@ -8,6 +8,108 @@
   "rows": [
     {
       "race_date": "2026-10-26",
+      "off_time_uk": "18:45",
+      "course": "Kempton",
+      "horse": "Breathe Easy",
+      "race_id": "rac_32302372180",
+      "horse_id": "hrs_50434265",
+      "scheduled_off_dt": "2026-10-26T18:45:00+00:00",
+      "interest_rank": 2,
+      "tier": "watchlist",
+      "original_status": "Watchlist",
+      "display_status": "Watchlist",
+      "competition_confidence_percent": null,
+      "identified_challengers": [
+        "Fight Your Corner",
+        "Loblolly",
+        "Drifts Away"
+      ],
+      "selection_status": "WATCHLIST",
+      "selected_at": "2026-10-26T09:07:00+00:00",
+      "added_at": "2026-10-26T10:01:33.209Z",
+      "original_assessment": "Watchlist",
+      "selection_reason": {
+        "summary": "Returns after 240 days in a competitive mile handicap. Fight Your Corner and Loblolly bring course-and-distance seconds; Drifts Away was second at Yarmouth. Those rivals make his narrow favouritism worth questioning.",
+        "counterargument": "Won his last two races, remains unexposed, drawn two with Oisin Murphy. Balding 7/44 (16%). His potential could justify favourite status; watchlist only. Musical Angel explicitly NR and excluded.",
+        "challengers": [
+          "Fight Your Corner",
+          "Loblolly",
+          "Drifts Away"
+        ],
+        "evidence_status": "RACING_API_AND_USER_ASSESSMENT",
+        "source": "The Racing API Pro and Sporting Life",
+        "added_at": "2026-10-26T10:01:33.209Z"
+      },
+      "position": null,
+      "placing": null,
+      "result_status": "PENDING",
+      "result_source": null,
+      "verification_status": "PENDING",
+      "official_accuracy_eligible": false,
+      "going": "Standard / Slow",
+      "lay_odds": 6.6,
+      "price_snapshot": {
+        "price": "9/2",
+        "type": "Bookmaker back price; not lay odds",
+        "source": "The Racing API Pro",
+        "checked_at": "2026-10-26T09:06:00+00:00",
+        "url": "https://www.sportinglife.com/racing/racecards/2026-10-26/kempton/racecard/945407/try-unibets-new-racing-bet-builder-handicap"
+      },
+      "trainer_jockey_evidence": "Won his last two races, remains unexposed, drawn two with Oisin Murphy. Balding 7/44 (16%). His potential could justify favourite status; watchlist only. Musical Angel explicitly NR and excluded.",
+      "manual_lay_screenshot_request": {
+        "requested_at": "2026-10-26T11:13:39Z",
+        "status": "RECEIVED",
+        "reason": "No explicitly identified Betfair Exchange LAY quote available",
+        "required_evidence": "Pink lay column with visible odds and available amount; observation time"
+      },
+      "price_acquisition_check": {
+        "retrieved_at": "2026-10-26T11:13:39Z",
+        "provider": "The Racing API Pro",
+        "bookmaker": "Betfair Exchange",
+        "original_price_side": "UNKNOWN",
+        "current_decimal": "6.2",
+        "provider_updated_raw": "2026-10-26 11:10:19",
+        "provider_updated_timezone": null,
+        "latest_change": {
+          "changed_at": "2026-10-26T10:40:00+00:00",
+          "fractional": "6.2",
+          "decimal": "6.2"
+        },
+        "accepted": false,
+        "rejection_reason": "Provider updated time has no timezone; latest explicitly zoned observation is over 30 minutes old",
+        "liquidity": null
+      },
+      "available_stake_gbp": 14,
+      "lay_price_provenance": {
+        "provider": "Betfair Exchange",
+        "source_type": "USER_SCREENSHOT",
+        "source_library_file_id": "libfile_d72e1b67eb40819198d61ff651e77508",
+        "observed_at": "2026-10-26T11:16:00+00:00",
+        "observation_time_basis": "Screenshot clock and displayed 26 Oct race date; Europe/London",
+        "retrieved_at": "2026-10-26T11:20:39Z",
+        "verification_status": "VERIFIED_SCREENSHOT_LAY",
+        "original_price_side": "LAY",
+        "liquidity_gbp": 14,
+        "liquidity_covers_liability_gbp": 78.4
+      }
+    }
+  ],
+  "simulation_note": "Breathe Easy: screenshot-verified lay 6.6 at 11:16 GMT; £14 available (£78.40 liability). Default simulations assume full amounts despite insufficient displayed liquidity; no real orders. Wexford abandoned and excluded.",
+  "bank_trial": {
+    "start_date": "2026-10-23",
+    "accounting_model": "ZERO_START_UNLIMITED_SIMULATED_OVERDRAFT",
+    "initial_balance_gbp": 0,
+    "percentage_benchmark_gbp": 10000,
+    "automatic_deposits": false,
+    "deposits": [],
+    "withdrawals": [],
+    "results_publish_when": "ALL_DAILY_RACES_FINISHED_AND_RESULTS_VERIFIED",
+    "performance_formula": "cumulative net profit or loss / 10000 * 100",
+    "authorization": "User replaced funded banks and top-ups with zero-start unlimited simulated overdraft; simplified results to three data columns."
+  },
+  "archived_abandoned_entries": [
+    {
+      "race_date": "2026-10-26",
       "off_time_uk": "15:05",
       "course": "Wexford",
       "horse": "The Big Westerner",
@@ -76,94 +178,47 @@
         "accepted": false,
         "rejection_reason": "Current exchange price missing; no historical backfill",
         "liquidity": null
-      }
-    },
-    {
-      "race_date": "2026-10-26",
-      "off_time_uk": "18:45",
-      "course": "Kempton",
-      "horse": "Breathe Easy",
-      "race_id": "rac_32302372180",
-      "horse_id": "hrs_50434265",
-      "scheduled_off_dt": "2026-10-26T18:45:00+00:00",
-      "interest_rank": 2,
-      "tier": "watchlist",
-      "original_status": "Watchlist",
-      "display_status": "Watchlist",
-      "competition_confidence_percent": null,
-      "identified_challengers": [
-        "Fight Your Corner",
-        "Loblolly",
-        "Drifts Away"
-      ],
-      "selection_status": "WATCHLIST",
-      "selected_at": "2026-10-26T09:07:00+00:00",
-      "added_at": "2026-10-26T10:01:33.209Z",
-      "original_assessment": "Watchlist",
-      "selection_reason": {
-        "summary": "Returns after 240 days in a competitive mile handicap. Fight Your Corner and Loblolly bring course-and-distance seconds; Drifts Away was second at Yarmouth. Those rivals make his narrow favouritism worth questioning.",
-        "counterargument": "Won his last two races, remains unexposed, drawn two with Oisin Murphy. Balding 7/44 (16%). His potential could justify favourite status; watchlist only. Musical Angel explicitly NR and excluded.",
-        "challengers": [
-          "Fight Your Corner",
-          "Loblolly",
-          "Drifts Away"
-        ],
-        "evidence_status": "RACING_API_AND_USER_ASSESSMENT",
-        "source": "The Racing API Pro and Sporting Life",
-        "added_at": "2026-10-26T10:01:33.209Z"
       },
-      "position": null,
-      "placing": null,
-      "result_status": "PENDING",
-      "result_source": null,
-      "verification_status": "PENDING",
-      "official_accuracy_eligible": false,
-      "going": "Standard / Slow",
-      "lay_odds": null,
-      "price_snapshot": {
-        "price": "9/2",
-        "type": "Bookmaker back price; not lay odds",
-        "source": "The Racing API Pro",
-        "checked_at": "2026-10-26T09:06:00+00:00",
-        "url": "https://www.sportinglife.com/racing/racecards/2026-10-26/kempton/racecard/945407/try-unibets-new-racing-bet-builder-handicap"
-      },
-      "trainer_jockey_evidence": "Won his last two races, remains unexposed, drawn two with Oisin Murphy. Balding 7/44 (16%). His potential could justify favourite status; watchlist only. Musical Angel explicitly NR and excluded.",
-      "manual_lay_screenshot_request": {
-        "requested_at": "2026-10-26T11:13:39Z",
-        "status": "REQUESTED",
-        "reason": "No explicitly identified Betfair Exchange LAY quote available",
-        "required_evidence": "Pink lay column with visible odds and available amount; observation time"
-      },
-      "price_acquisition_check": {
-        "retrieved_at": "2026-10-26T11:13:39Z",
-        "provider": "The Racing API Pro",
-        "bookmaker": "Betfair Exchange",
-        "original_price_side": "UNKNOWN",
-        "current_decimal": "6.2",
-        "provider_updated_raw": "2026-10-26 11:10:19",
-        "provider_updated_timezone": null,
-        "latest_change": {
-          "changed_at": "2026-10-26T10:40:00+00:00",
-          "fractional": "6.2",
-          "decimal": "6.2"
-        },
-        "accepted": false,
-        "rejection_reason": "Provider updated time has no timezone; latest explicitly zoned observation is over 30 minutes old",
-        "liquidity": null
-      }
+      "race_status": "ABANDONED",
+      "excluded_from_outcomes": true,
+      "abandonment_source": "https://api.theracingapi.com/v1/racecards/rac_32302498085/pro",
+      "abandonment_checked_at": "2026-10-26T11:20:39Z"
     }
   ],
-  "simulation_note": "Awaiting pre-race exchange observations. No simulation booked without an acceptable price.",
-  "bank_trial": {
-    "start_date": "2026-10-23",
-    "accounting_model": "ZERO_START_UNLIMITED_SIMULATED_OVERDRAFT",
-    "initial_balance_gbp": 0,
-    "percentage_benchmark_gbp": 10000,
-    "automatic_deposits": false,
-    "deposits": [],
-    "withdrawals": [],
-    "results_publish_when": "ALL_DAILY_RACES_FINISHED_AND_RESULTS_VERIFIED",
-    "performance_formula": "cumulative net profit or loss / 10000 * 100",
-    "authorization": "User replaced funded banks and top-ups with zero-start unlimited simulated overdraft; simplified results to three data columns."
+  "preserve_device_choices": true,
+  "published_simulations": {
+    "recorded_at": "2026-10-26T11:20:39Z",
+    "authorization": "User requested screenshot lay price in fictional Bet Builder; existing automatic three-strategy authorization",
+    "price_execution_note": "Hypothetical full default liabilities; screenshot liquidity only £14 stake (£78.40 liability), insufficient for these defaults.",
+    "fixed": {
+      "entries": [
+        {
+          "race_id": "rac_32302372180",
+          "horse_id": "hrs_50434265",
+          "odds": 6.6,
+          "liability_cents": 100000
+        }
+      ]
+    },
+    "race": {
+      "entries": [
+        {
+          "race_id": "rac_32302372180",
+          "horse_id": "hrs_50434265",
+          "odds": 6.6,
+          "liability_cents": 50000
+        }
+      ]
+    },
+    "manual": {
+      "entries": [
+        {
+          "race_id": "rac_32302372180",
+          "horse_id": "hrs_50434265",
+          "odds": 6.6,
+          "liability_cents": 25000
+        }
+      ]
+    }
   }
 }

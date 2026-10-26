@@ -130,11 +130,11 @@
         "checked_at": "2026-10-26T11:22:32Z",
         "added_at": "2026-10-26T11:22:32Z"
       },
-      "result_status": "PENDING",
-      "position": null,
-      "placing": null,
-      "result_source": null,
-      "verification_status": "PENDING",
+      "result_status": "WIN",
+      "position": "4",
+      "placing": "4th",
+      "result_source": "THE_RACING_API",
+      "verification_status": "PROVIDER_ACCEPTED",
       "official_accuracy_eligible": false,
       "going": "Standard / Slow",
       "lay_odds": 4.9,
@@ -157,7 +157,16 @@
         "original_price_side": "LAY",
         "liquidity_gbp": 19,
         "liquidity_covers_liability_gbp": 74.1
-      }
+      },
+      "result_date": "2026-10-26",
+      "result_off_time_uk": "17:45",
+      "result_course": "Kempton",
+      "result_horse": "Weffaag",
+      "result_off_dt": "2026-10-26T17:45:00+00:00",
+      "result_retrieved_at": "2026-10-26T18:20:17Z",
+      "result_race_id": "rac_32302368306",
+      "result_horse_id": "hrs_56559188",
+      "result_source_url": "https://api.theracingapi.com/v1/results/rac_32302368306"
     }
   ],
   "simulation_note": "Breathe Easy: screenshot-verified lay 6.6 at 11:16 GMT; £14 available (£78.40 liability). Default simulations assume full amounts despite insufficient displayed liquidity; no real orders. Wexford abandoned and excluded. Weffaag: screenshot-verified lay 4.9 at 11:22 GMT, £19 available (£74.10 liability). £500/race and £250 manual fictional defaults booked assuming full liquidity. User requested Weffaag included: £1000 daily fictional liability now split £500 each across Breathe Easy and Weffaag. Explicit device edits retained.",

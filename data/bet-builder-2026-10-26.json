@@ -157,13 +157,10 @@
         "original_price_side": "LAY",
         "liquidity_gbp": 19,
         "liquidity_covers_liability_gbp": 74.1
-      },
-      "unbooked_simulation_modes": [
-        "fixed"
-      ]
+      }
     }
   ],
-  "simulation_note": "Breathe Easy: screenshot-verified lay 6.6 at 11:16 GMT; £14 available (£78.40 liability). Default simulations assume full amounts despite insufficient displayed liquidity; no real orders. Wexford abandoned and excluded. Weffaag: screenshot-verified lay 4.9 at 11:22 GMT, £19 available (£74.10 liability). £500/race and £250 manual fictional defaults booked assuming full liquidity. Existing £1000 daily allocation to Breathe Easy retained; Weffaag excluded from that already booked plan.",
+  "simulation_note": "Breathe Easy: screenshot-verified lay 6.6 at 11:16 GMT; £14 available (£78.40 liability). Default simulations assume full amounts despite insufficient displayed liquidity; no real orders. Wexford abandoned and excluded. Weffaag: screenshot-verified lay 4.9 at 11:22 GMT, £19 available (£74.10 liability). £500/race and £250 manual fictional defaults booked assuming full liquidity. User requested Weffaag included: £1000 daily fictional liability now split £500 each across Breathe Easy and Weffaag. Explicit device edits retained.",
   "bank_trial": {
     "start_date": "2026-10-23",
     "accounting_model": "ZERO_START_UNLIMITED_SIMULATED_OVERDRAFT",
@@ -265,7 +262,13 @@
           "race_id": "rac_32302372180",
           "horse_id": "hrs_50434265",
           "odds": 6.6,
-          "liability_cents": 100000
+          "liability_cents": 50000
+        },
+        {
+          "race_id": "rac_32302368306",
+          "horse_id": "hrs_56559188",
+          "odds": 4.9,
+          "liability_cents": 50000
         }
       ]
     },
@@ -306,5 +309,6 @@
   },
   "expansion_from_keys": [
     "18:45|Kempton|Breathe Easy"
-  ]
+  ],
+  "sync_published_default_entries": true
 }

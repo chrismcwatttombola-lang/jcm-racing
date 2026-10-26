@@ -1,0 +1,36 @@
+{
+  "schema_version": 1,
+  "date": "2026-10-27",
+  "details": [
+    {
+      "date": "2026-10-27",
+      "horse": "Eighty Eight",
+      "course": "Wolverhampton",
+      "off_time_uk": "16:30",
+      "race_id": "rac_32302531014",
+      "horse_id": "hrs_25825541",
+      "field_size": 10,
+      "position": null,
+      "winner": null,
+      "winning_margin_lengths": null,
+      "selected_beaten_lengths": null,
+      "results_url": null,
+      "racecard_url": "https://www.sportinglife.com/racing/meeting/2026-10-27/wolverhampton"
+    },
+    {
+      "date": "2026-10-27",
+      "horse": "Silver Hill",
+      "course": "Newcastle",
+      "off_time_uk": "14:31",
+      "race_id": "rac_32302523266",
+      "horse_id": "hrs_44975042",
+      "field_size": 5,
+      "position": null,
+      "winner": null,
+      "winning_margin_lengths": null,
+      "selected_beaten_lengths": null,
+      "results_url": null,
+      "racecard_url": "https://www.sportinglife.com/racing/racecards/2026-10-27/newcastle/racecard/945555/sunday-lunch-at-the-border-minstrel-novices-limited-handicap-chase-gbb-race"
+    }
+  ]
+}

@@ -93,7 +93,7 @@ function settings(c,m){
  if(!c.published_simulations?.[m])return loadSettings(c,m)||initial(c,m);
  const s=initial(c,m),plan=c.published_simulations[m];
  if(plan.entries.length>c.rows.length)throw Error('Invalid published simulation');
- for(const r of c.rows){const matches=plan.entries.filter(e=>e.race_id===r.race_id&&e.horse_id===r.horse_id);if(matches.length===0&&r.lay_odds===null){s.entries[key(r)]={included:false,liability_cents:0,odds:null,confirmed_at:null,default_entry:true};s.choices[key(r)]=false;continue;}if(matches.length!==1)throw Error('Published simulation identity mismatch');const e=matches[0];if(price(e.odds)!==e.odds||!Number.isSafeInteger(e.liability_cents)||e.liability_cents<=0)throw Error('Invalid published simulation');s.entries[key(r)]={included:!withdrawn(r),liability_cents:withdrawn(r)?0:e.liability_cents,odds:e.odds,confirmed_at:null,default_entry:true};}
+ for(const r of c.rows){const matches=plan.entries.filter(e=>e.race_id===r.race_id&&e.horse_id===r.horse_id);if(matches.length===0&&(r.lay_odds===null||r.unbooked_simulation_modes?.includes(m))){s.entries[key(r)]={included:false,liability_cents:0,odds:r.lay_odds??null,confirmed_at:null,default_entry:true};s.choices[key(r)]=false;continue;}if(matches.length!==1)throw Error('Published simulation identity mismatch');const e=matches[0];if(price(e.odds)!==e.odds||!Number.isSafeInteger(e.liability_cents)||e.liability_cents<=0)throw Error('Invalid published simulation');s.entries[key(r)]={included:!withdrawn(r),liability_cents:withdrawn(r)?0:e.liability_cents,odds:e.odds,confirmed_at:null,default_entry:true};}
  s.basis='Published simulation booked '+c.published_simulations.recorded_at;s.published=true;return s;
 }
 async function carriedBank(d,m,days){

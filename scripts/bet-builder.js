@@ -47,6 +47,15 @@ function loadSettings(c,m){
  const raw=localStorage.getItem(storage(c.date,m));
  if(!raw)return null;
  const s=JSON.parse(raw);
+ if(c.archived_abandoned_entries?.some(r=>Object.prototype.hasOwnProperty.call(s?.entries||{},key(r)))){
+  const previousRows=[...c.rows,...c.archived_abandoned_entries].filter(r=>Object.prototype.hasOwnProperty.call(s.entries,key(r)));
+  const old=loadSettings({...c,rows:previousRows,archived_abandoned_entries:null,expansion_from_keys:null,expansion_from_keysets:null},m);
+  const next=structuredClone(old);
+  for(const k of Object.keys(next.entries))if(!c.rows.some(r=>key(r)===k)){delete next.entries[k];if(next.choices)delete next.choices[k];}
+  for(const r of c.rows)if(!next.entries[key(r)]){next.entries[key(r)]={included:false,liability_cents:0,odds:r.lay_odds??null,confirmed_at:null,default_entry:true};next.choices={...next.choices,[key(r)]:false};}
+  if(m==='fixed'){const picked=c.rows.filter(r=>next.entries[key(r)].included);picked.forEach((r,i)=>next.entries[key(r)].liability_cents=Math.floor(next.amount_cents/picked.length)+(i<next.amount_cents%picked.length?1:0));}
+  return next;
+ }
  // Only explicitly published prior cards may expand. Validate old settings
  // against their original identities before adding excluded rows; never rewrite storage.
  if(s&&c.expansion_from_keys&&Object.keys(s.entries||{}).length!==c.rows.length){
@@ -83,8 +92,8 @@ function settings(c,m){
  if(c.preserve_device_choices&&localStorage.getItem(storage(c.date,m)))return loadSettings(c,m);
  if(!c.published_simulations?.[m])return loadSettings(c,m)||initial(c,m);
  const s=initial(c,m),plan=c.published_simulations[m];
- if(plan.entries.length!==c.rows.length)throw Error('Incomplete published simulation');
- for(const r of c.rows){const matches=plan.entries.filter(e=>e.race_id===r.race_id&&e.horse_id===r.horse_id);if(matches.length!==1)throw Error('Published simulation identity mismatch');const e=matches[0];if(price(e.odds)!==e.odds||!Number.isSafeInteger(e.liability_cents)||e.liability_cents<=0)throw Error('Invalid published simulation');s.entries[key(r)]={included:!withdrawn(r),liability_cents:withdrawn(r)?0:e.liability_cents,odds:e.odds,confirmed_at:null,default_entry:true};}
+ if(plan.entries.length>c.rows.length)throw Error('Invalid published simulation');
+ for(const r of c.rows){const matches=plan.entries.filter(e=>e.race_id===r.race_id&&e.horse_id===r.horse_id);if(matches.length===0&&r.lay_odds===null){s.entries[key(r)]={included:false,liability_cents:0,odds:null,confirmed_at:null,default_entry:true};s.choices[key(r)]=false;continue;}if(matches.length!==1)throw Error('Published simulation identity mismatch');const e=matches[0];if(price(e.odds)!==e.odds||!Number.isSafeInteger(e.liability_cents)||e.liability_cents<=0)throw Error('Invalid published simulation');s.entries[key(r)]={included:!withdrawn(r),liability_cents:withdrawn(r)?0:e.liability_cents,odds:e.odds,confirmed_at:null,default_entry:true};}
  s.basis='Published simulation booked '+c.published_simulations.recorded_at;s.published=true;return s;
 }
 async function carriedBank(d,m,days){

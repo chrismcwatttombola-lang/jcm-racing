@@ -1,0 +1,120 @@
+{
+  "schema_version": 1,
+  "mode": "research_only_not_official_picks",
+  "date": "2026-10-27",
+  "imported_at": "2026-10-26T19:14:14Z",
+  "high_competition": [
+    {
+      "race_date": "2026-10-27",
+      "horse": "Eighty Eight",
+      "course": "Wolverhampton",
+      "off_time_uk": "16:30",
+      "race_id": "rac_32302531014",
+      "horse_id": "hrs_25825541",
+      "scheduled_off_dt": "2026-10-27T16:30:00+00:00",
+      "interest_rank": 1,
+      "tier": "potential",
+      "original_status": "Potential selection - preliminary",
+      "display_status": "Potential selection - preliminary",
+      "original_assessment": "Potential selection - preliminary",
+      "selection_status": "POTENTIAL_SELECTION",
+      "competition_confidence_percent": null,
+      "selected_at": "2026-10-26T19:14:14Z",
+      "added_at": "2026-10-26T19:14:14Z",
+      "identified_challengers": [
+        "Bajan Bandit",
+        "Sant Alessio",
+        "Symphony of Joy"
+      ],
+      "selection_reason": {
+        "summary": "Returns after 228 days, having finished ninth at Dundalk as joint-favourite. Bajan Bandit brings a recent all-weather win, third and second, the latest seven days ago.",
+        "counterargument": "Lower handicap mark, two earlier Dundalk thirds and potential improvement for James Owen support his chance. Preliminary interest, no firm recommendation.",
+        "challengers": [
+          "Bajan Bandit",
+          "Sant Alessio",
+          "Symphony of Joy"
+        ],
+        "source": "The Racing API Pro",
+        "checked_at": "2026-10-26T19:14:14Z"
+      },
+      "position": null,
+      "placing": null,
+      "result_status": "PENDING",
+      "verification_status": "PENDING",
+      "result_source": null,
+      "official_accuracy_eligible": false,
+      "going": "Standard",
+      "lay_odds": 250,
+      "available_stake_gbp": 17,
+      "lay_price_provenance": {
+        "provider": "Betfair Exchange",
+        "source_type": "USER_SCREENSHOT",
+        "source_library_file_id": "libfile_f6325b0fa1108191a4cabe8172151fd0",
+        "observed_at": "2026-10-26T19:13:00+00:00",
+        "observation_time_basis": "Screenshot clock 19:13, 27 Oct market date; supplied evening 26 October",
+        "retrieved_at": "2026-10-26T19:14:14Z",
+        "verification_status": "VERIFIED_SCREENSHOT_LAY",
+        "original_price_side": "LAY",
+        "liquidity_gbp": 17,
+        "back_odds": 3.75,
+        "wide_spread_warning": "Lay 250 versus back 3.75; extreme early spread, not a representative competitive price"
+      }
+    }
+  ],
+  "competition_watchlist": [
+    {
+      "race_date": "2026-10-27",
+      "horse": "Silver Hill",
+      "course": "Newcastle",
+      "off_time_uk": "14:31",
+      "race_id": "rac_32302523266",
+      "horse_id": "hrs_44975042",
+      "scheduled_off_dt": "2026-10-27T14:31:00+00:00",
+      "interest_rank": 2,
+      "tier": "watchlist",
+      "original_status": "Watchlist - lower priority",
+      "display_status": "Watchlist - lower priority",
+      "original_assessment": "Watchlist - lower priority",
+      "selection_status": "WATCHLIST",
+      "competition_confidence_percent": null,
+      "selected_at": "2026-10-26T19:14:14Z",
+      "added_at": "2026-10-26T19:14:14Z",
+      "identified_challengers": [
+        "Dunkerque",
+        "Kent de Thaix"
+      ],
+      "selection_reason": {
+        "summary": "Returns after 223 days and steps up from recent races around 2.5 miles to nearly three miles. Dunkerque has recent chasing experience and Kent de Thaix won over three miles at Wetherby.",
+        "counterargument": "Consistent hurdle form and Jamie Snowden's 6 wins from 17 recent runners support favouritism. Dunkerque's recent defeats and other rivals' weaknesses limit conviction. Watchlist only.",
+        "challengers": [
+          "Dunkerque",
+          "Kent de Thaix"
+        ],
+        "source": "The Racing API Pro",
+        "checked_at": "2026-10-26T19:14:14Z"
+      },
+      "position": null,
+      "placing": null,
+      "result_status": "PENDING",
+      "verification_status": "PENDING",
+      "result_source": null,
+      "official_accuracy_eligible": false,
+      "going": "Good",
+      "lay_odds": 2.3,
+      "available_stake_gbp": 30,
+      "lay_price_provenance": {
+        "provider": "Betfair Exchange",
+        "source_type": "USER_SCREENSHOT",
+        "source_library_file_id": "libfile_8d2cd7dcf2688191aee186c519c6226a",
+        "observed_at": "2026-10-26T19:13:00+00:00",
+        "observation_time_basis": "Screenshot clock 19:13, 27 Oct market date; supplied evening 26 October",
+        "retrieved_at": "2026-10-26T19:14:14Z",
+        "verification_status": "VERIFIED_SCREENSHOT_LAY",
+        "original_price_side": "LAY",
+        "liquidity_gbp": 30,
+        "back_odds": 2.2,
+        "wide_spread_warning": null
+      }
+    }
+  ]
+}

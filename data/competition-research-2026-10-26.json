@@ -56,6 +56,60 @@
       },
       "trainer_jockey_evidence": "Won his last two races, remains unexposed, drawn two with Oisin Murphy. Balding 7/44 (16%). His potential could justify favourite status; watchlist only. Musical Angel explicitly NR and excluded.",
       "available_stake_gbp": 14
+    },
+    {
+      "race_date": "2026-10-26",
+      "off_time_uk": "17:45",
+      "course": "Kempton",
+      "horse": "Weffaag",
+      "race_id": "rac_32302368306",
+      "horse_id": "hrs_56559188",
+      "scheduled_off_dt": "2026-10-26T17:45:00+00:00",
+      "interest_rank": 3,
+      "tier": "watchlist",
+      "original_status": "Watchlist",
+      "display_status": "Watchlist",
+      "competition_confidence_percent": null,
+      "selection_status": "WATCHLIST",
+      "selected_at": "2026-10-26T11:22:32Z",
+      "added_at": "2026-10-26T11:22:32Z",
+      "original_assessment": "Watchlist",
+      "identified_challengers": [
+        "Siwa Oasis",
+        "Rogue Messiah",
+        "Blue Prince",
+        "I'm Workin On It"
+      ],
+      "selection_reason": {
+        "summary": "Won a six-runner Newcastle novice but finished tenth of twenty on his handicap debut at York. Faces recent course-and-distance winner Siwa Oasis, course-and-distance runner-up Rogue Messiah and consistent Blue Prince and I'm Workin On It. His favourite status merits scrutiny in this deeper handicap.",
+        "counterargument": "York's soft ground may explain that run. Returns to seven furlongs on all-weather after a breathing-operation success, with Oisin Murphy, draw three and an unexposed profile for William Haggas. Watchlist only.",
+        "challengers": [
+          "Siwa Oasis",
+          "Rogue Messiah",
+          "Blue Prince",
+          "I'm Workin On It"
+        ],
+        "source": "The Racing API Pro and Sporting Life",
+        "source_url": "https://www.sportinglife.com/racing/racecards/2026-10-26/kempton/racecard/945405/unibet-40-000-live-streamed-events-handicap",
+        "checked_at": "2026-10-26T11:22:32Z",
+        "added_at": "2026-10-26T11:22:32Z"
+      },
+      "result_status": "PENDING",
+      "position": null,
+      "placing": null,
+      "result_source": null,
+      "verification_status": "PENDING",
+      "official_accuracy_eligible": false,
+      "going": "Standard / Slow",
+      "lay_odds": null,
+      "available_stake_gbp": null,
+      "price_snapshot": {
+        "price": "11/4",
+        "type": "Sky Bet bookmaker back price; not lay odds",
+        "source": "Sporting Life",
+        "checked_at": "2026-10-26T11:22:32Z",
+        "url": "https://www.sportinglife.com/racing/racecards/2026-10-26/kempton/racecard/945405/unibet-40-000-live-streamed-events-handicap"
+      }
     }
   ],
   "archived_abandoned_entries": [

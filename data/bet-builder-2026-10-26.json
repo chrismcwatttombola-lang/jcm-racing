@@ -40,11 +40,11 @@
         "source": "The Racing API Pro and Sporting Life",
         "added_at": "2026-10-26T10:01:33.209Z"
       },
-      "position": null,
-      "placing": null,
-      "result_status": "PENDING",
-      "result_source": null,
-      "verification_status": "PENDING",
+      "position": "4",
+      "placing": "4th",
+      "result_status": "WIN",
+      "result_source": "THE_RACING_API",
+      "verification_status": "PROVIDER_ACCEPTED",
       "official_accuracy_eligible": false,
       "going": "Standard / Slow",
       "lay_odds": 6.6,
@@ -91,7 +91,16 @@
         "original_price_side": "LAY",
         "liquidity_gbp": 14,
         "liquidity_covers_liability_gbp": 78.4
-      }
+      },
+      "result_date": "2026-10-26",
+      "result_off_time_uk": "18:45",
+      "result_course": "Kempton",
+      "result_horse": "Breathe Easy",
+      "result_off_dt": "2026-10-26T18:45:00+00:00",
+      "result_retrieved_at": "2026-10-26T19:07:49Z",
+      "result_race_id": "rac_32302372180",
+      "result_horse_id": "hrs_50434265",
+      "result_source_url": "https://api.theracingapi.com/v1/results/rac_32302372180"
     },
     {
       "race_date": "2026-10-26",

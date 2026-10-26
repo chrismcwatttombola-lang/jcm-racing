@@ -17,6 +17,22 @@
       "selected_beaten_lengths": null,
       "racecard_url": "https://www.sportinglife.com/racing/racecards/2026-10-26/kempton/racecard/945407/try-unibets-new-racing-bet-builder-handicap",
       "results_url": null
+    },
+    {
+      "date": "2026-10-26",
+      "horse": "Weffaag",
+      "course": "Kempton",
+      "off_time_uk": "17:45",
+      "race_id": "rac_32302368306",
+      "horse_id": "hrs_56559188",
+      "field_size": 12,
+      "position": null,
+      "winner": null,
+      "race_name": "Unibet 40,000+ Live Streamed Events Handicap",
+      "winning_margin_lengths": null,
+      "selected_beaten_lengths": null,
+      "racecard_url": "https://www.sportinglife.com/racing/racecards/2026-10-26/kempton/racecard/945405/unibet-40-000-live-streamed-events-handicap",
+      "results_url": null
     }
   ],
   "archived_abandoned_entries": [

@@ -3,7 +3,62 @@
   "mode": "research_only_not_official_picks",
   "date": "2026-10-26",
   "imported_at": "2026-10-26T10:01:33.209Z",
-  "high_competition": [
+  "high_competition": [],
+  "competition_watchlist": [
+    {
+      "race_date": "2026-10-26",
+      "off_time_uk": "18:45",
+      "course": "Kempton",
+      "horse": "Breathe Easy",
+      "race_id": "rac_32302372180",
+      "horse_id": "hrs_50434265",
+      "scheduled_off_dt": "2026-10-26T18:45:00+00:00",
+      "interest_rank": 2,
+      "tier": "watchlist",
+      "original_status": "Watchlist",
+      "display_status": "Watchlist",
+      "competition_confidence_percent": null,
+      "identified_challengers": [
+        "Fight Your Corner",
+        "Loblolly",
+        "Drifts Away"
+      ],
+      "selection_status": "WATCHLIST",
+      "selected_at": "2026-10-26T09:07:00+00:00",
+      "added_at": "2026-10-26T10:01:33.209Z",
+      "original_assessment": "Watchlist",
+      "selection_reason": {
+        "summary": "Returns after 240 days in a competitive mile handicap. Fight Your Corner and Loblolly bring course-and-distance seconds; Drifts Away was second at Yarmouth. Those rivals make his narrow favouritism worth questioning.",
+        "counterargument": "Won his last two races, remains unexposed, drawn two with Oisin Murphy. Balding 7/44 (16%). His potential could justify favourite status; watchlist only. Musical Angel explicitly NR and excluded.",
+        "challengers": [
+          "Fight Your Corner",
+          "Loblolly",
+          "Drifts Away"
+        ],
+        "evidence_status": "RACING_API_AND_USER_ASSESSMENT",
+        "source": "The Racing API Pro and Sporting Life",
+        "added_at": "2026-10-26T10:01:33.209Z"
+      },
+      "position": null,
+      "placing": null,
+      "result_status": "PENDING",
+      "result_source": null,
+      "verification_status": "PENDING",
+      "official_accuracy_eligible": false,
+      "going": "Standard / Slow",
+      "lay_odds": 6.6,
+      "price_snapshot": {
+        "price": "9/2",
+        "type": "Bookmaker back price; not lay odds",
+        "source": "The Racing API Pro",
+        "checked_at": "2026-10-26T09:06:00+00:00",
+        "url": "https://www.sportinglife.com/racing/racecards/2026-10-26/kempton/racecard/945407/try-unibets-new-racing-bet-builder-handicap"
+      },
+      "trainer_jockey_evidence": "Won his last two races, remains unexposed, drawn two with Oisin Murphy. Balding 7/44 (16%). His potential could justify favourite status; watchlist only. Musical Angel explicitly NR and excluded.",
+      "available_stake_gbp": 14
+    }
+  ],
+  "archived_abandoned_entries": [
     {
       "race_date": "2026-10-26",
       "off_time_uk": "15:05",
@@ -51,60 +106,11 @@
         "checked_at": "2026-10-26T09:06:00+00:00",
         "url": "https://www.sportinglife.com/racing/racecards/2026-10-26/wexford/racecard/945549/michael-hickey-memorial-chase-listed"
       },
-      "trainer_jockey_evidence": "Grade 2 chase winner, proven in testing ground and still lightly raced. Main rivals also return from breaks. De Bromhead 7/31 (23%); Darragh O'Keeffe rides. No strong recommendation."
-    }
-  ],
-  "competition_watchlist": [
-    {
-      "race_date": "2026-10-26",
-      "off_time_uk": "18:45",
-      "course": "Kempton",
-      "horse": "Breathe Easy",
-      "race_id": "rac_32302372180",
-      "horse_id": "hrs_50434265",
-      "scheduled_off_dt": "2026-10-26T18:45:00+00:00",
-      "interest_rank": 2,
-      "tier": "watchlist",
-      "original_status": "Watchlist",
-      "display_status": "Watchlist",
-      "competition_confidence_percent": null,
-      "identified_challengers": [
-        "Fight Your Corner",
-        "Loblolly",
-        "Drifts Away"
-      ],
-      "selection_status": "WATCHLIST",
-      "selected_at": "2026-10-26T09:07:00+00:00",
-      "added_at": "2026-10-26T10:01:33.209Z",
-      "original_assessment": "Watchlist",
-      "selection_reason": {
-        "summary": "Returns after 240 days in a competitive mile handicap. Fight Your Corner and Loblolly bring course-and-distance seconds; Drifts Away was second at Yarmouth. Those rivals make his narrow favouritism worth questioning.",
-        "counterargument": "Won his last two races, remains unexposed, drawn two with Oisin Murphy. Balding 7/44 (16%). His potential could justify favourite status; watchlist only. Musical Angel explicitly NR and excluded.",
-        "challengers": [
-          "Fight Your Corner",
-          "Loblolly",
-          "Drifts Away"
-        ],
-        "evidence_status": "RACING_API_AND_USER_ASSESSMENT",
-        "source": "The Racing API Pro and Sporting Life",
-        "added_at": "2026-10-26T10:01:33.209Z"
-      },
-      "position": null,
-      "placing": null,
-      "result_status": "PENDING",
-      "result_source": null,
-      "verification_status": "PENDING",
-      "official_accuracy_eligible": false,
-      "going": "Standard / Slow",
-      "lay_odds": null,
-      "price_snapshot": {
-        "price": "9/2",
-        "type": "Bookmaker back price; not lay odds",
-        "source": "The Racing API Pro",
-        "checked_at": "2026-10-26T09:06:00+00:00",
-        "url": "https://www.sportinglife.com/racing/racecards/2026-10-26/kempton/racecard/945407/try-unibets-new-racing-bet-builder-handicap"
-      },
-      "trainer_jockey_evidence": "Won his last two races, remains unexposed, drawn two with Oisin Murphy. Balding 7/44 (16%). His potential could justify favourite status; watchlist only. Musical Angel explicitly NR and excluded."
+      "trainer_jockey_evidence": "Grade 2 chase winner, proven in testing ground and still lightly raced. Main rivals also return from breaks. De Bromhead 7/31 (23%); Darragh O'Keeffe rides. No strong recommendation.",
+      "race_status": "ABANDONED",
+      "excluded_from_outcomes": true,
+      "abandonment_source": "https://api.theracingapi.com/v1/racecards/rac_32302498085/pro",
+      "abandonment_checked_at": "2026-10-26T11:20:39Z"
     }
   ]
 }

@@ -53,7 +53,30 @@
         "checked_at": "2026-10-26T09:06:00+00:00",
         "url": "https://www.sportinglife.com/racing/racecards/2026-10-26/wexford/racecard/945549/michael-hickey-memorial-chase-listed"
       },
-      "trainer_jockey_evidence": "Grade 2 chase winner, proven in testing ground and still lightly raced. Main rivals also return from breaks. De Bromhead 7/31 (23%); Darragh O'Keeffe rides. No strong recommendation."
+      "trainer_jockey_evidence": "Grade 2 chase winner, proven in testing ground and still lightly raced. Main rivals also return from breaks. De Bromhead 7/31 (23%); Darragh O'Keeffe rides. No strong recommendation.",
+      "manual_lay_screenshot_request": {
+        "requested_at": "2026-10-26T11:13:39Z",
+        "status": "REQUESTED",
+        "reason": "No explicitly identified Betfair Exchange LAY quote available",
+        "required_evidence": "Pink lay column with visible odds and available amount; observation time"
+      },
+      "price_acquisition_check": {
+        "retrieved_at": "2026-10-26T11:13:39Z",
+        "provider": "The Racing API Pro",
+        "bookmaker": "Betfair Exchange",
+        "original_price_side": "UNKNOWN",
+        "current_decimal": "-",
+        "provider_updated_raw": "2026-10-26 11:10:19",
+        "provider_updated_timezone": null,
+        "latest_change": {
+          "changed_at": "2026-10-26T10:19:00+00:00",
+          "fractional": "-",
+          "decimal": "-"
+        },
+        "accepted": false,
+        "rejection_reason": "Current exchange price missing; no historical backfill",
+        "liquidity": null
+      }
     },
     {
       "race_date": "2026-10-26",
@@ -104,7 +127,30 @@
         "checked_at": "2026-10-26T09:06:00+00:00",
         "url": "https://www.sportinglife.com/racing/racecards/2026-10-26/kempton/racecard/945407/try-unibets-new-racing-bet-builder-handicap"
       },
-      "trainer_jockey_evidence": "Won his last two races, remains unexposed, drawn two with Oisin Murphy. Balding 7/44 (16%). His potential could justify favourite status; watchlist only. Musical Angel explicitly NR and excluded."
+      "trainer_jockey_evidence": "Won his last two races, remains unexposed, drawn two with Oisin Murphy. Balding 7/44 (16%). His potential could justify favourite status; watchlist only. Musical Angel explicitly NR and excluded.",
+      "manual_lay_screenshot_request": {
+        "requested_at": "2026-10-26T11:13:39Z",
+        "status": "REQUESTED",
+        "reason": "No explicitly identified Betfair Exchange LAY quote available",
+        "required_evidence": "Pink lay column with visible odds and available amount; observation time"
+      },
+      "price_acquisition_check": {
+        "retrieved_at": "2026-10-26T11:13:39Z",
+        "provider": "The Racing API Pro",
+        "bookmaker": "Betfair Exchange",
+        "original_price_side": "UNKNOWN",
+        "current_decimal": "6.2",
+        "provider_updated_raw": "2026-10-26 11:10:19",
+        "provider_updated_timezone": null,
+        "latest_change": {
+          "changed_at": "2026-10-26T10:40:00+00:00",
+          "fractional": "6.2",
+          "decimal": "6.2"
+        },
+        "accepted": false,
+        "rejection_reason": "Provider updated time has no timezone; latest explicitly zoned observation is over 30 minutes old",
+        "liquidity": null
+      }
     }
   ],
   "simulation_note": "Awaiting pre-race exchange observations. No simulation booked without an acceptable price.",

@@ -57,6 +57,13 @@ function loadSettings(c,m){
   for(const r of c.rows.filter(r=>!base.includes(key(r)))){migrated.entries[key(r)]={included:false,liability_cents:0,odds:r.lay_odds??null,confirmed_at:null,default_entry:true};migrated.choices[key(r)]=false;}
   migrated.basis='Saved device choices; later additions excluded';return migrated;
  }
+ if(c.archived_abandoned_entries?.length&&Object.keys(s?.entries||{}).length!==c.rows.length){
+  const originalRows=[...c.rows,...c.archived_abandoned_entries];
+  const old=loadSettings({...c,rows:originalRows,archived_abandoned_entries:null},m);
+  const next=structuredClone(old);next.entries=Object.fromEntries(Object.entries(next.entries).filter(([k])=>c.rows.some(r=>key(r)===k)));next.choices=Object.fromEntries(Object.entries(next.choices||{}).filter(([k])=>c.rows.some(r=>key(r)===k)));
+  if(m==='fixed'){const picked=c.rows.filter(r=>next.entries[key(r)].included);picked.forEach((r,i)=>next.entries[key(r)].liability_cents=Math.floor(next.amount_cents/picked.length)+(i<next.amount_cents%picked.length?1:0));}
+  return next;
+ }
  if(!s||Object.keys(s.entries||{}).length!==c.rows.length||s.version!==3||s.policy!==policy||s.date!==c.date||s.mode!==m||!s.entries||typeof s.entries!=='object'||Array.isArray(s.entries)||!Number.isSafeInteger(s.amount_cents)||s.amount_cents<0)throw Error('Invalid saved strategy');
  const first=Math.min(...c.rows.map(off));
  if(m!=='manual'&&s.confirmed_at!==null&&(!Number.isFinite(Date.parse(s.confirmed_at))||Date.parse(s.confirmed_at)>=first||Date.parse(s.confirmed_at)>Date.now()||Date.parse(s.confirmed_at)<Date.parse(c.introduced_at)))throw Error('Invalid amount lock');
@@ -73,6 +80,7 @@ function loadSettings(c,m){
 function selected(s,r){return !withdrawn(r)&&(s.choices?.[key(r)]??s.entries[key(r)]?.included??true);}
 function opening(c,m){return c.date>=bankTrial.start?bankTrial.initial:m==='fixed'?100000:m==='race'?Math.max(500000,c.rows.filter(r=>!withdrawn(r)).length*50000):500000;}
 function settings(c,m){
+ if(c.preserve_device_choices&&localStorage.getItem(storage(c.date,m)))return loadSettings(c,m);
  if(!c.published_simulations?.[m])return loadSettings(c,m)||initial(c,m);
  const s=initial(c,m),plan=c.published_simulations[m];
  if(plan.entries.length!==c.rows.length)throw Error('Incomplete published simulation');
@@ -161,7 +169,7 @@ async function open(next='fixed'){
     (c.research_summary?'<p class="builder-note" data-research-coverage>'+safe(c.research_summary)+'</p>':'')+
     (c.simulation_note?'<p class="builder-note">'+safe(c.simulation_note)+'</p>':'')+
     '<section class="builder-tile builder-potential"><h3>Profit / Loss Calculator</h3><strong data-builder-potential>'+ (t.potential===null?'Unavailable':money(t.potential))+'</strong><p class="builder-note">Simulation · after 5% commission · assumes remaining horses are beaten.</p></section>'+
-    '<p id="builder-message" role="status">'+safe(message)+'</p><p class="builder-note">'+(s.published?'Simulation booked · both races included · published record retained across devices.':'Simulation · liability at risk · saved on this device.')+'</p>'+
+    '<p id="builder-message" role="status">'+safe(message)+'</p><p class="builder-note">'+(s.published?'Simulation booked · published record retained across devices.':'Simulation · liability at risk · saved on this device.')+'</p>'+
     '<h3>'+labelDate(d)+' · '+rows.length+' races</h3>'+rows.map((r,i)=>{
      const v=s.entries[key(r)]||{included:false,liability_cents:0,odds:r.lay_odds??null},locked=s.published||Date.now()>=off(r),st=status(r),checkboxLocked=withdrawn(r)||(next==='fixed'?amountLocked:locked);
      return '<section class="jcm-manual-row builder-row" data-builder-row="'+i+'"><strong>'+safe(r.horse)+'</strong><p>'+safe(r.off_time_uk)+' · '+safe(r.course)+' · '+(locked?'Locked':'Editable')+'</p><label><input data-builder-include="'+i+'" type="checkbox" '+(selected(s,r)?'checked ':'')+(checkboxLocked?'disabled':'')+'> Include race</label>'+

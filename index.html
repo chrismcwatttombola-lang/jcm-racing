@@ -355,7 +355,7 @@ window.jcmAcceptedResult = function(r) {
 const date=document.getElementById('date'),panel=document.getElementById('jcm-official-panel');
 if(!date||!panel)return;
 let day=date.value,detailRows=[],state='loading',cardDetails=[],loadVersion=0;
-const researchDays={'2026-10-21':3,'2026-10-22':5,'2026-10-23':2,'2026-10-24':3,'2026-10-25':0,'2026-10-26':2};
+const researchDays={'2026-10-21':3,'2026-10-22':5,'2026-10-23':2,'2026-10-24':3,'2026-10-25':0,'2026-10-26':1};
 function raceResultsLink(m,r){try{const u=new URL(m?.results_url);const course=r.course.toLowerCase().replace(/\s*\(aw\)/g,'').replace(/[^a-z0-9]+/g,'-').replace(/^-|-$/g,'');return u.protocol==='https:'&&u.hostname==='www.sportinglife.com'&&new RegExp('^/racing/results/'+r.race_date+'/'+course+'/[0-9]+/[a-z0-9-]+/?$').test(u.pathname)&&!u.search&&!u.hash?u.href:null;}catch(_){return null;}}
 function detailFor(r){const matches=cardDetails.filter(m=>m.date===r.race_date&&m.horse===r.horse&&m.course===r.course&&m.off_time_uk===r.off_time_uk);return matches.length===1?matches[0]:null;}
 function ordinal(v){const n=Number(v);if(!Number.isInteger(n)||n<1)return String(v||'Not supplied');const a=n%100;return n+(a>=11&&a<=13?'th':({1:'st',2:'nd',3:'rd'}[n%10]||'th'));}

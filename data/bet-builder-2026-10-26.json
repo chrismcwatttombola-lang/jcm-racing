@@ -137,18 +137,33 @@
       "verification_status": "PENDING",
       "official_accuracy_eligible": false,
       "going": "Standard / Slow",
-      "lay_odds": null,
-      "available_stake_gbp": null,
+      "lay_odds": 4.9,
+      "available_stake_gbp": 19,
       "price_snapshot": {
         "price": "11/4",
         "type": "Sky Bet bookmaker back price; not lay odds",
         "source": "Sporting Life",
         "checked_at": "2026-10-26T11:22:32Z",
         "url": "https://www.sportinglife.com/racing/racecards/2026-10-26/kempton/racecard/945405/unibet-40-000-live-streamed-events-handicap"
-      }
+      },
+      "lay_price_provenance": {
+        "provider": "Betfair Exchange",
+        "source_type": "USER_SCREENSHOT",
+        "source_library_file_id": "libfile_c09fb59eb1248191a83284bfb671e5c0",
+        "observed_at": "2026-10-26T11:22:00+00:00",
+        "observation_time_basis": "Screenshot clock; race title, runner number 12, draw 3, jockey/trainer match approved 26 October Kempton 17:45 entry; date/course/off from conversation",
+        "retrieved_at": "2026-10-26T11:28:27Z",
+        "verification_status": "VERIFIED_SCREENSHOT_LAY",
+        "original_price_side": "LAY",
+        "liquidity_gbp": 19,
+        "liquidity_covers_liability_gbp": 74.1
+      },
+      "unbooked_simulation_modes": [
+        "fixed"
+      ]
     }
   ],
-  "simulation_note": "Breathe Easy: screenshot-verified lay 6.6 at 11:16 GMT; £14 available (£78.40 liability). Default simulations assume full amounts despite insufficient displayed liquidity; no real orders. Wexford abandoned and excluded. Weffaag added as watchlist at 11:22 GMT; awaiting lay screenshot, no price or simulation booked.",
+  "simulation_note": "Breathe Easy: screenshot-verified lay 6.6 at 11:16 GMT; £14 available (£78.40 liability). Default simulations assume full amounts despite insufficient displayed liquidity; no real orders. Wexford abandoned and excluded. Weffaag: screenshot-verified lay 4.9 at 11:22 GMT, £19 available (£74.10 liability). £500/race and £250 manual fictional defaults booked assuming full liquidity. Existing £1000 daily allocation to Breathe Easy retained; Weffaag excluded from that already booked plan.",
   "bank_trial": {
     "start_date": "2026-10-23",
     "accounting_model": "ZERO_START_UNLIMITED_SIMULATED_OVERDRAFT",
@@ -261,6 +276,13 @@
           "horse_id": "hrs_50434265",
           "odds": 6.6,
           "liability_cents": 50000
+        },
+        {
+          "race_id": "rac_32302368306",
+          "horse_id": "hrs_56559188",
+          "odds": 4.9,
+          "liability_cents": 50000,
+          "recorded_at": "2026-10-26T11:28:27Z"
         }
       ]
     },
@@ -271,6 +293,13 @@
           "horse_id": "hrs_50434265",
           "odds": 6.6,
           "liability_cents": 25000
+        },
+        {
+          "race_id": "rac_32302368306",
+          "horse_id": "hrs_56559188",
+          "odds": 4.9,
+          "liability_cents": 25000,
+          "recorded_at": "2026-10-26T11:28:27Z"
         }
       ]
     }

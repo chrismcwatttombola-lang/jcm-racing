@@ -108,11 +108,11 @@
         "source": "The Racing API Pro",
         "checked_at": "2026-10-26T19:14:14Z"
       },
-      "position": null,
-      "placing": null,
-      "result_status": "PENDING",
-      "verification_status": "PENDING",
-      "result_source": null,
+      "position": "4",
+      "placing": "4th",
+      "result_status": "WIN",
+      "verification_status": "PROVIDER_ACCEPTED",
+      "result_source": "THE_RACING_API",
       "official_accuracy_eligible": false,
       "going": "Good",
       "lay_odds": 2.62,
@@ -144,7 +144,16 @@
           "back_odds": 2.2,
           "wide_spread_warning": null
         }
-      ]
+      ],
+      "result_date": "2026-10-27",
+      "result_off_time_uk": "14:31",
+      "result_course": "Newcastle",
+      "result_horse": "Silver Hill",
+      "result_off_dt": "2026-10-27T14:31:00+00:00",
+      "result_retrieved_at": "2026-10-27T16:12:35.598Z",
+      "result_race_id": "rac_32302523266",
+      "result_horse_id": "hrs_44975042",
+      "result_source_url": "https://api.theracingapi.com/v1/results/rac_32302523266"
     }
   ]
 }

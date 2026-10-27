@@ -15,7 +15,21 @@
       "winning_margin_lengths": null,
       "selected_beaten_lengths": null,
       "results_url": null,
-      "racecard_url": "https://www.sportinglife.com/racing/meeting/2026-10-27/wolverhampton"
+      "racecard_url": "https://www.sportinglife.com/racing/meeting/2026-10-27/wolverhampton",
+      "lay_odds": 4.5,
+      "available_stake_gbp": 14,
+      "lay_price_provenance": {
+        "provider": "Betfair Exchange",
+        "source_type": "USER_SCREENSHOT",
+        "source_library_file_id": "libfile_c421607eb0ec8191acebbcea3f00d2cd",
+        "observed_at": "2026-10-27T06:35:00+00:00",
+        "observation_time_basis": "Screenshot clock, 27 Oct market date, course and off time; Europe/London GMT",
+        "retrieved_at": "2026-10-27T06:37:16Z",
+        "verification_status": "VERIFIED_SCREENSHOT_LAY",
+        "original_price_side": "LAY",
+        "liquidity_gbp": 14,
+        "back_odds": 3.65
+      }
     },
     {
       "date": "2026-10-27",
@@ -30,7 +44,21 @@
       "winning_margin_lengths": null,
       "selected_beaten_lengths": null,
       "results_url": null,
-      "racecard_url": "https://www.sportinglife.com/racing/racecards/2026-10-27/newcastle/racecard/945555/sunday-lunch-at-the-border-minstrel-novices-limited-handicap-chase-gbb-race"
+      "racecard_url": "https://www.sportinglife.com/racing/racecards/2026-10-27/newcastle/racecard/945555/sunday-lunch-at-the-border-minstrel-novices-limited-handicap-chase-gbb-race",
+      "lay_odds": 2.62,
+      "available_stake_gbp": 11,
+      "lay_price_provenance": {
+        "provider": "Betfair Exchange",
+        "source_type": "USER_SCREENSHOT",
+        "source_library_file_id": "libfile_4e13fee4506c8191ae636c7c22a74ee4",
+        "observed_at": "2026-10-27T06:36:00+00:00",
+        "observation_time_basis": "Screenshot clock, 27 Oct market date, course and off time; Europe/London GMT",
+        "retrieved_at": "2026-10-27T06:37:16Z",
+        "verification_status": "VERIFIED_SCREENSHOT_LAY",
+        "original_price_side": "LAY",
+        "liquidity_gbp": 11,
+        "back_odds": 2.54
+      }
     }
   ]
 }

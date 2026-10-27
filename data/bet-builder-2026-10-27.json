@@ -46,21 +46,36 @@
       "result_source": null,
       "official_accuracy_eligible": false,
       "going": "Standard",
-      "lay_odds": 250,
-      "available_stake_gbp": 17,
+      "lay_odds": 4.5,
+      "available_stake_gbp": 14,
       "lay_price_provenance": {
         "provider": "Betfair Exchange",
         "source_type": "USER_SCREENSHOT",
-        "source_library_file_id": "libfile_f6325b0fa1108191a4cabe8172151fd0",
-        "observed_at": "2026-10-26T19:13:00+00:00",
-        "observation_time_basis": "Screenshot clock 19:13, 27 Oct market date; supplied evening 26 October",
-        "retrieved_at": "2026-10-26T19:14:14Z",
+        "source_library_file_id": "libfile_c421607eb0ec8191acebbcea3f00d2cd",
+        "observed_at": "2026-10-27T06:35:00+00:00",
+        "observation_time_basis": "Screenshot clock, 27 Oct market date, course and off time; Europe/London GMT",
+        "retrieved_at": "2026-10-27T06:37:16Z",
         "verification_status": "VERIFIED_SCREENSHOT_LAY",
         "original_price_side": "LAY",
-        "liquidity_gbp": 17,
-        "back_odds": 3.75,
-        "wide_spread_warning": "Lay 250 versus back 3.75; extreme early spread, not a representative competitive price"
-      }
+        "liquidity_gbp": 14,
+        "back_odds": 3.65
+      },
+      "lay_price_observations": [
+        {
+          "odds": 250,
+          "provider": "Betfair Exchange",
+          "source_type": "USER_SCREENSHOT",
+          "source_library_file_id": "libfile_f6325b0fa1108191a4cabe8172151fd0",
+          "observed_at": "2026-10-26T19:13:00+00:00",
+          "observation_time_basis": "Screenshot clock 19:13, 27 Oct market date; supplied evening 26 October",
+          "retrieved_at": "2026-10-26T19:14:14Z",
+          "verification_status": "VERIFIED_SCREENSHOT_LAY",
+          "original_price_side": "LAY",
+          "liquidity_gbp": 17,
+          "back_odds": 3.75,
+          "wide_spread_warning": "Lay 250 versus back 3.75; extreme early spread, not a representative competitive price"
+        }
+      ]
     },
     {
       "race_date": "2026-10-27",
@@ -100,21 +115,36 @@
       "result_source": null,
       "official_accuracy_eligible": false,
       "going": "Good",
-      "lay_odds": 2.3,
-      "available_stake_gbp": 30,
+      "lay_odds": 2.62,
+      "available_stake_gbp": 11,
       "lay_price_provenance": {
         "provider": "Betfair Exchange",
         "source_type": "USER_SCREENSHOT",
-        "source_library_file_id": "libfile_8d2cd7dcf2688191aee186c519c6226a",
-        "observed_at": "2026-10-26T19:13:00+00:00",
-        "observation_time_basis": "Screenshot clock 19:13, 27 Oct market date; supplied evening 26 October",
-        "retrieved_at": "2026-10-26T19:14:14Z",
+        "source_library_file_id": "libfile_4e13fee4506c8191ae636c7c22a74ee4",
+        "observed_at": "2026-10-27T06:36:00+00:00",
+        "observation_time_basis": "Screenshot clock, 27 Oct market date, course and off time; Europe/London GMT",
+        "retrieved_at": "2026-10-27T06:37:16Z",
         "verification_status": "VERIFIED_SCREENSHOT_LAY",
         "original_price_side": "LAY",
-        "liquidity_gbp": 30,
-        "back_odds": 2.2,
-        "wide_spread_warning": null
-      }
+        "liquidity_gbp": 11,
+        "back_odds": 2.54
+      },
+      "lay_price_observations": [
+        {
+          "odds": 2.3,
+          "provider": "Betfair Exchange",
+          "source_type": "USER_SCREENSHOT",
+          "source_library_file_id": "libfile_8d2cd7dcf2688191aee186c519c6226a",
+          "observed_at": "2026-10-26T19:13:00+00:00",
+          "observation_time_basis": "Screenshot clock 19:13, 27 Oct market date; supplied evening 26 October",
+          "retrieved_at": "2026-10-26T19:14:14Z",
+          "verification_status": "VERIFIED_SCREENSHOT_LAY",
+          "original_price_side": "LAY",
+          "liquidity_gbp": 30,
+          "back_odds": 2.2,
+          "wide_spread_warning": null
+        }
+      ]
     }
   ],
   "bank_trial": {
@@ -130,22 +160,22 @@
     "authorization": "User replaced funded banks and top-ups with zero-start unlimited simulated overdraft; simplified results to three data columns."
   },
   "preserve_device_choices": true,
-  "simulation_note": "Screenshot prices at 19:13 GMT on 26 October. Silver Hill lay 2.3 (£30 stake available). Eighty Eight lay 250 (£17 available), versus back 3.75: extremely wide early spread. Fictional simulations use exact displayed quotes; no real execution claimed.",
+  "simulation_note": "User-requested screenshot refresh: Eighty Eight 4.5 at 06:35 GMT (£14 available); Silver Hill 2.62 at 06:36 GMT (£11 available). Fictional default liabilities exceed shown liquidity; no real execution. Previous publication retained; explicit device choices preserved.",
   "published_simulations": {
-    "recorded_at": "2026-10-26T19:14:14Z",
-    "authorization": "User approved both entries and supplied lay screenshots; automatic fictional three-strategy booking previously authorized.",
+    "recorded_at": "2026-10-27T06:37:16Z",
+    "authorization": "User explicitly requested updated screenshot lay prices before racing on 27 October. Previous publication retained in history; liabilities unchanged.",
     "fixed": {
       "entries": [
         {
           "race_id": "rac_32302531014",
           "horse_id": "hrs_25825541",
-          "odds": 250,
+          "odds": 4.5,
           "liability_cents": 50000
         },
         {
           "race_id": "rac_32302523266",
           "horse_id": "hrs_44975042",
-          "odds": 2.3,
+          "odds": 2.62,
           "liability_cents": 50000
         }
       ]
@@ -155,13 +185,13 @@
         {
           "race_id": "rac_32302531014",
           "horse_id": "hrs_25825541",
-          "odds": 250,
+          "odds": 4.5,
           "liability_cents": 50000
         },
         {
           "race_id": "rac_32302523266",
           "horse_id": "hrs_44975042",
-          "odds": 2.3,
+          "odds": 2.62,
           "liability_cents": 50000
         }
       ]
@@ -171,16 +201,70 @@
         {
           "race_id": "rac_32302531014",
           "horse_id": "hrs_25825541",
-          "odds": 250,
+          "odds": 4.5,
           "liability_cents": 25000
         },
         {
           "race_id": "rac_32302523266",
           "horse_id": "hrs_44975042",
-          "odds": 2.3,
+          "odds": 2.62,
           "liability_cents": 25000
         }
       ]
     }
-  }
+  },
+  "published_simulation_history": [
+    {
+      "recorded_at": "2026-10-26T19:14:14Z",
+      "authorization": "User approved both entries and supplied lay screenshots; automatic fictional three-strategy booking previously authorized.",
+      "fixed": {
+        "entries": [
+          {
+            "race_id": "rac_32302531014",
+            "horse_id": "hrs_25825541",
+            "odds": 250,
+            "liability_cents": 50000
+          },
+          {
+            "race_id": "rac_32302523266",
+            "horse_id": "hrs_44975042",
+            "odds": 2.3,
+            "liability_cents": 50000
+          }
+        ]
+      },
+      "race": {
+        "entries": [
+          {
+            "race_id": "rac_32302531014",
+            "horse_id": "hrs_25825541",
+            "odds": 250,
+            "liability_cents": 50000
+          },
+          {
+            "race_id": "rac_32302523266",
+            "horse_id": "hrs_44975042",
+            "odds": 2.3,
+            "liability_cents": 50000
+          }
+        ]
+      },
+      "manual": {
+        "entries": [
+          {
+            "race_id": "rac_32302531014",
+            "horse_id": "hrs_25825541",
+            "odds": 250,
+            "liability_cents": 25000
+          },
+          {
+            "race_id": "rac_32302523266",
+            "horse_id": "hrs_44975042",
+            "odds": 2.3,
+            "liability_cents": 25000
+          }
+        ]
+      }
+    }
+  ]
 }

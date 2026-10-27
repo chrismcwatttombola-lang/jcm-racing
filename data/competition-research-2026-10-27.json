@@ -44,21 +44,36 @@
       "result_source": null,
       "official_accuracy_eligible": false,
       "going": "Standard",
-      "lay_odds": 250,
-      "available_stake_gbp": 17,
+      "lay_odds": 4.5,
+      "available_stake_gbp": 14,
       "lay_price_provenance": {
         "provider": "Betfair Exchange",
         "source_type": "USER_SCREENSHOT",
-        "source_library_file_id": "libfile_f6325b0fa1108191a4cabe8172151fd0",
-        "observed_at": "2026-10-26T19:13:00+00:00",
-        "observation_time_basis": "Screenshot clock 19:13, 27 Oct market date; supplied evening 26 October",
-        "retrieved_at": "2026-10-26T19:14:14Z",
+        "source_library_file_id": "libfile_c421607eb0ec8191acebbcea3f00d2cd",
+        "observed_at": "2026-10-27T06:35:00+00:00",
+        "observation_time_basis": "Visible screenshot clock and 27 Oct course / selected race time; Europe/London GMT",
+        "retrieved_at": "2026-10-27T06:37:16Z",
         "verification_status": "VERIFIED_SCREENSHOT_LAY",
         "original_price_side": "LAY",
-        "liquidity_gbp": 17,
-        "back_odds": 3.75,
-        "wide_spread_warning": "Lay 250 versus back 3.75; extreme early spread, not a representative competitive price"
-      }
+        "liquidity_gbp": 14,
+        "back_odds": 3.65
+      },
+      "lay_price_observations": [
+        {
+          "odds": 250,
+          "provider": "Betfair Exchange",
+          "source_type": "USER_SCREENSHOT",
+          "source_library_file_id": "libfile_f6325b0fa1108191a4cabe8172151fd0",
+          "observed_at": "2026-10-26T19:13:00+00:00",
+          "observation_time_basis": "Screenshot clock 19:13, 27 Oct market date; supplied evening 26 October",
+          "retrieved_at": "2026-10-26T19:14:14Z",
+          "verification_status": "VERIFIED_SCREENSHOT_LAY",
+          "original_price_side": "LAY",
+          "liquidity_gbp": 17,
+          "back_odds": 3.75,
+          "wide_spread_warning": "Lay 250 versus back 3.75; extreme early spread, not a representative competitive price"
+        }
+      ]
     }
   ],
   "competition_watchlist": [
@@ -100,21 +115,36 @@
       "result_source": null,
       "official_accuracy_eligible": false,
       "going": "Good",
-      "lay_odds": 2.3,
-      "available_stake_gbp": 30,
+      "lay_odds": 2.62,
+      "available_stake_gbp": 11,
       "lay_price_provenance": {
         "provider": "Betfair Exchange",
         "source_type": "USER_SCREENSHOT",
-        "source_library_file_id": "libfile_8d2cd7dcf2688191aee186c519c6226a",
-        "observed_at": "2026-10-26T19:13:00+00:00",
-        "observation_time_basis": "Screenshot clock 19:13, 27 Oct market date; supplied evening 26 October",
-        "retrieved_at": "2026-10-26T19:14:14Z",
+        "source_library_file_id": "libfile_4e13fee4506c8191ae636c7c22a74ee4",
+        "observed_at": "2026-10-27T06:36:00+00:00",
+        "observation_time_basis": "Visible screenshot clock and 27 Oct course / selected race time; Europe/London GMT",
+        "retrieved_at": "2026-10-27T06:37:16Z",
         "verification_status": "VERIFIED_SCREENSHOT_LAY",
         "original_price_side": "LAY",
-        "liquidity_gbp": 30,
-        "back_odds": 2.2,
-        "wide_spread_warning": null
-      }
+        "liquidity_gbp": 11,
+        "back_odds": 2.54
+      },
+      "lay_price_observations": [
+        {
+          "odds": 2.3,
+          "provider": "Betfair Exchange",
+          "source_type": "USER_SCREENSHOT",
+          "source_library_file_id": "libfile_8d2cd7dcf2688191aee186c519c6226a",
+          "observed_at": "2026-10-26T19:13:00+00:00",
+          "observation_time_basis": "Screenshot clock 19:13, 27 Oct market date; supplied evening 26 October",
+          "retrieved_at": "2026-10-26T19:14:14Z",
+          "verification_status": "VERIFIED_SCREENSHOT_LAY",
+          "original_price_side": "LAY",
+          "liquidity_gbp": 30,
+          "back_odds": 2.2,
+          "wide_spread_warning": null
+        }
+      ]
     }
   ]
 }

@@ -39,11 +39,11 @@
         "source": "The Racing API Pro",
         "checked_at": "2026-10-26T19:14:14Z"
       },
-      "position": null,
-      "placing": null,
-      "result_status": "PENDING",
-      "verification_status": "PENDING",
-      "result_source": null,
+      "position": "2",
+      "placing": "2nd",
+      "result_status": "WIN",
+      "verification_status": "PROVIDER_ACCEPTED",
+      "result_source": "THE_RACING_API",
       "official_accuracy_eligible": false,
       "going": "Standard",
       "lay_odds": 4.5,
@@ -75,7 +75,16 @@
           "back_odds": 3.75,
           "wide_spread_warning": "Lay 250 versus back 3.75; extreme early spread, not a representative competitive price"
         }
-      ]
+      ],
+      "result_date": "2026-10-27",
+      "result_off_time_uk": "16:30",
+      "result_course": "Wolverhampton",
+      "result_horse": "Eighty Eight",
+      "result_off_dt": "2026-10-27T16:30:00+00:00",
+      "result_retrieved_at": "2026-10-27T16:51:00Z",
+      "result_race_id": "rac_32302531014",
+      "result_horse_id": "hrs_25825541",
+      "result_source_url": "https://api.theracingapi.com/v1/results/rac_32302531014"
     },
     {
       "race_date": "2026-10-27",

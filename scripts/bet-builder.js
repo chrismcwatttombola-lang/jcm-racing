@@ -10,7 +10,7 @@ const percent=v=>v===null?'N/A':(v>0?'+':'')+v.toFixed(2)+'%';
 const safe=v=>String(v??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const key=r=>[r.off_time_uk,r.course,r.horse].join('|');
 const labelDate=d=>new Date(d+'T12:00:00Z').toLocaleDateString('en-GB',{day:'numeric',month:'short',year:'numeric'});
-let mode='fixed',generation=0,lockTimer,refreshTimer,resultsDay=null,resultsMonth=null;
+let mode='race',generation=0,lockTimer,refreshTimer,resultsDay=null,resultsMonth=null;
 const read=async path=>{const r=await fetch(path,{cache:'no-store'});if(!r.ok)throw Error('Unavailable');return r.json();};
 const day=()=>document.getElementById('date').value;
 const storage=(d,m)=>'jcm-builder-v3-'+d+'-'+m;
@@ -20,16 +20,9 @@ const off=r=>Date.parse(r.scheduled_off_dt);
 const withdrawn=r=>r.withdrawal_status==='SCREENSHOT_NR';
 const status=r=>withdrawn(r)?'NR':Date.now()>=off(r)&&window.jcmAcceptedResult(r)&&(r.result_source!=='THE_RACING_API'||(!r.race_id||r.result_race_id===r.race_id)&&(!r.horse_id||r.result_horse_id===r.horse_id))&&['WIN','LOSS','NR'].includes(r.result_status)?r.result_status:'PENDING';
 function stop(){window.jcmBuilderLegacyActive=false;generation++;clearTimeout(lockTimer);clearInterval(refreshTimer);window.jcmStopLegacyAccount?.();window.jcmStopFixedTimer?.();}
-window.jcmAddAccountSwitch=function(node,current){
+window.jcmAddAccountSwitch=function(node){
  node.querySelector('.jcm-account-switch')?.remove();
  node.querySelector('.builder-select-all')?.remove();
- const sw=document.createElement('div');sw.className='jcm-account-switch builder-switch';sw.setAttribute('role','tablist');sw.setAttribute('aria-label','Fictional account strategy');
- sw.innerHTML=Object.entries(names).map(([m,label])=>'<button type="button" role="tab" aria-selected="'+(m===current)+'" data-account-mode="'+m+'">'+label+'</button>').join('');
- node.prepend(sw);
- const boxes=[...node.querySelectorAll('[data-builder-include],[data-account-row],[data-manual-include]')],editable=boxes.filter(b=>!b.disabled);
- if(boxes.length){const label=document.createElement('label');label.className='builder-select-all';label.innerHTML='<input id="builder-select-all" type="checkbox" '+(!editable.length?'disabled':'')+'> Select all editable races';sw.after(label);const master=label.querySelector('input');master.checked=editable.length>0&&editable.every(b=>b.checked);master.indeterminate=editable.some(b=>b.checked)&&!master.checked;master.addEventListener('change',()=>{if(node.jcmToggleAll)node.jcmToggleAll(master.checked);else if(current==='fixed')window.jcmSetAllFixed?.(master.checked);else window.jcmSetAllManual?.(master.checked);});}
- sw.querySelectorAll('button').forEach(b=>b.addEventListener('click',()=>open(b.dataset.accountMode)));
- sw.addEventListener('keydown',e=>{if(!['ArrowLeft','ArrowRight','Home','End'].includes(e.key))return;e.preventDefault();const keys=Object.keys(names),i=keys.indexOf(current),next=e.key==='Home'?0:e.key==='End'?3:(i+(e.key==='ArrowRight'?1:3))%4;open(keys[next]);});
 };
 function validateConfig(c,d){
  if(c.schema_version!==2||c.fictional_only!==true||c.date!==d||![0,5000,10000].includes(c.opening_balance_gbp)||c.commission_rate!==.05||!Number.isFinite(Date.parse(c.introduced_at))||!Array.isArray(c.rows)||!c.rows.length)throw Error('Invalid card');
@@ -154,14 +147,14 @@ function totals(c,rows,s){
  return {movement,reserved,unresolved,selected,staked,settledRisk,returned:staked+movement,percentage:settledRisk?movement/settledRisk*100:null,potential:potentialAvailable?movement+outstandingProfit:null,balance,available:balance-reserved,deposits,withdrawals,topup,net,bank_percentage:net/bankTrial.benchmark*100};
 }
 function persist(c,m,s){localStorage.setItem(storage(c.date,m),JSON.stringify(s));}
-async function open(next='fixed'){
+async function open(next='race'){
+ next='race';
  stop();mode=next;const token=generation,d=day();
  const overlay=document.getElementById('jcm-detail-overlay'),node=overlay.querySelector('#jcm-detail-content');overlay.classList.add('open');
  delete node.jcmToggleAll;
  overlay.querySelector('.jcm-modal')?.scrollTo(0,0);node.innerHTML='<h2>Bet Builder</h2><p role="status">Loading…</p>';window.jcmAddAccountSwitch(node,next);overlay.querySelector('.jcm-close').focus();
  try{
   const days=await read('data/bet-builder-days.json');if(token!==generation)return;
-  if(next==='results'){await results(node,days,token);if(token===generation)refreshTimer=setInterval(()=>{if(token!==generation||!overlay.classList.contains('open')){clearInterval(refreshTimer);return;}results(node,days,token).catch(()=>{});},30000);return;}
   if(!days.days.includes(d))throw Error('No account card for date');
   let c=await card(d),rows=c.rows;const carried=await carriedBank(d,next,days);c.account_opening_cents=d>=bankTrial.start?carried.bank:opening(c,next);c.carried_reserved_cents=carried.reserved;c.carried_deposits_cents=carried.deposits;c.carried_withdrawals_cents=carried.withdrawals;
   if(token!==generation)return;
@@ -244,6 +237,37 @@ async function history(days){
  }
  return {points,issues,coverageNotes};
 }
+function weekCommencing(d){
+ const date=new Date(d+'T12:00:00Z');date.setUTCDate(date.getUTCDate()-((date.getUTCDay()+6)%7));return date.toISOString().slice(0,10);
+}
+async function raceProfitSummary(days){
+ let total=0,wins=0,losses=0,pending=0;const weeks=new Map();
+ for(const d of [...days.days].sort()){
+  const c=await card(d),plan=c.published_simulations?.race;
+  if(!plan)continue;
+  if(!Array.isArray(plan.entries))throw Error('Invalid recorded £500 plan');
+  for(const entry of plan.entries){
+   const matches=c.rows.filter(r=>r.race_id===entry.race_id&&r.horse_id===entry.horse_id);
+   if(matches.length!==1||entry.liability_cents!==50000||price(entry.odds)!==entry.odds)throw Error('Invalid recorded £500 bet');
+   const st=status(matches[0]);
+   if(st==='PENDING'){pending++;continue;}
+   if(st==='NR')continue;
+   const movement=st==='LOSS'?-50000:Math.round(50000/(entry.odds-1)*(1-c.commission_rate));
+   if(st==='WIN')wins++;else losses++;
+   total+=movement;const week=weekCommencing(d);weeks.set(week,(weeks.get(week)||0)+movement);
+  }
+ }
+ return {total,wins,losses,pending,weeks:[...weeks].sort(([a],[b])=>b.localeCompare(a)).map(([week,profit])=>({week,profit}))};
+}
+const shortDate=d=>new Date(d+'T12:00:00Z').toLocaleDateString('en-GB',{day:'2-digit',month:'2-digit',year:'2-digit'});
+const signedMoney=v=>(v>0?'+':'')+money(v);
+async function updateHubProfit(){
+ const node=document.getElementById('jcm-profit-summary');if(!node)return;
+ try{
+  const summary=await raceProfitSummary(await read('data/bet-builder-days.json'));
+  node.innerHTML='<div class="jcm-profit-total"><span>Profit / Loss</span><strong class="'+(summary.total>0?'positive':summary.total<0?'negative':'')+'">'+signedMoney(summary.total)+'</strong></div><p class="jcm-profit-record">'+summary.wins+' wins / '+summary.losses+' losses · £500 liability per race</p><div class="jcm-profit-weeks">'+(summary.weeks.length?summary.weeks.map(w=>'<div><span>WC '+shortDate(w.week)+'</span><strong class="'+(w.profit>0?'positive':w.profit<0?'negative':'')+'">'+signedMoney(w.profit)+'</strong></div>').join(''):'<p>No settled £500 bets yet.</p>')+'</div><small>Settled recorded bets · 5% commission</small>';
+ }catch(_){node.innerHTML='<p>Profit / loss unavailable.</p>';}
+}
 async function results(node,days,token){
  const {points,issues,coverageNotes}=await history(days);
  if(token!==generation)return;
@@ -288,8 +312,10 @@ function chart(points,month){
  svg+='<g data-chart-legend transform="translate(0 264)">'+Object.entries(colours).map(([m,colour],i)=>'<g data-legend-strategy="'+m+'" transform="translate('+(44+i*124)+' 0)"><line x1="0" x2="15" y1="-4" y2="-4" stroke="'+colour+'" stroke-width="3"/><text x="20" y="0" fill="'+colour+'" font-size="11" font-weight="700">'+names[m]+'</text></g>').join('')+'</g>';
  return '<section class="builder-tile builder-chart-tile">'+svg+'</svg></section>'+'';
 }
-window.jcmOpenDummyAccount=()=>open('fixed');
-window.jcmOpenBuilderStrategy=open;
+window.jcmOpenDummyAccount=()=>open('race');
+window.jcmOpenBuilderStrategy=()=>open('race');
+updateHubProfit();
+setInterval(()=>{if(!document.hidden)updateHubProfit();},30000);
 const accountOverlay=document.getElementById('jcm-detail-overlay');
 accountOverlay.querySelector('.jcm-close').addEventListener('click',stop);
 accountOverlay.addEventListener('click',e=>{if(e.target===accountOverlay)stop();});

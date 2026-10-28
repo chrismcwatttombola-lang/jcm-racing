@@ -125,11 +125,17 @@ main>.day,main>.section,main>#picks,main>#jcm-watchlist,main>#market-monitor,mai
 .jcm-hub-tile .jcm-hub-state{font-size:11px;font-weight:850;letter-spacing:.5px;color:#fff;margin-top:auto}
 .jcm-hub-foot{color:#cbd6e7;font-size:12px;margin-top:23px;text-align:center}
 .jcm-profit-card{margin-top:18px;border:1px solid #455572;background:#182336;border-radius:18px;padding:18px 16px;color:#fff}
-.jcm-profit-total,.jcm-profit-weeks>div{display:flex;align-items:center;justify-content:space-between;gap:12px}
+.jcm-profit-total,.jcm-profit-week-head{display:flex;align-items:center;justify-content:space-between;gap:12px}
 .jcm-profit-total span{font-size:18px;font-weight:850;color:#fff}.jcm-profit-total strong{font-size:clamp(23px,6vw,31px);color:#fff}
 .jcm-profit-record{margin:7px 0 15px;color:#cbd6e7;font-size:12px}
-.jcm-profit-weeks{border-top:1px solid #455572}.jcm-profit-weeks>div{padding:12px 0;border-bottom:1px solid #35445d;font-size:15px}
-.jcm-profit-weeks strong{font-size:17px}.jcm-profit-card .positive{color:#43bd84}.jcm-profit-card .negative{color:#ff849d}
+.jcm-profit-weeks{border-top:1px solid #455572}.jcm-profit-week{border-bottom:1px solid #35445d}
+.jcm-profit-week-head{width:100%;padding:13px 0;border:0;background:transparent;color:#fff;font:inherit;text-align:left;cursor:pointer}
+.jcm-profit-week-head span:first-child{font-size:15px}.jcm-profit-week-head strong{font-size:17px}.jcm-profit-week-head .jcm-week-chevron{font-size:16px;color:#aebbd0;transition:transform .18s ease}
+.jcm-profit-week-head[aria-expanded="true"] .jcm-week-chevron{transform:rotate(180deg)}
+.jcm-profit-week-detail{padding:0 0 10px}.jcm-profit-week-detail[hidden]{display:none}
+.jcm-profit-entry{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:3px 12px;padding:10px 9px;margin:0 0 7px;border-radius:10px;background:#111b2b}
+.jcm-profit-entry strong{font-size:14px;color:#fff}.jcm-profit-entry>span{grid-column:2;grid-row:1/3;align-self:center;font-size:14px;font-weight:850}
+.jcm-profit-entry small{color:#aebbd0;font-size:11px}.jcm-profit-card .positive{color:#43bd84}.jcm-profit-card .negative{color:#ff849d}
 .jcm-profit-card>small{display:block;margin-top:12px;color:#aebbd0;font-size:11px}
 .jcm-home-link{border:1px solid #ffd400;background:#26324b;color:#ffd400;border-radius:10px;padding:8px 11px;font-size:13px;font-weight:850;cursor:pointer;margin-left:auto}
 @media(max-width:360px){.jcm-hub-grid{gap:9px}.jcm-hub-tile{min-height:174px;padding:14px 11px}}
@@ -428,4 +434,4 @@ async function loadDay(){
 }
 date.addEventListener('change',loadDay);window.addEventListener('pageshow',loadDay);document.addEventListener('visibilitychange',()=>{if(!document.hidden)loadDay();});setInterval(()=>{if(!document.hidden)loadDay();},30000);loadDay();
 })();
-</script><script src="scripts/fresh-tracker.js?v=20261022"></script><link rel="stylesheet" href="scripts/bet-builder.css?v=results-refresh-20261024"><script src="scripts/bet-builder.js?v=20261028-simple-500-race-3"></script><link rel="stylesheet" href="scripts/roundup.css?v=1"><script src="scripts/roundup.js?v=1"></script></body></html>
+</script><script src="scripts/fresh-tracker.js?v=20261022"></script><link rel="stylesheet" href="scripts/bet-builder.css?v=results-refresh-20261024"><script src="scripts/bet-builder.js?v=20261028-week-breakdown-1"></script><link rel="stylesheet" href="scripts/roundup.css?v=1"><script src="scripts/roundup.js?v=1"></script></body></html>

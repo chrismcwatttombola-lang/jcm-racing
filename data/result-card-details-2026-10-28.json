@@ -1,0 +1,64 @@
+{
+  "schema_version": 1,
+  "date": "2026-10-28",
+  "details": [
+    {
+      "date": "2026-10-28",
+      "horse": "Jimmyjeroo",
+      "course": "Huntingdon",
+      "off_time_uk": "13:06",
+      "race_id": "rac_32302612368",
+      "horse_id": "hrs_31835125",
+      "field_size": 6,
+      "position": null,
+      "winner": null,
+      "winning_margin_lengths": null,
+      "selected_beaten_lengths": null,
+      "results_url": null,
+      "racecard_url": "https://www.sportinglife.com/racing/racecards/2026-10-28/huntingdon/racecard/945758/agri-day-at-huntingdon-racecourse-10-november-amateur-jockeys-handicap-chase",
+      "lay_odds": 2.98,
+      "available_stake_gbp": 13,
+      "lay_price_provenance": {
+        "provider": "Betfair Exchange",
+        "source_type": "USER_SCREENSHOT",
+        "source_library_file_id": "libfile_547af1c1f79c8191a8e3d0c2fe3152c5",
+        "observed_at": "2026-10-28T07:51:00+00:00",
+        "observation_time_basis": "Visible clock 07:51 and 13:06 Huntingdon next-race panel; supplied 28 October morning, Europe/London GMT",
+        "retrieved_at": "2026-10-28T07:53:54Z",
+        "verification_status": "VERIFIED_SCREENSHOT_LAY",
+        "original_price_side": "LAY",
+        "liquidity_gbp": 13,
+        "back_odds": 2.92
+      }
+    },
+    {
+      "date": "2026-10-28",
+      "horse": "It's Top",
+      "course": "Huntingdon",
+      "off_time_uk": "15:36",
+      "race_id": "rac_32302622053",
+      "horse_id": "hrs_41072682",
+      "field_size": 9,
+      "position": null,
+      "winner": null,
+      "winning_margin_lengths": null,
+      "selected_beaten_lengths": null,
+      "results_url": null,
+      "racecard_url": "https://www.sportinglife.com/racing/racecards/2026-10-28/huntingdon/racecard/945763/christmas-parties-2026-at-huntingdon-racecourse-handicap-chase-gbb-race",
+      "lay_odds": 5.3,
+      "available_stake_gbp": 12,
+      "lay_price_provenance": {
+        "provider": "Betfair Exchange",
+        "source_type": "USER_SCREENSHOT",
+        "source_library_file_id": "libfile_c75ddd7fa77881918d5c833ce89421a9",
+        "observed_at": "2026-10-28T07:51:00+00:00",
+        "observation_time_basis": "Visible clock 07:51, 28 Oct date, Huntingdon and selected 15:36 race; Europe/London GMT",
+        "retrieved_at": "2026-10-28T07:53:54Z",
+        "verification_status": "VERIFIED_SCREENSHOT_LAY",
+        "original_price_side": "LAY",
+        "liquidity_gbp": 12,
+        "back_odds": 5
+      }
+    }
+  ]
+}

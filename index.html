@@ -124,6 +124,13 @@ main>.day,main>.section,main>#picks,main>#jcm-watchlist,main>#market-monitor,mai
 .jcm-hub-tile .jcm-hub-icon{font-size:30px;line-height:1}
 .jcm-hub-tile .jcm-hub-state{font-size:11px;font-weight:850;letter-spacing:.5px;color:#fff;margin-top:auto}
 .jcm-hub-foot{color:#cbd6e7;font-size:12px;margin-top:23px;text-align:center}
+.jcm-profit-card{margin-top:18px;border:1px solid #455572;background:#182336;border-radius:18px;padding:18px 16px;color:#fff}
+.jcm-profit-total,.jcm-profit-weeks>div{display:flex;align-items:center;justify-content:space-between;gap:12px}
+.jcm-profit-total span{font-size:18px;font-weight:850;color:#fff}.jcm-profit-total strong{font-size:clamp(23px,6vw,31px);color:#fff}
+.jcm-profit-record{margin:7px 0 15px;color:#cbd6e7;font-size:12px}
+.jcm-profit-weeks{border-top:1px solid #455572}.jcm-profit-weeks>div{padding:12px 0;border-bottom:1px solid #35445d;font-size:15px}
+.jcm-profit-weeks strong{font-size:17px}.jcm-profit-card .positive{color:#43bd84}.jcm-profit-card .negative{color:#ff849d}
+.jcm-profit-card>small{display:block;margin-top:12px;color:#aebbd0;font-size:11px}
 .jcm-home-link{border:1px solid #ffd400;background:#26324b;color:#ffd400;border-radius:10px;padding:8px 11px;font-size:13px;font-weight:850;cursor:pointer;margin-left:auto}
 @media(max-width:360px){.jcm-hub-grid{gap:9px}.jcm-hub-tile{min-height:174px;padding:14px 11px}}
 
@@ -276,7 +283,7 @@ header .head #date{margin:0;flex:none}
 (function(){
  const logo=document.querySelector('.identity img');
  const hub=document.createElement('div');hub.id='jcm-hub';hub.setAttribute('aria-label','JCM Racing Hub');
- hub.innerHTML='<div class="jcm-hub-inner"><div class="jcm-hub-top">'+(logo?'<img class="jcm-hub-mark" alt="JCM" src="'+logo.getAttribute('src')+'">':'')+'<div><div class="jcm-hub-eyebrow">JCM RACING <span class="jcm-hub-tagline">Better, informed.</span></div><h1 class="jcm-hub-title">Your racing hub</h1></div></div><div class="jcm-hub-grid"><button class="jcm-hub-tile" data-page="picks"><span id="jcm-daily-rate" class="jcm-daily-rate" aria-live="polite">Today · Loading results…</span><span class="jcm-hub-icon">🎯</span><strong>Lay Bets</strong><span>Vulnerable favourites</span><span class="jcm-hub-state">OPEN DASHBOARD ↗</span></button><button type="button" class="jcm-hub-tile" data-page="dummy-account"><span class="jcm-hub-icon">💷</span><strong>Bet Builder</strong><span>A risk free environment to test your betting theories.</span><span class="jcm-hub-state">VIEW ACCOUNT STATEMENT ↗</span></button><button type="button" class="jcm-hub-tile" data-page="roundup"><span class="jcm-hub-icon">📝</span><strong>Today’s Plan</strong><span>Daily theory and learnings</span><span class="jcm-hub-state">VIEW ROUNDUP ↗</span></button><button type="button" class="jcm-hub-tile" data-page="rated-performance"><span class="jcm-hub-icon">📊</span><strong>Rated Performance</strong><span id="jcm-rated-ratios" aria-live="polite">Loading Win / Loss ratios…</span><span class="jcm-hub-state">VIEW WIN / LOSS ↗</span></button></div><p class="jcm-hub-foot">Private research · simulations only</p></div>';
+ hub.innerHTML='<div class="jcm-hub-inner"><div class="jcm-hub-top">'+(logo?'<img class="jcm-hub-mark" alt="JCM" src="'+logo.getAttribute('src')+'">':'')+'<div><div class="jcm-hub-eyebrow">JCM RACING <span class="jcm-hub-tagline">Better, informed.</span></div><h1 class="jcm-hub-title">Your racing hub</h1></div></div><div class="jcm-hub-grid"><button class="jcm-hub-tile" data-page="picks"><span id="jcm-daily-rate" class="jcm-daily-rate" aria-live="polite">Today · Loading results…</span><span class="jcm-hub-icon">🎯</span><strong>Lay Bets</strong><span>Vulnerable favourites</span><span class="jcm-hub-state">OPEN DASHBOARD ↗</span></button><button type="button" class="jcm-hub-tile" data-page="dummy-account"><span class="jcm-hub-icon">💷</span><strong>Bet Builder</strong><span>A risk free environment to test your betting theories.</span><span class="jcm-hub-state">VIEW ACCOUNT STATEMENT ↗</span></button></div><section id="jcm-profit-summary" class="jcm-profit-card" aria-live="polite"><p>Loading £500 race profit / loss…</p></section><p class="jcm-hub-foot">Private research · simulations only</p></div>';
  document.body.append(hub);
  const head=document.querySelector('header .head');
  const home=document.createElement('button');home.type='button';home.className='jcm-home-link';home.innerHTML='<svg width="21" height="21" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m3 10 9-7 9 7"/><path d="M5 9v12h14V9"/><path d="M9 21v-8h6v8"/></svg>';home.setAttribute('aria-label','Return to JCM Hub');
@@ -291,9 +298,6 @@ header .head #date{margin:0;flex:none}
   const page=tile.dataset.page;
   if(page==='picks')navigate('picks',true);
   else if(page==='dummy-account')window.jcmOpenDummyAccount?.();
-  else if(page==='roundup')window.jcmOpenRoundup?.();
-  else if(page==='rated-performance')window.jcmOpenRatedPerformance?.();
-  
   else if(page==='odds')alert('Live Odds Tracker is in development. Market-data access and alert criteria must be validated before launch.');
   else if(page==='performance')alert('Performance analytics is planned. Official picks and Watchlist will remain separately measured.');
   else alert('More JCM tools are planned. This section is not live yet.');
@@ -366,7 +370,7 @@ function confidenceTier(r){
  const p=r.competition_confidence_percent;
  return typeof p==='number'&&Number.isFinite(p)&&p>=0&&p<=100?(p>=80?'high':p>=70?'medium':'low'):'unrated';
 }
-function confidenceBox(r){return '<span class="jcm-confidence unrated"><small>'+safe(r.display_status||r.original_status||'Not rated')+'</small></span>';}
+function confidenceBox(){return '';}
 function resultView(r){
  let url;try{url=new URL(r.result_source_url)}catch(_){return {label:'Pending',css:'pending'};}
  if(!window.jcmAcceptedResult(r))return {label:'Pending',css:'pending'};
@@ -381,7 +385,7 @@ function paint(){
  const tile=document.getElementById('jcm-daily-rate');if(tile)tile.textContent=(day===new Intl.DateTimeFormat('en-CA',{timeZone:'Europe/London'}).format(new Date())?'Today':day)+' · '+rate;
  const heading='<div class="jcm-panel-heading"><h2>Daily picks</h2><span class="jcm-accuracy">'+safe(rate)+'</span></div>';
  const note='<p class="jcm-ft-note">Tap a horse for the original reasoning and race links.</p>';
- panel.innerHTML=heading+(state==='ready'&&detailRows.length===0?'':note)+(state==='loading'?'<p role="status">Loading today’s horses…</p>':state==='error'?'<p role="status">INSUFFICIENT VERIFIED DATA — today’s list could not be loaded.</p>':detailRows.length===0?'<p role="status">No picks today — Sunday 25 October 2026.</p>':detailRows.map((r,i)=>'<button type="button" class="jcm-row jcm-research-row jcm-rating-'+confidenceTier(r)+(day==='2026-10-13'&&r.tier==='watchlist'?' jcm-competition-watchlist':'')+'" data-research-index="'+i+'"><span><span class="jcm-time">'+safe(r.off_time_uk)+'</span><span class="jcm-ground">'+safe(r.course)+'</span></span><span class="jcm-horse">'+safe(r.horse)+'<small class="note" style="display:block">'+safe(r.display_status||r.original_status)+'</small></span><span class="jcm-status '+resultView(r).css+'">'+safe(resultView(r).label)+'</span></button>').join(''));
+ panel.innerHTML=heading+(state==='ready'&&detailRows.length===0?'':note)+(state==='loading'?'<p role="status">Loading today’s horses…</p>':state==='error'?'<p role="status">INSUFFICIENT VERIFIED DATA — today’s list could not be loaded.</p>':detailRows.length===0?'<p role="status">No picks today — Sunday 25 October 2026.</p>':detailRows.map((r,i)=>'<button type="button" class="jcm-row jcm-research-row jcm-rating-'+confidenceTier(r)+(day==='2026-10-13'&&r.tier==='watchlist'?' jcm-competition-watchlist':'')+'" data-research-index="'+i+'"><span><span class="jcm-time">'+safe(r.off_time_uk)+'</span><span class="jcm-ground">'+safe(r.course)+'</span></span><span class="jcm-horse">'+safe(r.horse)+'</span><span class="jcm-status '+resultView(r).css+'">'+safe(resultView(r).label)+'</span></button>').join(''));
 }
 window.jcmResearchResultView=resultView;
 window.jcmShowResearchCard=(r,m=null)=>{
@@ -424,4 +428,4 @@ async function loadDay(){
 }
 date.addEventListener('change',loadDay);window.addEventListener('pageshow',loadDay);document.addEventListener('visibilitychange',()=>{if(!document.hidden)loadDay();});setInterval(()=>{if(!document.hidden)loadDay();},30000);loadDay();
 })();
-</script><script src="scripts/fresh-tracker.js?v=20261022"></script><link rel="stylesheet" href="scripts/bet-builder.css?v=results-refresh-20261024"><script src="scripts/bet-builder.js?v=20261026-weffaag-included"></script><link rel="stylesheet" href="scripts/roundup.css?v=1"><script src="scripts/roundup.js?v=1"></script></body></html>
+</script><script src="scripts/fresh-tracker.js?v=20261022"></script><link rel="stylesheet" href="scripts/bet-builder.css?v=results-refresh-20261024"><script src="scripts/bet-builder.js?v=20261028-simple-500-race"></script><link rel="stylesheet" href="scripts/roundup.css?v=1"><script src="scripts/roundup.js?v=1"></script></body></html>

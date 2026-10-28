@@ -176,7 +176,6 @@ async function open(next='race'){
     '<section class="builder-tile"><div class="builder-bank"><div>Starting tally<strong>£0.00</strong></div><div>Current tally<strong data-builder-balance>'+money(t.balance)+'</strong></div><div>Open liability<strong data-builder-reserved>'+money(t.reserved)+'</strong></div><div>Overdraft<strong data-builder-available>Unlimited</strong></div></div></section>'+
     '<section class="builder-tile"><h3>Settled profit / loss</h3><strong data-builder-settled>'+money(t.movement)+'</strong><p class="builder-note">'+percent(t.percentage)+' on '+money(t.settledRisk)+' settled liability · after 5% commission. Pending liability: '+money(t.reserved)+'.</p></section>'+
     (c.research_summary?'<p class="builder-note" data-research-coverage>'+safe(c.research_summary)+'</p>':'')+
-    (c.simulation_note?'<p class="builder-note">'+safe(c.simulation_note)+'</p>':'')+
     '<section class="builder-tile builder-potential"><h3>Profit / Loss Calculator</h3><strong data-builder-potential>'+ (t.potential===null?'Unavailable':money(t.potential))+'</strong><p class="builder-note">Simulation · after 5% commission · assumes remaining horses are beaten.</p></section>'+
     '<p id="builder-message" role="status">'+safe(message)+'</p><p class="builder-note">'+(s.published?'Simulation booked · published record retained across devices.':'Simulation · liability at risk · saved on this device.')+'</p>'+
     '<h3>'+labelDate(d)+' · '+rows.length+' races</h3>'+rows.map((r,i)=>{

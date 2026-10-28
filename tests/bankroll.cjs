@@ -13,6 +13,7 @@ const win=calculate(['WIN','WIN']);assert.equal(win.balance,27682);assert(Math.a
 assert.equal(calculate(['WIN','LOSS']).balance,-37162);assert.equal(calculate(['LOSS','LOSS']).balance,-100000);assert.equal(calculate(['NR','LOSS']).balance,-50000);
 const empty=calculate(['LOSS','LOSS'],'fixed',100000);assert.equal(empty.balance,0);assert.equal(empty.deposits,0);assert.equal(empty.topup,0);
 assert.equal(calculate(['LOSS','LOSS'],'fixed',-2000000).balance,-2100000);
+const noOdds=structuredClone(today);delete noOdds.published_simulations.race;noOdds.rows.forEach((r,i)=>{r.lay_odds=null;r.result_status=i?'LOSS':'WIN';});const noOddsTotals=api.totals(noOdds,noOdds.rows,api.settings(noOdds,'race'));assert.equal(noOddsTotals.movement,-40000);assert.equal(noOddsTotals.potential,-40000);assert.equal(noOddsTotals.reserved,0);assert.equal(noOddsTotals.unresolved,0);
 function publish(date,outcomes){const c=structuredClone(today);c.date=date;c.rows.forEach((r,i)=>{r.race_date=date;r.scheduled_off_dt=date+'T'+r.off_time_uk+':00+01:00';r.result_status=outcomes[i];});files['data/bet-builder-'+date+'.json']=c;files['data/competition-research-'+date+'.json']={date,high_competition:c.rows,competition_watchlist:[]};}
 (async()=>{
  publish('2026-10-23',['WIN','LOSS']);publish('2026-10-24',['LOSS','LOSS']);

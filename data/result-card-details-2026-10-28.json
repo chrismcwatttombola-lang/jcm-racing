@@ -80,7 +80,7 @@
       },
       "placing": "PU",
       "result_status": "WIN",
-      "verification_status": "API_CONFIRMED",
+      "verification_status": "PROVIDER_ACCEPTED",
       "result_source": "THE_RACING_API",
       "official_accuracy_eligible": false,
       "result_date": "2026-10-28",
@@ -94,7 +94,8 @@
       "result_stage": "FULL_RESULT",
       "result_non_runners": [],
       "result_source_reference": "The Racing API Pro get_result_by_id",
-      "race_name": "Christmas Parties 2026 At Huntingdon Racecourse Handicap Steeple Chase (GBB Race)"
+      "race_name": "Christmas Parties 2026 At Huntingdon Racecourse Handicap Steeple Chase (GBB Race)",
+      "result_source_url": "https://api.theracingapi.com/v1/results/rac_32302622053"
     }
   ]
 }

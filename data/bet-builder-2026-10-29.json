@@ -1,0 +1,156 @@
+{
+  "schema_version": 2,
+  "fictional_only": true,
+  "date": "2026-10-29",
+  "introduced_at": "2026-10-28T21:05:13Z",
+  "opening_balance_gbp": 0,
+  "commission_rate": 0.05,
+  "rows": [
+    {
+      "race_date": "2026-10-29",
+      "horse": "Wecouldavehaditall",
+      "course": "Punchestown",
+      "off_time_uk": "14:35",
+      "race_id": "rac_32303284507",
+      "horse_id": "hrs_17389790586",
+      "scheduled_off_dt": "2026-10-29T14:35:00+00:00",
+      "interest_rank": 1,
+      "tier": "selection",
+      "original_status": "Selection",
+      "display_status": "Selection",
+      "original_assessment": "Selection",
+      "selection_status": "SELECTION",
+      "competition_confidence_percent": null,
+      "qualitative_confidence": "Moderate evidence for opposing the favourite",
+      "selected_at": "2026-10-28T21:05:13Z",
+      "added_at": "2026-10-28T21:05:13Z",
+      "identified_challengers": [
+        "Margot Mae",
+        "Gabby Hayes"
+      ],
+      "selection_reason": {
+        "summary": "The favourite has managed one placing from five starts and was only sixth from OR 69 on yielding-to-soft ground last time. Margot Mae is rated 2 lb higher and arrives after a two-length fourth, while Gabby Hayes was third on heavy ground two starts ago. That makes a short favourite price difficult to justify.",
+        "counterargument": "Wecouldavehaditall was a close third at Naas from OR 68, receives weight from Margot Mae and has a 3 lb rider claim. The first-time hood may also help, so the case is moderate rather than strong.",
+        "challengers": [
+          "Margot Mae",
+          "Gabby Hayes"
+        ],
+        "source": "The Racing API Pro full race analysis and Sporting Life racecard",
+        "evidence_urls": [
+          "https://www.sportinglife.com/racing/racecards/2026-10-29/punchestown/racecard/946642/premiere-weekend-race-and-dine-packages-from-75-euros-nursery-handicap",
+          "https://api.theracingapi.com/v1/racecards/rac_32303284507"
+        ],
+        "checked_at": "2026-10-28T21:05:13Z",
+        "evidence_status": "RACING_API_PRO_AND_SPORTING_LIFE"
+      },
+      "field_size": 6,
+      "going": "TBC",
+      "surface": "Turf",
+      "result_status": "PENDING",
+      "verification_status": "PENDING",
+      "result_source": null,
+      "official_accuracy_eligible": false,
+      "lay_odds": null,
+      "available_stake_gbp": null,
+      "source": "Bet365 bookmaker price observed via The Racing API Pro; this is not a Betfair lay quote.",
+      "lay_price_provenance": null,
+      "market_observation": {
+        "provider": "Bet365",
+        "source_type": "BOOKMAKER_ODDS",
+        "observed_price_fractional": "13/8",
+        "observed_price_decimal": 2.63,
+        "observed_at": "2026-10-28T21:00:19Z",
+        "price_last_changed_at": "2026-10-28T19:42:00Z",
+        "retrieved_at": "2026-10-28T21:05:13Z",
+        "verification_status": "BOOKMAKER_PRICE_ONLY_NOT_LAY",
+        "original_price_side": "BACK",
+        "source_timezone": "UTC",
+        "source_url": "https://api.theracingapi.com/v1/odds/rac_32303284507/hrs_17389790586"
+      },
+      "racecard_url": "https://www.sportinglife.com/racing/racecards/2026-10-29/punchestown/racecard/946642/premiere-weekend-race-and-dine-packages-from-75-euros-nursery-handicap",
+      "position": null,
+      "placing": null
+    },
+    {
+      "race_date": "2026-10-29",
+      "horse": "Spacebound",
+      "course": "Punchestown",
+      "off_time_uk": "15:05",
+      "race_id": "rac_32303286444",
+      "horse_id": "hrs_52087602",
+      "scheduled_off_dt": "2026-10-29T15:05:00+00:00",
+      "interest_rank": 2,
+      "tier": "selection",
+      "original_status": "Selection",
+      "display_status": "Selection",
+      "original_assessment": "Selection",
+      "selection_status": "SELECTION",
+      "competition_confidence_percent": null,
+      "qualitative_confidence": "Moderate evidence for opposing the favourite",
+      "selected_at": "2026-10-28T21:05:13Z",
+      "added_at": "2026-10-28T21:05:13Z",
+      "identified_challengers": [
+        "Saliba",
+        "Oracle Of Delphi",
+        "Celestial Siren"
+      ],
+      "selection_reason": {
+        "summary": "Spacebound has been beaten on both recent starts as favourite, including fourth at 11/10 at Limerick and fourth as joint-favourite at the Curragh. He races from OR 77 while Saliba is rated 80 and comes here after two seconds; Oracle Of Delphi was a close third eight days ago and Celestial Siren has repeated placed form.",
+        "counterargument": "The drop from a mile to seven furlongs should suit a prominent runner who raced too freely last time, and his best soft-ground second is stronger than most of this field. Those positives keep the opposition case at moderate strength.",
+        "challengers": [
+          "Saliba",
+          "Oracle Of Delphi",
+          "Celestial Siren"
+        ],
+        "source": "The Racing API Pro full race analysis and Sporting Life racecard",
+        "evidence_urls": [
+          "https://www.sportinglife.com/racing/racecards/2026-10-29/punchestown/racecard/946643/premiere-weekend-two-day-ticket-just-35-euros-maiden",
+          "https://api.theracingapi.com/v1/racecards/rac_32303286444"
+        ],
+        "checked_at": "2026-10-28T21:05:13Z",
+        "evidence_status": "RACING_API_PRO_AND_SPORTING_LIFE"
+      },
+      "field_size": 12,
+      "going": "TBC",
+      "surface": "Turf",
+      "result_status": "PENDING",
+      "verification_status": "PENDING",
+      "result_source": null,
+      "official_accuracy_eligible": false,
+      "lay_odds": null,
+      "available_stake_gbp": null,
+      "source": "Bet365 bookmaker price observed via The Racing API Pro; this is not a Betfair lay quote.",
+      "lay_price_provenance": null,
+      "market_observation": {
+        "provider": "Bet365",
+        "source_type": "BOOKMAKER_ODDS",
+        "observed_price_fractional": "7/4",
+        "observed_price_decimal": 2.75,
+        "observed_at": "2026-10-28T21:00:19Z",
+        "price_last_changed_at": "2026-10-28T18:01:00Z",
+        "retrieved_at": "2026-10-28T21:05:13Z",
+        "verification_status": "BOOKMAKER_PRICE_ONLY_NOT_LAY",
+        "original_price_side": "BACK",
+        "source_timezone": "UTC",
+        "source_url": "https://api.theracingapi.com/v1/odds/rac_32303286444/hrs_52087602"
+      },
+      "racecard_url": "https://www.sportinglife.com/racing/racecards/2026-10-29/punchestown/racecard/946643/premiere-weekend-two-day-ticket-just-35-euros-maiden",
+      "position": null,
+      "placing": null
+    }
+  ],
+  "bank_trial": {
+    "start_date": "2026-10-23",
+    "accounting_model": "ZERO_START_UNLIMITED_SIMULATED_OVERDRAFT",
+    "initial_balance_gbp": 0,
+    "percentage_benchmark_gbp": 10000,
+    "automatic_deposits": false,
+    "deposits": [],
+    "withdrawals": [],
+    "results_publish_when": "ALL_DAILY_RACES_FINISHED_AND_RESULTS_VERIFIED",
+    "performance_formula": "cumulative net profit or loss / 10000 * 100",
+    "authorization": "User replaced funded banks and top-ups with zero-start unlimited simulated overdraft; simplified results to the single £500-per-race view."
+  },
+  "preserve_device_choices": true,
+  "simulation_note": "Two advance selections recorded for 29 October. Betfair lay odds are intentionally empty until the user supplies screenshots of the pink lay prices. No profit or loss is booked before verified results."
+}

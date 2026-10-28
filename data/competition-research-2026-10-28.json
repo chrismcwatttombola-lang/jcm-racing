@@ -113,7 +113,7 @@
       "position": "PU",
       "placing": "PU",
       "result_status": "WIN",
-      "verification_status": "API_CONFIRMED",
+      "verification_status": "PROVIDER_ACCEPTED",
       "result_source": "THE_RACING_API",
       "official_accuracy_eligible": false,
       "going": "Good",
@@ -142,7 +142,8 @@
       "result_horse_id": "hrs_41072682",
       "result_stage": "FULL_RESULT",
       "result_non_runners": [],
-      "result_source_reference": "The Racing API Pro get_result_by_id"
+      "result_source_reference": "The Racing API Pro get_result_by_id",
+      "result_source_url": "https://api.theracingapi.com/v1/results/rac_32302622053"
     }
   ],
   "competition_watchlist": []

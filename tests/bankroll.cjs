@@ -3,8 +3,8 @@ const path=require('node:path'),root=path.resolve(__dirname,'..');
 const today=JSON.parse(fs.readFileSync(path.join(root,'data/bet-builder-2026-10-23.json')));
 const files={},store=new Map(),stub={addEventListener(){},querySelector(){return stub;}};
 class Clock extends Date {static now(){return Date.parse('2026-11-01T12:00:00Z');}}
-const context={window:{jcmAcceptedResult:()=>true},document:{getElementById:()=>stub,addEventListener(){}},structuredClone,Date:Clock,localStorage:{getItem:k=>store.get(k)||null,setItem:(k,v)=>store.set(k,v)},fetch:async p=>({ok:!!files[p],json:async()=>structuredClone(files[p])})};
-const source=fs.readFileSync(path.join(root,'scripts/bet-builder.js'),'utf8').replace("window.jcmOpenDummyAccount=()=>open('fixed');","window.bankTest={settings,totals,carriedBank,history};window.jcmOpenDummyAccount=()=>open('fixed');");
+const context={window:{jcmAcceptedResult:()=>true},document:{getElementById:()=>stub,addEventListener(){}},structuredClone,Date:Clock,setInterval(){},localStorage:{getItem:k=>store.get(k)||null,setItem:(k,v)=>store.set(k,v)},fetch:async p=>({ok:!!files[p],json:async()=>structuredClone(files[p])})};
+const source=fs.readFileSync(path.join(root,'scripts/bet-builder.js'),'utf8').replace("window.jcmOpenDummyAccount=()=>open('race');","window.bankTest={settings,totals,carriedBank,history,raceProfitSummary};window.jcmOpenDummyAccount=()=>open('race');");
 vm.runInNewContext(source,context);const api=context.window.bankTest;
 function calculate(outcomes,m='fixed',opening=0){const c=structuredClone(today);c.account_opening_cents=opening;c.rows.forEach((r,i)=>r.result_status=outcomes[i]);return api.totals(c,c.rows,api.settings(c,m));}
 const pending=calculate(['PENDING','PENDING']);assert.equal(pending.balance,0);assert.equal(pending.reserved,100000);assert.equal(pending.potential,27682);assert.equal(pending.net,0);
@@ -17,6 +17,7 @@ function publish(date,outcomes){const c=structuredClone(today);c.date=date;c.row
 (async()=>{
  publish('2026-10-23',['WIN','LOSS']);publish('2026-10-24',['LOSS','LOSS']);
  const days={days:['2026-10-24','2026-10-23','2026-10-22']};
+ const summary=await api.raceProfitSummary({days:['2026-10-24','2026-10-23']});assert.equal(summary.total,-137162);assert.equal(summary.wins,1);assert.equal(summary.losses,3);assert.equal(JSON.stringify(summary.weeks),JSON.stringify([{week:'2026-10-19',profit:-137162}]));
  const carry=await api.carriedBank('2026-10-25','fixed',days);assert.equal(carry.bank,-137162);assert.equal(carry.deposits,0);
  assert.equal((await api.carriedBank('2026-10-25','fixed',days)).bank,carry.bank);
  const h=await api.history(days);assert.equal(h.points.fixed[1].balance,carry.bank);assert(Math.abs(h.points.fixed[1].percentage+13.7162)<1e-9);

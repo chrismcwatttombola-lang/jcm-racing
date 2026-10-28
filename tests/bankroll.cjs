@@ -17,7 +17,7 @@ function publish(date,outcomes){const c=structuredClone(today);c.date=date;c.row
 (async()=>{
  publish('2026-10-23',['WIN','LOSS']);publish('2026-10-24',['LOSS','LOSS']);
  const days={days:['2026-10-24','2026-10-23','2026-10-22']};
- const summary=await api.raceProfitSummary({days:['2026-10-24','2026-10-23']});assert.equal(summary.total,-137162);assert.equal(summary.wins,1);assert.equal(summary.losses,3);assert.equal(JSON.stringify(summary.weeks),JSON.stringify([{week:'2026-10-19',profit:-137162}]));
+ const summary=await api.raceProfitSummary({days:['2026-10-24','2026-10-23']});assert.equal(summary.total,-137162);assert.equal(summary.wins,1);assert.equal(summary.losses,3);assert.equal(summary.weeks[0].week,'2026-10-19');assert.equal(summary.weeks[0].profit,-137162);assert.equal(summary.weeks[0].entries.length,4);assert.equal(summary.weeks[0].entries[0].horse,today.rows[0].horse);assert.equal(summary.weeks[0].entries[0].profit,12838);assert.equal(summary.weeks[0].entries[1].profit,-50000);
  const carry=await api.carriedBank('2026-10-25','fixed',days);assert.equal(carry.bank,-137162);assert.equal(carry.deposits,0);
  assert.equal((await api.carriedBank('2026-10-25','fixed',days)).bank,carry.bank);
  const h=await api.history(days);assert.equal(h.points.fixed[1].balance,carry.bank);assert(Math.abs(h.points.fixed[1].percentage+13.7162)<1e-9);

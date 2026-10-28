@@ -260,12 +260,12 @@ async function raceProfitSummary(days){
  return {total,wins,losses,pending,weeks:[...weeks].sort(([a],[b])=>b.localeCompare(a)).map(([week,profit])=>({week,profit}))};
 }
 const shortDate=d=>new Date(d+'T12:00:00Z').toLocaleDateString('en-GB',{day:'2-digit',month:'2-digit',year:'2-digit'});
-const signedMoney=v=>(v>0?'+':'')+money(v);
+const signedMoney=v=>v<0?'-'+money(-v):v>0?'+'+money(v):money(0);
 async function updateHubProfit(){
  const node=document.getElementById('jcm-profit-summary');if(!node)return;
  try{
   const summary=await raceProfitSummary(await read('data/bet-builder-days.json'));
-  node.innerHTML='<div class="jcm-profit-total"><span>Profit / Loss</span><strong class="'+(summary.total>0?'positive':summary.total<0?'negative':'')+'">'+signedMoney(summary.total)+'</strong></div><p class="jcm-profit-record">'+summary.wins+' wins / '+summary.losses+' losses · £500 liability per race</p><div class="jcm-profit-weeks">'+(summary.weeks.length?summary.weeks.map(w=>'<div><span>WC '+shortDate(w.week)+'</span><strong class="'+(w.profit>0?'positive':w.profit<0?'negative':'')+'">'+signedMoney(w.profit)+'</strong></div>').join(''):'<p>No settled £500 bets yet.</p>')+'</div><small>Settled recorded bets · 5% commission</small>';
+  node.innerHTML='<div class="jcm-profit-total"><span>Profit / Loss</span><strong class="'+(summary.total>0?'positive':summary.total<0?'negative':'')+'">'+signedMoney(summary.total)+'</strong></div><p class="jcm-profit-record">'+summary.wins+' '+(summary.wins===1?'win':'wins')+' / '+summary.losses+' '+(summary.losses===1?'loss':'losses')+' · £500 liability per race</p><div class="jcm-profit-weeks">'+(summary.weeks.length?summary.weeks.map(w=>'<div><span>WC '+shortDate(w.week)+'</span><strong class="'+(w.profit>0?'positive':w.profit<0?'negative':'')+'">'+signedMoney(w.profit)+'</strong></div>').join(''):'<p>No settled £500 bets yet.</p>')+'</div><small>Settled recorded bets · 5% commission</small>';
  }catch(_){node.innerHTML='<p>Profit / loss unavailable.</p>';}
 }
 async function results(node,days,token){

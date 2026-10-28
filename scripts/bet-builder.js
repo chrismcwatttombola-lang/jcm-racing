@@ -178,9 +178,10 @@ async function open(next='race'){
     '<p id="builder-message" role="status">'+safe(message)+'</p><p class="builder-note">'+(s.published?'Simulation booked · published record retained across devices.':'Simulation · liability at risk · saved on this device.')+'</p>'+
     '<h3>'+labelDate(d)+' · '+rows.length+' races</h3>'+rows.map((r,i)=>{
      const v=s.entries[key(r)]||{included:false,liability_cents:0,odds:r.lay_odds??null},locked=s.published||Date.now()>=off(r),st=status(r),checkboxLocked=withdrawn(r)||(next==='fixed'?amountLocked:locked);
+     const estimate=v.included&&v.odds===null&&['WIN','LOSS'].includes(st),settledAmount=st==='LOSS'?-v.liability_cents:st==='WIN'?(estimate?10000:Math.round(v.liability_cents/(v.odds-1)*.95)):null;
      return '<section class="jcm-manual-row builder-row" data-builder-row="'+i+'"><strong>'+safe(r.horse)+'</strong><p>'+safe(r.off_time_uk)+' · '+safe(r.course)+' · '+(locked?'Locked':'Editable')+'</p><label><input data-builder-include="'+i+'" type="checkbox" '+(selected(s,r)?'checked ':'')+(checkboxLocked?'disabled':'')+'> Include race</label>'+
       (next==='manual'?'<label for="builder-liability-'+i+'">Liability (£)</label><input id="builder-liability-'+i+'" data-builder-liability="'+i+'" type="number" min="0.01" step="0.01" value="'+(v.liability_cents?v.liability_cents/100:'')+'" '+(locked||withdrawn(r)?'disabled':'')+'>':'')+
-      (r.simulation_price_basis?'<p class="builder-note">Betfair Exchange · assumed lay price '+safe(r.simulation_price_basis.assumed_lay_odds)+' · unverified, not live. Available money unknown.</p>':'')+'<label for="builder-odds-'+i+'">'+(r.simulation_price_basis?'Simulation lay odds':'Lay odds')+'</label><input id="builder-odds-'+i+'" data-builder-odds="'+i+'" type="number" min="1.01" max="1000" step="0.01" value="'+(v.odds??'')+'" '+(locked||withdrawn(r)?'disabled':'')+'><button data-builder-confirm-row="'+i+'" '+(locked||withdrawn(r)?'disabled':'')+'>'+ (next==='manual'?'Confirm race':'Save odds')+'</button><p>Liability: <strong data-builder-liability-value>'+money(v.included?v.liability_cents:0)+'</strong><br>Result: '+safe(st==='WIN'?'Horse lost':st==='LOSS'?'Horse won':st==='NR'?'Non-runner'+(withdrawn(r)?' (Betfair screenshot)':''):'Pending')+'<br>Potential net profit: '+(v.included&&v.odds!==null?money(Math.round(v.liability_cents/(v.odds-1)*.95)):'Unavailable')+'<br>Displayed liquidity: '+(r.available_stake_gbp!==null?money(Math.round(r.available_stake_gbp*100)):'Unavailable')+(v.included&&v.odds!==null&&Number.isFinite(r.available_stake_gbp)&&r.available_stake_gbp<v.liability_cents/100/(v.odds-1)?' · Insufficient liquidity':'')+'</p>'+ (locked&&v.included&&v.odds===null?'<p>INSUFFICIENT VERIFIED DATA — no pre-race price saved; financial result unavailable.</p>':'')+'</section>';
+      (r.simulation_price_basis?'<p class="builder-note">Betfair Exchange · assumed lay price '+safe(r.simulation_price_basis.assumed_lay_odds)+' · unverified, not live. Available money unknown.</p>':'')+'<label for="builder-odds-'+i+'">'+(r.simulation_price_basis?'Simulation lay odds':'Lay odds')+'</label><input id="builder-odds-'+i+'" data-builder-odds="'+i+'" type="number" min="1.01" max="1000" step="0.01" value="'+(v.odds??'')+'" '+(locked||withdrawn(r)?'disabled':'')+'><button data-builder-confirm-row="'+i+'" '+(locked||withdrawn(r)?'disabled':'')+'>'+ (next==='manual'?'Confirm race':'Save odds')+'</button><p>Liability: <strong data-builder-liability-value>'+money(v.included?v.liability_cents:0)+'</strong><br>Result: '+safe(st==='WIN'?'Horse lost':st==='LOSS'?'Horse won':st==='NR'?'Non-runner'+(withdrawn(r)?' (Betfair screenshot)':''):'Pending')+'<br>'+(settledAmount!==null?'Profit / loss: '+signedMoney(settledAmount)+(estimate?'*':''):(v.included&&v.odds!==null?'Potential net profit: '+money(Math.round(v.liability_cents/(v.odds-1)*.95)):'Estimated profit if horse loses: +£100.00*'))+'<br>Displayed liquidity: '+(r.available_stake_gbp!==null?money(Math.round(r.available_stake_gbp*100)):'Unavailable')+(v.included&&v.odds!==null&&Number.isFinite(r.available_stake_gbp)&&r.available_stake_gbp<v.liability_cents/100/(v.odds-1)?' · Insufficient liquidity':'')+'</p>'+ (v.included&&v.odds===null?'<p class="builder-note">* Estimate used because no pre-race lay odds were recorded.</p>':'')+'</section>';
     }).join('');
    function toggleRows(targets,checked){
     let candidate=structuredClone(s);candidate.choices={...s.choices};const stamp=new Date().toISOString();
@@ -238,24 +239,26 @@ function weekCommencing(d){
  const date=new Date(d+'T12:00:00Z');date.setUTCDate(date.getUTCDate()-((date.getUTCDay()+6)%7));return date.toISOString().slice(0,10);
 }
 async function raceProfitSummary(days){
- let total=0,wins=0,losses=0,pending=0;const weeks=new Map();
+ let total=0,wins=0,losses=0,pending=0,estimated=0;const weeks=new Map();
  for(const d of [...days.days].sort()){
   const c=await card(d),plan=c.published_simulations?.race;
-  if(!plan)continue;
-  if(!Array.isArray(plan.entries))throw Error('Invalid recorded £500 plan');
-  for(const entry of plan.entries){
-   const matches=c.rows.filter(r=>r.race_id===entry.race_id&&r.horse_id===entry.horse_id);
-   if(matches.length!==1||entry.liability_cents!==50000||price(entry.odds)!==entry.odds)throw Error('Invalid recorded £500 bet');
-   const st=status(matches[0]);
+  if(plan&&!Array.isArray(plan.entries))throw Error('Invalid recorded £500 plan');
+  for(const row of c.rows){
+   const entries=(plan?.entries||[]).filter(entry=>row.race_id===entry.race_id&&row.horse_id===entry.horse_id);
+   if(entries.length>1)throw Error('Duplicate recorded £500 bet');
+   const entry=entries[0]||null;
+   if(entry&&(entry.liability_cents!==50000||price(entry.odds)!==entry.odds))throw Error('Invalid recorded £500 bet');
+   const st=status(row);
    if(st==='PENDING'){pending++;continue;}
    if(st==='NR')continue;
-   const movement=st==='LOSS'?-50000:Math.round(50000/(entry.odds-1)*(1-c.commission_rate));
+   const estimate=!entry,movement=st==='LOSS'?-50000:estimate?10000:Math.round(50000/(entry.odds-1)*(1-c.commission_rate));
    if(st==='WIN')wins++;else losses++;
-   total+=movement;const week=weekCommencing(d),current=weeks.get(week)||{profit:0,entries:[]};
-   current.profit+=movement;current.entries.push({date:d,off_time_uk:matches[0].off_time_uk,course:matches[0].course,horse:matches[0].horse,status:st,odds:entry.odds,profit:movement});weeks.set(week,current);
+   if(estimate)estimated++;
+   total+=movement;const week=weekCommencing(d),current=weeks.get(week)||{profit:0,estimated:0,entries:[]};
+   current.profit+=movement;if(estimate)current.estimated++;current.entries.push({date:d,off_time_uk:row.off_time_uk,course:row.course,horse:row.horse,status:st,odds:entry?.odds??null,profit:movement,estimated:estimate});weeks.set(week,current);
   }
  }
- return {total,wins,losses,pending,weeks:[...weeks].sort(([a],[b])=>b.localeCompare(a)).map(([week,value])=>({week,profit:value.profit,entries:value.entries.sort((a,b)=>a.date.localeCompare(b.date)||a.off_time_uk.localeCompare(b.off_time_uk))}))};
+ return {total,wins,losses,pending,estimated,weeks:[...weeks].sort(([a],[b])=>b.localeCompare(a)).map(([week,value])=>({week,profit:value.profit,estimated:value.estimated,entries:value.entries.sort((a,b)=>a.date.localeCompare(b.date)||a.off_time_uk.localeCompare(b.off_time_uk))}))};
 }
 const shortDate=d=>new Date(d+'T12:00:00Z').toLocaleDateString('en-GB',{day:'2-digit',month:'2-digit',year:'2-digit'});
 const signedMoney=v=>v<0?'-'+money(-v):v>0?'+'+money(v):money(0);
@@ -263,7 +266,7 @@ async function updateHubProfit(){
  const node=document.getElementById('jcm-profit-summary');if(!node)return;
  try{
   const summary=await raceProfitSummary(await read('data/bet-builder-days.json'));
-  node.innerHTML='<div class="jcm-profit-total"><span>Profit / Loss</span><strong class="'+(summary.total>0?'positive':summary.total<0?'negative':'')+'">'+signedMoney(summary.total)+'</strong></div><p class="jcm-profit-record">'+summary.wins+' '+(summary.wins===1?'win':'wins')+' / '+summary.losses+' '+(summary.losses===1?'loss':'losses')+' · £500 liability per race</p><div class="jcm-profit-weeks">'+(summary.weeks.length?summary.weeks.map((w,i)=>'<section class="jcm-profit-week"><button type="button" class="jcm-profit-week-head" data-profit-week="'+i+'" aria-expanded="false" aria-controls="jcm-profit-week-'+i+'"><span>WC '+shortDate(w.week)+'</span><strong class="'+(w.profit>0?'positive':w.profit<0?'negative':'')+'">'+signedMoney(w.profit)+'</strong><span class="jcm-week-chevron" aria-hidden="true">⌄</span></button><div id="jcm-profit-week-'+i+'" class="jcm-profit-week-detail" hidden>'+w.entries.map(e=>'<div class="jcm-profit-entry"><strong>'+safe(e.horse)+'</strong><small>'+shortDate(e.date)+' · '+safe(e.off_time_uk)+' · '+safe(e.course)+' · '+(e.status==='WIN'?'Horse lost · Lay win':'Horse won · Lay loss')+' · Lay '+e.odds+'</small><span class="'+(e.profit>0?'positive':'negative')+'">'+signedMoney(e.profit)+'</span></div>').join('')+'</div></section>').join(''):'<p>No settled £500 bets yet.</p>')+'</div><small>Settled recorded bets · 5% commission</small>';
+  node.innerHTML='<div class="jcm-profit-total"><span>Profit / Loss</span><strong class="'+(summary.total>0?'positive':summary.total<0?'negative':'')+'">'+signedMoney(summary.total)+(summary.estimated?'*':'')+'</strong></div><p class="jcm-profit-record">'+summary.wins+' '+(summary.wins===1?'win':'wins')+' / '+summary.losses+' '+(summary.losses===1?'loss':'losses')+' · £500 liability per race</p><div class="jcm-profit-weeks">'+(summary.weeks.length?summary.weeks.map((w,i)=>'<section class="jcm-profit-week"><button type="button" class="jcm-profit-week-head" data-profit-week="'+i+'" aria-expanded="false" aria-controls="jcm-profit-week-'+i+'"><span>WC '+shortDate(w.week)+'</span><strong class="'+(w.profit>0?'positive':w.profit<0?'negative':'')+'">'+signedMoney(w.profit)+(w.estimated?'*':'')+'</strong><span class="jcm-week-chevron" aria-hidden="true">⌄</span></button><div id="jcm-profit-week-'+i+'" class="jcm-profit-week-detail" hidden>'+w.entries.map(e=>'<div class="jcm-profit-entry"><strong>'+safe(e.horse)+'</strong><small>'+shortDate(e.date)+' · '+safe(e.off_time_uk)+' · '+safe(e.course)+' · '+(e.status==='WIN'?'Horse lost · Lay win':'Horse won · Lay loss')+(e.odds!==null?' · Lay '+e.odds:' · No recorded lay odds')+'</small><span class="'+(e.profit>0?'positive':'negative')+'">'+signedMoney(e.profit)+(e.estimated?'*':'')+'</span></div>').join('')+'</div></section>').join(''):'<p>No settled £500 bets yet.</p>')+'</div><small>Settled recorded bets · 5% commission'+(summary.estimated?'<br>* Estimate: +£100 for a lay win or −£500 for a lay loss where no odds were recorded.':'')+'</small>';
   node.querySelectorAll('[data-profit-week]').forEach(button=>button.addEventListener('click',()=>{const detail=node.querySelector('#'+button.getAttribute('aria-controls')),open=button.getAttribute('aria-expanded')==='true';button.setAttribute('aria-expanded',String(!open));detail.hidden=open;}));
  }catch(_){node.innerHTML='<p>Profit / loss unavailable.</p>';}
 }

@@ -39,11 +39,11 @@
         "checked_at": "2026-10-28T07:40:06Z",
         "evidence_status": "RACING_API_AND_USER_ASSESSMENT"
       },
-      "position": null,
-      "placing": null,
-      "result_status": "PENDING",
-      "verification_status": "PENDING",
-      "result_source": null,
+      "position": "4",
+      "placing": "4th",
+      "result_status": "WIN",
+      "verification_status": "WEBSITE_CONFIRMED",
+      "result_source": "SPORTING_LIFE",
       "official_accuracy_eligible": false,
       "going": "Good",
       "lay_odds": 2.98,
@@ -60,7 +60,20 @@
         "original_price_side": "LAY",
         "liquidity_gbp": 13,
         "back_odds": 2.92
-      }
+      },
+      "result_date": "2026-10-28",
+      "result_off_time_uk": "13:06",
+      "result_course": "Huntingdon",
+      "result_horse": "Jimmyjeroo",
+      "result_off_dt": "2026-10-28T13:06:00+00:00",
+      "result_retrieved_at": "2026-10-28T13:57:11.337146Z",
+      "result_race_id": "rac_32302612368",
+      "result_horse_id": "hrs_31835125",
+      "result_website_race_id": "945758",
+      "result_source_url": "https://www.sportinglife.com/racing/results/2026-10-28/huntingdon/945758/agri-day-at-huntingdon-racecourse-10-november-amateur-jockeys-handicap-chase",
+      "result_non_runners": [],
+      "result_website_horse_id": "1075374",
+      "result_stage": "WEIGHEDIN"
     },
     {
       "race_date": "2026-10-28",

@@ -17,6 +17,8 @@ function publish(date,outcomes){const c=structuredClone(today);c.date=date;c.row
 (async()=>{
  publish('2026-10-23',['WIN','LOSS']);publish('2026-10-24',['LOSS','LOSS']);
  const days={days:['2026-10-24','2026-10-23','2026-10-22']};
+ publish('2026-10-22',['WIN','LOSS']);delete files['data/bet-builder-2026-10-22.json'].published_simulations.race;
+ const estimate=await api.raceProfitSummary({days:['2026-10-22']});assert.equal(estimate.total,-40000);assert.equal(estimate.wins,1);assert.equal(estimate.losses,1);assert.equal(estimate.estimated,2);assert.equal(estimate.weeks[0].estimated,2);assert.equal(estimate.weeks[0].entries[0].profit,10000);assert.equal(estimate.weeks[0].entries[0].estimated,true);assert.equal(estimate.weeks[0].entries[1].profit,-50000);
  const summary=await api.raceProfitSummary({days:['2026-10-24','2026-10-23']});assert.equal(summary.total,-137162);assert.equal(summary.wins,1);assert.equal(summary.losses,3);assert.equal(summary.weeks[0].week,'2026-10-19');assert.equal(summary.weeks[0].profit,-137162);assert.equal(summary.weeks[0].entries.length,4);assert.equal(summary.weeks[0].entries[0].horse,today.rows[0].horse);assert.equal(summary.weeks[0].entries[0].profit,12838);assert.equal(summary.weeks[0].entries[1].profit,-50000);
  const carry=await api.carriedBank('2026-10-25','fixed',days);assert.equal(carry.bank,-137162);assert.equal(carry.deposits,0);
  assert.equal((await api.carriedBank('2026-10-25','fixed',days)).bank,carry.bank);

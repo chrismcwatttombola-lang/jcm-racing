@@ -135,9 +135,9 @@ function totals(c,rows,s){
  for(const r of rows){const v=s.entries[key(r)];if(!v?.included)continue;selected++;const st=status(r);
   if(st==='NR')continue;
   staked+=v.liability_cents;
-  if(st==='PENDING'||v.odds===null){reserved+=v.liability_cents;unresolved++;if(v.odds===null)potentialAvailable=false;else outstandingProfit+=Math.round(v.liability_cents/(v.odds-1)*(1-c.commission_rate));continue;}
+  if(st==='PENDING'){reserved+=v.liability_cents;unresolved++;outstandingProfit+=v.odds===null?10000:Math.round(v.liability_cents/(v.odds-1)*(1-c.commission_rate));continue;}
   settledRisk+=v.liability_cents;
-  movement+=st==='LOSS'?-v.liability_cents:Math.round(v.liability_cents/(v.odds-1)*(1-c.commission_rate));
+  movement+=st==='LOSS'?-v.liability_cents:v.odds===null?10000:Math.round(v.liability_cents/(v.odds-1)*(1-c.commission_rate));
  }
  reserved+=c.carried_reserved_cents||0;
  let balance=(c.account_opening_cents??Math.round(c.opening_balance_gbp*100))+movement;
@@ -166,15 +166,15 @@ async function open(next='race'){
   function commit(candidate,message){
    if(d<bankTrial.start&&totals(c,rows,candidate).available<0){say('Insufficient available balance. Reduce the amount or uncheck an editable race.');return;}
    candidate.basis='Saved device choices';try{persist(c,next,candidate);}catch(_){say('Unable to save. Choices unchanged.');return;}
-   s=candidate;if(node.jcmAutoSaving){const t=totals(c,rows,s);for(const [name,value] of Object.entries({balance:t.balance,reserved:t.reserved,available:t.available}))node.querySelector('[data-builder-'+name+']').textContent=name==='available'&&d>=bankTrial.start?'Unlimited':money(value);node.querySelector('[data-builder-potential]').textContent=t.potential===null?'Unavailable':money(t.potential);node.querySelectorAll('[data-builder-row]').forEach((el,i)=>{const v=s.entries[key(rows[i])];el.querySelector('[data-builder-liability-value]').textContent=money(v?.included?v.liability_cents:0);});say(message);}else draw(message);
+   s=candidate;if(node.jcmAutoSaving){const t=totals(c,rows,s),hasEstimate=rows.some(r=>selected(s,r)&&s.entries[key(r)]?.odds===null);for(const [name,value] of Object.entries({balance:t.balance,reserved:t.reserved,available:t.available}))node.querySelector('[data-builder-'+name+']').textContent=name==='available'&&d>=bankTrial.start?'Unlimited':money(value);node.querySelector('[data-builder-potential]').textContent=t.potential===null?'Unavailable':signedMoney(t.potential)+(hasEstimate?'*':'');node.querySelectorAll('[data-builder-row]').forEach((el,i)=>{const v=s.entries[key(rows[i])];el.querySelector('[data-builder-liability-value]').textContent=money(v?.included?v.liability_cents:0);});say(message);}else draw(message);
   }
   function say(message){node.querySelector('#builder-message').textContent=message;}
   function draw(message=''){
    if(token!==generation||!overlay.classList.contains('open'))return;
-   const t=totals(c,rows,s),amountLocked=s.published||Date.now()>=first;
+   const t=totals(c,rows,s),amountLocked=s.published||Date.now()>=first,hasEstimate=rows.some(r=>selected(s,r)&&s.entries[key(r)]?.odds===null);
    node.innerHTML='<h2>Bet Builder · '+names[next]+'</h2><label class="builder-date">Racing day <select id="builder-day">'+days.days.map(v=>'<option value="'+v+'" '+(v===d?'selected':'')+'>'+labelDate(v)+'</option>').join('')+'</select></label>'+
     (c.research_summary?'<p class="builder-note" data-research-coverage>'+safe(c.research_summary)+'</p>':'')+
-    '<section class="builder-tile builder-potential"><h3>Profit / Loss Calculator</h3><strong data-builder-potential>'+ (t.potential===null?'Unavailable':money(t.potential))+'</strong><p class="builder-note">Simulation · after 5% commission · assumes remaining horses are beaten.</p></section>'+
+    '<section class="builder-tile builder-potential"><h3>'+(t.unresolved?'Profit / Loss Calculator':'Profit / Loss')+'</h3><strong data-builder-potential>'+ (t.potential===null?'Unavailable':signedMoney(t.potential)+(hasEstimate?'*':''))+'</strong><p class="builder-note">'+(t.unresolved?'Simulation · after 5% commission · assumes remaining horses are beaten.':'Settled total · after 5% commission.')+(hasEstimate?'<br>* Estimate: +£100 for a lay win or −£500 for a lay loss where no odds were recorded.':'')+'</p></section>'+
     '<p id="builder-message" role="status">'+safe(message)+'</p><p class="builder-note">'+(s.published?'Simulation booked · published record retained across devices.':'Simulation · liability at risk · saved on this device.')+'</p>'+
     '<h3>'+labelDate(d)+' · '+rows.length+' races</h3>'+rows.map((r,i)=>{
      const v=s.entries[key(r)]||{included:false,liability_cents:0,odds:r.lay_odds??null},locked=s.published||Date.now()>=off(r),st=status(r),checkboxLocked=withdrawn(r)||(next==='fixed'?amountLocked:locked);

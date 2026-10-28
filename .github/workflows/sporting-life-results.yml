@@ -1,0 +1,48 @@
+name: Sporting Life results updater
+on:
+  workflow_dispatch:
+  push:
+    paths:
+      - scripts/update_sporting_life_results.py
+      - tests/sporting_life_results_test.py
+      - .github/workflows/sporting-life-results.yml
+  schedule:
+    - cron: '3-58/5 11-23 * * *'
+permissions:
+  contents: write
+  pages: write
+concurrency:
+  group: sporting-life-results
+  cancel-in-progress: false
+jobs:
+  results:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Test identity and outcome safeguards
+        run: python tests/sporting_life_results_test.py
+      - name: Verify Sporting Life access from GitHub
+        run: python scripts/update_sporting_life_results.py --probe
+      - name: Retrieve due full results
+        run: python scripts/update_sporting_life_results.py --write
+      - name: Preserve published simulation calculations
+        run: node tests/bankroll.cjs
+      - name: Commit results without overwriting concurrent changes
+        id: save
+        run: |
+          if git diff --quiet -- data; then exit 0; fi
+          git config user.name 'JCM Results Updater'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add data/competition-research-*.json data/result-card-details-*.json data/bet-builder-*.json
+          git commit -m 'Update verified Sporting Life race results'
+          git push origin HEAD:main
+          echo 'changed=true' >> "$GITHUB_OUTPUT"
+      - name: Request Pages publication
+        if: steps.save.outputs.changed == 'true'
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: gh api --method POST "repos/${GITHUB_REPOSITORY}/pages/builds"

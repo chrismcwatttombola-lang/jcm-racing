@@ -58,9 +58,9 @@
       "race_id": "rac_32302622053",
       "horse_id": "hrs_41072682",
       "field_size": 9,
-      "position": null,
-      "winner": null,
-      "winning_margin_lengths": null,
+      "position": "PU",
+      "winner": "Nazare",
+      "winning_margin_lengths": 1.25,
       "selected_beaten_lengths": null,
       "results_url": null,
       "racecard_url": "https://www.sportinglife.com/racing/racecards/2026-10-28/huntingdon/racecard/945763/christmas-parties-2026-at-huntingdon-racecourse-handicap-chase-gbb-race",
@@ -77,7 +77,24 @@
         "original_price_side": "LAY",
         "liquidity_gbp": 12,
         "back_odds": 5
-      }
+      },
+      "placing": "PU",
+      "result_status": "WIN",
+      "verification_status": "API_CONFIRMED",
+      "result_source": "THE_RACING_API",
+      "official_accuracy_eligible": false,
+      "result_date": "2026-10-28",
+      "result_off_time_uk": "15:36",
+      "result_course": "Huntingdon",
+      "result_horse": "It's Top",
+      "result_off_dt": "2026-10-28T15:36:00+00:00",
+      "result_retrieved_at": "2026-10-28T19:04:19.177Z",
+      "result_race_id": "rac_32302622053",
+      "result_horse_id": "hrs_41072682",
+      "result_stage": "FULL_RESULT",
+      "result_non_runners": [],
+      "result_source_reference": "The Racing API Pro get_result_by_id",
+      "race_name": "Christmas Parties 2026 At Huntingdon Racecourse Handicap Steeple Chase (GBB Race)"
     }
   ]
 }

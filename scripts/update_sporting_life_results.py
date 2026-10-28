@@ -95,6 +95,7 @@ def main():
         return
     today = now.astimezone(ZoneInfo('Europe/London')).date()
     changes = 0
+    pending = []
     issues = []
     for path in sorted((ROOT / 'data').glob('competition-research-*.json')):
         day = path.stem.removeprefix('competition-research-')
@@ -151,13 +152,26 @@ def main():
                 changes += 1
                 print(day, row['horse'], update['placing'], update['result_status'])
             except (ValueError, KeyError, OSError) as error:
-                issues.append(day + ' ' + row['horse'] + ': ' + str(error))
+                message = str(error)
+                expected_waits = (
+                    'Full result link not available or ambiguous',
+                    'Awaiting weighed-in full result',
+                    'Non-numeric finish needs manual review; left pending',
+                    'Winner not explicit',
+                )
+                item = day + ' ' + row['horse'] + ': ' + message
+                if isinstance(error, OSError) or message in expected_waits:
+                    pending.append(item)
+                else:
+                    issues.append(item)
         if dirty and args.write:
             for target, data in ((path, research), (details_path, details), (builder_path, builder)):
                 target.write_text(json.dumps(data, indent=2, ensure_ascii=False) + '\n')
     print(f'{changes} supported changes; write={args.write}')
+    for item in pending:
+        print('PENDING:', item)
     for issue in issues:
-        print('PENDING:', issue)
+        print('ERROR:', issue)
     if issues:
         raise SystemExit(1)
 

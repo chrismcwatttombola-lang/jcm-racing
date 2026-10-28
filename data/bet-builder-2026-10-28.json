@@ -1,0 +1,192 @@
+{
+  "schema_version": 2,
+  "fictional_only": true,
+  "date": "2026-10-28",
+  "introduced_at": "2026-10-28T07:53:54Z",
+  "opening_balance_gbp": 0,
+  "commission_rate": 0.05,
+  "rows": [
+    {
+      "race_date": "2026-10-28",
+      "horse": "Jimmyjeroo",
+      "course": "Huntingdon",
+      "off_time_uk": "13:06",
+      "race_id": "rac_32302612368",
+      "horse_id": "hrs_31835125",
+      "scheduled_off_dt": "2026-10-28T13:06:00+00:00",
+      "interest_rank": 1,
+      "tier": "potential",
+      "original_status": "Potential selection - tentative",
+      "display_status": "Potential selection - tentative",
+      "original_assessment": "Potential selection - tentative",
+      "selection_status": "POTENTIAL_SELECTION",
+      "competition_confidence_percent": null,
+      "qualitative_confidence": "Tentative; no strong lay recommendation",
+      "selected_at": "2026-10-28T07:53:54Z",
+      "added_at": "2026-10-28T07:53:54Z",
+      "identified_challengers": [
+        "Anytrixwilldo",
+        "Jack's A Legend",
+        "Majestic Moment"
+      ],
+      "selection_reason": {
+        "summary": "Beaten 29.5 lengths when sixth at Worcester on 12 October. Anytrixwilldo and Jack's A Legend bring recent placed chase form, making his short favourite price questionable.",
+        "counterargument": "That was his first run after a year off, so improvement is plausible. Patrick Mullins rides and his earlier Hereford second supports his chance. Tentative potential selection, no strong lay recommendation.",
+        "challengers": [
+          "Anytrixwilldo",
+          "Jack's A Legend",
+          "Majestic Moment"
+        ],
+        "source": "The Racing API Pro full horse results and Sporting Life racecard",
+        "checked_at": "2026-10-28T07:40:06Z",
+        "evidence_status": "RACING_API_AND_USER_ASSESSMENT"
+      },
+      "position": null,
+      "placing": null,
+      "result_status": "PENDING",
+      "verification_status": "PENDING",
+      "result_source": null,
+      "official_accuracy_eligible": false,
+      "going": "Good",
+      "lay_odds": 2.98,
+      "available_stake_gbp": 13,
+      "source": "Betfair Exchange user screenshot, 28 October 07:51 GMT; explicit pink LAY column",
+      "lay_price_provenance": {
+        "provider": "Betfair Exchange",
+        "source_type": "USER_SCREENSHOT",
+        "source_library_file_id": "libfile_547af1c1f79c8191a8e3d0c2fe3152c5",
+        "observed_at": "2026-10-28T07:51:00+00:00",
+        "observation_time_basis": "Visible clock 07:51 and 13:06 Huntingdon next-race panel; supplied 28 October morning, Europe/London GMT",
+        "retrieved_at": "2026-10-28T07:53:54Z",
+        "verification_status": "VERIFIED_SCREENSHOT_LAY",
+        "original_price_side": "LAY",
+        "liquidity_gbp": 13,
+        "back_odds": 2.92
+      }
+    },
+    {
+      "race_date": "2026-10-28",
+      "horse": "It's Top",
+      "course": "Huntingdon",
+      "off_time_uk": "15:36",
+      "race_id": "rac_32302622053",
+      "horse_id": "hrs_41072682",
+      "scheduled_off_dt": "2026-10-28T15:36:00+00:00",
+      "interest_rank": 2,
+      "tier": "potential",
+      "original_status": "Potential selection - tentative",
+      "display_status": "Potential selection - tentative",
+      "original_assessment": "Potential selection - tentative",
+      "selection_status": "POTENTIAL_SELECTION",
+      "competition_confidence_percent": null,
+      "qualitative_confidence": "Tentative; no strong lay recommendation",
+      "selected_at": "2026-10-28T07:53:54Z",
+      "added_at": "2026-10-28T07:53:54Z",
+      "identified_challengers": [
+        "Nazare",
+        "Clap of Thunder",
+        "Scavengers Reign"
+      ],
+      "selection_reason": {
+        "summary": "Makes his chase debut after 209 days away, following a pulled-up effort at Uttoxeter and fifth, beaten 11.5 lengths, at Chepstow over hurdles. Nazare has already won over fences; Clap of Thunder has chase experience.",
+        "counterargument": "A second breathing operation and the switch to fences could improve him; Gavin Sheehan rides. Most rivals also return from breaks, while Scavengers Reign is another chase debutant. Tentative potential selection, no strong lay recommendation.",
+        "challengers": [
+          "Nazare",
+          "Clap of Thunder",
+          "Scavengers Reign"
+        ],
+        "source": "The Racing API Pro full horse results and Sporting Life racecard",
+        "checked_at": "2026-10-28T07:40:06Z",
+        "evidence_status": "RACING_API_AND_USER_ASSESSMENT"
+      },
+      "position": null,
+      "placing": null,
+      "result_status": "PENDING",
+      "verification_status": "PENDING",
+      "result_source": null,
+      "official_accuracy_eligible": false,
+      "going": "Good",
+      "lay_odds": 5.3,
+      "available_stake_gbp": 12,
+      "source": "Betfair Exchange user screenshot, 28 October 07:51 GMT; explicit pink LAY column",
+      "lay_price_provenance": {
+        "provider": "Betfair Exchange",
+        "source_type": "USER_SCREENSHOT",
+        "source_library_file_id": "libfile_c75ddd7fa77881918d5c833ce89421a9",
+        "observed_at": "2026-10-28T07:51:00+00:00",
+        "observation_time_basis": "Visible clock 07:51, 28 Oct date, Huntingdon and selected 15:36 race; Europe/London GMT",
+        "retrieved_at": "2026-10-28T07:53:54Z",
+        "verification_status": "VERIFIED_SCREENSHOT_LAY",
+        "original_price_side": "LAY",
+        "liquidity_gbp": 12,
+        "back_odds": 5
+      }
+    }
+  ],
+  "bank_trial": {
+    "start_date": "2026-10-23",
+    "accounting_model": "ZERO_START_UNLIMITED_SIMULATED_OVERDRAFT",
+    "initial_balance_gbp": 0,
+    "percentage_benchmark_gbp": 10000,
+    "automatic_deposits": false,
+    "deposits": [],
+    "withdrawals": [],
+    "results_publish_when": "ALL_DAILY_RACES_FINISHED_AND_RESULTS_VERIFIED",
+    "performance_formula": "cumulative net profit or loss / 10000 * 100",
+    "authorization": "User replaced funded banks and top-ups with zero-start unlimited simulated overdraft; simplified results to three data columns."
+  },
+  "preserve_device_choices": true,
+  "simulation_note": "User approved the two tentative entries and supplied explicit Betfair lay screenshots at 07:51 GMT: Jimmyjeroo 2.98 (£13 available), It's Top 5.3 (£12 available). Fictional default liabilities exceed displayed liquidity; no real execution. Neither entry is a strong lay recommendation.",
+  "published_simulations": {
+    "recorded_at": "2026-10-28T07:53:54Z",
+    "authorization": "User approved today's picks and supplied lay screenshots; automatic fictional three-strategy booking previously authorized.",
+    "fixed": {
+      "entries": [
+        {
+          "race_id": "rac_32302612368",
+          "horse_id": "hrs_31835125",
+          "odds": 2.98,
+          "liability_cents": 50000
+        },
+        {
+          "race_id": "rac_32302622053",
+          "horse_id": "hrs_41072682",
+          "odds": 5.3,
+          "liability_cents": 50000
+        }
+      ]
+    },
+    "race": {
+      "entries": [
+        {
+          "race_id": "rac_32302612368",
+          "horse_id": "hrs_31835125",
+          "odds": 2.98,
+          "liability_cents": 50000
+        },
+        {
+          "race_id": "rac_32302622053",
+          "horse_id": "hrs_41072682",
+          "odds": 5.3,
+          "liability_cents": 50000
+        }
+      ]
+    },
+    "manual": {
+      "entries": [
+        {
+          "race_id": "rac_32302612368",
+          "horse_id": "hrs_31835125",
+          "odds": 2.98,
+          "liability_cents": 25000
+        },
+        {
+          "race_id": "rac_32302622053",
+          "horse_id": "hrs_41072682",
+          "odds": 5.3,
+          "liability_cents": 25000
+        }
+      ]
+    }
+  }
+}

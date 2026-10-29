@@ -206,25 +206,47 @@
     "authorization": "User replaced funded banks and top-ups with zero-start unlimited simulated overdraft; simplified results to the single £500-per-race view."
   },
   "preserve_device_choices": true,
-  "simulation_note": "Latest user screenshots at 13:00 GMT show Wecouldavehaditall 2.88 (£9 available) and Spacebound 2.22 (£8 available). Published £500-per-race fictional bookings retain their first verified 06:09 prices, 3.2 and 3.05 respectively. Latest observations are not executed bets.",
+  "simulation_note": "User requested updated fictional Bet Builder bookings at the 13:00 GMT screenshot prices: Wecouldavehaditall 2.88 and Spacebound 2.22, each with £500 liability. Screenshot available lay stakes were £9 and £8 respectively; these are fictional simulations, not real executions. Previous bookings are retained in published_simulations_history.",
   "published_simulations": {
-    "recorded_at": "2026-10-29T06:12:22.640Z",
-    "authorization": "User supplied explicit Betfair Exchange lay screenshots; £500-per-race fictional booking authorized.",
+    "recorded_at": "2026-10-29T13:13:43.051Z",
+    "authorization": "User explicitly requested Bet Builder update to the 29 October 13:00 screenshot lay prices; retain £500 liability per race.",
     "race": {
       "entries": [
         {
           "race_id": "rac_32303284507",
           "horse_id": "hrs_17389790586",
-          "odds": 3.2,
+          "odds": 2.88,
           "liability_cents": 50000
         },
         {
           "race_id": "rac_32303286444",
           "horse_id": "hrs_52087602",
-          "odds": 3.05,
+          "odds": 2.22,
           "liability_cents": 50000
         }
       ]
     }
-  }
+  },
+  "published_simulations_history": [
+    {
+      "recorded_at": "2026-10-29T06:12:22.640Z",
+      "authorization": "User supplied explicit Betfair Exchange lay screenshots; £500-per-race fictional booking authorized.",
+      "race": {
+        "entries": [
+          {
+            "race_id": "rac_32303284507",
+            "horse_id": "hrs_17389790586",
+            "odds": 3.2,
+            "liability_cents": 50000
+          },
+          {
+            "race_id": "rac_32303286444",
+            "horse_id": "hrs_52087602",
+            "odds": 3.05,
+            "liability_cents": 50000
+          }
+        ]
+      }
+    }
+  ]
 }

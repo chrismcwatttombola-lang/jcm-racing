@@ -10,11 +10,11 @@
       "race_id": "rac_32303284507",
       "horse_id": "hrs_17389790586",
       "field_size": 6,
-      "position": null,
-      "winner": null,
+      "position": "5",
+      "winner": "Margot Mae",
       "winning_margin_lengths": null,
       "selected_beaten_lengths": null,
-      "results_url": null,
+      "results_url": "https://www.sportinglife.com/racing/results/2026-10-29/punchestown/946642/premiere-weekend-race-and-dine-packages-from-75-euros-nursery-handicap",
       "racecard_url": "https://www.sportinglife.com/racing/racecards/2026-10-29/punchestown/racecard/946642/premiere-weekend-race-and-dine-packages-from-75-euros-nursery-handicap",
       "lay_odds": 2.88,
       "available_stake_gbp": 9,
@@ -43,10 +43,10 @@
         "source_timezone": "UTC",
         "source_url": "https://api.theracingapi.com/v1/odds/rac_32303284507/hrs_17389790586"
       },
-      "placing": null,
-      "result_status": "PENDING",
-      "verification_status": "PENDING",
-      "result_source": null,
+      "placing": "5th",
+      "result_status": "WIN",
+      "verification_status": "WEBSITE_CONFIRMED",
+      "result_source": "SPORTING_LIFE",
       "official_accuracy_eligible": false,
       "race_name": "Premiere Weekend Race & Dine Packages From 75 Euros Nursery Handicap",
       "selected_at": "2026-10-28T21:05:13Z",
@@ -81,7 +81,22 @@
           "liquidity_gbp": 10,
           "back_odds": 2.5
         }
-      ]
+      ],
+      "result_date": "2026-10-29",
+      "result_off_time_uk": "14:35",
+      "result_course": "Punchestown",
+      "result_horse": "Wecouldavehaditall",
+      "result_off_dt": "2026-10-29T14:35:00+00:00",
+      "result_retrieved_at": "2026-10-29T14:53:33.349543Z",
+      "result_race_id": "rac_32303284507",
+      "result_horse_id": "hrs_17389790586",
+      "result_website_race_id": "946642",
+      "result_source_url": "https://www.sportinglife.com/racing/results/2026-10-29/punchestown/946642/premiere-weekend-race-and-dine-packages-from-75-euros-nursery-handicap",
+      "result_non_runners": [
+        "Melchizedek"
+      ],
+      "result_website_horse_id": "1232780",
+      "result_stage": "WEIGHEDIN"
     },
     {
       "date": "2026-10-29",

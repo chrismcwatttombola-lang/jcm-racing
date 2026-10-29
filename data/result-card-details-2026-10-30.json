@@ -1,0 +1,63 @@
+{
+  "schema_version": 1,
+  "date": "2026-10-30",
+  "details": [
+    {
+      "date": "2026-10-30",
+      "horse": "Siena Storm",
+      "course": "Newmarket",
+      "off_time_uk": "13:45",
+      "race_id": "rac_32302827375",
+      "horse_id": "hrs_17389476643",
+      "field_size": 14,
+      "position": null,
+      "winner": null,
+      "winning_margin_lengths": null,
+      "selected_beaten_lengths": null,
+      "results_url": null,
+      "racecard_url": "https://www.sportinglife.com/racing/racecards/2026-10-30/newmarket/racecard/946113/irish-stallion-farms-ebf-bosra-sham-fillies-stakes",
+      "lay_odds": null,
+      "available_stake_gbp": null,
+      "lay_price_provenance": null,
+      "market_observation": {
+        "provider": "Bet365",
+        "source_type": "BOOKMAKER_ODDS",
+        "observed_price_fractional": "6/4",
+        "observed_price_decimal": 2.5,
+        "observed_at": "2026-10-29T21:20:10Z",
+        "price_last_changed_at": null,
+        "retrieved_at": "2026-10-29T21:23:48.145Z",
+        "verification_status": "BOOKMAKER_PRICE_ONLY_NOT_LAY",
+        "original_price_side": "BACK",
+        "source_timezone": "UTC",
+        "source_url": "https://api.theracingapi.com/v1/odds/rac_32302827375/hrs_17389476643"
+      },
+      "placing": null,
+      "result_status": "PENDING",
+      "verification_status": "PENDING",
+      "result_source": null,
+      "official_accuracy_eligible": false,
+      "race_name": "Irish Stallion Farms EBF 'Bosra Sham' Fillies' Stakes (Listed Race)",
+      "selected_at": "2026-10-29T21:23:48.145Z",
+      "selection_reason": {
+        "summary": "Siena Storm has the highest official rating in the field, but she has been beaten on both starts since her maiden win and now drops sharply from 7f to 6f in a 14-runner Listed race. Sporting Life's race verdict prefers Nicely, who has consecutive placed efforts in Group 3 and Listed company, while Love Is, Fillipas, Etonnante and Silesia give the favourite several credible rivals. The short 6/4 bookmaker price leaves little allowance for the new sprint test.",
+        "counterargument": "Her fifth in the Oh So Sharp Stakes is the strongest single piece of form in the field, the 6f trip could help if she settles in the first-time hood, and Ed Walker's yard is 5 from 23 in the API's recent trainer window. She is a legitimate favourite, so the evidence for opposing her is solid rather than overwhelming.",
+        "challengers": [
+          "Nicely",
+          "Love Is",
+          "Fillipas",
+          "Etonnante",
+          "Silesia"
+        ],
+        "source": "The Racing API Pro full race analysis and Sporting Life racecard",
+        "evidence_urls": [
+          "https://www.sportinglife.com/racing/racecards/2026-10-30/newmarket/racecard/946113/irish-stallion-farms-ebf-bosra-sham-fillies-stakes",
+          "https://api.theracingapi.com/v1/racecards/rac_32302827375"
+        ],
+        "checked_at": "2026-10-29T21:23:48.145Z",
+        "evidence_status": "RACING_API_PRO_AND_SPORTING_LIFE"
+      },
+      "source": "Awaiting user Betfair Exchange pink LAY screenshot"
+    }
+  ]
+}

@@ -50,20 +50,20 @@
       "verification_status": "PENDING",
       "result_source": null,
       "official_accuracy_eligible": false,
-      "lay_odds": 3.2,
-      "available_stake_gbp": 10,
-      "source": "Betfair Exchange user screenshot, 29 October 06:09 GMT; explicit pink LAY column",
+      "lay_odds": 2.88,
+      "available_stake_gbp": 9,
+      "source": "Betfair Exchange user screenshot, 29 October 13:00 GMT; explicit pink LAY column",
       "lay_price_provenance": {
         "provider": "Betfair Exchange",
         "source_type": "USER_SCREENSHOT",
-        "source_library_file_id": "libfile_9903dfba3b1c819182ec194d31a07505",
-        "observed_at": "2026-10-29T06:09:00+00:00",
-        "observation_time_basis": "Visible clock 06:09, Punchestown 29 Oct and selected 14:35 race; Europe/London GMT",
-        "retrieved_at": "2026-10-29T06:12:22.640Z",
+        "source_library_file_id": "libfile_ea785068efac81919d048d4be56623ab",
+        "observed_at": "2026-10-29T13:00:00+00:00",
+        "observation_time_basis": "Visible clock 13:00, Punchestown 29 Oct and selected 14:35 race; Europe/London GMT",
+        "retrieved_at": "2026-10-29T13:11:56.210Z",
         "verification_status": "VERIFIED_SCREENSHOT_LAY",
         "original_price_side": "LAY",
-        "liquidity_gbp": 10,
-        "back_odds": 2.5
+        "liquidity_gbp": 9,
+        "back_odds": 2.8
       },
       "market_observation": {
         "provider": "Bet365",
@@ -80,7 +80,23 @@
       },
       "racecard_url": "https://www.sportinglife.com/racing/racecards/2026-10-29/punchestown/racecard/946642/premiere-weekend-race-and-dine-packages-from-75-euros-nursery-handicap",
       "position": null,
-      "placing": null
+      "placing": null,
+      "lay_price_history": [
+        {
+          "lay_odds": 3.2,
+          "available_stake_gbp": 10,
+          "provider": "Betfair Exchange",
+          "source_type": "USER_SCREENSHOT",
+          "source_library_file_id": "libfile_9903dfba3b1c819182ec194d31a07505",
+          "observed_at": "2026-10-29T06:09:00+00:00",
+          "observation_time_basis": "Visible clock 06:09, Punchestown 29 Oct and selected 14:35 race; Europe/London GMT",
+          "retrieved_at": "2026-10-29T06:12:22.640Z",
+          "verification_status": "VERIFIED_SCREENSHOT_LAY",
+          "original_price_side": "LAY",
+          "liquidity_gbp": 10,
+          "back_odds": 2.5
+        }
+      ]
     },
     {
       "race_date": "2026-10-29",
@@ -128,20 +144,20 @@
       "verification_status": "PENDING",
       "result_source": null,
       "official_accuracy_eligible": false,
-      "lay_odds": 3.05,
-      "available_stake_gbp": 11,
-      "source": "Betfair Exchange user screenshot, 29 October 06:09 GMT; explicit pink LAY column",
+      "lay_odds": 2.22,
+      "available_stake_gbp": 8,
+      "source": "Betfair Exchange user screenshot, 29 October 13:00 GMT; explicit pink LAY column",
       "lay_price_provenance": {
         "provider": "Betfair Exchange",
         "source_type": "USER_SCREENSHOT",
-        "source_library_file_id": "libfile_684d67929a348191a843307e959580bf",
-        "observed_at": "2026-10-29T06:09:00+00:00",
-        "observation_time_basis": "Visible clock 06:09, Punchestown 29 Oct and selected 15:05 race; Europe/London GMT",
-        "retrieved_at": "2026-10-29T06:12:22.640Z",
+        "source_library_file_id": "libfile_79fb2e3467a481919a102f7ce390f74b",
+        "observed_at": "2026-10-29T13:00:00+00:00",
+        "observation_time_basis": "Visible clock 13:00, Punchestown 29 Oct and selected 15:05 race; Europe/London GMT",
+        "retrieved_at": "2026-10-29T13:11:56.210Z",
         "verification_status": "VERIFIED_SCREENSHOT_LAY",
         "original_price_side": "LAY",
-        "liquidity_gbp": 11,
-        "back_odds": 2.78
+        "liquidity_gbp": 8,
+        "back_odds": 2.18
       },
       "market_observation": {
         "provider": "Bet365",
@@ -158,7 +174,23 @@
       },
       "racecard_url": "https://www.sportinglife.com/racing/racecards/2026-10-29/punchestown/racecard/946643/premiere-weekend-two-day-ticket-just-35-euros-maiden",
       "position": null,
-      "placing": null
+      "placing": null,
+      "lay_price_history": [
+        {
+          "lay_odds": 3.05,
+          "available_stake_gbp": 11,
+          "provider": "Betfair Exchange",
+          "source_type": "USER_SCREENSHOT",
+          "source_library_file_id": "libfile_684d67929a348191a843307e959580bf",
+          "observed_at": "2026-10-29T06:09:00+00:00",
+          "observation_time_basis": "Visible clock 06:09, Punchestown 29 Oct and selected 15:05 race; Europe/London GMT",
+          "retrieved_at": "2026-10-29T06:12:22.640Z",
+          "verification_status": "VERIFIED_SCREENSHOT_LAY",
+          "original_price_side": "LAY",
+          "liquidity_gbp": 11,
+          "back_odds": 2.78
+        }
+      ]
     }
   ],
   "bank_trial": {
@@ -174,7 +206,7 @@
     "authorization": "User replaced funded banks and top-ups with zero-start unlimited simulated overdraft; simplified results to the single £500-per-race view."
   },
   "preserve_device_choices": true,
-  "simulation_note": "User supplied explicit Betfair Exchange pink-column screenshots at 06:09 GMT: Wecouldavehaditall 3.2 (£10 available) and Spacebound 3.05 (£11 available). Both £500-per-race fictional simulations are booked at the first verified pre-race lay prices; displayed liquidity was lower than the fictional liability and no real execution occurred.",
+  "simulation_note": "Latest user screenshots at 13:00 GMT show Wecouldavehaditall 2.88 (£9 available) and Spacebound 2.22 (£8 available). Published £500-per-race fictional bookings retain their first verified 06:09 prices, 3.2 and 3.05 respectively. Latest observations are not executed bets.",
   "published_simulations": {
     "recorded_at": "2026-10-29T06:12:22.640Z",
     "authorization": "User supplied explicit Betfair Exchange lay screenshots; £500-per-race fictional booking authorized.",

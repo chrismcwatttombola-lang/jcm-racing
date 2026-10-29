@@ -155,9 +155,9 @@
       "field_size": 12,
       "going": "TBC",
       "surface": "Turf",
-      "result_status": "PENDING",
-      "verification_status": "PENDING",
-      "result_source": null,
+      "result_status": "WIN",
+      "verification_status": "WEBSITE_CONFIRMED",
+      "result_source": "SPORTING_LIFE",
       "official_accuracy_eligible": false,
       "lay_odds": 2.22,
       "available_stake_gbp": 8,
@@ -188,8 +188,8 @@
         "source_url": "https://api.theracingapi.com/v1/odds/rac_32303286444/hrs_52087602"
       },
       "racecard_url": "https://www.sportinglife.com/racing/racecards/2026-10-29/punchestown/racecard/946643/premiere-weekend-two-day-ticket-just-35-euros-maiden",
-      "position": null,
-      "placing": null,
+      "position": "2",
+      "placing": "2nd",
       "lay_price_history": [
         {
           "lay_odds": 3.05,
@@ -205,7 +205,22 @@
           "liquidity_gbp": 11,
           "back_odds": 2.78
         }
-      ]
+      ],
+      "result_date": "2026-10-29",
+      "result_off_time_uk": "15:05",
+      "result_course": "Punchestown",
+      "result_horse": "Spacebound",
+      "result_off_dt": "2026-10-29T15:05:00+00:00",
+      "result_retrieved_at": "2026-10-29T15:23:56.194548Z",
+      "result_race_id": "rac_32303286444",
+      "result_horse_id": "hrs_52087602",
+      "result_website_race_id": "946643",
+      "result_source_url": "https://www.sportinglife.com/racing/results/2026-10-29/punchestown/946643/premiere-weekend-two-day-ticket-just-35-euros-maiden",
+      "result_non_runners": [
+        "Oracle Of Delphi"
+      ],
+      "result_website_horse_id": "1182344",
+      "result_stage": "WEIGHEDIN"
     }
   ],
   "bank_trial": {

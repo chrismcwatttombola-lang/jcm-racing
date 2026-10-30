@@ -1,0 +1,156 @@
+{
+  "schema_version": 2,
+  "fictional_only": true,
+  "date": "2026-10-31",
+  "introduced_at": "2026-10-30T21:06:38.281Z",
+  "opening_balance_gbp": 0,
+  "commission_rate": 0.05,
+  "rows": [
+    {
+      "race_date": "2026-10-31",
+      "horse": "Kenough",
+      "course": "Down Royal",
+      "off_time_uk": "13:00",
+      "race_id": "rac_32303216712",
+      "horse_id": "hrs_58133495",
+      "scheduled_off_dt": "2026-10-31T13:00:00+00:00",
+      "interest_rank": 1,
+      "tier": "selection",
+      "original_status": "Selection",
+      "display_status": "Selection",
+      "original_assessment": "Selection",
+      "selection_status": "SELECTION",
+      "competition_confidence_percent": null,
+      "qualitative_confidence": "Good evidence for opposing the favourite",
+      "selected_at": "2026-10-30T21:06:38.281Z",
+      "added_at": "2026-10-30T21:06:38.281Z",
+      "identified_challengers": [
+        "Cite Florale",
+        "Admiral Will Brown"
+      ],
+      "selection_reason": {
+        "summary": "Kenough is a short-priced favourite after finishing third on his hurdling debut, but he has still not won a race and his jumping was untidy at the final flight. Cite Florale is already unbeaten over hurdles, winning at Killarney despite making a mistake three out, and gives the favourite a direct, credible rival at a much less demanding price. Admiral Will Brown also brings useful Flat form into his hurdle debut.",
+        "counterargument": "Kenough finished strongly at Punchestown after missing the break, that experience should improve him, and his Flat form gives him a sound base. Joseph O'Brien and J. J. Slevin are significant positives, so the case for opposing him is good rather than overwhelming.",
+        "challengers": [
+          "Cite Florale",
+          "Admiral Will Brown"
+        ],
+        "source": "The Racing API Pro full race analysis and Sporting Life racecard",
+        "evidence_urls": [
+          "https://www.sportinglife.com/racing/racecards/2026-10-31/down-royal/racecard/946523/lisburn-and-castlereagh-city-council-3-y-o-hurdle",
+          "https://api.theracingapi.com/v1/racecards/rac_32303216712"
+        ],
+        "checked_at": "2026-10-30T21:06:38.281Z",
+        "evidence_status": "RACING_API_PRO_AND_SPORTING_LIFE"
+      },
+      "field_size": 8,
+      "going": "Yielding",
+      "surface": "Turf",
+      "result_status": "PENDING",
+      "verification_status": "PENDING",
+      "result_source": null,
+      "official_accuracy_eligible": false,
+      "lay_odds": null,
+      "available_stake_gbp": null,
+      "source": "Betfair Exchange lay screenshot pending",
+      "lay_price_provenance": null,
+      "market_observation": {
+        "provider": "Bet365",
+        "source_type": "BOOKMAKER_ODDS",
+        "observed_price_fractional": "10/11",
+        "observed_price_decimal": 1.91,
+        "observed_at": "2026-10-30T21:00:15Z",
+        "price_last_changed_at": null,
+        "retrieved_at": "2026-10-30T21:06:38.281Z",
+        "verification_status": "BOOKMAKER_PRICE_ONLY_NOT_LAY",
+        "original_price_side": "BACK",
+        "source_timezone": "UTC",
+        "source_url": "https://api.theracingapi.com/v1/odds/rac_32303216712/hrs_58133495"
+      },
+      "racecard_url": "https://www.sportinglife.com/racing/racecards/2026-10-31/down-royal/racecard/946523/lisburn-and-castlereagh-city-council-3-y-o-hurdle",
+      "position": null,
+      "placing": null
+    },
+    {
+      "race_date": "2026-10-31",
+      "horse": "Sledgehammer",
+      "course": "Wetherby",
+      "off_time_uk": "16:03",
+      "race_id": "rac_32303021075",
+      "horse_id": "hrs_58565304",
+      "scheduled_off_dt": "2026-10-31T16:03:00+00:00",
+      "interest_rank": 2,
+      "tier": "selection",
+      "original_status": "Selection",
+      "display_status": "Selection",
+      "original_assessment": "Selection",
+      "selection_status": "SELECTION",
+      "competition_confidence_percent": null,
+      "qualitative_confidence": "Strong evidence for opposing the favourite",
+      "selected_at": "2026-10-30T21:06:38.281Z",
+      "added_at": "2026-10-30T21:06:38.281Z",
+      "identified_challengers": [
+        "Upfordebate",
+        "Paddy O'Mahler",
+        "Slaney Opera"
+      ],
+      "selection_reason": {
+        "summary": "Sledgehammer is very short after one Hexham win, but that performance was rated only 86 and followed a fall plus several modest efforts. He now meets three credible rivals: Upfordebate has won his last two races with performances around 108-109, Slaney Opera arrives after a comfortable Uttoxeter success, and Paddy O'Mahler has proven course-and-distance form. The favourite's low weight is valuable, but the price asks the recent win to outweigh a large gap in established chase form.",
+        "counterargument": "Sledgehammer won over this three-mile trip last time, carries 20 lb less than Upfordebate and Paddy O'Mahler, and is open to more improvement after only a handful of chase starts. The market support may reflect that handicap advantage.",
+        "challengers": [
+          "Upfordebate",
+          "Paddy O'Mahler",
+          "Slaney Opera"
+        ],
+        "source": "The Racing API Pro full race analysis and Sporting Life racecard",
+        "evidence_urls": [
+          "https://www.sportinglife.com/racing/racecards/2026-10-31/wetherby/racecard/946319/bet365-handicap-chase-gbb-race",
+          "https://api.theracingapi.com/v1/racecards/rac_32303021075"
+        ],
+        "checked_at": "2026-10-30T21:06:38.281Z",
+        "evidence_status": "RACING_API_PRO_AND_SPORTING_LIFE"
+      },
+      "field_size": 4,
+      "going": "Good",
+      "surface": "Turf",
+      "result_status": "PENDING",
+      "verification_status": "PENDING",
+      "result_source": null,
+      "official_accuracy_eligible": false,
+      "lay_odds": null,
+      "available_stake_gbp": null,
+      "source": "Betfair Exchange lay screenshot pending",
+      "lay_price_provenance": null,
+      "market_observation": {
+        "provider": "Bet365",
+        "source_type": "BOOKMAKER_ODDS",
+        "observed_price_fractional": "4/6",
+        "observed_price_decimal": 1.67,
+        "observed_at": "2026-10-30T21:00:15Z",
+        "price_last_changed_at": null,
+        "retrieved_at": "2026-10-30T21:06:38.281Z",
+        "verification_status": "BOOKMAKER_PRICE_ONLY_NOT_LAY",
+        "original_price_side": "BACK",
+        "source_timezone": "UTC",
+        "source_url": "https://api.theracingapi.com/v1/odds/rac_32303021075/hrs_58565304"
+      },
+      "racecard_url": "https://www.sportinglife.com/racing/racecards/2026-10-31/wetherby/racecard/946319/bet365-handicap-chase-gbb-race",
+      "position": null,
+      "placing": null
+    }
+  ],
+  "bank_trial": {
+    "start_date": "2026-10-23",
+    "accounting_model": "ZERO_START_UNLIMITED_SIMULATED_OVERDRAFT",
+    "initial_balance_gbp": 0,
+    "percentage_benchmark_gbp": 10000,
+    "automatic_deposits": false,
+    "deposits": [],
+    "withdrawals": [],
+    "results_publish_when": "ALL_DAILY_RACES_FINISHED_AND_RESULTS_VERIFIED",
+    "performance_formula": "cumulative net profit or loss / 10000 * 100",
+    "authorization": "User replaced funded banks and top-ups with zero-start unlimited simulated overdraft; simplified results to the single £500-per-race view."
+  },
+  "preserve_device_choices": true,
+  "simulation_note": "Betfair Exchange lay prices are awaiting user screenshots. The £500-per-race entries remain fictional and pending; no profit or loss has been booked."
+}

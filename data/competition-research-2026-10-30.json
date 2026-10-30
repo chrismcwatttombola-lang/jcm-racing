@@ -50,9 +50,9 @@
       "field_size": 14,
       "going": "Good To Soft",
       "surface": "Turf",
-      "result_status": "PENDING",
-      "verification_status": "PENDING",
-      "result_source": null,
+      "result_status": "LOSS",
+      "verification_status": "WEBSITE_CONFIRMED",
+      "result_source": "SPORTING_LIFE",
       "official_accuracy_eligible": false,
       "lay_odds": 2.72,
       "available_stake_gbp": 14,
@@ -83,8 +83,23 @@
         "source_url": "https://api.theracingapi.com/v1/odds/rac_32302827375/hrs_17389476643"
       },
       "racecard_url": "https://www.sportinglife.com/racing/racecards/2026-10-30/newmarket/racecard/946113/irish-stallion-farms-ebf-bosra-sham-fillies-stakes",
-      "position": null,
-      "placing": null
+      "position": "1",
+      "placing": "1st",
+      "result_date": "2026-10-30",
+      "result_off_time_uk": "13:45",
+      "result_course": "Newmarket",
+      "result_horse": "Siena Storm",
+      "result_off_dt": "2026-10-30T13:45:00+00:00",
+      "result_retrieved_at": "2026-10-30T14:03:02.380655Z",
+      "result_race_id": "rac_32302827375",
+      "result_horse_id": "hrs_17389476643",
+      "result_website_race_id": "946113",
+      "result_source_url": "https://www.sportinglife.com/racing/results/2026-10-30/newmarket/946113/irish-stallion-farms-ebf-bosra-sham-fillies-stakes-listed",
+      "result_non_runners": [
+        "Love Is"
+      ],
+      "result_website_horse_id": "1232468",
+      "result_stage": "WEIGHEDIN"
     }
   ],
   "competition_watchlist": []

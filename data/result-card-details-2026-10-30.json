@@ -9,12 +9,12 @@
       "off_time_uk": "13:45",
       "race_id": "rac_32302827375",
       "horse_id": "hrs_17389476643",
-      "field_size": 14,
-      "position": null,
-      "winner": null,
+      "field_size": 13,
+      "position": "1",
+      "winner": "Siena Storm",
       "winning_margin_lengths": null,
       "selected_beaten_lengths": null,
-      "results_url": null,
+      "results_url": "https://www.sportinglife.com/racing/results/2026-10-30/newmarket/946113/irish-stallion-farms-ebf-bosra-sham-fillies-stakes-listed",
       "racecard_url": "https://www.sportinglife.com/racing/racecards/2026-10-30/newmarket/racecard/946113/irish-stallion-farms-ebf-bosra-sham-fillies-stakes",
       "lay_odds": 2.72,
       "available_stake_gbp": 14,
@@ -43,12 +43,12 @@
         "source_timezone": "UTC",
         "source_url": "https://api.theracingapi.com/v1/odds/rac_32302827375/hrs_17389476643"
       },
-      "placing": null,
-      "result_status": "PENDING",
-      "verification_status": "PENDING",
-      "result_source": null,
+      "placing": "1st",
+      "result_status": "LOSS",
+      "verification_status": "WEBSITE_CONFIRMED",
+      "result_source": "SPORTING_LIFE",
       "official_accuracy_eligible": false,
-      "race_name": "Irish Stallion Farms EBF 'Bosra Sham' Fillies' Stakes (Listed Race)",
+      "race_name": "Irish Stallion Farms EBF 'Bosra Sham' Fillies' Stakes (Listed)",
       "selected_at": "2026-10-29T21:23:48.145Z",
       "selection_reason": {
         "summary": "Siena Storm has the highest official rating in the field, but she has been beaten on both starts since her maiden win and now drops sharply from 7f to 6f in a 14-runner Listed race. Sporting Life's race verdict prefers Nicely, who has consecutive placed efforts in Group 3 and Listed company, while Love Is, Fillipas, Etonnante and Silesia give the favourite several credible rivals. The short 6/4 bookmaker price leaves little allowance for the new sprint test.",
@@ -68,7 +68,22 @@
         "checked_at": "2026-10-29T21:23:48.145Z",
         "evidence_status": "RACING_API_PRO_AND_SPORTING_LIFE"
       },
-      "source": "Betfair Exchange user screenshot, 30 October 07:01 GMT; explicit pink LAY column"
+      "source": "Betfair Exchange user screenshot, 30 October 07:01 GMT; explicit pink LAY column",
+      "result_date": "2026-10-30",
+      "result_off_time_uk": "13:45",
+      "result_course": "Newmarket",
+      "result_horse": "Siena Storm",
+      "result_off_dt": "2026-10-30T13:45:00+00:00",
+      "result_retrieved_at": "2026-10-30T14:03:02.380655Z",
+      "result_race_id": "rac_32302827375",
+      "result_horse_id": "hrs_17389476643",
+      "result_website_race_id": "946113",
+      "result_source_url": "https://www.sportinglife.com/racing/results/2026-10-30/newmarket/946113/irish-stallion-farms-ebf-bosra-sham-fillies-stakes-listed",
+      "result_non_runners": [
+        "Love Is"
+      ],
+      "result_website_horse_id": "1232468",
+      "result_stage": "WEIGHEDIN"
     }
   ]
 }

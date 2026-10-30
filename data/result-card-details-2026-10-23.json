@@ -16,7 +16,21 @@
       "winning_margin_lengths": 4.5,
       "selected_beaten_lengths": 4.5,
       "racecard_url": "https://www.sportinglife.com/racing/racecards/2026-10-23/cheltenham/racecard/944906/foundation-developments-conditional-jockeys-handicap-hurdle",
-      "results_url": null
+      "results_url": "https://www.sportinglife.com/racing/results/2026-10-23/cheltenham/944906/foundation-developments-conditional-jockeys-handicap-hurdle",
+      "placing": "2nd",
+      "result_status": "WIN",
+      "result_source": "THE_RACING_API",
+      "verification_status": "PROVIDER_ACCEPTED",
+      "result_date": "2026-10-23",
+      "result_off_time_uk": "14:25",
+      "result_course": "Cheltenham",
+      "result_horse": "The Hardest Geezer",
+      "result_off_dt": "2026-10-23T14:25:00+01:00",
+      "result_retrieved_at": "2026-10-23T14:51:13+01:00",
+      "result_race_id": "rac_32301953788",
+      "result_horse_id": "hrs_37889761",
+      "result_source_url": "https://api.theracingapi.com/v1/results/rac_32301953788",
+      "official_accuracy_eligible": false
     },
     {
       "date": "2026-10-23",
@@ -32,7 +46,21 @@
       "winning_margin_lengths": 0.3,
       "selected_beaten_lengths": 0,
       "racecard_url": "https://www.sportinglife.com/racing/racecards/2026-10-23/doncaster/racecard/944925/william-hill-price-boosts-every-day-handicap-div-2",
-      "results_url": null
+      "results_url": "https://www.sportinglife.com/racing/results/2026-10-23/doncaster/944925/william-hill-price-boosts-every-day-handicap-div-2",
+      "placing": "1st",
+      "result_status": "LOSS",
+      "result_source": "THE_RACING_API",
+      "verification_status": "PROVIDER_ACCEPTED",
+      "official_accuracy_eligible": false,
+      "result_date": "2026-10-23",
+      "result_off_time_uk": "17:05",
+      "result_course": "Doncaster",
+      "result_horse": "Intense Vision",
+      "result_off_dt": "2026-10-23T17:05:00+01:00",
+      "result_retrieved_at": "2026-10-23T18:38:14+01:00",
+      "result_race_id": "rac_32302558132",
+      "result_horse_id": "hrs_63908691",
+      "result_source_url": "https://api.theracingapi.com/v1/results/rac_32302558132"
     }
   ]
 }

@@ -44,11 +44,11 @@
         "source_message_at": "2026-10-23T08:39:31+01:00",
         "added_at": "2026-10-23T08:48:00+01:00"
       },
-      "position": null,
-      "placing": null,
-      "result_status": "PENDING",
-      "result_source": null,
-      "verification_status": "PENDING",
+      "position": "2",
+      "placing": "2nd",
+      "result_status": "WIN",
+      "result_source": "THE_RACING_API",
+      "verification_status": "PROVIDER_ACCEPTED",
       "official_accuracy_eligible": false,
       "going": "Good to Soft (Good in places)",
       "lay_odds": 4.7,
@@ -73,7 +73,16 @@
         "user_authorized_date": "2026-10-23",
         "live": false,
         "available_stake_gbp": null
-      }
+      },
+      "result_date": "2026-10-23",
+      "result_off_time_uk": "14:25",
+      "result_course": "Cheltenham",
+      "result_horse": "The Hardest Geezer",
+      "result_off_dt": "2026-10-23T14:25:00+01:00",
+      "result_retrieved_at": "2026-10-23T14:51:13+01:00",
+      "result_race_id": "rac_32301953788",
+      "result_horse_id": "hrs_37889761",
+      "result_source_url": "https://api.theracingapi.com/v1/results/rac_32301953788"
     },
     {
       "race_date": "2026-10-23",
@@ -113,11 +122,11 @@
         "source_message_at": "2026-10-23T08:39:31+01:00",
         "added_at": "2026-10-23T08:48:00+01:00"
       },
-      "position": null,
-      "placing": null,
-      "result_status": "PENDING",
-      "result_source": null,
-      "verification_status": "PENDING",
+      "position": "1",
+      "placing": "1st",
+      "result_status": "LOSS",
+      "result_source": "THE_RACING_API",
+      "verification_status": "PROVIDER_ACCEPTED",
       "official_accuracy_eligible": false,
       "going": "Soft (Heavy in places)",
       "lay_odds": 4.2,
@@ -142,13 +151,22 @@
         "user_authorized_date": "2026-10-23",
         "live": false,
         "available_stake_gbp": null
-      }
+      },
+      "result_date": "2026-10-23",
+      "result_off_time_uk": "17:05",
+      "result_course": "Doncaster",
+      "result_horse": "Intense Vision",
+      "result_off_dt": "2026-10-23T17:05:00+01:00",
+      "result_retrieved_at": "2026-10-23T18:38:14+01:00",
+      "result_race_id": "rac_32302558132",
+      "result_horse_id": "hrs_63908691",
+      "result_source_url": "https://api.theracingapi.com/v1/results/rac_32302558132"
     }
   ],
   "simulation_note": "Analysis only: 4.70 and 4.20 are earlier Betfair Exchange figures used as assumed lay prices with user approval. The feed did not identify the back/lay side. These are not verified or live lay quotes; matching and liquidity are unknown. Success rate tracks horse outcomes, not profit.",
   "published_simulations": {
     "recorded_at": "2026-10-23T10:26:58+01:00",
-    "authorization": "User instructed all three simulations booked at current assumptions; each starts with \u00a310,000, carries results forward, and records a further \u00a310,000 simulated deposit only when exhausted.",
+    "authorization": "User instructed all three simulations booked at current assumptions; each starts with £10,000, carries results forward, and records a further £10,000 simulated deposit only when exhausted.",
     "fixed": {
       "entries": [
         {

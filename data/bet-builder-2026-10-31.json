@@ -50,10 +50,21 @@
       "verification_status": "PENDING",
       "result_source": null,
       "official_accuracy_eligible": false,
-      "lay_odds": null,
-      "available_stake_gbp": null,
-      "source": "Betfair Exchange lay screenshot pending",
-      "lay_price_provenance": null,
+      "lay_odds": 2.02,
+      "available_stake_gbp": 37,
+      "source": "Betfair Exchange user screenshot, 31 October 08:50 GMT; explicit pink LAY column",
+      "lay_price_provenance": {
+        "provider": "Betfair Exchange",
+        "source_type": "USER_SCREENSHOT",
+        "source_library_file_id": "libfile_ee1b4c472e148191aa0b1211f1cf3736",
+        "observed_at": "2026-10-31T08:50:00+00:00",
+        "observation_time_basis": "Visible clock 08:50, Down Royal 31 Oct and selected 13:00 race; Europe/London GMT",
+        "retrieved_at": "2026-10-31T08:51:24.488Z",
+        "verification_status": "VERIFIED_SCREENSHOT_LAY",
+        "original_price_side": "LAY",
+        "liquidity_gbp": 37,
+        "back_odds": 1.94
+      },
       "market_observation": {
         "provider": "Bet365",
         "source_type": "BOOKMAKER_ODDS",
@@ -117,10 +128,21 @@
       "verification_status": "PENDING",
       "result_source": null,
       "official_accuracy_eligible": false,
-      "lay_odds": null,
-      "available_stake_gbp": null,
-      "source": "Betfair Exchange lay screenshot pending",
-      "lay_price_provenance": null,
+      "lay_odds": 1.85,
+      "available_stake_gbp": 11,
+      "source": "Betfair Exchange user screenshot, 31 October 08:50 GMT; explicit pink LAY column",
+      "lay_price_provenance": {
+        "provider": "Betfair Exchange",
+        "source_type": "USER_SCREENSHOT",
+        "source_library_file_id": "libfile_5a82f64b8f6c8191ae85ae4077f466f5",
+        "observed_at": "2026-10-31T08:50:00+00:00",
+        "observation_time_basis": "Visible clock 08:50, Wetherby 31 Oct and selected 16:03 race; Europe/London GMT",
+        "retrieved_at": "2026-10-31T08:51:24.488Z",
+        "verification_status": "VERIFIED_SCREENSHOT_LAY",
+        "original_price_side": "LAY",
+        "liquidity_gbp": 11,
+        "back_odds": 1.78
+      },
       "market_observation": {
         "provider": "Bet365",
         "source_type": "BOOKMAKER_ODDS",
@@ -152,5 +174,25 @@
     "authorization": "User replaced funded banks and top-ups with zero-start unlimited simulated overdraft; simplified results to the single £500-per-race view."
   },
   "preserve_device_choices": true,
-  "simulation_note": "Betfair Exchange lay prices are awaiting user screenshots. The £500-per-race entries remain fictional and pending; no profit or loss has been booked."
+  "simulation_note": "User supplied explicit Betfair Exchange pink LAY screenshots at 08:50 GMT: Kenough 2.02 (£37 available) and Sledgehammer 1.85 (£11 available). Each £500 liability is a fictional simulation only; no real execution.",
+  "published_simulations": {
+    "recorded_at": "2026-10-31T08:51:24.488Z",
+    "authorization": "User supplied explicit Betfair Exchange lay screenshots; £500-per-race fictional booking authorized.",
+    "race": {
+      "entries": [
+        {
+          "race_id": "rac_32303216712",
+          "horse_id": "hrs_58133495",
+          "odds": 2.02,
+          "liability_cents": 50000
+        },
+        {
+          "race_id": "rac_32303021075",
+          "horse_id": "hrs_58565304",
+          "odds": 1.85,
+          "liability_cents": 50000
+        }
+      ]
+    }
+  }
 }

@@ -12,7 +12,7 @@
       "field_size": 13,
       "position": "1",
       "winner": "Siena Storm",
-      "winning_margin_lengths": null,
+      "winning_margin_lengths": "6",
       "selected_beaten_lengths": null,
       "results_url": "https://www.sportinglife.com/racing/results/2026-10-30/newmarket/946113/irish-stallion-farms-ebf-bosra-sham-fillies-stakes-listed",
       "racecard_url": "https://www.sportinglife.com/racing/racecards/2026-10-30/newmarket/racecard/946113/irish-stallion-farms-ebf-bosra-sham-fillies-stakes",
@@ -74,7 +74,7 @@
       "result_course": "Newmarket",
       "result_horse": "Siena Storm",
       "result_off_dt": "2026-10-30T13:45:00+00:00",
-      "result_retrieved_at": "2026-10-30T14:03:02.380655Z",
+      "result_retrieved_at": "2026-10-31T15:09:42.674244Z",
       "result_race_id": "rac_32302827375",
       "result_horse_id": "hrs_17389476643",
       "result_website_race_id": "946113",
@@ -83,7 +83,92 @@
         "Love Is"
       ],
       "result_website_horse_id": "1232468",
-      "result_stage": "WEIGHEDIN"
+      "result_stage": "WEIGHEDIN",
+      "finish_margins": [
+        {
+          "position": "1",
+          "horse": "Siena Storm",
+          "margin_from_previous": null,
+          "cumulative_beaten_lengths": "0"
+        },
+        {
+          "position": "2",
+          "horse": "Nicely",
+          "margin_from_previous": "6",
+          "cumulative_beaten_lengths": "6"
+        },
+        {
+          "position": "3",
+          "horse": "What A Girl Wants",
+          "margin_from_previous": "1 ¾",
+          "cumulative_beaten_lengths": "7.75"
+        },
+        {
+          "position": "4",
+          "horse": "Silesia",
+          "margin_from_previous": "nk",
+          "cumulative_beaten_lengths": "8.05"
+        },
+        {
+          "position": "5",
+          "horse": "China In Your Hand",
+          "margin_from_previous": "nk",
+          "cumulative_beaten_lengths": "8.35"
+        },
+        {
+          "position": "6",
+          "horse": "Polyxena",
+          "margin_from_previous": "½",
+          "cumulative_beaten_lengths": "8.85"
+        },
+        {
+          "position": "7",
+          "horse": "Sydney Grace",
+          "margin_from_previous": "nk",
+          "cumulative_beaten_lengths": "9.15"
+        },
+        {
+          "position": "8",
+          "horse": "Eyeconic",
+          "margin_from_previous": "¾",
+          "cumulative_beaten_lengths": "9.9"
+        },
+        {
+          "position": "9",
+          "horse": "Faith In Florence",
+          "margin_from_previous": "hd",
+          "cumulative_beaten_lengths": "10.1"
+        },
+        {
+          "position": "10",
+          "horse": "Bated Benevolence",
+          "margin_from_previous": "1 ½",
+          "cumulative_beaten_lengths": "11.6"
+        },
+        {
+          "position": "11",
+          "horse": "Etonnante",
+          "margin_from_previous": "4 ¾",
+          "cumulative_beaten_lengths": "16.35"
+        },
+        {
+          "position": "12",
+          "horse": "Troublesome Guest",
+          "margin_from_previous": "3 ¾",
+          "cumulative_beaten_lengths": "20.1"
+        },
+        {
+          "position": "13",
+          "horse": "Fillipas",
+          "margin_from_previous": "2 ¼",
+          "cumulative_beaten_lengths": "22.35"
+        }
+      ],
+      "margin_source": "SPORTING_LIFE",
+      "margin_source_url": "https://www.sportinglife.com/racing/results/2026-10-30/newmarket/946113/irish-stallion-farms-ebf-bosra-sham-fillies-stakes-listed",
+      "margin_retrieved_at": "2026-10-31T15:09:42.674244Z",
+      "margin_stage": "WEIGHEDIN",
+      "margin_verification_status": "WEBSITE_CONFIRMED"
     }
   ]
 }

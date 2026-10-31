@@ -84,14 +84,93 @@
       "result_course": "Down Royal",
       "result_horse": "Kenough",
       "result_off_dt": "2026-10-31T13:00:00+00:00",
-      "result_retrieved_at": "2026-10-31T13:18:50.918227Z",
+      "result_retrieved_at": "2026-10-31T15:09:42.674244Z",
       "result_race_id": "rac_32303216712",
       "result_horse_id": "hrs_58133495",
       "result_website_race_id": "946523",
       "result_source_url": "https://www.sportinglife.com/racing/results/2026-10-31/down-royal/946523/lisburn-and-castlereagh-city-council-3-y-o-hurdle",
       "result_non_runners": [],
       "result_website_horse_id": "1204234",
-      "result_stage": "WEIGHEDIN"
+      "result_stage": "WEIGHEDIN",
+      "result_history": [
+        {
+          "result_status": "WIN",
+          "verification_status": "WEBSITE_CONFIRMED",
+          "result_source": "SPORTING_LIFE",
+          "position": "2",
+          "placing": "2nd",
+          "result_date": "2026-10-31",
+          "result_off_time_uk": "13:00",
+          "result_course": "Down Royal",
+          "result_horse": "Kenough",
+          "result_off_dt": "2026-10-31T13:00:00+00:00",
+          "result_retrieved_at": "2026-10-31T13:18:50.918227Z",
+          "result_race_id": "rac_32303216712",
+          "result_horse_id": "hrs_58133495",
+          "result_website_race_id": "946523",
+          "result_source_url": "https://www.sportinglife.com/racing/results/2026-10-31/down-royal/946523/lisburn-and-castlereagh-city-council-3-y-o-hurdle",
+          "result_non_runners": [],
+          "result_website_horse_id": "1204234",
+          "result_stage": "WEIGHEDIN"
+        }
+      ],
+      "winning_margin_lengths": "6 ½",
+      "selected_beaten_lengths": "6.5",
+      "finish_margins": [
+        {
+          "position": "1",
+          "horse": "Admiral Will Brown",
+          "margin_from_previous": null,
+          "cumulative_beaten_lengths": "0"
+        },
+        {
+          "position": "2",
+          "horse": "Kenough",
+          "margin_from_previous": "6 ½",
+          "cumulative_beaten_lengths": "6.5"
+        },
+        {
+          "position": "3",
+          "horse": "Servare",
+          "margin_from_previous": "½",
+          "cumulative_beaten_lengths": "7"
+        },
+        {
+          "position": "4",
+          "horse": "Cite Florale",
+          "margin_from_previous": "3 ¾",
+          "cumulative_beaten_lengths": "10.75"
+        },
+        {
+          "position": "5",
+          "horse": "Contador",
+          "margin_from_previous": "4 ½",
+          "cumulative_beaten_lengths": "15.25"
+        },
+        {
+          "position": "6",
+          "horse": "Fay Og",
+          "margin_from_previous": "8 ½",
+          "cumulative_beaten_lengths": "23.75"
+        },
+        {
+          "position": "7",
+          "horse": "Moon Aura",
+          "margin_from_previous": "9",
+          "cumulative_beaten_lengths": "32.75"
+        },
+        {
+          "position": "8",
+          "horse": "Swift Charm",
+          "margin_from_previous": "4 ½",
+          "cumulative_beaten_lengths": "37.25"
+        }
+      ],
+      "margin_source": "SPORTING_LIFE",
+      "margin_source_url": "https://www.sportinglife.com/racing/results/2026-10-31/down-royal/946523/lisburn-and-castlereagh-city-council-3-y-o-hurdle",
+      "margin_retrieved_at": "2026-10-31T15:09:42.674244Z",
+      "margin_stage": "WEIGHEDIN",
+      "margin_verification_status": "WEBSITE_CONFIRMED"
     },
     {
       "race_date": "2026-10-31",

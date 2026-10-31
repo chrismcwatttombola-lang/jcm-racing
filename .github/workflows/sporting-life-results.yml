@@ -10,6 +10,9 @@ on:
     # Two long-running watchers avoid the large queue gaps GitHub can apply
     # to high-frequency scheduled workflows. Each watcher polls for 5h 45m.
     - cron: '7 10,16 * * *'
+    # One short early-morning sweep reconciles settled margins for the full
+    # fresh project after the previous day's results have stabilised.
+    - cron: '15 6 * * *'
 permissions:
   contents: write
   pages: write
@@ -32,13 +35,20 @@ jobs:
       - name: Poll, validate and publish due full results
         env:
           GH_TOKEN: ${{ github.token }}
+          WORKFLOW_SCHEDULE: ${{ github.event.schedule }}
         run: |
           git config user.name 'JCM Results Updater'
           git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
-          for attempt in $(seq 1 70); do
+          attempts=70
+          mode='--write'
+          if [ "$WORKFLOW_SCHEDULE" = '15 6 * * *' ]; then
+            attempts=1
+            mode='--write --reconcile'
+          fi
+          for attempt in $(seq 1 "$attempts"); do
             git fetch origin main
             git reset --hard origin/main
-            python scripts/update_sporting_life_results.py --write
+            python scripts/update_sporting_life_results.py $mode
             node tests/bankroll.cjs
             if ! git diff --quiet -- data; then
               git add data/competition-research-*.json data/result-card-details-*.json data/bet-builder-*.json
@@ -49,5 +59,6 @@ jobs:
                 echo 'Concurrent update detected; the next poll will re-read main and retry.'
               fi
             fi
-            if [ "$attempt" -lt 70 ]; then sleep 300; fi
+            if [ "$attempt" -lt "$attempts" ]; then sleep 300; fi
           done
+

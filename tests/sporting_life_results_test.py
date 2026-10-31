@@ -11,14 +11,14 @@ class Results(unittest.TestCase):
     def setUp(self):
         self.row = dict(race_date='2026-10-27', off_time_uk='14:31', course='Newcastle', horse='Silver Hill', scheduled_off_dt='2026-10-27T14:31:00+00:00', race_id='rac_1', horse_id='hrs_1')
         self.url = 'https://www.sportinglife.com/racing/results/2026-10-27/newcastle/945555/test-race'
-        self.page = {'race': {'race_summary': dict(date='2026-10-27', time='14:31', course_name='Newcastle', race_stage='WEIGHEDIN', race_summary_reference={'id':945555}, ride_count=2, name='Test'), 'rides': [dict(horse={'name':'Winner', 'horse_reference':{'id':1}},finish_position=1,ride_status='RUNNER'),dict(horse={'name':'Silver Hill', 'horse_reference':{'id':2}},finish_position=4,ride_status='RUNNER')]}}
+        self.page = {'race': {'race_summary': dict(date='2026-10-27', time='14:31', course_name='Newcastle', race_stage='WEIGHEDIN', race_summary_reference={'id':945555}, ride_count=4, name='Test'), 'rides': [dict(horse={'name':'Winner', 'horse_reference':{'id':1}},finish_position=1,ride_status='RUNNER'),dict(horse={'name':'Second', 'horse_reference':{'id':3}},finish_position=2,finish_distance='sh',ride_status='RUNNER'),dict(horse={'name':'Third', 'horse_reference':{'id':4}},finish_position=3,finish_distance='1 ¼',ride_status='RUNNER'),dict(horse={'name':'Silver Hill', 'horse_reference':{'id':2}},finish_position=4,finish_distance='nk',ride_status='RUNNER')]}}
     def parse(self):
         return m.result(self.row,self.page,self.url,datetime.now(timezone.utc))[0]
     def test_loss_success_and_nr(self):
         self.assertEqual(self.parse()['result_status'],'WIN')
-        self.page['race']['rides'][1]['finish_position']=1
+        self.page['race']['rides'][3]['finish_position']=1
         self.assertEqual(self.parse()['result_status'],'LOSS')
-        self.page['race']['rides'][1].update(ride_status='NONRUNNER',finish_position=0)
+        self.page['race']['rides'][3].update(ride_status='NONRUNNER',finish_position=0)
         self.assertEqual(self.parse()['result_status'],'NR')
     def test_wrong_date_time_course(self):
         for key,val in [('date','2026-10-26'),('time','14:32'),('course_name','Kempton')]:
@@ -33,7 +33,26 @@ class Results(unittest.TestCase):
         self.page['race']['rides'].pop()
         with self.assertRaises(ValueError):self.parse()
     def test_noncompletion_not_invented(self):
-        self.page['race']['rides'][1]['finish_position']=0
+        self.page['race']['rides'][3]['finish_position']=0
         with self.assertRaises(ValueError):self.parse()
 
+    def test_verified_winning_and_cumulative_margins(self):
+        update, detail = m.result(self.row,self.page,self.url,datetime.now(timezone.utc))
+        self.assertEqual(update['winning_margin_lengths'], 'sh')
+        self.assertEqual(update['selected_beaten_lengths'], '1.65')
+        self.assertEqual(detail['finish_margins'][2]['cumulative_beaten_lengths'], '1.35')
+        self.assertEqual(detail['margin_stage'], 'WEIGHEDIN')
+
+    def test_unknown_margin_is_preserved_without_inventing_total(self):
+        self.page['race']['rides'][2]['finish_distance'] = 'dist'
+        update, detail = m.result(self.row,self.page,self.url,datetime.now(timezone.utc))
+        self.assertIsNone(update['selected_beaten_lengths'])
+        self.assertEqual(detail['finish_margins'][2]['margin_from_previous'], 'dist')
+
+    def test_dead_heat_winning_margin(self):
+        self.page['race']['rides'][1]['finish_position'] = 1
+        update, _ = m.result(self.row,self.page,self.url,datetime.now(timezone.utc))
+        self.assertEqual(update['winning_margin_lengths'], 'dh')
+
 if __name__=='__main__':unittest.main()
+

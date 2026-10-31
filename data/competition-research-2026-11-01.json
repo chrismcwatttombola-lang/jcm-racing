@@ -1,0 +1,137 @@
+{
+  "schema_version": 1,
+  "mode": "research_only_not_official_picks",
+  "date": "2026-11-01",
+  "imported_at": "2026-10-31T21:28:42.113Z",
+  "high_competition": [
+    {
+      "race_date": "2026-11-01",
+      "horse": "Keops Des Bordes",
+      "course": "Carlisle",
+      "off_time_uk": "13:13",
+      "race_id": "rac_32303038508",
+      "horse_id": "hrs_40095811",
+      "scheduled_off_dt": "2026-11-01T13:13:00+00:00",
+      "interest_rank": 1,
+      "tier": "selection",
+      "original_status": "Selection",
+      "display_status": "Selection",
+      "original_assessment": "Selection",
+      "selection_status": "SELECTION",
+      "competition_confidence_percent": null,
+      "qualitative_confidence": "Good evidence for opposing the favourite",
+      "selected_at": "2026-10-31T21:28:42.113Z",
+      "added_at": "2026-10-31T21:28:42.113Z",
+      "identified_challengers": [
+        "Ronnie Russet",
+        "Ocean Master",
+        "Lauvergnat"
+      ],
+      "selection_reason": {
+        "summary": "Keops Des Bordes is a very short-priced favourite for his hurdling debut after only one run in the last 22 months, a fourth in an Ayr bumper 197 days ago. Ronnie Russet won two bumpers, including an easy Newcastle success, before finishing close enough in a Grade 1 at Aintree to be a serious rival. Point winners Ocean Master and Lauvergnat add further depth, so the favourite's price asks a lot of unproven jumping and fitness.",
+        "counterargument": "Keops Des Bordes won his point, ran well behind No Drama This End in a bumper, returned from a long absence with ability intact and represents Dan and Harry Skelton. Sporting Life makes him the selection and the strong market support may prove accurate.",
+        "challengers": [
+          "Ronnie Russet",
+          "Ocean Master",
+          "Lauvergnat"
+        ],
+        "source": "The Racing API Pro full race analysis and Sporting Life racecard",
+        "evidence_urls": [
+          "https://www.sportinglife.com/racing/racecards/2026-11-01/carlisle/racecard/946328/pricedup-now-with-best-odds-guaranteed-novices-hurdle-gbb-race",
+          "https://api.theracingapi.com/v1/racecards/rac_32303038508"
+        ],
+        "checked_at": "2026-10-31T21:28:42.113Z",
+        "evidence_status": "RACING_API_PRO_AND_SPORTING_LIFE"
+      },
+      "field_size": 8,
+      "going": "Good to soft",
+      "surface": "Turf",
+      "result_status": null,
+      "verification_status": "PENDING",
+      "result_source": null,
+      "official_accuracy_eligible": false,
+      "lay_odds": null,
+      "available_stake_gbp": null,
+      "source": "Betfair Exchange lay price pending user screenshot; no fictional profit booked",
+      "lay_price_provenance": null,
+      "market_observation": {
+        "provider": "Bet365",
+        "source_type": "BOOKMAKER_ODDS",
+        "observed_price_fractional": "1/1",
+        "observed_price_decimal": 2,
+        "observed_at": "2026-10-31T21:20:11Z",
+        "price_last_changed_at": "2026-10-31T21:18:00+00:00",
+        "retrieved_at": "2026-10-31T21:26:29.857Z",
+        "verification_status": "BOOKMAKER_PRICE_ONLY_NOT_LAY",
+        "original_price_side": "BACK",
+        "source_timezone": "UTC",
+        "source_url": "https://api.theracingapi.com/v1/odds/rac_32303038508/hrs_40095811"
+      },
+      "racecard_url": "https://www.sportinglife.com/racing/racecards/2026-11-01/carlisle/racecard/946328/pricedup-now-with-best-odds-guaranteed-novices-hurdle-gbb-race"
+    },
+    {
+      "race_date": "2026-11-01",
+      "horse": "Pigeon House",
+      "course": "Huntingdon",
+      "off_time_uk": "12:22",
+      "race_id": "rac_32303050130",
+      "horse_id": "hrs_30124724",
+      "scheduled_off_dt": "2026-11-01T12:22:00+00:00",
+      "interest_rank": 2,
+      "tier": "selection",
+      "original_status": "Selection",
+      "display_status": "Selection",
+      "original_assessment": "Selection",
+      "selection_status": "SELECTION",
+      "competition_confidence_percent": null,
+      "qualitative_confidence": "Moderate evidence for opposing the favourite",
+      "selected_at": "2026-10-31T21:28:42.113Z",
+      "added_at": "2026-10-31T21:28:42.113Z",
+      "identified_challengers": [
+        "Shallow River",
+        "Blackwater Lilly"
+      ],
+      "selection_reason": {
+        "summary": "Pigeon House is around evens despite an inconsistent sequence containing two pulled-up runs and a 26-length defeat 15 days ago. Shallow River is rated 4 lb higher, has won over this course and distance and drops into claiming company with first-time blinkers. Blackwater Lilly also shaped better than the bare result over this course and distance last time, giving the favourite two plausible opponents.",
+        "counterargument": "Pigeon House drops in class, has previously made all to win a two-mile claimer and may have too much speed for Shallow River. The opposition is unreliable too, so this is a moderate case rather than a strong one.",
+        "challengers": [
+          "Shallow River",
+          "Blackwater Lilly"
+        ],
+        "source": "The Racing API Pro full race analysis and Sporting Life racecard",
+        "evidence_urls": [
+          "https://www.sportinglife.com/racing/racecards/2026-11-01/huntingdon/racecard/946334/copybet-support-safer-gambling-claiming-hurdle",
+          "https://api.theracingapi.com/v1/racecards/rac_32303050130"
+        ],
+        "checked_at": "2026-10-31T21:28:42.113Z",
+        "evidence_status": "RACING_API_PRO_AND_SPORTING_LIFE"
+      },
+      "field_size": 5,
+      "going": "Good (good to firm in places on hurdle course)",
+      "surface": "Turf",
+      "result_status": null,
+      "verification_status": "PENDING",
+      "result_source": null,
+      "official_accuracy_eligible": false,
+      "lay_odds": null,
+      "available_stake_gbp": null,
+      "source": "Betfair Exchange lay price pending user screenshot; no fictional profit booked",
+      "lay_price_provenance": null,
+      "market_observation": {
+        "provider": "Bet365",
+        "source_type": "BOOKMAKER_ODDS",
+        "observed_price_fractional": "11/10",
+        "observed_price_decimal": 2.1,
+        "observed_at": "2026-10-31T21:20:11Z",
+        "price_last_changed_at": "2026-10-31T18:25:00+00:00",
+        "retrieved_at": "2026-10-31T21:26:32.888Z",
+        "verification_status": "BOOKMAKER_PRICE_ONLY_NOT_LAY",
+        "original_price_side": "BACK",
+        "source_timezone": "UTC",
+        "source_url": "https://api.theracingapi.com/v1/odds/rac_32303050130/hrs_30124724"
+      },
+      "racecard_url": "https://www.sportinglife.com/racing/racecards/2026-11-01/huntingdon/racecard/946334/copybet-support-safer-gambling-claiming-hurdle"
+    }
+  ],
+  "competition_watchlist": []
+}

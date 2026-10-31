@@ -216,9 +216,9 @@
       "field_size": 4,
       "going": "Good",
       "surface": "Turf",
-      "result_status": "PENDING",
-      "verification_status": "PENDING",
-      "result_source": null,
+      "result_status": "LOSS",
+      "verification_status": "WEBSITE_CONFIRMED",
+      "result_source": "SPORTING_LIFE",
       "official_accuracy_eligible": false,
       "lay_odds": 1.85,
       "available_stake_gbp": 11,
@@ -249,8 +249,54 @@
         "source_url": "https://api.theracingapi.com/v1/odds/rac_32303021075/hrs_58565304"
       },
       "racecard_url": "https://www.sportinglife.com/racing/racecards/2026-10-31/wetherby/racecard/946319/bet365-handicap-chase-gbb-race",
-      "position": null,
-      "placing": null
+      "position": "1",
+      "placing": "1st",
+      "result_date": "2026-10-31",
+      "result_off_time_uk": "16:03",
+      "result_course": "Wetherby",
+      "result_horse": "Sledgehammer",
+      "result_off_dt": "2026-10-31T16:03:00+00:00",
+      "result_retrieved_at": "2026-10-31T16:20:48.741738Z",
+      "result_race_id": "rac_32303021075",
+      "result_horse_id": "hrs_58565304",
+      "result_website_race_id": "946319",
+      "result_source_url": "https://www.sportinglife.com/racing/results/2026-10-31/wetherby/946319/bet365-handicap-chase-gbb-race",
+      "result_non_runners": [],
+      "result_website_horse_id": "1215161",
+      "result_stage": "WEIGHEDIN",
+      "winning_margin_lengths": "1",
+      "selected_beaten_lengths": null,
+      "finish_margins": [
+        {
+          "position": "1",
+          "horse": "Sledgehammer",
+          "margin_from_previous": null,
+          "cumulative_beaten_lengths": "0"
+        },
+        {
+          "position": "2",
+          "horse": "Slaney Opera",
+          "margin_from_previous": "1",
+          "cumulative_beaten_lengths": "1"
+        },
+        {
+          "position": "3",
+          "horse": "Upfordebate",
+          "margin_from_previous": "10",
+          "cumulative_beaten_lengths": "11"
+        },
+        {
+          "position": "4",
+          "horse": "Paddy O'Mahler",
+          "margin_from_previous": "6",
+          "cumulative_beaten_lengths": "17"
+        }
+      ],
+      "margin_source": "SPORTING_LIFE",
+      "margin_source_url": "https://www.sportinglife.com/racing/results/2026-10-31/wetherby/946319/bet365-handicap-chase-gbb-race",
+      "margin_retrieved_at": "2026-10-31T16:20:48.741738Z",
+      "margin_stage": "WEIGHEDIN",
+      "margin_verification_status": "WEBSITE_CONFIRMED"
     }
   ],
   "bank_trial": {

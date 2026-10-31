@@ -143,11 +143,11 @@
       "race_id": "rac_32303021075",
       "horse_id": "hrs_58565304",
       "field_size": 4,
-      "position": null,
-      "winner": null,
-      "winning_margin_lengths": null,
+      "position": "1",
+      "winner": "Sledgehammer",
+      "winning_margin_lengths": "1",
       "selected_beaten_lengths": null,
-      "results_url": null,
+      "results_url": "https://www.sportinglife.com/racing/results/2026-10-31/wetherby/946319/bet365-handicap-chase-gbb-race",
       "racecard_url": "https://www.sportinglife.com/racing/racecards/2026-10-31/wetherby/racecard/946319/bet365-handicap-chase-gbb-race",
       "lay_odds": 1.85,
       "available_stake_gbp": 11,
@@ -176,12 +176,12 @@
         "source_timezone": "UTC",
         "source_url": "https://api.theracingapi.com/v1/odds/rac_32303021075/hrs_58565304"
       },
-      "placing": null,
-      "result_status": "PENDING",
-      "verification_status": "PENDING",
-      "result_source": null,
+      "placing": "1st",
+      "result_status": "LOSS",
+      "verification_status": "WEBSITE_CONFIRMED",
+      "result_source": "SPORTING_LIFE",
       "official_accuracy_eligible": false,
-      "race_name": "Bet365 Handicap Steeple Chase (Go North Red Rum Series Qualifier) (GBB Race)",
+      "race_name": "bet365 Handicap Chase (GBB Race)",
       "selected_at": "2026-10-30T21:06:38.281Z",
       "selection_reason": {
         "summary": "Sledgehammer is very short after one Hexham win, but that performance was rated only 86 and followed a fall plus several modest efforts. He now meets three credible rivals: Upfordebate has won his last two races with performances around 108-109, Slaney Opera arrives after a comfortable Uttoxeter success, and Paddy O'Mahler has proven course-and-distance form. The favourite's low weight is valuable, but the price asks the recent win to outweigh a large gap in established chase form.",
@@ -199,7 +199,51 @@
         "checked_at": "2026-10-30T21:06:38.281Z",
         "evidence_status": "RACING_API_PRO_AND_SPORTING_LIFE"
       },
-      "source": "Betfair Exchange user screenshot, 31 October 08:50 GMT; explicit pink LAY column"
+      "source": "Betfair Exchange user screenshot, 31 October 08:50 GMT; explicit pink LAY column",
+      "result_date": "2026-10-31",
+      "result_off_time_uk": "16:03",
+      "result_course": "Wetherby",
+      "result_horse": "Sledgehammer",
+      "result_off_dt": "2026-10-31T16:03:00+00:00",
+      "result_retrieved_at": "2026-10-31T16:20:48.741738Z",
+      "result_race_id": "rac_32303021075",
+      "result_horse_id": "hrs_58565304",
+      "result_website_race_id": "946319",
+      "result_source_url": "https://www.sportinglife.com/racing/results/2026-10-31/wetherby/946319/bet365-handicap-chase-gbb-race",
+      "result_non_runners": [],
+      "result_website_horse_id": "1215161",
+      "result_stage": "WEIGHEDIN",
+      "finish_margins": [
+        {
+          "position": "1",
+          "horse": "Sledgehammer",
+          "margin_from_previous": null,
+          "cumulative_beaten_lengths": "0"
+        },
+        {
+          "position": "2",
+          "horse": "Slaney Opera",
+          "margin_from_previous": "1",
+          "cumulative_beaten_lengths": "1"
+        },
+        {
+          "position": "3",
+          "horse": "Upfordebate",
+          "margin_from_previous": "10",
+          "cumulative_beaten_lengths": "11"
+        },
+        {
+          "position": "4",
+          "horse": "Paddy O'Mahler",
+          "margin_from_previous": "6",
+          "cumulative_beaten_lengths": "17"
+        }
+      ],
+      "margin_source": "SPORTING_LIFE",
+      "margin_source_url": "https://www.sportinglife.com/racing/results/2026-10-31/wetherby/946319/bet365-handicap-chase-gbb-race",
+      "margin_retrieved_at": "2026-10-31T16:20:48.741738Z",
+      "margin_stage": "WEIGHEDIN",
+      "margin_verification_status": "WEBSITE_CONFIRMED"
     }
   ]
 }
